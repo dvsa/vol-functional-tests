@@ -4,6 +4,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
@@ -25,7 +26,7 @@ public class InternalNavigation extends BasePage {
 
     @When("i click submit")
     public void iClickSubmit() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @And("i have logged in to internal")

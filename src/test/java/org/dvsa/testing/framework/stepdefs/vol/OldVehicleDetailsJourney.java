@@ -6,6 +6,7 @@ import apiCalls.Utils.volBuilders.VehiclesBuilder;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -48,7 +49,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         waitForTitleToBePresent("Add vehicle");
         enterText(VRMField, SelectorType.XPATH, generatedVRM);
         enterText(weightField, SelectorType.XPATH, generatedWeight);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the vehicle should be appear")
@@ -62,7 +63,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
         click(firstVehicleRemoveButton, SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the vehicle no longer appears")
@@ -76,7 +77,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleInTable, SelectorType.XPATH);
         replaceText(weightField, SelectorType.XPATH, generatedWeight);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the vehicle should have changed")
@@ -94,7 +95,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         click(transferButton, SelectorType.XPATH);
         transferLicence = getText(firstLicenceInTransferDropdown, SelectorType.XPATH);
         selectValueFromDropDown(transferDropdown, SelectorType.XPATH, transferLicence);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @And("the other licence contains that vehicle")

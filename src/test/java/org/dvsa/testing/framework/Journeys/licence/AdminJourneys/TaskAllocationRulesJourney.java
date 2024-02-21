@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
 import org.dvsa.testing.framework.Injectors.World;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -35,7 +36,7 @@ public class TaskAllocationRulesJourney extends BasePage {
         waitForElementToBeClickable("details[user]", SelectorType.NAME);
         waitAndSelectByIndex("details[user]", SelectorType.NAME, 4);
         setOwnerName(getSelectedTextFromDropDown("//select[@name='details[user]']", SelectorType.XPATH));
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitAndClick("50", SelectorType.LINKTEXT);
     }
 
@@ -52,7 +53,7 @@ public class TaskAllocationRulesJourney extends BasePage {
             waitForTextToBePresent("Edit alpha split");
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
             replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
-            world.universalActions.clickSubmit();
+            UniversalActions.clickSubmit();
             waitForElementToBeClickable("addAlphaSplit", SelectorType.ID);
             waitForTextToBePresent("Alpha split updated");
         } else {
@@ -65,6 +66,6 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void deleteTaskAllocationRule() {
         waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
         waitAndClick("delete", SelectorType.ID);
-        world.universalActions.clickConfirm();
+        UniversalActions.clickConfirm();
     }
 }

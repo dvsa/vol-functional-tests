@@ -10,6 +10,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -80,7 +81,7 @@ public class RemoveTM extends BasePage {
     @And("user attempts to remove the last TM without selecting an option")
     public void userAttemptsToRemoveTheLastTMWithoutSelectingAnOption() {
         waitForTextToBePresent(alertHeaderValue);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("an error message should be displayed")
@@ -121,7 +122,7 @@ public class RemoveTM extends BasePage {
     public void theUserConfirmsALetterShouldBeIssued() {
         waitForTextToBePresent(alertHeaderValue);
         findSelectAllRadioButtonsByValue("Y");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @And("the last TM letter job is run")

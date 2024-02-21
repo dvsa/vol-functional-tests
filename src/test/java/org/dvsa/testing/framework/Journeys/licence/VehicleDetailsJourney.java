@@ -21,11 +21,11 @@ public class VehicleDetailsJourney extends BasePage {
             String num = String.valueOf(Int.random(10,99));
             waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
-            world.universalActions.clickSubmit();
+            UniversalActions.clickSubmit();
             if (isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
             {
                 waitAndClick("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH);
-                world.universalActions.clickSubmit();
+                UniversalActions.clickSubmit();
             }
             waitForTitleToBePresent("Vehicle details");
             UniversalActions.clickSaveAndContinue();

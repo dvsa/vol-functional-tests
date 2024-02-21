@@ -9,6 +9,7 @@ import apiCalls.enums.UserType;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -64,7 +65,7 @@ public class BusRegistrationJourney extends BasePage {
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterDateFieldsByPartialId("effectiveDate", dates);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
@@ -83,7 +84,7 @@ public class BusRegistrationJourney extends BasePage {
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", SelectorType.ID, "Mistake");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void payFeesAndGrantNewBusReg() {
@@ -96,14 +97,14 @@ public class BusRegistrationJourney extends BasePage {
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
@@ -172,7 +173,7 @@ public class BusRegistrationJourney extends BasePage {
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void internalSiteEditBusReg() {
@@ -189,6 +190,6 @@ public class BusRegistrationJourney extends BasePage {
         enterDateFieldsByPartialId("effectiveDate", dates);
         dates = world.globalMethods.date.getDateHashMap(0,0,2);
         enterDateFieldsByPartialId("endDate", dates);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

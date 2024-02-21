@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -28,7 +29,7 @@ public class GoodVarDecreaseVehicle extends BasePage {
     public void removesAVehicleBecauseOfNewVehicleCap() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
         world.selfServeUIJourney.removeFirstVehicleOnVehiclePage();
-       world.universalActions.refreshPageWithJavascript();
+       UniversalActions.refreshPageWithJavascript();
         waitAndClick("//*[@class='govuk-back-link']", SelectorType.XPATH);
     }
 

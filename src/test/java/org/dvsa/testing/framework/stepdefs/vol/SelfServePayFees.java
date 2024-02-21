@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,7 +20,7 @@ public class SelfServePayFees extends BasePage {
 
         @When("^I pay fees on self serve")
         public void iPayFeesOnSelfServe() {
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.payFee(null, "card");
     }
 

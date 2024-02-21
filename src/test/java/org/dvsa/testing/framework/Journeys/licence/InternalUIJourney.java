@@ -6,6 +6,7 @@ import autoitx4java.AutoItX;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -47,7 +48,7 @@ public class InternalUIJourney extends BasePage {
         assertTrue(isElementPresent("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH));
         waitAndEnterText("noOfVehiclesRequired", SelectorType.ID, "1");
         findSelectAllRadioButtonsByValue("adPlaced");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void addNewInternalUser() {
@@ -63,7 +64,7 @@ public class InternalUIJourney extends BasePage {
         waitAndEnterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Created record");
     }
 
@@ -75,7 +76,7 @@ public class InternalUIJourney extends BasePage {
         waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 5);
         waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 3);
         waitAndSelectValueFromDropDown("//*[@id='documentTemplate']", SelectorType.XPATH, "GV - Blank letter to operator");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Amend letter");
     }
 
@@ -87,12 +88,12 @@ public class InternalUIJourney extends BasePage {
         waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 2);
         waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 4);
         waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Amend letter");
     }
 
     public void saveDocumentInInternal() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitAndClick("//*[@id='close']", SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
     }
@@ -142,7 +143,7 @@ public class InternalUIJourney extends BasePage {
         waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
         waitAndClick("//button[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
-        world.universalActions.clickConfirm();
+        UniversalActions.clickConfirm();
     }
 
     public void checkLicenceStatus(String arg0) {
@@ -158,19 +159,19 @@ public class InternalUIJourney extends BasePage {
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
-        world.universalActions.clickConfirm();
+        UniversalActions.clickConfirm();
     }
 
     public void payForInterimApp() {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
         enterText("applicationInterimReason", SelectorType.ID, "Testing");
         click("submitAndPay", SelectorType.ID);
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
@@ -196,24 +197,24 @@ public class InternalUIJourney extends BasePage {
         click("//li[contains(text(),'Convictions')]", SelectorType.XPATH);
         enterText("//*[@id='fields[description]']", SelectorType.XPATH, "testing");
         enterText("//*[@id='fields[ecmsNo]']", SelectorType.XPATH, "12345");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void caseWorkerCompleteOverview() {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void createPublicInquiry() {
@@ -230,7 +231,7 @@ public class InternalUIJourney extends BasePage {
         click("//*[@id='fields_piTypes__chosen']/div/ul/li[1]", SelectorType.XPATH);
         selectFirstValueInList("//*[@id='fields_reasons__chosen']/ul/li/input");
         click("//*[@id='fields_reasons__chosen']/div/ul/li[2]", SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void loginIntoInternalAsExistingAdmin() {
@@ -268,7 +269,7 @@ public class InternalUIJourney extends BasePage {
         click("//*[@name='id']", SelectorType.XPATH);
         click("//*[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Delete record");
-        world.universalActions.clickConfirm();
+        UniversalActions.clickConfirm();
     }
 
     public void navigateToChangeHistory() {
@@ -284,9 +285,9 @@ public class InternalUIJourney extends BasePage {
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(String.format("//*[contains(text(),'%s')]", variationFeeDecision), SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Variation details");
-        world.universalActions.refreshPageWithJavascript();
+        UniversalActions.refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
 
@@ -308,7 +309,7 @@ public class InternalUIJourney extends BasePage {
         waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH, "distinctiveName");
         selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
         navigate().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(filePath);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }

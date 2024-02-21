@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
@@ -31,8 +32,8 @@ public class SystemMessagesJourney extends BasePage {
         enterDateFieldsByPartialId("details[endDate]", EndDate);
         selectValueFromDropDown("details[endDate]_hour", SelectorType.ID, "00");
         selectValueFromDropDown("details[endDate]_minute", SelectorType.ID, "00");
-        world.universalActions.clickSubmit();
-        world.universalActions.closeAlert();
+        UniversalActions.clickSubmit();
+        UniversalActions.closeAlert();
     }
 }
 

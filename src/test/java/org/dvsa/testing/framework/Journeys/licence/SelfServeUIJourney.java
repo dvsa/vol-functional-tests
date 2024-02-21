@@ -5,6 +5,7 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -41,7 +42,7 @@ public class SelfServeUIJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         }
         click("termsAgreed", SelectorType.ID);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
 
     }
 
@@ -61,7 +62,7 @@ public class SelfServeUIJourney extends BasePage {
         enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         enterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
 
     }
 
@@ -72,7 +73,7 @@ public class SelfServeUIJourney extends BasePage {
             clickByLinkText("Financial evidence");
         }
         click("//input[@id='uploadLaterRadio']", SelectorType.XPATH);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void signDeclaration() {
@@ -81,7 +82,7 @@ public class SelfServeUIJourney extends BasePage {
             click("//*[@name='declarationsAndUndertakings[signatureOptions]']", SelectorType.XPATH);
             waitAndClick("form-actions[sign]", SelectorType.NAME);
         } else if (isTitlePresent("Declaration", 10)) {
-            world.universalActions.clickSubmit();
+            UniversalActions.clickSubmit();
         }
     }
 
@@ -117,8 +118,8 @@ public class SelfServeUIJourney extends BasePage {
         waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
-        world.universalActions.clickSubmit();
-        world.universalActions.refreshPageWithJavascript();
+        UniversalActions.clickSubmit();
+        UniversalActions.refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
 
@@ -127,7 +128,7 @@ public class SelfServeUIJourney extends BasePage {
     public void removeFirstVehicleOnVehiclePage() {
         navigate().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
         navigate().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {
@@ -149,7 +150,7 @@ public class SelfServeUIJourney extends BasePage {
             world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         else
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         if (!getCurrentUrl().contains("#validationSummary"))
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }

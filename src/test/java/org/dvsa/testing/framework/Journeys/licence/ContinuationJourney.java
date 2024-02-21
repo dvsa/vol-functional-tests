@@ -7,6 +7,7 @@ import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -43,7 +44,7 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("checkall", SelectorType.ID);
         waitAndClick("generate", SelectorType.ID);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
@@ -90,13 +91,13 @@ public class ContinuationJourney extends BasePage {
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             waitAndClick("submitAndPay", SelectorType.ID);
-            world.universalActions.clickPay();
+            UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             waitForTextToBePresent("Declaration");

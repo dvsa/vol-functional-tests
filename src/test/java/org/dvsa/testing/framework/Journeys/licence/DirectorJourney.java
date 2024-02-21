@@ -99,7 +99,7 @@ public class DirectorJourney extends BasePage {
 
     public void addPersonDetails() {
         personDetails();
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     private void personDetails() {
@@ -131,7 +131,7 @@ public class DirectorJourney extends BasePage {
     public void removeDirector() {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import com.typesafe.config.Config;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
         waitAndEnterText("amount", SelectorType.ID, amount);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void payFee(String amount, @NotNull String paymentMethod) {
@@ -157,7 +158,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void clickPayAndConfirm(String paymentMethod) {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }

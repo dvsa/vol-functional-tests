@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -78,13 +79,13 @@ public class SurrenderJourney extends BasePage {
     public void addOperatorLicenceDetails() {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void addCommunityLicenceDetails() {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public String getSurrenderAddressLine1() {
@@ -118,7 +119,7 @@ public class SurrenderJourney extends BasePage {
     public void submitSurrenderUntilReviewPage() {
         navigateToSurrendersStartPage();
         startSurrender();
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -133,7 +134,7 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
-        world.universalActions.closeAlert();
+        UniversalActions.closeAlert();
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -161,9 +162,9 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void acknowledgeDestroyPage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Securely destroy");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
@@ -182,14 +183,14 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void removeDisc() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
