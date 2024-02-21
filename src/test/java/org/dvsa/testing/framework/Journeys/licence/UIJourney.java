@@ -424,10 +424,9 @@ public class UIJourney extends BasePage {
 
     public void changeLicenceForVariation() {
         refreshPage();
-        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
-        waitAndClick(submitButton, SelectorType.ID);
+        clickById(submitButton);
         refreshPage();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
