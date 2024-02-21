@@ -423,12 +423,12 @@ public class UIJourney extends BasePage {
     }
 
     public void changeLicenceForVariation() {
-        waitForTextToBePresent( world.applicationDetails.getLicenceNumber());
-        waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        refreshPage();
+        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(submitButton, SelectorType.ID);
-        refreshPageWithJavascript();
+        refreshPage();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
