@@ -19,7 +19,7 @@ public class UniversalActions extends BasePage {
         this.world = world;
     }
 
-    public void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
+    public static void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
     }
 
     public List<WebElement> getTableBodyRowList() {
@@ -46,7 +46,7 @@ public class UniversalActions extends BasePage {
         waitAndClick("form-actions[continue]", SelectorType.ID);
     }
 
-    public void clickSaveAndReturn() {
+    public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 

@@ -6,6 +6,7 @@ import activesupport.dates.Dates;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.InterimPage;
@@ -76,20 +77,20 @@ public class InterimLicence extends BasePage {
 
     @Then("A {string} error appears when i save the interim licence")
     public void AErrorAppearsWhenISaveTheInterimLicence(String errorType) {
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
         assertTrue(isTextPresent(errorMes));
     }
 
     @Then("I should get an error when i save the application")
     public void iShouldGetAnErrorWhenISaveTheApplication() {
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertTrue(isTextPresent(VehicleErrorMessage));
     }
 
     @Then("I should be able to save the application without any errors")
     public void iShouldBeAbleToSaveTheApplicationWithoutAnyErrors() {
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertFalse(isTextPresent(VehicleErrorMessage));
         assertFalse(isTextPresent(HgvVehicleErrorMessage));
         assertFalse(isTextPresent(LgvVehicleErrorMessage));
@@ -97,13 +98,13 @@ public class InterimLicence extends BasePage {
 
     @Then("I should not error when i save the application")
     public void iShouldNotErrorWhenISaveTheApplication() {
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertFalse(isTextPresent(valueIsRequiredErrorMessage));
     }
 
     @Then("I should error when i attempt to grant the application")
     public void iShouldErrorWhenIAttemptToGrantTheApplication() {
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim application");
         InterimPage.grant();
