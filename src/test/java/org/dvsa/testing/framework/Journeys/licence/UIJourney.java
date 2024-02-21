@@ -23,6 +23,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.*;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
@@ -422,12 +423,12 @@ public class UIJourney extends BasePage {
     }
 
     public void changeLicenceForVariation() {
-        waitForTextToBePresent( world.applicationDetails.getLicenceNumber());
-        waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        refreshPage();
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
-        waitAndClick(submitButton, SelectorType.ID);
-        refreshPageWithJavascript();
+        clickById(submitButton);
+        refreshPage();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
