@@ -46,7 +46,16 @@ public class SelfServeUIJourney extends BasePage {
 
     }
 
-    public void resettingSelfServePassword() {
+
+    public void resetSelfServePassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
+        click(nameAttribute("input", "submit"), SelectorType.CSS);
+        assertTrue(isTextPresent("Your password was reset successfully"));
+    }
+
+    public void resettingExternalPassword() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
         }
