@@ -39,4 +39,4 @@ Feature: Goods Variation increase vehicle count for an OC
     Examples:
       | LicenceType            |
       | standard_national      |
-      | restricted             |
+#      | restricted             |

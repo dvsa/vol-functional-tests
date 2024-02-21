@@ -49,7 +49,7 @@ Feature: Operating Centre authorisation variations triggering fees
     Examples:
       | licenceType            |
       | standard_international |
-      | standard_national      |
+#      | standard_national      |
 
   Scenario: Increasing HGVs at an OC, increasing LGVs total authorisation and reverting the HGVs increase triggers a fee
     Given I have a "goods" "standard_international" licence

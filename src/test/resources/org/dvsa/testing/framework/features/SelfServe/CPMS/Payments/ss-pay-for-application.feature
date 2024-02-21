@@ -2,7 +2,7 @@
 @ss_regression @FullRegression
 Feature: Self Serve Apply for licence
 
-  @CPMS_tests @printAndSign
+  @application_fees @printAndSign
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |

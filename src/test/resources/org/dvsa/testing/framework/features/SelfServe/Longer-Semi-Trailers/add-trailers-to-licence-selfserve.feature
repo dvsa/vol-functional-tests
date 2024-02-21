@@ -1,6 +1,7 @@
 @long-semi-trailers
 Feature: Adding trailers to a licence on self serve - Longer semi and non longer semi trailers
 
+  @add-longer-trailer
   Scenario Outline: Adding longer semi trailers to a licence on self serve
     Given I have a "goods" "<licenceType>" licence
     When on self serve I add a valid trailer number "<trailerNumber>" and longer semi trailer is set to "<semiTrailer>" on the licence
@@ -13,6 +14,7 @@ Feature: Adding trailers to a licence on self serve - Longer semi and non longer
       | standard_national      | G4785632      | Yes         |
       | restricted             | G1258963      | Yes         |
 
+  @add-non-longer-trailer
   Scenario Outline: Adding non longer semi trailers to a licence on self serve
     Given I have a "goods" "<licenceType>" licence
     When on self serve I add a valid trailer number "<trailerNumber>" and longer semi trailer is set to "<semiTrailer>" on the licence

@@ -1,11 +1,13 @@
 @VOL-90 @VOL-91 @DVLA @ss_regression @FullRegression @printAndSign
 Feature: Transfer a vehicle
 
+
   Scenario: Transfer vehicles for dual licence holder
     Given I have "2" "goods" "standard_international" licences with "3" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence
     When i transfer a vehicle to an assumed licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
+
 
   Scenario: Transfer vehicles for multiple licence holder
     Given I have "3" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
@@ -21,6 +23,7 @@ Feature: Transfer a vehicle
     Then the "2 vehicles have been transferred to licence" confirmation banner should appear
     Then the "You have transferred the last vehicle from your licence" confirmation body should appear
     Then the switchboard only views add vehicle and view vehicle radio buttons
+
 
   Scenario: I transfer vehicles to a full licence and an error displays
     Given I have "2" "goods" "standard_national" licences with "4" vehicles and a vehicleAuthority of "5"

@@ -32,7 +32,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
-        refreshPageWithJavascript();
+        refreshPage();
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='form-actions[generate]']");

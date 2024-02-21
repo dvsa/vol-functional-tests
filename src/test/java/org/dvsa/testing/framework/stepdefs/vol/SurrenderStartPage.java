@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

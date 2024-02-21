@@ -20,9 +20,9 @@ public class OperatingCentreJourney extends BasePage {
     String enterAddressManually = "Enter the address yourself";
     String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
     String operatingCentreTrailerField = "//*[@id='noOfTrailersRequired']";
-    String confirmOffStreetParkingCheckbox = "//*[@id='permission']";
+    String confirmOffStreetParkingCheckbox = "permission";
     String advertTitle = "//h3[text()='Newspaper advert']";
-    String uploadAdvertLater = "//*[@value='adPlacedLater']";
+    String uploadAdvertLater = "//*[contains(text(),'Upload documents later')]";
 
     public String addOperatingCentre = "//*[@id='add']";
     public String totalAuthorisationField = "//input[@id='totAuthVehicles']";
@@ -123,16 +123,16 @@ public class OperatingCentreJourney extends BasePage {
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
         waitForElementToBePresent(addOperatingCentre);
-        click(addOperatingCentre, SelectorType.XPATH);
+        waitAndClick(addOperatingCentre, SelectorType.XPATH);
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
             enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
-            click(uploadAdvertLater, SelectorType.XPATH);
+            waitAndClick(uploadAdvertLater, SelectorType.XPATH);
         }
-        click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
+        clickById(confirmOffStreetParkingCheckbox);
         world.UIJourney.clickSubmit();
     }
 
