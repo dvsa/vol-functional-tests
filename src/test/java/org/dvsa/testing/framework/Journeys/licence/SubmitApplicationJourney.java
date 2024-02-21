@@ -109,8 +109,8 @@ public class SubmitApplicationJourney extends BasePage {
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
 
-        axeScanner.scan(true);
         UniversalActions.clickSaveAndContinue();
+        axeScanner.scan(true);
 
 
         waitForTitleToBePresent("Financial evidence");
