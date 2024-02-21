@@ -58,9 +58,9 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheBusinessDetailsPageAreMade() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
-        world.universalActions.checkValue("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
-        world.universalActions.checkValue("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
-        world.universalActions.checkValue("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
+        assertEquals(getText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH), tradingName);
+        assertEquals(getText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH), tradingName2);
+        assertEquals(getText("//*[@id='natureOfBusiness']", SelectorType.XPATH), natureOfBusiness);
         world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
         assertEquals(findElement("//td[2]", SelectorType.XPATH).getText(), companyNumber);
     }
@@ -87,22 +87,21 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the addresses page are made")
     public void theChangesToTheAddressesPageAreMade() {
-        clickByLinkText("Home");
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
-        world.universalActions.checkValue("//*[@id='correspondence[fao]']", SelectorType.XPATH, forAttentionOf);
-        world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
-        world.universalActions.checkValue("//*[@id='phone_primary']", SelectorType.XPATH, phoneNumber);
-        world.universalActions.checkValue("//*[@id='$phone_secondary']", SelectorType.XPATH, secondaryPhoneNumber);
-        world.universalActions.checkValue("//*[@id='email']", SelectorType.XPATH, email);
-        world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
-        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
-        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
-        world.universalActions.checkValue("//*[@id='consultant[transportConsultantName]']", SelectorType.XPATH, transportConsultantName);
-        world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
-        world.universalActions.checkValue("//*[@id='tc_phone_primary']", SelectorType.XPATH, phoneNumber);
-        world.universalActions.checkValue("//*[@id='tc_phone_secondary']", SelectorType.XPATH, secondaryPhoneNumber);
-        world.universalActions.checkValue("//*[@id='consultantContact[email]']", SelectorType.XPATH, email);
-    }
+            clickByLinkText("Home");
+            world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
+            assertEquals(getText("//*[@id='correspondence[fao]']", SelectorType.XPATH), forAttentionOf);
+            world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+            assertEquals(getText("//*[@id='phone_primary']", SelectorType.XPATH), phoneNumber);
+            assertEquals(getText("//*[@id='$phone_secondary']", SelectorType.XPATH), secondaryPhoneNumber);
+            assertEquals(getText("//*[@id='email']", SelectorType.XPATH), email);
+            assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
+            assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
+            assertEquals(getText("//*[@id='consultant[transportConsultantName]']", SelectorType.XPATH), transportConsultantName);
+            world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
+            assertEquals(getText("//*[@id='tc_phone_primary']", SelectorType.XPATH), phoneNumber);
+            assertEquals(getText("//*[@id='tc_phone_secondary']", SelectorType.XPATH), secondaryPhoneNumber);
+            assertEquals(getText("//*[@id='consultantContact[email]']", SelectorType.XPATH), email);
+        }
 
     @When("i make changes to the vehicles page")
     public void iMakeChangesToTheVehiclesPage() {
