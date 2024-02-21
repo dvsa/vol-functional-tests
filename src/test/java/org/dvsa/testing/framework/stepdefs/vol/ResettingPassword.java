@@ -21,7 +21,7 @@ public class ResettingPassword extends BasePage {
     @And("i reset my password")
     public void iResetMyPassword() {
         clickByLinkText("Sign out");
-        world.selfServeUIJourney.resettingSelfServePassword();
+        world.selfServeUIJourney.resettingExternalPassword();
         enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
         waitAndClick("auth.forgot-password.button", SelectorType.ID);
         while (isTextPresent("Failed")) {click(nameAttribute("input","submit"), SelectorType.CSS);
@@ -30,7 +30,7 @@ public class ResettingPassword extends BasePage {
 
     @Given("i try resetting my password")
     public void iTryResettingMyPassword() {
-        world.selfServeUIJourney.resettingSelfServePassword();
+        world.selfServeUIJourney.resettingExternalPassword();
         enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName().concat(Str.randomWord(4)));
         click(nameAttribute("input","submit"), SelectorType.CSS);
     }
@@ -43,7 +43,7 @@ public class ResettingPassword extends BasePage {
     @And("I receive the reset password link via email")
     public void iReceiveTheResetPasswordLinkViaEmail() throws InterruptedException {
         world.genericUtils.getResetPasswordLink();
-        world.selfServeUIJourney.resettingSelfServePassword();
+        world.selfServeUIJourney.resetSelfServePassword();
     }
 
     @Then("I should be able to login with my new password")
