@@ -424,6 +424,7 @@ public class UIJourney extends BasePage {
 
     public void changeLicenceForVariation() {
         refreshPage();
+        getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         clickById(submitButton);
