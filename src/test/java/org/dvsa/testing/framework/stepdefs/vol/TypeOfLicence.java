@@ -72,13 +72,13 @@ public class TypeOfLicence extends BasePage {
 
     @When("I confirm the warning message")
     public void iConfirmWarningMessage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("I cancel the warning message and click cancel on the type of licence page")
     public void iCancelWarningMessageAndClickCancelOnTheTypeOfLicencePage() {
-        world.universalActions.clickCancel();
-        world.universalActions.clickCancel();
+        UniversalActions.clickCancel();
+        UniversalActions.clickCancel();
     }
 
     @When("each section on the application overview page has the correct status for the {string} licence")
@@ -171,13 +171,13 @@ public class TypeOfLicence extends BasePage {
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreate() {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("i choose to have mixed vehicles and create")
     public void iChooseToHaveMixedVehiclesAndCreate() {
         click(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the caseworker is navigated to the lgv only application overview")
@@ -201,6 +201,6 @@ public class TypeOfLicence extends BasePage {
     @And("i choose to have light goods vehicles only and click create without confirming the declaration")
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreateWithoutConfirmingTheDeclaration() {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

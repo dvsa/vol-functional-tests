@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.clickContinue;
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
@@ -51,12 +52,12 @@ public class SubmitApplicationJourney extends BasePage {
                         if (isTextPresent("Not Yet Submitted")) {
                             apps.click();
                             waitAndClick("Cancel application", SelectorType.LINKTEXT);
-                            world.universalActions.clickSubmit();
+                            UniversalActions.clickSubmit();
                         }
                         if (isTextPresent("Under Consideration")) {
                             apps.click();
                             waitAndClick("Withdraw application", SelectorType.LINKTEXT);
-                            world.universalActions.clickSubmit();
+                            UniversalActions.clickSubmit();
                         }
                         if (isTextPresent("Awaiting grant fee")) {
                             apps.click();
@@ -110,7 +111,7 @@ public class SubmitApplicationJourney extends BasePage {
 
         UniversalActions.clickSaveAndContinue();
         axeScanner.scan(true);
-        UIJourney.clickSaveAndContinue();
+
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
@@ -120,13 +121,13 @@ public class SubmitApplicationJourney extends BasePage {
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
-        world.universalActions.clickContinue();
+        clickContinue();
         axeScanner.scan(true);
-        world.UIJourney.clickContinue();
+        clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            world.universalActions.clickSend();
+            UniversalActions.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
@@ -153,7 +154,7 @@ public class SubmitApplicationJourney extends BasePage {
     public void submitAndPayForApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
         List<String> licenceApplicationArray = Arrays.asList(Browser.navigate().findElement(By.xpath("//h2")).getText().split("/"));

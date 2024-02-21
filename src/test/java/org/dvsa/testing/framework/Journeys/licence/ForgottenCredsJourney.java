@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -33,6 +34,6 @@ public class ForgottenCredsJourney extends BasePage {
         waitAndClick("Forgotten your username?", SelectorType.LINKTEXT);
         waitAndEnterText("fields[licenceNumber]", SelectorType.ID, world.applicationDetails.getLicenceNumber());
         waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.registerUser.getEmailAddress());
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

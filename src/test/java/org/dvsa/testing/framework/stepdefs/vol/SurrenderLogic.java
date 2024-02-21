@@ -10,6 +10,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -32,14 +33,14 @@ public class SurrenderLogic extends BasePage {
 
     @Given("i update my address details on my licence")
     public void iUpdateMyAddressDetailsOnMyLicence() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
         world.selfServeUIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
         String contactNumber = "07123465976";
         replaceText("phone_primary", SelectorType.ID, contactNumber);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("continue with application link is displayed")
@@ -95,7 +96,7 @@ public class SurrenderLogic extends BasePage {
 
     @Given("i am on the surrenders current discs page")
     public void iAmOnTheSurrendersCurrentDiscsPage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("current-discs"));
     }
 
@@ -107,7 +108,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("i am on the operator licence page")
     public void iAmOnTheOperatorLicencePage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
@@ -122,7 +123,7 @@ public class SurrenderLogic extends BasePage {
     @And("i am on the community licence page")
     public void iAmOnTheCommunityLicencePage() {
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
-            world.universalActions.clickSubmit();
+            UniversalActions.clickSubmit();
             world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourney.addOperatorLicenceDetails();
@@ -140,7 +141,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("i am on the disc and doc review page")
     public void iAmOnTheDiscAndDocReviewPage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -159,7 +160,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("i am on the destroy disc page")
     public void iAmOnTheDestroyDiscPage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -167,13 +168,13 @@ public class SurrenderLogic extends BasePage {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
         }
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("destroy"));
     }
 
     @And("i am on the declaration page")
     public void iAmOnTheDeclarationPage() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -181,9 +182,9 @@ public class SurrenderLogic extends BasePage {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
         }
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTitleToBePresent("Now securely destroy your licence documentation");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("declaration"));
     }
 
@@ -282,7 +283,7 @@ public class SurrenderLogic extends BasePage {
     public void theCaseWorkerUndoesTheSurrender() {
         waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("The licence surrender has been undone");
     }
 

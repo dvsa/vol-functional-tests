@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -30,7 +31,7 @@ public class InternalApplication extends BasePage{
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("has been submitted");
         world.internalUIJourney.caseWorkerCompleteConditionsAndUndertakings();
         world.internalUIJourney.caseWorkerCompleteReviewAndDeclarations();
@@ -49,7 +50,7 @@ public class InternalApplication extends BasePage{
 
         do {
             tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
-            world.universalActions.refreshPageWithJavascript();
+            refreshPageWithJavascript();
         } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
 
         if (System.currentTimeMillis() > kickoutTime) {
@@ -87,7 +88,7 @@ public class InternalApplication extends BasePage{
     @Then("The letter is sent by {string}")
     public void theLetterIsSentBy(String sendOption) {
         String objDef = String.format("form-actions[%s]", sendOption);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         click(objDef,SelectorType.ID);
         if (sendOption.equals("email")) {
@@ -104,7 +105,7 @@ public class InternalApplication extends BasePage{
     public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
         assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
         click("form-actions[confirm-add]", SelectorType.ID);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Operating centres and authorisation");
         assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
     }
@@ -116,7 +117,7 @@ public class InternalApplication extends BasePage{
 
     @And("i save the letter")
     public void iSaveTheLetter() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         click("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
@@ -124,7 +125,7 @@ public class InternalApplication extends BasePage{
 
     @And("i save the letter clicking the Propose To Revoke button")
     public void iSaveTheLetterClickingTheProposeToRevokeButton() {
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         String proposeToRevoke = "//button[text()='Propose to revoke']";
         click(proposeToRevoke, SelectorType.XPATH);
@@ -198,7 +199,7 @@ public class InternalApplication extends BasePage{
 
     @And("I click cancel")
     public void clicksCancel() {
-        world.universalActions.clickCancel();
+        UniversalActions.clickCancel();
     }
 
     @And("the caseworker is still on the operators page")

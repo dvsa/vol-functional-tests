@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
@@ -22,7 +23,7 @@ public class SubmissionsJourney extends BasePage {
         selectRandomValueFromDropDown("user", SelectorType.ID);
         String operatorForename = world.DataGenerator.getOperatorForeName();
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void createAndSubmitSubmission() {
@@ -31,12 +32,12 @@ public class SubmissionsJourney extends BasePage {
         clickByLinkText("Submissions");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("fields[submissionSections][submissionType]", SelectorType.NAME, 13);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void setInfoCompleteAndAssignSubmission() {
         clickByLinkText("Set info complete");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
         waitForTextToBePresent("Assign to:");
         clickByXPath("//*[@id='tcOrOther']");
@@ -49,13 +50,13 @@ public class SubmissionsJourney extends BasePage {
         clickByLinkText("Edit submission");
         selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
         refreshPage();
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void addTransportManagerComments() {
         clickByXPath("//form[@name='transport-managers-section-attachments']/following-sibling::a[1]");
         waitAndEnterText("fields[comment]_ifr", SelectorType.ID, "-" + world.DataGenerator.getRandomWord());
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void closeSubmission() {

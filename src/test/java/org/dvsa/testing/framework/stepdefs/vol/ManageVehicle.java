@@ -4,6 +4,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import io.cucumber.java.en.*;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -326,7 +327,7 @@ public class ManageVehicle extends BasePage {
         for (int i = 0; i < numberOfVehicles; i++) {
             waitAndClick("//button[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
-            world.universalActions.clickSubmit();
+            UniversalActions.clickSubmit();
             waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
             Thread.sleep(2000);
         }

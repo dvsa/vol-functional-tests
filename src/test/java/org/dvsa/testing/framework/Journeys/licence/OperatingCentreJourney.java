@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.OperatorType;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -93,7 +94,7 @@ public class OperatingCentreJourney extends BasePage {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
         }
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
@@ -110,13 +111,13 @@ public class OperatingCentreJourney extends BasePage {
         } else {
             replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         }
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
         waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
@@ -131,7 +132,7 @@ public class OperatingCentreJourney extends BasePage {
             waitAndClick(uploadAdvertLater, SelectorType.XPATH);
         }
         clickById(confirmOffStreetParkingCheckbox);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     private boolean hasTotalHGVAuthorityIncreased(String newHGVTotalAuthority) {

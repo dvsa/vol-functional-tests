@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -41,7 +42,7 @@ public class TaskAllocation extends BasePage {
         waitAndClick("re-assign task", SelectorType.ID);
         waitForTextToBePresent("Assigned to");
         selectSystemTeam();
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void editTask() {

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -22,6 +23,6 @@ public class SafetyInspectorJourney extends BasePage {
         waitAndEnterText("addressLine1", SelectorType.ID, faker.generateCompanyName());
         waitAndEnterText("addressTown", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcode", SelectorType.ID, "NG1 6LP");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

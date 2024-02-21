@@ -6,6 +6,7 @@ import activesupport.number.Int;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -78,7 +79,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForElementToBePresent(successfulAddedRecordAlert);
     }
 
@@ -103,7 +104,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate + 100));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate + 100));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForElementToBePresent(successfullyEditedRecordAlert);
     }
 
@@ -121,7 +122,7 @@ public class FinancialStandingRates extends BasePage {
         click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        world.universalActions.clickConfirm();
+        UniversalActions.clickConfirm();
         waitForElementToBePresent(successfullyDeletedRecordAlert);
     }
 
@@ -149,7 +150,7 @@ public class FinancialStandingRates extends BasePage {
     public void iSubmitNoInformationOnAFinancialStandingRate() {
         click(addButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("There is a problem");
     }
 

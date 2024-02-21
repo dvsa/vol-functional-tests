@@ -19,7 +19,7 @@ public class UniversalActions extends BasePage {
         this.world = world;
     }
 
-    public void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
+    public static void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
     }
 
     public List<WebElement> getTableBodyRowList() {
@@ -34,39 +34,39 @@ public class UniversalActions extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void clickSubmit() {
+    public static void clickSubmit() {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
     }
 
-    public void clickSend() {
+    public static void clickSend() {
         waitAndClick("form-actions[send]", SelectorType.NAME);
     }
 
-    public void clickContinue() {
+    public static void clickContinue() {
         waitAndClick("form-actions[continue]", SelectorType.ID);
     }
 
-    public void clickSaveAndReturn() {
+    public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
-    public void clickCancel() {
+    public static void clickCancel() {
         waitAndClick("form-actions[cancel]", SelectorType.NAME);
     }
 
-    public void clickOk() {
+    public static void clickOk() {
         waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
     }
 
-    public void clickConfirm() {
+    public static void clickConfirm() {
         waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
-    public void clickPay() {
+    public static void clickPay() {
         waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
     }
 
-    public void closeAlert() {
+    public static void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
         waitAndClick("//*[contains(text(),'Close')]", SelectorType.XPATH);
     }

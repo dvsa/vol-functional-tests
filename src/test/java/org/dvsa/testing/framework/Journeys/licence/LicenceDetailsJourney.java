@@ -29,7 +29,7 @@ public class LicenceDetailsJourney extends BasePage {
         waitAndEnterText("data[licNo]",SelectorType.NAME,"OB".concat(String.valueOf(Int.random(8))));
         waitAndEnterText("data[holderName]",SelectorType.NAME,faker.generateFirstName());
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTitleToBePresent("Licence history");
         UniversalActions.clickSaveAndContinue();
     }

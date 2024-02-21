@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -43,7 +44,7 @@ public class CreateApplications extends BasePage {
 
     @When("i pay for my application")
     public void iPayForMyApplication() {
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }
@@ -63,7 +64,7 @@ public class CreateApplications extends BasePage {
         waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         waitForTextToBePresent("Would you like to use a stored card?");
         selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);

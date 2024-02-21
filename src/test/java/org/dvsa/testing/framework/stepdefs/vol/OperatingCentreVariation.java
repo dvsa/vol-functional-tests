@@ -6,6 +6,7 @@ import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -137,7 +138,7 @@ public class OperatingCentreVariation extends BasePage {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove this operating centre?");
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);
@@ -226,7 +227,7 @@ public class OperatingCentreVariation extends BasePage {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
@@ -240,7 +241,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i increase total PSV authorisation to {string} vehicles")
     public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
         replaceText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("the increase in PSV authorisation is not allowed")
@@ -263,7 +264,7 @@ public class OperatingCentreVariation extends BasePage {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        world.universalActions.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 }

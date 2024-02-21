@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.codec.DecoderException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -71,7 +72,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         clickByLinkText("Sign out");
         world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         Browser.navigate().get(world.genericUtils.getTransportManagerLink());
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -88,9 +89,9 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("i add new person as a transport manager and they fill out their details")
@@ -146,7 +147,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForPageLoad();
     }
 
@@ -154,7 +155,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForPageLoad();
     }
 
@@ -166,7 +167,7 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
-        world.universalActions.refreshPageWithJavascript();
+        UniversalActions.refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         world.selfServeUIJourney.changeLicenceForVariation();
         world.TMJourney.addNewPersonAsTransportManager("variation");

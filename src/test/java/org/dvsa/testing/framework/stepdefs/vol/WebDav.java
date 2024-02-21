@@ -8,6 +8,7 @@ import autoitx4java.AutoItX;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -43,7 +44,7 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @And("i open the document in word for the first time")
@@ -74,7 +75,7 @@ public class WebDav extends BasePage{
         String fileName = getText("//table//tbody//tr//td", SelectorType.XPATH);
         world.genericUtils.writeLineToFile(
                 String.format("%s,%s,%s", licenceNumber, fileName, documentLink),
-                String.format("%s/Reports/WebDavRequiredStorage/%sWebDav.csv", Paths.get("").toAbsolutePath().toString(), env.toString()));
+                String.format("%s/Reports/WebDavRequiredStorage/%sWebDav.csv", Paths.get("").toAbsolutePath(), env.toString()));
     }
 
     @Then("the document should contain the changes")
@@ -99,6 +100,6 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        world.universalActions.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }
