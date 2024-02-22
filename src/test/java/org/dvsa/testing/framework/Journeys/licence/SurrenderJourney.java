@@ -1,9 +1,10 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
+import apiCalls.enums.LicenceType;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import apiCalls.enums.LicenceType;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -13,8 +14,8 @@ import scanner.AXEScanner;
 import java.io.IOException;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -86,7 +87,7 @@ public class SurrenderJourney extends BasePage {
     public void addOperatorLicenceDetails() throws IllegalBrowserException, IOException {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
             axeScanner.scan(true);
         }
 
@@ -94,7 +95,7 @@ public class SurrenderJourney extends BasePage {
     public void addCommunityLicenceDetails() {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public String getSurrenderAddressLine1() {
@@ -132,7 +133,7 @@ public class SurrenderJourney extends BasePage {
     public void submitSurrenderUntilReviewPage() throws IllegalBrowserException, IOException {
         navigateToSurrendersStartPage();
         startSurrender();
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -149,7 +150,7 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
-        world.UIJourney.closeAlert();
+        UniversalActions.closeAlert();
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -177,10 +178,10 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void acknowledgeDestroyPage() throws IllegalBrowserException, IOException {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         axeScanner.scan(true);
         waitForTextToBePresent("Securely destroy");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
@@ -202,14 +203,14 @@ public class SurrenderJourney extends BasePage {
 
 
     public void removeDisc() throws IllegalBrowserException, IOException {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
