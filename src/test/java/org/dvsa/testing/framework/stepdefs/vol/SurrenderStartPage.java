@@ -19,7 +19,7 @@ public class SurrenderStartPage extends BasePage {
 
     @When("i click on apply to surrender licence")
     public void iClickOnApplyToSurrenderLicence() throws IllegalBrowserException, IOException {
-        world.surrenderJourney.navigateToSurrendersStartPage(false);
+        world.surrenderJourney.navigateToSurrendersStartPage();
     }
 
     @Then("the correct page heading for {string} should be displayed")
