@@ -59,11 +59,24 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheBusinessDetailsPageAreMade() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
-        assertEquals(getText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH), tradingName);
-        assertEquals(getText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH), tradingName2);
-        assertEquals(getText("//*[@id='natureOfBusiness']", SelectorType.XPATH), natureOfBusiness);
+
+        String expectedChangedText1 = tradingName;
+        String actualChangeText1 = getText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH);
+        assertEquals(expectedChangedText1, actualChangeText1);
+
+        String expectedChangedText2 = tradingName2;
+        String actualChangeText2 = getText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH);
+        assertEquals(expectedChangedText2, actualChangeText2);
+
+        String expectedChangedText3 = natureOfBusiness;
+        String actualChangeText3 = getText("//*[@id='natureOfBusiness']", SelectorType.XPATH);
+        assertEquals(expectedChangedText3, actualChangeText3);
+
         world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-        assertEquals(findElement("//td[2]", SelectorType.XPATH).getText(), companyNumber);
+
+        String expectedChangedText4 = companyNumber;
+        String actualChangeText4 = findElement("//td[2]", SelectorType.XPATH).getText();
+        assertEquals(expectedChangedText4, actualChangeText4);
     }
 
     @When("i make changes to the addresses page")
@@ -90,18 +103,55 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheAddressesPageAreMade() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
-        assertEquals(getText("//*[@id='correspondence[fao]']", SelectorType.XPATH), forAttentionOf);
-        world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
-        assertEquals(getText("//*[@id='phone_primary']", SelectorType.XPATH), phoneNumber);
-        assertEquals(getText("//*[@id='$phone_secondary']", SelectorType.XPATH), secondaryPhoneNumber);
-        assertEquals(getText("//*[@id='email']", SelectorType.XPATH), email);
-        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
-        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
-        assertEquals(getText("//*[@id='consultant[transportConsultantName]']", SelectorType.XPATH), transportConsultantName);
-        world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
-        assertEquals(getText("//*[@id='tc_phone_primary']", SelectorType.XPATH), phoneNumber);
-        assertEquals(getText("//*[@id='tc_phone_secondary']", SelectorType.XPATH), secondaryPhoneNumber);
-        assertEquals(getText("//*[@id='consultantContact[email]']", SelectorType.XPATH), email);
+
+        String correspondenceFaoXpath = "//*[@id='correspondence[fao]']";
+        String actualCorrespondenceFaoText = getText(correspondenceFaoXpath, SelectorType.XPATH);
+        assertEquals(actualCorrespondenceFaoText, forAttentionOf);
+
+        HashMap<String, String> expectedNewAddress = newAddress;
+        world.selfServeUIJourney.checkAddressDetails(expectedNewAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+
+        String phonePrimaryText = phoneNumber;
+        String phonePrimaryXpath = "//*[@id='phone_primary'][contains(text(), '" + phonePrimaryText + "')]";
+        assertEquals(getText(phonePrimaryXpath, SelectorType.XPATH), phonePrimaryText);
+
+        String phoneSecondaryText = secondaryPhoneNumber;
+        String phoneSecondaryXpath = "//*[@id='$phone_secondary'][contains(text(), '" + phoneSecondaryText + "')]";
+        assertEquals(getText(phoneSecondaryXpath, SelectorType.XPATH), phoneSecondaryText);
+
+        String emailText = email;
+        String emailXpath = "//*[@id='email'][contains(text(), '" + emailText + "')]";
+        assertEquals(getText(emailXpath, SelectorType.XPATH), emailText);
+
+        String transportConsultantXpath = "//*[@id='consultant[add-transport-consultant]']";
+        assertTrue(Browser.navigate().findElement(By.xpath(transportConsultantXpath)).isSelected());
+
+        String writtenPermissionXpath = "//*[@id='written-permission-to-engage']";
+        assertTrue(Browser.navigate().findElement(By.xpath(writtenPermissionXpath)).isSelected());
+
+        String consultantNameText = transportConsultantName;
+        String consultantNameXpath = "//*[@id='consultant[transportConsultantName]'][contains(text(), '" + consultantNameText + "')]";
+        assertEquals(getText(consultantNameXpath, SelectorType.XPATH), consultantNameText);
+
+        world.selfServeUIJourney.checkAddressDetails(expectedNewAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
+
+        String consultantPhonePrimaryText = phoneNumber;
+        String consultantPhonePrimaryXpath = "//*[@id='tc_phone_primary'][contains(text(), '" + consultantPhonePrimaryText + "')]";
+        assertEquals(getText(consultantPhonePrimaryXpath, SelectorType.XPATH), consultantPhonePrimaryText);
+
+        String consultantPhoneSecondaryText = secondaryPhoneNumber;
+        String consultantPhoneSecondaryXpath = "//*[@id='tc_phone_secondary'][contains(text(), '" + consultantPhoneSecondaryText + "')]";
+        assertEquals(getText(consultantPhoneSecondaryXpath, SelectorType.XPATH), consultantPhoneSecondaryText);
+
+        String consultantEmailText = email;
+        String consultantEmailXpath = "//*[@id='consultantContact[email]'][contains(text(), '" + consultantEmailText + "')]";
+        assertEquals(getText(consultantEmailXpath, SelectorType.XPATH), consultantEmailText);
+
+        String warningTextXpath = "//*[@class='govuk-warning-text__text']";
+        String actualChangeText = getText(warningTextXpath, SelectorType.XPATH);
+
+        String expectedChangedText = "Your expected changed text";  // Replace with the actual expected text
+        assertEquals(expectedChangedText, actualChangeText);
     }
 
     @When("i make changes to the vehicles page")

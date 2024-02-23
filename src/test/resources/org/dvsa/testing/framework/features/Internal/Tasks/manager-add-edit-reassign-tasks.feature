@@ -17,7 +17,7 @@ Feature:Add, Edit and reassign tasks on the internal application
   @edit_task
 
   Scenario: User wishes to edit a task
-    Then I edit a task
+    Then I edit a taskc
     Then the User has edited a task
 
   @dd_task
