@@ -19,5 +19,5 @@ Feature: Create application page should comply to the WCAG 2.1 AA accessibility 
     Then no issues should be present on the page
 
     Examples:
-      | Licence | ScanOrNot |
-      | Goods   | true      |
+      | Licence |  |
+      | Goods   |  |

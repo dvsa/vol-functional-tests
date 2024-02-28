@@ -72,7 +72,6 @@ public class SelfServeUIJourney extends BasePage {
         enterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         UniversalActions.clickSubmit();
-
     }
 
     public void completeFinancialEvidencePage() {

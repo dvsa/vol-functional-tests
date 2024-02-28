@@ -86,11 +86,10 @@ public class DirectorJourney extends BasePage {
         if (isTitlePresent(convictionsAndPenaltiesTitle, 5)) {
             completeConvictionsAndPenalties("N");
         }
-        if (scanOrNot) {
             AXEScanner axeScanner = AccessibilitySteps.scanner;
             axeScanner.scan(true);
         }
-    }
+
 
     public void addDirectorDetails() {
         personDetails();

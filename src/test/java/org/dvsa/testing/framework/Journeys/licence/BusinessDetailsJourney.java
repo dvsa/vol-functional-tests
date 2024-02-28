@@ -35,11 +35,10 @@ public class BusinessDetailsJourney extends BasePage {
         }
         enterCorrespondenceAddress();
         UniversalActions.clickSaveAndContinue();
-        if (scanOrNot) {
             AXEScanner axeScanner = AccessibilitySteps.scanner;
             axeScanner.scan(true);
         }
-    }
+
 
     public void enterCorrespondenceAddress() {
         UniversalActions.clickSaveAndContinue();
