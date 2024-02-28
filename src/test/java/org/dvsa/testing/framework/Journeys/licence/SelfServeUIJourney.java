@@ -45,7 +45,6 @@ public class SelfServeUIJourney extends BasePage {
         UniversalActions.clickSubmit();
     }
 
-
     public void resetSelfServePassword() {
         String passWord = world.configuration.config.getString("adminPassword");
         waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
