@@ -8,7 +8,7 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import apiCalls.enums.*;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -35,7 +35,7 @@ public class TypeOfLicence extends BasePage {
         if (licenceWhere.equals("GB")) {
             clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         }
-        UIJourney.inputLicenceAndVehicleType(licenceType, vehicleType, lgvUndertaking);
+        world.selfServeUIJourney.inputLicenceAndVehicleType(licenceType, vehicleType, lgvUndertaking);
     }
 
     @Given("I {string} the LGV undertaking declaration checkbox")
@@ -48,7 +48,7 @@ public class TypeOfLicence extends BasePage {
     @Given("I go to update the vehicle type on the licence to {string} {string} {string}")
     public void iGoToUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
         clickByLinkText("Type of licence");
-        UIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
+        world.selfServeUIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
     }
 
     @Then("A LGV only error message should be displayed")
@@ -72,13 +72,13 @@ public class TypeOfLicence extends BasePage {
 
     @When("I confirm the warning message")
     public void iConfirmWarningMessage() {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("I cancel the warning message and click cancel on the type of licence page")
     public void iCancelWarningMessageAndClickCancelOnTheTypeOfLicencePage() {
-        world.UIJourney.clickCancel();
-        world.UIJourney.clickCancel();
+        UniversalActions.clickCancel();
+        UniversalActions.clickCancel();
     }
 
     @When("each section on the application overview page has the correct status for the {string} licence")
@@ -116,7 +116,7 @@ public class TypeOfLicence extends BasePage {
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickSaveAndContinue() {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
     }
@@ -124,7 +124,7 @@ public class TypeOfLicence extends BasePage {
     @And("i choose to have mixed vehicles and click save and continue")
     public void iChooseToHaveMixedVehiclesAndClickSaveAndContinue() {
         click(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
     }
@@ -171,13 +171,13 @@ public class TypeOfLicence extends BasePage {
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreate() {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("i choose to have mixed vehicles and create")
     public void iChooseToHaveMixedVehiclesAndCreate() {
         click(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the caseworker is navigated to the lgv only application overview")
@@ -201,6 +201,6 @@ public class TypeOfLicence extends BasePage {
     @And("i choose to have light goods vehicles only and click create without confirming the declaration")
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreateWithoutConfirmingTheDeclaration() {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

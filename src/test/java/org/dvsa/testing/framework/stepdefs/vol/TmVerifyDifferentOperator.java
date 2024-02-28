@@ -1,18 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import com.amazonaws.services.dynamodbv2.xspec.B;
-import org.apache.commons.codec.DecoderException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.commons.codec.DecoderException;
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,7 +46,7 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("i sign the declaration")
     public void iSignTheDeclaration() {
-        world.UIJourney.signDeclaration();
+        world.selfServeUIJourney.signDeclaration();
     }
 
     @When("i add an operator as a transport manager")
@@ -75,8 +72,8 @@ public class TmVerifyDifferentOperator extends BasePage{
         clickByLinkText("Sign out");
         world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         Browser.navigate().get(world.genericUtils.getTransportManagerLink());
-        world.UIJourney.clickSubmit();
-        world.UIJourney.signDeclaration();
+        UniversalActions.clickSubmit();
+        world.selfServeUIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -92,9 +89,9 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("i add new person as a transport manager and they fill out their details")
@@ -150,7 +147,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForPageLoad();
     }
 
@@ -158,7 +155,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForPageLoad();
     }
 
@@ -170,9 +167,9 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
-        refreshPageWithJavascript();
+        UniversalActions.refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
-        world.UIJourney.changeLicenceForVariation();
+        world.selfServeUIJourney.changeLicenceForVariation();
         world.TMJourney.addNewPersonAsTransportManager("variation");
     }
 

@@ -4,7 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -26,7 +26,7 @@ public class GoodVarUpgrade extends BasePage {
     public void iUpgradeMyLicenceTypeToStandardNational() {
         world.generalVariationJourney.beginUpgradeVariation();
         click(world.typeOfLicenceJourney.standardNational, SelectorType.XPATH);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("correct statuses are shown by the correct seven sections")
@@ -51,9 +51,9 @@ public class GoodVarUpgrade extends BasePage {
     public void iCompleteTheRequiredFiveSections() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Home");
-        world.UIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
         clickByLinkText("Home");
         world.TMJourney.addNewPersonAsTransportManager("variation");
         clickByLinkText("Home");

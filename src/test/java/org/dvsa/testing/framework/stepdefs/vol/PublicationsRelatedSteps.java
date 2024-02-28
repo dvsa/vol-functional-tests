@@ -9,6 +9,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
@@ -23,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -289,7 +290,7 @@ public class PublicationsRelatedSteps extends BasePage {
         waitForTextToBePresent("Publish application");
         clickByLinkText("Publish application");
         waitForTextToBePresent("publish this application");
-        world.UIJourney.clickOk();
+        UniversalActions.clickOk();
         waitForTextToBePresent("Republish application");
     }
 

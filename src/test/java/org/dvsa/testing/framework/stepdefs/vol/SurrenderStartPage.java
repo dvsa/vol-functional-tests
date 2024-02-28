@@ -18,7 +18,7 @@ public class SurrenderStartPage extends BasePage {
     public SurrenderStartPage(World world) {this.world=world;}
 
     @When("i click on apply to surrender licence")
-    public void iClickOnApplyToSurrenderLicence() {
+    public void iClickOnApplyToSurrenderLicence() throws IllegalBrowserException, IOException {
         world.surrenderJourney.navigateToSurrendersStartPage();
     }
 

@@ -6,7 +6,7 @@ import activesupport.dates.Dates;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.InterimPage;
@@ -77,20 +77,20 @@ public class InterimLicence extends BasePage {
 
     @Then("A {string} error appears when i save the interim licence")
     public void AErrorAppearsWhenISaveTheInterimLicence(String errorType) {
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
         assertTrue(isTextPresent(errorMes));
     }
 
     @Then("I should get an error when i save the application")
     public void iShouldGetAnErrorWhenISaveTheApplication() {
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertTrue(isTextPresent(VehicleErrorMessage));
     }
 
     @Then("I should be able to save the application without any errors")
     public void iShouldBeAbleToSaveTheApplicationWithoutAnyErrors() {
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertFalse(isTextPresent(VehicleErrorMessage));
         assertFalse(isTextPresent(HgvVehicleErrorMessage));
         assertFalse(isTextPresent(LgvVehicleErrorMessage));
@@ -98,13 +98,13 @@ public class InterimLicence extends BasePage {
 
     @Then("I should not error when i save the application")
     public void iShouldNotErrorWhenISaveTheApplication() {
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         assertFalse(isTextPresent(valueIsRequiredErrorMessage));
     }
 
     @Then("I should error when i attempt to grant the application")
     public void iShouldErrorWhenIAttemptToGrantTheApplication() {
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim application");
         InterimPage.grant();
@@ -124,7 +124,7 @@ public class InterimLicence extends BasePage {
 
     @And("i create a variation in internal")
     public void iCreateAVariationInInternal() {
-        world.UIJourney.createVariationInInternal(false);
+        world.internalUIJourney.createVariationInInternal(false);
     }
 
     @And("I submit the application with an interim")
@@ -136,7 +136,7 @@ public class InterimLicence extends BasePage {
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");
         click("//*[contains(text(),'Print, sign and return')]/../../input", SelectorType.XPATH);
         click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
-        world.UIJourney.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }
@@ -263,7 +263,7 @@ public class InterimLicence extends BasePage {
         enterText("interimAuthLgvVehicles", SelectorType.ID, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()));
         click("grant", SelectorType.ID);
         waitForTextToBePresent(interimGrantModalHeading);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent(interimGrantConfirmation);
     }
 
@@ -287,6 +287,6 @@ public class InterimLicence extends BasePage {
         click("(//input[@name='declarationsAndUndertakings[declarationConfirmation]'])[2]", SelectorType.XPATH);
         click(interimRadioYes, SelectorType.XPATH);
         waitAndEnterText("applicationInterimReason", SelectorType.ID, "I request an interim");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 }

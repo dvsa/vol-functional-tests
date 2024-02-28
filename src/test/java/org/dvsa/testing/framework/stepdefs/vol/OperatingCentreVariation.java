@@ -6,7 +6,7 @@ import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -46,14 +46,14 @@ public class OperatingCentreVariation extends BasePage {
     public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) throws HttpException {
         world.operatingCentreJourney.submitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
         world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
-        world.UIJourney.caseWorkerCompleteOverview();
+        world.internalUIJourney.caseWorkerCompleteOverview();
         waitForTextToBePresent("The overview page has been saved");
-        world.UIJourney.grantApplicationUnderDelegatedAuthority();
+        world.internalUIJourney.grantApplicationUnderDelegatedAuthority();
     }
 
     @And("complete the financial evidence page")
     public void completeTheFinancialEvidenceAndReviewAndDeclarationShouldDisplayPayAndSubmit() {
-        world.UIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
     }
 
     @And("the review and declaration page should display pay and submit")
@@ -138,7 +138,7 @@ public class OperatingCentreVariation extends BasePage {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove this operating centre?");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);
@@ -148,7 +148,7 @@ public class OperatingCentreVariation extends BasePage {
     public void iCreateALgvAuthorisationIncreaseVariationWithOnInternal(String feeRequired) throws HttpException {
         boolean variationFeeRequired = feeRequired.equals("Fee Required");
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        world.UIJourney.createVariationInInternal(variationFeeRequired);
+        world.internalUIJourney.createVariationInInternal(variationFeeRequired);
     }
 
     @Then("the variation fee is required on internal")
@@ -169,7 +169,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i scan the various operating centre and authorisation pages")
     public void iScanTheVariousOperatingCentreAndAuthorisationPages() throws IllegalBrowserException, IOException {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.selfServeUIJourney.changeLicenceForVariation();
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         waitForTitleToBePresent("Edit operating centre");
@@ -197,7 +197,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("I create and save an lgv authorisation variation on internal with {int} more LGVs")
     public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        world.UIJourney.createVariationInInternal(false);
+        world.internalUIJourney.createVariationInInternal(false);
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
         world.internalNavigation.navigateToAuthorisationPage();
         world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
@@ -223,11 +223,11 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("The variation is submitted")
     public void variationSubmitted() {
-        world.UIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        world.UIJourney.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
@@ -241,7 +241,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i increase total PSV authorisation to {string} vehicles")
     public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
         replaceText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("the increase in PSV authorisation is not allowed")
@@ -251,7 +251,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("the {string} {string} variation is submitted")
     public void theVariationIsSubmitted(String operatorType, String licenceType) {
-        world.UIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
         if (operatorType.equals("public")) {
         clickByLinkText("Vehicle declarations");
             if (licenceType.equals("restricted")){
@@ -264,7 +264,7 @@ public class OperatingCentreVariation extends BasePage {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        world.UIJourney.clickPay();
+        UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 }

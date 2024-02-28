@@ -8,7 +8,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -52,7 +52,7 @@ public class DirectorVariation extends BasePage {
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion (String answer) {
         directorJourney.answerConvictionsAndPenalties(answer);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @And("^an urgent task is created in internal$")
@@ -64,7 +64,7 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         directorJourney.answerFinancialHistory(answer);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @And("^i enter \"([^\"]*)\" to licence history question$")
@@ -119,13 +119,13 @@ public class DirectorVariation extends BasePage {
     @When("I begin adding a director but submit empty fields")
     public void iBeginAddingADirectorButSubmitEmptyFields() {
         clickByXPath(directorJourney.addButton);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
     @When("I submit the empty page")
     public void iSubmitAnEmptyPage() {
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
@@ -160,7 +160,7 @@ public class DirectorVariation extends BasePage {
         incorrectDateValues.put("year", "%^&*");
         enterDateFieldsByPartialId("dob", incorrectDateValues);
 
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 

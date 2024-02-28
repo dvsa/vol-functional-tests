@@ -9,10 +9,7 @@ import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
 import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
 import org.dvsa.testing.framework.Journeys.permits.*;
-import org.dvsa.testing.framework.Utils.Generic.DBUtils;
-import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
-import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.*;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
@@ -52,7 +49,7 @@ public class Initialisation extends BasePage {
         world.selfServeNavigation = new SelfServeNavigation(world);
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);
-        world.UIJourney = new UIJourney(world);
+        world.universalActions = new UniversalActions(world);
         world.DataGenerator = new DataGenerator(world);
         world.forgottenCredsJourney = new ForgottenCredsJourney(world);
         world.businessDetailsJourney = new BusinessDetailsJourney(world);
@@ -92,5 +89,7 @@ public class Initialisation extends BasePage {
         world.presidingTCsStep = new PresidingTCsStep(world);
         world.submissionsJourney = new SubmissionsJourney(world);
         world.accessibilitySteps = new AccessibilitySteps(world);
+        world.selfServeUIJourney = new SelfServeUIJourney(world);
+        world.internalUIJourney = new InternalUIJourney(world);
     }
 }

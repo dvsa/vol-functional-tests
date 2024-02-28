@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -23,7 +24,7 @@ public class UserAccountJourney extends BasePage {
         String teamName = selectRandomValueFromDropDown("team", SelectorType.ID);
         setTeamName(teamName);
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void ChangeUserDetails() {
@@ -39,7 +40,7 @@ public class UserAccountJourney extends BasePage {
         replaceText("addressTown", SelectorType.ID, world.DataGenerator.getOperatorTown());
         replaceText("postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
         selectRandomValueFromDropDown("officeAddress[countryCode]", SelectorType.ID);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForElementToBeClickable("team", SelectorType.ID);
     }
 }

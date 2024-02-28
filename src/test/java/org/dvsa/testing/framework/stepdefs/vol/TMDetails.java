@@ -6,7 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
-import org.dvsa.testing.framework.enums.SelfServeNavBar;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -28,7 +28,7 @@ public class TMDetails extends BasePage {
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, world.registerUser.getForeName() + " " + world.registerUser.getFamilyName());
-        world.UIJourney.clickContinue();
+        UniversalActions.clickContinue();
     }
 
     @Then("the optional wording should not be displayed on the page")
@@ -79,7 +79,7 @@ public class TMDetails extends BasePage {
 
     @When("the users attempts to save without entering any data")
     public void theUsersAttemptsToSaveWithoutEnteringAnyData() {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("a validation message should be displayed")

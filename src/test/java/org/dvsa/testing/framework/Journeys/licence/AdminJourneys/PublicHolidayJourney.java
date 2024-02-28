@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -19,8 +20,8 @@ public class PublicHolidayJourney extends BasePage {
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +2);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
-        world.UIJourney.clickSubmit();
-        world.UIJourney.closeAlert();
+        UniversalActions.clickSubmit();
+        UniversalActions.closeAlert();
     }
 
     public void editPublicHoliday() {
@@ -28,13 +29,13 @@ public class PublicHolidayJourney extends BasePage {
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         HashMap<String, String> currentDate = date.getDateHashMap(+0, +7, +2);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
-        world.UIJourney.clickSubmit();
-        world.UIJourney.closeAlert();
+        UniversalActions.clickSubmit();
+        UniversalActions.closeAlert();
     }
 
     public void deletePublicHoliday() {
         waitAndClick("//*[contains(text(),'Remove')]",SelectorType.XPATH);
-        world.UIJourney.clickConfirm();
+        UniversalActions.clickConfirm();
         waitForElementToBeClickable("//p[text()='The public holiday is removed']", SelectorType.XPATH);
     }
 }

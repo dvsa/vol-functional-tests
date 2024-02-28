@@ -7,7 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -30,7 +30,7 @@ public class Trailers extends BasePage {
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Given("on internal I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
@@ -39,21 +39,21 @@ public class Trailers extends BasePage {
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("the trailer {string} and type {string} is successfully added to the trailer table")
     public void trailerAddedCheck(String trailerNumber, String isLongerSemiTrailer) {
         assertTrue(isElementPresent("//tbody/tr/td/input[@value='" + trailerNumber + "']", SelectorType.XPATH));
         assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Longer semi-trailer']",SelectorType.XPATH), isLongerSemiTrailer);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @When("trailer number {string} is changed to longer semi trailer {string}")
     public void changeTrailerType(String trailerNumber, String isLongerSemiTrailer) {
         clickByXPath("//tbody/tr/td/input[@value='" + trailerNumber + "']");
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("on self serve I add a trailer with no trailer number")
@@ -61,7 +61,7 @@ public class Trailers extends BasePage {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("on internal I add a trailer with no trailer number")
@@ -69,7 +69,7 @@ public class Trailers extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("on self serve I add a trailer with the longer semi trailer option unanswered")
@@ -77,7 +77,7 @@ public class Trailers extends BasePage {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @When("on internal I add a trailer with the longer semi trailer option unanswered")
@@ -85,7 +85,7 @@ public class Trailers extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("the trailer number mandatory error message appears")

@@ -3,27 +3,21 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
-import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import apiCalls.enums.UserType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
-import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.Journeys.licence.APIJourney.tmCount;
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,7 +81,7 @@ public class RemoveTM extends BasePage {
     @And("user attempts to remove the last TM without selecting an option")
     public void userAttemptsToRemoveTheLastTMWithoutSelectingAnOption() {
         waitForTextToBePresent(alertHeaderValue);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @Then("an error message should be displayed")
@@ -128,7 +122,7 @@ public class RemoveTM extends BasePage {
     public void theUserConfirmsALetterShouldBeIssued() {
         waitForTextToBePresent(alertHeaderValue);
         findSelectAllRadioButtonsByValue("Y");
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     @And("the last TM letter job is run")

@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
@@ -71,7 +72,7 @@ public class UnlicensedOperatorSteps extends BasePage {
         waitForTextToBePresent("Add vehicle");
         waitAndEnterText("vrm", SelectorType.ID, vrm);
         waitAndEnterText("plated_weight", SelectorType.ID, platedWeight);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         assertTrue(isTextPresent("Created record"));
     }
 

@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -12,7 +13,7 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InternalApplication extends BasePage{
@@ -30,11 +31,11 @@ public class InternalApplication extends BasePage{
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("has been submitted");
-        world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
-        world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
-        world.UIJourney.caseWorkerCompleteOverview();
+        world.internalUIJourney.caseWorkerCompleteConditionsAndUndertakings();
+        world.internalUIJourney.caseWorkerCompleteReviewAndDeclarations();
+        world.internalUIJourney.caseWorkerCompleteOverview();
     }
 
     @And("grants the application")
@@ -55,18 +56,18 @@ public class InternalApplication extends BasePage{
         if (System.currentTimeMillis() > kickoutTime) {
             throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
         }
-        world.UIJourney.grantApplicationUnderDelegatedAuthority();
+        world.internalUIJourney.grantApplicationUnderDelegatedAuthority();
     }
 
     @Then("the licence is granted in Internal")
     public void theLicenceIsGrantedInInternal() {
         waitForTextToBePresent("Overview");
-        world.UIJourney.checkLicenceStatus("Granted");
+        world.internalUIJourney.checkLicenceStatus("Granted");
     }
 
     @When("i generate a letter")
     public void iGenerateALetter() {
-        world.UIJourney.generateLetter();
+        world.internalUIJourney.generateLetter();
     }
 
     @Then("The pop up should contain letter details")
@@ -81,13 +82,13 @@ public class InternalApplication extends BasePage{
 
     @When("i generate a letter of Subcategory In Office Revocation")
     public void iGenerateALetterOfSubcategoryInOfficeRevocation() {
-        world.UIJourney.generatePTRLetter();
+        world.internalUIJourney.generatePTRLetter();
     }
 
     @Then("The letter is sent by {string}")
     public void theLetterIsSentBy(String sendOption) {
         String objDef = String.format("form-actions[%s]", sendOption);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         click(objDef,SelectorType.ID);
         if (sendOption.equals("email")) {
@@ -104,19 +105,19 @@ public class InternalApplication extends BasePage{
     public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
         assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
         click("form-actions[confirm-add]", SelectorType.ID);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Operating centres and authorisation");
         assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
     }
 
     @When("a caseworker adds a new operating centre out of the traffic area")
     public void aCaseworkerAddsANewOperatingCentreOutOfTheTrafficArea() throws HttpException {
-        world.UIJourney.addNewOperatingCentre();
+        world.internalUIJourney.addNewOperatingCentre();
     }
 
     @And("i save the letter")
     public void iSaveTheLetter() {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         click("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
@@ -124,7 +125,7 @@ public class InternalApplication extends BasePage{
 
     @And("i save the letter clicking the Propose To Revoke button")
     public void iSaveTheLetterClickingTheProposeToRevokeButton() {
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
         String proposeToRevoke = "//button[text()='Propose to revoke']";
         click(proposeToRevoke, SelectorType.XPATH);
@@ -138,7 +139,7 @@ public class InternalApplication extends BasePage{
 
     @And("I delete generated letter above from the table")
     public void iDeleteGeneratedLetterAboveFromTheTable() {
-        world.UIJourney.deleteLicenceDocument();
+        world.internalUIJourney.deleteLicenceDocument();
     }
 
     @Then("the document should be deleted")
@@ -198,7 +199,7 @@ public class InternalApplication extends BasePage{
 
     @And("I click cancel")
     public void clicksCancel() {
-        world.UIJourney.clickCancel();
+        UniversalActions.clickCancel();
     }
 
     @And("the caseworker is still on the operators page")

@@ -48,8 +48,8 @@ public class GoodVarIncreaseVehicle extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
-        world.UIJourney.completeFinancialEvidencePage();
-        world.UIJourney.signDeclarationForVariation();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.signDeclarationForVariation();
     }
 
     @Then("the {string} fee should be paid")
@@ -65,7 +65,7 @@ public class GoodVarIncreaseVehicle extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
-        world.UIJourney.completeFinancialEvidencePage();
-        world.UIJourney.signDeclarationForVariation();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.signDeclarationForVariation();
     }
 }

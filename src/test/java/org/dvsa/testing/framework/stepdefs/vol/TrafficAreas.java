@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.And;
 
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -54,7 +54,7 @@ public class TrafficAreas extends BasePage {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.ADDRESSES);
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNIPostcode);
         clearEstablishmentAddress();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("an error explaining that a NI address has been assigned to a GB application is displayed")
@@ -73,7 +73,7 @@ public class TrafficAreas extends BasePage {
     public void iEnterAndSaveANIEstablishmentAddress() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.ADDRESSES);
         enterAndSelectEstablishmentAddressWithPostcodeSearch(knownRealNIPostcode);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @When("i apply for a new {string} lgv only application and enter a postcode in the North West of England")
@@ -84,16 +84,16 @@ public class TrafficAreas extends BasePage {
         clickByXPath("//input[@value='ltyp_si']");
         clickByXPath("//input[@value='app_veh_type_lgv']");
         click("lgv-declaration-confirmation", SelectorType.ID);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Apply for a new licence");
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         clickByLinkText("Business type");
-        UIJourney.clickSaveAndContinue();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
         enterPhoneAndEmail();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("the traffic area is set as North West of England")
@@ -130,7 +130,7 @@ public class TrafficAreas extends BasePage {
     public void aLicenceAlreadyExistsInThisTrafficAreaErrorAppearsWhenICompleteThePage() {
         enterText("totAuthLgvVehicles", SelectorType.ID, "5");
         enterText("totCommunityLicences", SelectorType.ID, "5");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForElementToBePresent("//p[@role='alert']");
         assertTrue(isTextPresent("You already have a Goods application or licence within the North West of England traffic area"));
     }
@@ -139,7 +139,7 @@ public class TrafficAreas extends BasePage {
     public void aLicenceAlreadyExistsInThisTrafficAreaErrorDoesNotAppearWhenICompleteThePage() {
         enterText("totAuthLgvVehicles", SelectorType.ID, "5");
         enterText("totCommunityLicences", SelectorType.ID, "5");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         assertFalse(isElementPresent("//p[@role='alert']", SelectorType.XPATH));
         assertFalse(isTextPresent("You already have a Goods application or licence within the North West of England traffic area"));
     }
@@ -149,7 +149,7 @@ public class TrafficAreas extends BasePage {
         completeApplicationUntilAddressesPage();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
         enterPhoneAndEmail();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @When("i complete the application to and enter and save a north west correspondence address and an establishment address")
@@ -158,7 +158,7 @@ public class TrafficAreas extends BasePage {
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
         enterPhoneAndEmail();
         enterAndSelectEstablishmentAddressWithPostcodeSearch(knownRealNorthWestPostcode);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @When("i complete the application to and enter and save a north west correspondence address and a non-uk establishment address")
@@ -172,7 +172,7 @@ public class TrafficAreas extends BasePage {
         enterText(establishmentAddressLine1, SelectorType.XPATH, "test");
         enterText(establishmentAddressTown, SelectorType.XPATH, "test");
         enterText(establishmentAddressPostcode, SelectorType.XPATH, "FG67FG");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
 
@@ -185,7 +185,7 @@ public class TrafficAreas extends BasePage {
         enterText(correspondenceAddressTown, SelectorType.XPATH, "test");
         enterText(correspondenceAddressPostcode, SelectorType.XPATH, "FG67FG");
         enterPhoneAndEmail();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @And("I add an operating centre with a northern ireland postcode")
@@ -197,11 +197,11 @@ public class TrafficAreas extends BasePage {
 
     private void completeApplicationUntilAddressesPage() {
         clickByLinkText("Business type");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         enterText("//*[@id='data[companyNumber][company_number]']", SelectorType.XPATH, "12321212");
         click("//*[@id='data[companyNumber][submit_lookup_company]']", SelectorType.XPATH);
         enterText("//*[@id='natureOfBusiness']", SelectorType.XPATH, "test nature of business");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     private void enterAndSelectCorrespondenceAddressWithPostcodeSearch(String postcode) {

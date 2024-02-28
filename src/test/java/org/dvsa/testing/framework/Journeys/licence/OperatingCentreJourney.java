@@ -1,13 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.OperatorType;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -53,7 +52,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private void completeApplicationAfterUpdatingAuthorities(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        world.UIJourney.completeFinancialEvidencePage();
+        world.selfServeUIJourney.completeFinancialEvidencePage();
         if (world.licenceCreation.isPSVLicence()) {
             world.psvJourney.completeVehicleDeclarationsPage();
         }
@@ -95,7 +94,7 @@ public class OperatingCentreJourney extends BasePage {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
         }
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
@@ -112,13 +111,13 @@ public class OperatingCentreJourney extends BasePage {
         } else {
             replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         }
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
         waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
@@ -126,14 +125,14 @@ public class OperatingCentreJourney extends BasePage {
         waitAndClick(addOperatingCentre, SelectorType.XPATH);
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText(enterAddressManually);
-        world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
+        world.selfServeUIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
             enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
             waitAndClick(uploadAdvertLater, SelectorType.XPATH);
         }
         clickById(confirmOffStreetParkingCheckbox);
-        world.UIJourney.clickSubmit();
+        UniversalActions.clickSubmit();
     }
 
     private boolean hasTotalHGVAuthorityIncreased(String newHGVTotalAuthority) {
