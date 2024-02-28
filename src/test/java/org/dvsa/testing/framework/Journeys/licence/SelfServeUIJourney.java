@@ -43,7 +43,6 @@ public class SelfServeUIJourney extends BasePage {
         }
         click("termsAgreed", SelectorType.ID);
         UniversalActions.clickSubmit();
-
     }
 
 
