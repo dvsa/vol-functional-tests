@@ -36,3 +36,4 @@ Feature: Viewing messages tab as an external user
     * i have logged in to self serve
     Then i view the new message that the caseworker has sent
     And i have opened a new message, which will appear as open
+
