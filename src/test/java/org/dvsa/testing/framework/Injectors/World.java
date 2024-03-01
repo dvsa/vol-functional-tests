@@ -95,4 +95,6 @@ public class World {
     public SelfServeUIJourney selfServeUIJourney;
 
     public InternalUIJourney internalUIJourney;
+
+    public MessagingJourney messagingJourney;
 }
