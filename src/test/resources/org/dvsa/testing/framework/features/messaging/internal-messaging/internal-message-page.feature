@@ -2,6 +2,8 @@
 
 Feature: Viewing messages tab as an internal user
 
+
+  @int-message-heading
   Scenario Outline: Caseworker submits application
     Given I have a "<operator>" "<licence-type>" application
     When the caseworker completes and submits the application
@@ -11,18 +13,8 @@ Feature: Viewing messages tab as an internal user
       | operator | licence-type      |
       | public   | restricted        |
       | goods    | standard_national |
+      | goods    | restricted        |
 
-# Test can potentially be reinstated based on the implementation of VOL-4692
-# Scenario: Viewing from a Not Yet Submitted application
-#    Given i have a "goods" "restricted" partial application
-#    And i create an admin and url search for my application
-#   Then the messaging heading should not be displayed
-
-  @int-message-heading
-  Scenario: Viewing from an Under Consideration application
-    Given I have a "goods" "restricted" application
-    And the caseworker completes and submits the application
-    Then the messaging heading should be displayed
 
   @int-message-page-display
   Scenario: Check display of messages tab from a valid licence
@@ -46,6 +38,11 @@ Feature: Viewing messages tab as an internal user
     * i create a new conversation to operator and archive the conversation
 
 
+  # Test can potentially be reinstated based on the implementation of VOL-4692
+# Scenario: Viewing from a Not Yet Submitted application
+#    Given i have a "goods" "restricted" partial application
+#    And i create an admin and url search for my application
+#   Then the messaging heading should not be displayed
 
 #  @int-message-task-check
 #    Scenario: Check if a task has been created in internal for the new message
