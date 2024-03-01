@@ -92,6 +92,8 @@ public class MessagingJourney extends BasePage {
 
     public static void notificationCount(){
         assertEquals(getText("//*[contains(@class,'notification-count__number')]", SelectorType.XPATH), "1");
+        clickByLinkText("Messages");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
     }
 
 }
