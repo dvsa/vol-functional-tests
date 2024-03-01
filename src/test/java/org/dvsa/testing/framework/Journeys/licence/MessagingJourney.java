@@ -90,5 +90,9 @@ public class MessagingJourney extends BasePage {
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--blue')]", SelectorType.XPATH), "OPEN");
     }
 
+    public static void notificationCount(){
+        assertEquals(getText("//*[contains(@class,'notification-count__number')]", SelectorType.XPATH), "1");
+    }
+
 }
 

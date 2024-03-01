@@ -28,4 +28,10 @@ public class MessagingSelfServe extends BasePage {
     public void iHaveOpenedANewMessageWhichWillAppearAsOpen() {
         MessagingJourney.openMessageStatusCheck();
     }
+
+    @Then("i validate the new message count appears on the messaging tab")
+    public void iValidateTheNewMessageCountAppearsOnTheMessagingTab() {
+        MessagingJourney.notificationCount();
+
+    }
 }

@@ -37,3 +37,13 @@ Feature: Viewing messages tab as an external user
     Then i view the new message that the caseworker has sent
     And i have opened a new message, which will appear as open
 
+  @ss-message-count-check
+  Scenario: Check notification count on external application
+    Given i have a valid "goods" "restricted" licence
+    And i create an admin and url search for my licence
+    * i click the messages heading
+    * i create a new conversation to operator
+    * i have logged in to self serve
+    Then i validate the new message count appears on the messaging tab
+
+
