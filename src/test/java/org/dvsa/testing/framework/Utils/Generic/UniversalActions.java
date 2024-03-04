@@ -47,7 +47,7 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSaveAndReturn() {
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
     public static void clickCancel() {
