@@ -202,13 +202,13 @@ public class InternalUIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
-        UniversalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteOverview() {

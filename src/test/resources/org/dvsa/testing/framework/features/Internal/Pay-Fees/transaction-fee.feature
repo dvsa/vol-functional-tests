@@ -1,4 +1,3 @@
-@Admin-Payment-Processing
 @int_regression
 @smoketest
 @FullRegression
