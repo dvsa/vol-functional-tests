@@ -158,7 +158,7 @@ public class TypeOfLicence extends BasePage {
         world.internalNavigation.loginIntoInternal();
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
-        waitAndClick("New application", SelectorType.LINKTEXT);
+        clickByLinkText("New application");
         waitForTextToBePresent("Application received");
         click(world.typeOfLicenceJourney.goodsLicence, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.standardInternational, SelectorType.XPATH);
