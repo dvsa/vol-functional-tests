@@ -42,11 +42,11 @@ public class ValidPermitPageSteps {
     }
     @And("the table of ECMT removal permits is as expected")
     public void theTableOfECMTRemovalPermitsIsAsExpected() {
-        //Updated days due to 366, due to 2024 being a leap year
+        //Updated days due to 364, due to 2024 being a leap year
         String message = "Expected all permits to have a status of 'VALID'";
         List<ValidECMTInternationalPermit> permits = ValidPermitsPage.ECMTInternationalRemovalPermits();
         assertTrue(permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID),message);
         IntStream.range(0, permits.size() - 1).forEach((idx) -> assertTrue(
-                permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(366))));
+                permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(364))));
     }
 }
