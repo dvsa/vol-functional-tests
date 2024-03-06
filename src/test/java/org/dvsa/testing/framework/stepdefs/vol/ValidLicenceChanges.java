@@ -263,40 +263,40 @@ public class ValidLicenceChanges extends BasePage {
         assertFalse(isElementPresent("consultantAddress[searchPostcode][postcode]", SelectorType.NAME));
     }
 
-    @Then("directors names should be displayed as links")
-    public void directorsNamesShouldBeDisplayedAsLinks() {
+    @Then("directors names should not be displayed as links")
+    public void directorsNamesShouldNotBeDisplayedAsLinks() {
         waitAndClick("People", SelectorType.LINKTEXT);
         waitForTextToBePresent("Responsible people");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
         }
     }
 
-    @Then("operating centre names should be displayed as links")
-    public void operatingCentreNamesShouldBeDisplayedAsLinks() {
+    @Then("operating centre names should not be displayed as links")
+    public void operatingCentreNamesShouldNotBeDisplayedAsLinks() {
         waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
         waitForTextToBePresent("Operating centres");
         List<WebElement> operatingCentreName = findElements("//*[@data-heading='Address']", SelectorType.XPATH);
         for (WebElement element : operatingCentreName) {
-            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
         }
         assertFalse(isElementPresent("data[totAuthHgvVehiclesFieldset][totAuthHgvVehicles]", SelectorType.NAME));
         assertFalse(isElementPresent("data[totAuthTrailersFieldset][totAuthTrailers]", SelectorType.NAME));
     }
 
-    @Then("safety inspector names should be displayed as links")
-    public void safetyInspectorNamesShouldBeDisplayedAsLinks() {
+    @Then("safety inspector names should not be displayed as links")
+    public void safetyInspectorNamesShouldNotBeDisplayedAsLinks() {
         waitAndClick("Safety and compliance", SelectorType.LINKTEXT);
         waitForTextToBePresent("Safety and compliance");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
         }
     }
 
-    @Then("permit reference number should be displayed as links")
-    public void permitReferenceNumberShouldBeDisplayedAsLinks() {
+    @Then("permit reference number should not be displayed as links")
+    public void permitReferenceNumberShouldNotBeDisplayedAsLinks() {
         waitAndClick("IRHP Permits", SelectorType.LINKTEXT);
         waitForTextToBePresent("Permit Application");
         List<WebElement> names = findElements("//*[@data-heading='Reference number']", SelectorType.XPATH);

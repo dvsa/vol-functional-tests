@@ -17,7 +17,7 @@ Feature: Users should have functionality based on their system role
       | readOnlyUser        |
 
   @readonly-addresses
-  Scenario Outline: Limited Read only and Read Only users should on be able to view Address details
+  Scenario Outline: Limited Read only and Read Only users should not be able to view Address details
     Given i have logged in to internal as "<User>"
     When i search for and click on my licence "OB1134621"
     Then i cannot make changes to the addresses page
@@ -27,10 +27,10 @@ Feature: Users should have functionality based on their system role
       | readOnlyUser        |
 
   @readonly-directors
-  Scenario Outline: Limited Read only and Read Only directors name should be displayed as links
+  Scenario Outline: Limited Read only and Read Only directors name should not be displayed as links
     Given i have logged in to internal as "<User>"
     When i search for and click on my licence "OB1134621"
-    Then directors names should be displayed as links
+    Then directors names should not be displayed as links
     Examples:
       | User                |
       | limitedReadOnlyUser |
@@ -40,27 +40,27 @@ Feature: Users should have functionality based on their system role
   Scenario Outline: Limited Read only and Read Only should not view input fields on operating centres
     Given i have logged in to internal as "<User>"
     When i search for and click on my licence "OB1134621"
-    Then operating centre names should be displayed as links
+    Then operating centre names should not be displayed as links
     Examples:
       | User                |
       | limitedReadOnlyUser |
       | readOnlyUser        |
 
   @readonly-safety
-  Scenario Outline: Limited Read only and Read Only should be able to view safety inspector names as links
+  Scenario Outline: Limited Read only and Read Only should not be able to view safety inspector names as links
     Given i have logged in to internal as "<User>"
     When i search for and click on my licence "OB1134621"
-    Then safety inspector names should be displayed as links
+    Then safety inspector names should not be displayed as links
     Examples:
       | User                |
       | limitedReadOnlyUser |
       | readOnlyUser        |
 
   @readonly-irhp-permits
-  Scenario Outline: Limited Read only and Read Only should be able to view permit number as links
+  Scenario Outline: Limited Read only and Read Only should not be able to view permit number as links
     Given i have logged in to internal as "<User>"
     When i search for and click on my licence "OB2073506"
-    Then permit reference number should be displayed as links
+    Then permit reference number should not be displayed as links
     Examples:
       | User                |
       | limitedReadOnlyUser |
@@ -92,7 +92,7 @@ Feature: Users should have functionality based on their system role
     Given i have logged in to internal as "<User>"
     When i url search for a case
     Then i should not be able to add case details
-#    And i should not be able to create snapshots
+    And i should not be able to create snapshots
     And i should not be able to edit case details
     Examples:
       | User         |
