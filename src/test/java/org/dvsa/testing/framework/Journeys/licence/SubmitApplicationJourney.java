@@ -120,8 +120,6 @@ public class SubmitApplicationJourney extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-
-        clickContinue();
         axeScanner.scan(true);
         clickContinue();
 
