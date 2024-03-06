@@ -1,5 +1,4 @@
 @readOnly
-@limitedReadOnly
 Feature: Users should have functionality based on their system role
 
   Background:
