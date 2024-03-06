@@ -26,13 +26,8 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
-        Collection<String> tags = scenario.getSourceTagNames();
-        for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
-                if (isLinkPresent("Sign out", 2)) {
-                    waitAndClick("Sign out", SelectorType.LINKTEXT);
-                }
-            }
+        if (isLinkPresent("Sign out", 5)) {
+            waitAndClick("Sign out", SelectorType.LINKTEXT);
         }
     }
 
