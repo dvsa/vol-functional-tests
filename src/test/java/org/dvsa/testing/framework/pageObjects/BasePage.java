@@ -390,13 +390,14 @@ public abstract class BasePage extends DriverUtils {
         boolean clickable = true;
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                    .pollingEvery(ofSeconds(POLLING_SECONDS))
+                    .withTimeout(ofSeconds(3))
+                    .pollingEvery(ofSeconds(1))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class);
 
-            wait.until(WebDriver ->
-                    ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
+            wait.until(driver ->
+                    wait.until(ExpectedConditions.elementToBeClickable(
+                            by(selector, selectorType)))).click();
         } catch (Exception ex) {
             clickable = false;
         }
