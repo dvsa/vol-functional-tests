@@ -102,4 +102,14 @@ public class InternalSearch extends BasePage {
         assertNotNull(getText("operator-details[name]", SelectorType.ID));
         assertNotNull(getText("registeredAddress[addressLine1]", SelectorType.ID));
     }
+
+    @When("i url search for a transport manager")
+    public void iUrlSearchForATransportManager() {
+        world.internalNavigation.getTransportManagerDetails("14298");
+    }
+
+    @When("i url search for a case")
+    public void iUrlSearchForACase() {
+        world.internalNavigation.getCase("407105");
+    }
 }
