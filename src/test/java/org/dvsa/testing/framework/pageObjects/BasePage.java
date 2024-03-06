@@ -180,7 +180,7 @@ public abstract class BasePage extends DriverUtils {
         return selectedValue;
     }
 
-    protected static boolean isLinkPresent(String locator, int duration) {
+    public static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(duration))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
@@ -261,25 +261,25 @@ public abstract class BasePage extends DriverUtils {
 
     protected static boolean isElementPresent(@NotNull String selector, SelectorType selectorType) {
         boolean isElementPresent = true;
-
         try {
             findElement(selector, selectorType);
         } catch (NoSuchElementException e) {
             isElementPresent = false;
         }
-
         return isElementPresent;
+    }
+
+    protected static boolean isElementSelected(@NotNull String selector, SelectorType selectorType) {
+        return findElement(selector, selectorType).isSelected();
     }
 
     protected static boolean isElementVisible(@NotNull String selector, long duration) {
         boolean visible = true;
-
         try {
             untilVisible(selector, SelectorType.XPATH, duration, TimeUnit.SECONDS);
         } catch (Exception ex) {
             visible = false;
         }
-
         return visible;
     }
 
@@ -387,7 +387,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static boolean isElementClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
-        boolean visible = true;
+        boolean clickable = true;
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
                     .withTimeout(ofSeconds(TIME_OUT_SECONDS))
@@ -398,10 +398,9 @@ public abstract class BasePage extends DriverUtils {
             wait.until(WebDriver ->
                     ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
         } catch (Exception ex) {
-            visible = false;
+            clickable = false;
         }
-
-        return visible;
+        return clickable;
     }
 
     public static void waitForElementToBeClickable(@NotNull String selector, @NotNull SelectorType selectorType) {

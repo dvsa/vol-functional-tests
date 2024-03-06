@@ -45,7 +45,7 @@ public class GrantApplication extends BasePage {
             overrideOppositionAndDates();
         }else{
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
-            world.internalNavigation.loginIntoInternal();
+            world.internalNavigation.loginIntoInternal("intSystemAdmin");
             world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Licence, licenceNumber[0].trim(), licenceNumber[0].trim());
             overrideOppositionAndDates();
         }

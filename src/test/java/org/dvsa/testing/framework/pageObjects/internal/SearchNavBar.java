@@ -10,6 +10,7 @@ public class SearchNavBar extends NavigationBar {
         selectValueFromDropDown("#search-select", SelectorType.CSS, searchType.toString());
         String SEARCH = "//input[@name='search']";
         String SEARCH_BUTTON = "//*[@name='submit']";
+        findElement(SEARCH,SelectorType.XPATH).clear();
         if(findElement(SEARCH,SelectorType.XPATH).getAttribute("value").isEmpty()) {
            enterText(SEARCH, SelectorType.XPATH, search);
        }

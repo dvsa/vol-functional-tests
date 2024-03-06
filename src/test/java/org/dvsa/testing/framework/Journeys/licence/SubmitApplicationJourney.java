@@ -62,7 +62,7 @@ public class SubmitApplicationJourney extends BasePage {
                         if (isTextPresent("Awaiting grant fee")) {
                             apps.click();
                             String[] licenceNumber = getText("//*[@class='page-header__subtitle page-header__h3']", SelectorType.XPATH).split("/");
-                            world.internalNavigation.loginIntoInternal();
+                            world.internalNavigation.loginIntoInternal("intSystemAdmin");
                             world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0].trim(), licenceNumber[0].trim());
                             withDrawApplication();
                             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
@@ -108,11 +108,8 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
-
-        UniversalActions.clickSaveAndContinue();
         axeScanner.scan(true);
-
-
+        UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();

@@ -4,6 +4,7 @@
 @printAndSign
 
 Feature: resetting password with valid/invalid user
+
 Background:
   Given I create a new external user
 

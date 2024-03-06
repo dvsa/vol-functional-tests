@@ -11,7 +11,7 @@ Feature: Admin paying fees
     Given i have an internal admin user
 
   Scenario: Process GB payment by cash and card
-    And i have logged in to internal
+    And i have logged in to internal as "admin"
     When i am on the payment processing page
     And i add a new "SCOT Bus Fine" fee
     And when i pay for the fee by "cash"

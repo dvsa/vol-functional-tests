@@ -18,13 +18,14 @@ public class InternalSearch extends BasePage {
         this.world = world;
     }
     @When("i search for and click on my licence")
-    public void iSearchForAndClickOnMyLicence() throws HttpException {
+    @When("i search for and click on my licence {string}")
+    public void iSearchForAndClickOnMyLicence(String licence) throws HttpException {
         if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
-            world.internalSearchJourney.searchAndViewLicence();
+            world.internalSearchJourney.searchAndViewLicence(licence);
         } else {
             world.APIJourney.createAdminUser();
             world.internalNavigation.logInAsAdmin();
-            world.internalSearchJourney.searchAndViewLicence();
+            world.internalSearchJourney.searchAndViewLicence(licence);
         }
     }
     @When("i search for and click on my application")
