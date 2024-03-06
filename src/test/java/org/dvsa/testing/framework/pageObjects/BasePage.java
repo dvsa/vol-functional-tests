@@ -390,7 +390,7 @@ public abstract class BasePage extends DriverUtils {
         boolean clickable = true;
         try {
             Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                    .withTimeout(ofSeconds(3))
+                    .withTimeout(ofSeconds(5))
                     .pollingEvery(ofSeconds(1))
                     .ignoring(NoSuchElementException.class)
                     .ignoring(StaleElementReferenceException.class);

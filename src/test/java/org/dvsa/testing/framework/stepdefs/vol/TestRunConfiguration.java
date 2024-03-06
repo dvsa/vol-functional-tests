@@ -9,8 +9,7 @@ import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.dvsa.testing.framework.pageObjects.BasePage.isLinkPresent;
-import static org.dvsa.testing.framework.pageObjects.BasePage.waitAndClick;
+import static org.dvsa.testing.framework.pageObjects.BasePage.*;
 
 public class TestRunConfiguration {
     @Before
@@ -24,7 +23,7 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
-        if(Browser.isBrowserOpen() && (isLinkPresent("Sign out", 2))){
+        if(isLinkPresent("Sign out", 2)){
             waitAndClick("Sign out", SelectorType.LINKTEXT);
         }
     }
