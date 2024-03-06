@@ -1,3 +1,4 @@
+@int_regression
 @readOnly
 Feature: Users should have functionality based on their system role
 

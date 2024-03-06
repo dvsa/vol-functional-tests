@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.jetbrains.annotations.Nullable;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -19,7 +20,7 @@ public class InternalSearch extends BasePage {
     }
     @When("i search for and click on my licence")
     @When("i search for and click on my licence {string}")
-    public void iSearchForAndClickOnMyLicence(String licence) throws HttpException {
+    public void iSearchForAndClickOnMyLicence(@Nullable String licence) throws HttpException {
         if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
             world.internalSearchJourney.searchAndViewLicence(licence);
         } else {

@@ -98,7 +98,7 @@ public class InternalApplication extends BasePage{
         }
         String generatedLetterType = "GV - Blank letter to operator";
         waitForTextToBePresent("Docs & attachments");
-        assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[1]",SelectorType.XPATH));
+        assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[2]",SelectorType.XPATH));
     }
 
     @Then("the postcode warning message should be displayed on internal")
