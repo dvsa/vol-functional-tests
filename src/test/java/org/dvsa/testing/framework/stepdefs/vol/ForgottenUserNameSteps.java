@@ -29,10 +29,13 @@ public class ForgottenUserNameSteps extends BasePage {
         waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.createApplication.getTransportManagerEmailAddress());
         UniversalActions.clickSubmit();
         world.selfServeNavigation.navigateToLoginPage();
+    }
+
+
+    @Then("the username is now displayed on the sign in page")
+    public void theUsernameIsNowDisplayedOnTheSignInPage() {
         String userName = world.configuration.getForgottenUsername();
         waitAndEnterText("auth.login.username", SelectorType.ID, userName);
         assert(isTextPresent(userName));
     }
-
-
 }
