@@ -96,5 +96,12 @@ public class MessagingJourney extends BasePage {
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
     }
 
+    public static void backToConversation(){
+        click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
+        click("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 ')]", SelectorType.XPATH);
+        click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
+    }
+
+
 }
 

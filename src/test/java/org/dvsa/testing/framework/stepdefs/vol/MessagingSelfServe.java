@@ -34,4 +34,10 @@ public class MessagingSelfServe extends BasePage {
         MessagingJourney.notificationCount();
 
     }
+
+    @Then("i click on back button to redirect to conversation page")
+    public void iClickOnBackButtonToRedirectToConversationPage() {
+        MessagingJourney.backToConversation();
+    }
+
 }

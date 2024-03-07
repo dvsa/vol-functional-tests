@@ -46,4 +46,13 @@ Feature: Viewing messages tab as an external user
     * i have logged in to self serve
     Then i validate the new message count appears on the messaging tab
 
+    @ss-message-back-to-conversation
+    Scenario: Check back button on messaging page
+      Given I have a "goods" "restricted" application
+      And the caseworker completes and submits the application
+      * i have logged in to self serve
+      * i click the messages heading
+      * i click on start a new conversation link
+      Then i click on back button to redirect to conversation page
+
 
