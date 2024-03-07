@@ -28,8 +28,9 @@ public class TestRunConfiguration {
         ScreenShotAttachment.attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
         for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
-                if (isLinkPresent("Sign out", 3)) {
+            if (Browser.isBrowserOpen() && tag.contains("readOnly")
+            || tag.contains("grant_under_consideration") || tag.contains("transactionFees")) {
+                if (isLinkPresent("Sign out", 5)) {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }
