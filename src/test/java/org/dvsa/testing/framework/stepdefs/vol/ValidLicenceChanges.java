@@ -386,8 +386,8 @@ public class ValidLicenceChanges extends BasePage {
         waitAndClick("6648", SelectorType.LINKTEXT);
         waitForTextToBePresent("Licensing (G) Submission");
         assertFalse(isElementPresent("//*[contains(text(),'Reopen')]", SelectorType.XPATH));
-        assertFalse(isElementPresent("//*[contains(text(),'Return')]", SelectorType.XPATH));
-        assertFalse(isElementPresent("//*[contains(text(),'Print submission')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//*[contains(text(),'Return')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//*[contains(text(),'Print submission')]", SelectorType.XPATH));
         assertFalse(isElementPresent("//*[contains(text(),'Create snapshot')]", SelectorType.XPATH));
     }
 
