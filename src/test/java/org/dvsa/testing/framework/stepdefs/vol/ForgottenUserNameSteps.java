@@ -36,6 +36,7 @@ public class ForgottenUserNameSteps extends BasePage {
     public void theUsernameIsNowDisplayedOnTheSignInPage() {
         String userName = world.configuration.getForgottenUsername();
         waitAndEnterText("auth.login.username", SelectorType.ID, userName);
+        waitForPageLoad();
         assert(isTextPresent(userName));
     }
 }
