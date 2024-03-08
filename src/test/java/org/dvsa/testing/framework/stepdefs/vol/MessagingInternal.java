@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -51,7 +50,7 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("the internal user disables messaging")
-    public void theInternalUserDisablesMessaging() throws HttpException {
+    public void theInternalUserDisablesMessaging() {
         MessagingJourney.disableMessaging();
     }
 }

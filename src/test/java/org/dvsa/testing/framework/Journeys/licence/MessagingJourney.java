@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.string.Str;
-import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
