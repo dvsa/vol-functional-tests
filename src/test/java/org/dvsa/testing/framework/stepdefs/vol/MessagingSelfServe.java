@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
 public class MessagingSelfServe extends BasePage {
 
@@ -40,4 +41,15 @@ public class MessagingSelfServe extends BasePage {
         MessagingJourney.backToConversation();
     }
 
+    @Then("the messages tab is not displayed on the dashboard")
+    public void theMessagesTabIsNotDisplayedOnTheDashboard() {
+        clickByLinkText("Home");
+        MessagingJourney.messageTabHidden();
+    }
+
+    @Then("the messages tab is displayed on the dashboard")
+    public void theMessagesTabIsDisplayedOnTheDashboard() {
+        clickByLinkText("Home");
+        MessagingJourney.messageTabShown();
+    }
 }

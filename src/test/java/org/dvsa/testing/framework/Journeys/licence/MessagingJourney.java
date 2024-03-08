@@ -1,12 +1,14 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.string.Str;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.enums.Tab;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class MessagingJourney extends BasePage {
@@ -103,5 +105,21 @@ public class MessagingJourney extends BasePage {
     }
 
 
+    public static void messageTabHidden() {
+        assertFalse(HomePage.isTabPresent(Tab.MESSAGES));
+    }
+
+    public static void messageTabShown() {
+        assertTrue(HomePage.isTabPresent(Tab.MESSAGES));
+    }
+
+    public static void disableMessaging() {
+        clickByLinkText("Messages");
+        clickByLinkText("Disable Messaging");
+        waitAndClick("close",SelectorType.ID);
+        waitForTextToBePresent("Messaging will be disabled for this operator");
+        click("close",SelectorType.ID);
+        waitForTextToBePresent("Messaging has been disabled for this operator");
+    }
 }
 
