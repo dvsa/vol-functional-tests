@@ -37,6 +37,17 @@ Feature: Viewing messages tab as an internal user
     * i click the messages heading
     * i create a new conversation to operator and archive the conversation
 
+  @int-message-count-check
+  Scenario: Check notification count on internal application
+    Given i have a valid "goods" "restricted" licence
+    And i create an admin and url search for my licence
+    * i have logged in to self serve
+    * i click the messages heading
+    * i click on start a new conversation link
+    * i have logged in to internal
+  And i search for and click on my licence
+    Then i validate the new message count appears on the messaging tab
+
 
   # Test can potentially be reinstated based on the implementation of VOL-4692
 # Scenario: Viewing from a Not Yet Submitted application
