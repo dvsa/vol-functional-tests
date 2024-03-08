@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import io.cucumber.java.en.And;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
@@ -35,8 +35,7 @@ public class ForgottenUserNameSteps extends BasePage {
     @Then("the username is now displayed on the sign in page")
     public void theUsernameIsNowDisplayedOnTheSignInPage() {
         String userName = world.configuration.getForgottenUsername();
-        waitAndEnterText("auth.login.username", SelectorType.ID, userName);
-        waitForPageLoad();
+        world.globalMethods.signIn(userName, world.configuration.config.getString("adminPassword"));
         assert(isTextPresent(userName));
     }
 }
