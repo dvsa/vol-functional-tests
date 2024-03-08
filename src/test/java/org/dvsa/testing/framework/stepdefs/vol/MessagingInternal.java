@@ -48,4 +48,9 @@ public class MessagingInternal extends BasePage {
     public void iShouldAbleToSeeNewTaskCreatedAsNewMessageForCaseWorker() {
         MessagingJourney.checkForNewTask();
     }
+
+    @And("the internal user disables messaging")
+    public void theInternalUserDisablesMessaging() {
+        MessagingJourney.disableMessaging();
+    }
 }
