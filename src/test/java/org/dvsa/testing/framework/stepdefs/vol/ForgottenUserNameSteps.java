@@ -37,6 +37,7 @@ public class ForgottenUserNameSteps extends BasePage {
         String userName = world.configuration.getForgottenUsername();
         world.globalMethods.signIn(userName, world.configuration.config.getString("adminPassword"));
         waitForTextToBePresent("There is a problem");
+        scrollToBottom();
         assert(isTextPresent(userName));
     }
 }
