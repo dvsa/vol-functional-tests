@@ -8,6 +8,8 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class ForgottenUserNameSteps extends BasePage {
 
     private final World world;
@@ -36,8 +38,7 @@ public class ForgottenUserNameSteps extends BasePage {
     public void theUsernameIsNowDisplayedOnTheSignInPage() {
         String userName = world.configuration.getForgottenUsername();
         world.globalMethods.signIn(userName, world.configuration.config.getString("adminPassword"));
-        waitForTextToBePresent("There is a problem");
         scrollToBottom();
-        assert(isTextPresent(userName));
+        assertTrue(isTextPresent(userName));
     }
 }
