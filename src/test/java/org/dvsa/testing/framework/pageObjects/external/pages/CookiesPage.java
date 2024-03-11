@@ -23,7 +23,7 @@ public class CookiesPage extends BasePage {
 
     public static void goToCookiesDetailsPage() {
         untilElementIsPresent(COOKIES_DETAILS_PAGE, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick(COOKIES_DETAILS_PAGE, SelectorType.XPATH);
+        waitAndClick(COOKIES_DETAILS_PAGE, SelectorType.XPATH);
         untilElementIsPresent("//h1[contains(@class,'gem-c-title__text')]", SelectorType.XPATH, 30, TimeUnit.SECONDS);
     }
 
