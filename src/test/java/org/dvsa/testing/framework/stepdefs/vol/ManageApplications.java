@@ -106,6 +106,13 @@ public class ManageApplications extends BasePage {
         }
     }
 
+    @Given("I have a {string} {string} licence in {string} traffic area")
+    public void iHaveALicenceInTrafficArea(String operatorType, String licenceType, String trafficArea) throws HttpException {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setNoOfAddedHgvVehicles(3);
+        world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, TrafficArea.valueOf(trafficArea));
+    }
+
     @Given("I have a {string} {string} application with {string} vehicles")
     public void iHaveAnApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
@@ -231,7 +238,7 @@ public class ManageApplications extends BasePage {
         refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.selfServeNavigation.navigateThroughApplication();
-        if(!world.configuration.env.equals("local")) {
+        if (!world.configuration.env.equals("local")) {
             world.selfServeUIJourney.signDeclaration();
         }
     }
@@ -280,6 +287,7 @@ public class ManageApplications extends BasePage {
         assertEquals(status.toUpperCase(), internalStatus);
         withDrawApplication();
     }
+
     @Given("I have an existing licence {string}")
     public void iHaveAnExistingLicence(String licenceNumber) {
         world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
