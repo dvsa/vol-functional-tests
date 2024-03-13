@@ -75,6 +75,7 @@ public class PaymentProcessing extends BasePage {
     public void iSearchForTransactionalFees() {
         clickByLinkText("Fees");
         waitAndSelectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Historic");
+        waitForTextToBePresent("2 Fees");
         clickByLinkText(String.format("GV/SN Grant Fee for application %s", world.createApplication.getApplicationId()));
         waitForTextToBePresent("Payments and adjustments");
         String[] transactionId = findElements("//tbody", SelectorType.XPATH).get(0).getText().split(" ");

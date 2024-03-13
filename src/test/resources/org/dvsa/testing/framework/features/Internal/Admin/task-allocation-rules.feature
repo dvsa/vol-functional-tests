@@ -7,18 +7,17 @@ Feature: User is able to Add, edit and delete a Task allocation rule
   Background:
     Given I am on the task allocation rules page
 
-
+  @delete_allocation
   Scenario: User wants to delete a task allocation rule
-    Given I delete an allocation rule
+    And I delete an allocation rule
     Then that rule should have been deleted
 
-
+  @edit_allocation
   Scenario: User wants to edit a task allocation rule
-    Given I edit an allocated rule
+    And I edit an allocated rule
     Then that rule should have been edited
 
-
+  @add_allocation
   Scenario: User wants to add a task allocation rule
-    Given I add an allocated rule
+    And I add an allocated rule
     Then the rule should have been added
-

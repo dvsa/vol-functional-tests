@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.jetbrains.annotations.Nullable;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -18,13 +19,14 @@ public class InternalSearch extends BasePage {
         this.world = world;
     }
     @When("i search for and click on my licence")
-    public void iSearchForAndClickOnMyLicence() throws HttpException {
+    @When("i search for and click on my licence {string}")
+    public void iSearchForAndClickOnMyLicence(@Nullable String licence) throws HttpException {
         if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
-            world.internalSearchJourney.searchAndViewLicence();
+            world.internalSearchJourney.searchAndViewLicence(licence);
         } else {
             world.APIJourney.createAdminUser();
             world.internalNavigation.logInAsAdmin();
-            world.internalSearchJourney.searchAndViewLicence();
+            world.internalSearchJourney.searchAndViewLicence(licence);
         }
     }
     @When("i search for and click on my application")
@@ -100,5 +102,15 @@ public class InternalSearch extends BasePage {
     public void theOperatorDetailsShouldBePopulated() {
         assertNotNull(getText("operator-details[name]", SelectorType.ID));
         assertNotNull(getText("registeredAddress[addressLine1]", SelectorType.ID));
+    }
+
+    @When("i url search for a transport manager")
+    public void iUrlSearchForATransportManager() {
+        world.internalNavigation.getTransportManagerDetails("14298");
+    }
+
+    @When("i url search for a case")
+    public void iUrlSearchForACase() {
+        world.internalNavigation.getCase("407105");
     }
 }

@@ -12,5 +12,4 @@ public class LicenceDetailsPageJourney {
     public static void clickFeesTab() {
         BaseDetailsPage.Tab.select(DetailsTab.Fees);
     }
-
 }

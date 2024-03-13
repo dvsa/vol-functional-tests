@@ -26,7 +26,7 @@ public class TaskAllocation extends BasePage {
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalNavigation.getLicence();
         waitAndClick("Processing", SelectorType.LINKTEXT);
-        waitAndClick("(//input[@type='checkbox'])[3]", SelectorType.XPATH);
+        waitAndClick("id[]", SelectorType.NAME);
     }
 
     public void selectSystemTeam() {

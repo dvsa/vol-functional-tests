@@ -31,32 +31,32 @@ public class ExternalSearchFilter extends BasePage {
 
     @Then("the Organisation Type filter should be displayed")
     public void theOrganisationTypeFilterShouldBeDisplayed() throws HttpException {
-        String opName = getText(String.format("//*[@id='filter[orgTypeDesc]']/option[2]"), SelectorType.XPATH);
+        String opName = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
         assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
     }
 
     @Then("the Licence Type filter should be displayed")
     public void theLicenceTypeFilterShouldBeDisplayed() throws HttpException {
-        String opName = getText(String.format("//*[@id='filter[orgTypeDesc]']/option[2]"), SelectorType.XPATH);
+        String opName = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
         assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
     }
 
     @Then("the Licence Status filter should be displayed")
     public void theLicenceStatusFilterShouldBeDisplayed() throws HttpException {
-        String licStatus = getText(String.format("//*[@id='filter[licStatusDesc]']/option[2]"), SelectorType.XPATH);
+        String licStatus = getText("//*[@id='filter[licStatusDesc]']/option[2]", SelectorType.XPATH);
         assertEquals(world.updateLicence.getLicenceStatusDetails(),licStatus);
     }
 
     @Then("the Traffic Area filter should be displayed")
     public void theTrafficAreaFilterShouldBeDisplayed() throws HttpException {
-        String traffArea = getText(String.format("//*[@id='filter[licenceTrafficArea]']/option[2]"), SelectorType.XPATH);
-        assertEquals(world.updateLicence.getLicenceTrafficArea(),traffArea);
+        String trafficArea = getText("//*[@id='filter[licenceTrafficArea]']/option[2]", SelectorType.XPATH);
+        assertEquals(world.updateLicence.getLicenceTrafficArea(),trafficArea);
     }
 
     @Then("the Goods or PSV filter should be displayed")
     public void theGoodsOrPSVFilterShouldBeDisplayed() throws HttpException {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
-        String opType = getText(String.format("//*[@id='filter[goodsOrPsvDesc]']/option[2]"), SelectorType.XPATH);
+        String opType = getText("//*[@id='filter[goodsOrPsvDesc]']/option[2]", SelectorType.XPATH);
         assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
     }
 }

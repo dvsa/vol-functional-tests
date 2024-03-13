@@ -7,6 +7,12 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.util.Collection;
+import java.util.List;
+
+import static org.dvsa.testing.framework.pageObjects.BasePage.*;
 
 public class TestRunConfiguration {
     @Before
@@ -20,6 +26,15 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
+        Collection<String> tags = scenario.getSourceTagNames();
+        for (String tag : tags) {
+            if (Browser.isBrowserOpen() && tag.contains("readOnly")
+            || tag.contains("grant_under_consideration") || tag.contains("transactionFees")) {
+                if (isLinkPresent("Sign out", 5)) {
+                    waitAndClick("Sign out", SelectorType.LINKTEXT);
+                }
+            }
+        }
     }
 
     @AfterAll

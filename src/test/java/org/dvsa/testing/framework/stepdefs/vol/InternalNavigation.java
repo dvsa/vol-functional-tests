@@ -29,9 +29,9 @@ public class InternalNavigation extends BasePage {
         UniversalActions.clickSubmit();
     }
 
-    @And("i have logged in to internal")
-    public void iHaveLoggedIntoInternal() throws HttpException {
-        world.internalNavigation.loginIntoInternal();
+    @And("i have logged in to internal as {string}")
+    public void iHaveLoggedIntoInternalAs(String role) throws HttpException {
+        world.internalNavigation.loginIntoInternal(role);
     }
 
     @When("i am on the internal application overview page")

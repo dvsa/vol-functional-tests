@@ -8,7 +8,7 @@ Feature: Internal Search
 
   @smoketest @searchLicence @int_regression
   Scenario: Search a Licence on Internal
-    When i search for and click on my licence
+    When i search for and click on my licence "OB1134621"
     Then the "Licence details" page should display
 
   @smoketest @searchApplication @int_regression
