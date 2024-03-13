@@ -625,4 +625,9 @@ public abstract class BasePage extends DriverUtils {
         Select option = new Select(findElement(selector, selectorType));
         return option.getFirstSelectedOption().getText();
     }
+
+    public static void scrollToBottom() {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    }
 }
