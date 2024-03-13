@@ -5,7 +5,7 @@ Feature: ECMT International Removal submission page
     Given I have a "goods" "standard_international" licence
 
   @EXTERNAL @OLCS-26739 @olcs-28201
-  Scenario: Application submission page details are displayed correctly
+  Scenario: Application submission page details are displayed correctly (resource-a)
     And   I am on the ECMT International removal submission page
     Then the page heading on the submission page is displayed correctly
     And  the application reference number is displayed correctly
@@ -15,7 +15,7 @@ Feature: ECMT International Removal submission page
     Then the application is under issued permits table with status as valid
 
   @EXTERNAL @OLCS-26739
-  Scenario: Fee waived, view receipt link is NOT displayed
+  Scenario: Fee waived, view receipt link is NOT displayed (resource-a)
     And I have partial ECMT international removal application
     And i create an admin and url search for my licence
     And I am on the fee details page
@@ -24,7 +24,7 @@ Feature: ECMT International Removal submission page
     Then I should not see the view receipt link
 
   @EXTERNAL @OLCS-26739
-  Scenario: Fee payments processed by case worker
+  Scenario: Fee payments processed by case worker (resource-b)
     And I have partial ECMT international removal application
     And i create an admin and url search for my licence
     And pay outstanding fees
@@ -32,7 +32,7 @@ Feature: ECMT International Removal submission page
     Then I should not see the view receipt link
 
   @EXTERNAL @OLCS-26739
-  Scenario: Fees paid through Fees Tab
+  Scenario: Fees paid through Fees Tab (resource-b)
     And I have partial ECMT international removal application
     And I navigate to permit dashboard page
     When  I select the fee tab and pay the outstanding fees

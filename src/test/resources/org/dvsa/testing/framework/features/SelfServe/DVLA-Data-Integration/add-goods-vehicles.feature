@@ -2,7 +2,7 @@
 Feature: Search and add a vehicle
 
   @smoketest @dvla-add-vehicle @localsmoke
-  Scenario Outline: Add a vehicle to a licence
+  Scenario Outline: Add a vehicle to a licence (resource-b)
     Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence
     And choose to add a "<VRM>" vehicle

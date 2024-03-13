@@ -16,7 +16,7 @@ Feature: Self Serve Apply for licence
       | public       | standard_national      |
 
   @stored_cards @smoketest @printAndSign @localsmoke
-  Scenario Outline: Saved card payment
+  Scenario Outline: Saved card payment (resource-a)
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
       | north_east |
@@ -31,7 +31,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
 
    @NI_application @smoketest
-  Scenario Outline: Create and pay NI application fees
+  Scenario Outline: Create and pay NI application fees (resource-a)
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |
     And i choose to print and sign

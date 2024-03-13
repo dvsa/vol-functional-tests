@@ -6,7 +6,7 @@ Feature: Unlicensed operator
     And i have logged in to internal as "admin"
 
   @unlicensed_operator_add @smoketest @localsmoke
-  Scenario: Create unlicensed operator
+  Scenario: Create unlicensed operator (resource-a)
     When i create an unlicensed operator
     Then the operator should be created
 

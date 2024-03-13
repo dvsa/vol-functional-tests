@@ -7,7 +7,7 @@ Feature: LGV Mixed variation authorisation text
     Then the lgv hint text is visible
 
   @smoketest @lgv-smoke
-  Scenario: If zero LGVs on the licence, then displays "HGVs" on the authorisation page
+  Scenario: If zero LGVs on the licence, then displays "HGVs" on the authorisation page (resource-b)
     Given I create a new external user
     And i have a "goods" "standard_international" licence with a hgv authorisation of "5" lgv authorisation of "0" in traffic area "1"
     When i am on the operating centre and authorisations page

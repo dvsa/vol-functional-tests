@@ -10,7 +10,7 @@ Feature: Admin paying fees
   Background:
     Given i have an internal admin user
 
-  Scenario: Process GB payment by cash and card
+  Scenario: Process GB payment by cash and card (resource-a)
     And i have logged in to internal as "admin"
     When i am on the payment processing page
     And i add a new "SCOT Bus Fine" fee
