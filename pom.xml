@@ -289,7 +289,7 @@
                     </includes>
 <!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>12</threadCount>-->
-<!--                    <reuseForks>false</reuseForks>-->
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
