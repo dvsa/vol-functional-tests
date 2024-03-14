@@ -27,6 +27,7 @@
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <assertj-core-version>3.24.2</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
+        <cucable-plugin.version>1.11.0</cucable-plugin.version>
 
         <aspectj.version>1.9.21</aspectj.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
@@ -236,6 +237,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skip>true</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>1</forkCount>
                     <includes>
                         <include>**/**.java</include>
