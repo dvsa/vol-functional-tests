@@ -27,6 +27,7 @@
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <assertj-core-version>3.24.2</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
+        <cucable-plugin.version>1.11.0</cucable-plugin.version>
 
         <aspectj.version>1.9.21</aspectj.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
@@ -224,6 +225,48 @@
                 </dependencies>
             </plugin>
             <plugin>
+                <groupId>com.trivago.rta</groupId>
+                <artifactId>cucable-plugin</artifactId>
+                <version>${cucable-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>parallel</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Required properties -->
+                    <sourceRunnerTemplateFile>src/test/resources/org/dvsa/testing/framework/cucable.template</sourceRunnerTemplateFile>
+                    <sourceFeatures>src/test/resources/org/dvsa/testing/framework/features</sourceFeatures>
+                    <generatedFeatureDirectory>${project.basedir}/target/parallel/features
+                    </generatedFeatureDirectory>
+                    <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
+                    <desiredNumberOfFeaturesPerRunner>1</desiredNumberOfFeaturesPerRunner>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build.helper.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/parallel/runners</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-failsafe-plugin.version}</version>
@@ -244,9 +287,9 @@
                     <includes>
                         <include>**/**.java</include>
                     </includes>
-                    <parallel>methods</parallel>
-                    <threadCount>12</threadCount>
-                    <reuseForks>false</reuseForks>
+<!--                    <parallel>methods</parallel>-->
+<!--                    <threadCount>12</threadCount>-->
+<!--                    <reuseForks>false</reuseForks>-->
                 </configuration>
             </plugin>
             <plugin>
