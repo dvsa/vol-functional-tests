@@ -225,48 +225,6 @@
                 </dependencies>
             </plugin>
             <plugin>
-                <groupId>com.trivago.rta</groupId>
-                <artifactId>cucable-plugin</artifactId>
-                <version>${cucable-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>generate-test-resources</id>
-                        <phase>generate-test-resources</phase>
-                        <goals>
-                            <goal>parallel</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- Required properties -->
-                    <sourceRunnerTemplateFile>src/test/resources/org/dvsa/testing/framework/cucable.template</sourceRunnerTemplateFile>
-                    <sourceFeatures>src/test/resources/org/dvsa/testing/framework/features</sourceFeatures>
-                    <generatedFeatureDirectory>${project.basedir}/target/parallel/features
-                    </generatedFeatureDirectory>
-                    <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfFeaturesPerRunner>1</desiredNumberOfFeaturesPerRunner>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build.helper.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>add-test-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/parallel/runners</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven-failsafe-plugin.version}</version>
@@ -287,8 +245,8 @@
                     <includes>
                         <include>**/**.java</include>
                     </includes>
-<!--                    <parallel>methods</parallel>-->
-<!--                    <threadCount>12</threadCount>-->
+                    <parallel>methods</parallel>
+                    <threadCount>12</threadCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
