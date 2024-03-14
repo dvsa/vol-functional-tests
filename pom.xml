@@ -241,12 +241,12 @@
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>3</forkCount>
+                    <forkCount>2</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
-                    <parallel>methods</parallel>
-                    <threadCount>12</threadCount>
+                    <parallel>methodsAndClasses</parallel>
+                    <threadCount>9</threadCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
