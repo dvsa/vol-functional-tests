@@ -256,7 +256,7 @@
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>5</threadCount>
+                    <threadCount>2</threadCount>
                     <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
