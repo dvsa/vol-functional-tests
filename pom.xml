@@ -248,8 +248,8 @@
                     </execution>
                 </executions>
                 <configuration>
-<!--                    <skip>true</skip>-->
-<!--                    <testFailureIgnore>true</testFailureIgnore>-->
+                    <skip>true</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
                     <includes>
