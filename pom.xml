@@ -250,8 +250,8 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>3</forkCount>
+<!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
+                    <forkCount>4</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
