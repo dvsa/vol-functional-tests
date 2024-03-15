@@ -295,7 +295,7 @@ public abstract class BasePage extends DriverUtils {
         return isInDOM;
     }
 
-    public static void untilVisible(@NotNull String selector, @NotNull SelectorType selectorType, long duration, TimeUnit timeUnit) {
+    protected static void untilVisible(@NotNull String selector, @NotNull SelectorType selectorType, long duration, TimeUnit timeUnit) {
         By by = by(selector, selectorType);
         until(ExpectedConditions.visibilityOfElementLocated(by));
     }
