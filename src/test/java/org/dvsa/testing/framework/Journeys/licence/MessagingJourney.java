@@ -34,7 +34,6 @@ public class MessagingJourney extends BasePage {
     public static void createConversation() {
         click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
-        waitAndSelectValueFromDropDown("//*[@id='appOrLicNo']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
         waitAndEnterText("//*[@id='fields[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("form-actions[submit]");
     }
@@ -44,8 +43,7 @@ public class MessagingJourney extends BasePage {
             ;
         waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
-        click("//*[@id='form-actions[reply]']", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
+        waitAndEnterText("//*[@id='form-actions[inputs][reply]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
     }
 
@@ -59,10 +57,10 @@ public class MessagingJourney extends BasePage {
 
     public static void createNewConversation() {
         clickByLinkText("Start a new conversation");
-        selectRandomValueFromDropDown("//*[@id='form-actions[messageSubject]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[appOrLicNo]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='form-actions[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
+        selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[inputs][appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
     }
 
