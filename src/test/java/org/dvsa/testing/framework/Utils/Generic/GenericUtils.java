@@ -33,8 +33,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zeroturnaround.zip.ZipUtil;
-
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -50,10 +48,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,7 +60,6 @@ public class GenericUtils extends BasePage {
     private final World world;
     private String registrationNumber;
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
-
 
     public String getRegistrationNumber() {
         return registrationNumber;
