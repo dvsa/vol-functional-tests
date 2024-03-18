@@ -253,9 +253,9 @@
                     <includes>
                         <include>**/**.java</include>
                     </includes>
-                    <parallel>methods</parallel>
+                    <parallel>suites</parallel>
                     <threadCount>2</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
