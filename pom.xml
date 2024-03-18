@@ -249,7 +249,7 @@
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
 <!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
-                    <forkCount>4</forkCount>
+                    <forkCount>2</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
