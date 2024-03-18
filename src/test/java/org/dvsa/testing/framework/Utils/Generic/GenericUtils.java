@@ -181,6 +181,12 @@ public class GenericUtils extends BasePage {
             case DEMO:
                 domain = "ssweb.demo.olcs.dev-dvsacloud.uk";
                 break;
+            case REGRESSION:
+                domain = "ssweb.reg.olcs.dev-dvsacloud.uk";
+                break;
+            case DAILY_ASSURANCE:
+                domain = "ssweb.da.olcs.dev-dvsacloud.uk";
+                break;
             default:
                 throw new IllegalArgumentException("Environment not supported: " + env);
         }
