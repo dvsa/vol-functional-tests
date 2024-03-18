@@ -156,17 +156,20 @@ public class GenericUtils extends BasePage {
         }
     }
 
+
     public String getResetPasswordLink() throws InterruptedException {
         Thread.sleep(100000);
         String htmlContent = world.configuration.getPasswordResetLink();
-        String sanatisedHTML = htmlContent.replace("3D", "")
-                .replace("co=", "co")
-                .replaceAll("(nfirmationId=[^&]+)=", "$1");
-        org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
+        String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
+                .replaceAll("=0A", "")
+                .replaceAll("=20", "")
+                .replaceAll("=\n", "")
+                .replaceAll("=\r", "");
+        org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
-            if (link.attr("abs:href").contains("ssweb")) {
-                String resetPasswordLink = link.attr("abs:href");
+            String resetPasswordLink = link.attr("abs:href");
+            if (resetPasswordLink.contains("ssweb.demo.olcs.dev-dvsacloud.uk/auth/reset-password")) {
                 WebDriver driver = Browser.navigate();
                 driver.get(resetPasswordLink);
                 return resetPasswordLink;
