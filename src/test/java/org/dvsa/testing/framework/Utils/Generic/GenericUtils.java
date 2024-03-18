@@ -1,24 +1,12 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import activesupport.number.Int;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
+import activesupport.number.Int;
+import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.jetbrains.annotations.NotNull;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.zeroturnaround.zip.ZipUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
@@ -32,6 +20,20 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.jetbrains.annotations.NotNull;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.zeroturnaround.zip.ZipUtil;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,19 +43,19 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
 
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
@@ -63,6 +65,7 @@ public class GenericUtils extends BasePage {
     private final World world;
     private String registrationNumber;
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
+
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -156,7 +159,6 @@ public class GenericUtils extends BasePage {
         }
     }
 
-
     public String getResetPasswordLink() throws InterruptedException {
         Thread.sleep(100000);
         String htmlContent = world.configuration.getPasswordResetLink();
@@ -165,11 +167,28 @@ public class GenericUtils extends BasePage {
                 .replaceAll("=20", "")
                 .replaceAll("=\n", "")
                 .replaceAll("=\r", "");
+
+        String envString = Properties.get("env", true);
+        EnvironmentType env = EnvironmentType.getEnum(envString);
+        String domain;
+        switch (env) {
+            case QUALITY_ASSURANCE:
+                domain = "ssweb.qa.olcs.dev-dvsacloud.uk";
+                break;
+            case DEVELOP:
+                domain = "ssweb.dev.olcs.dev-dvsacloud.uk";
+                break;
+            case DEMO:
+                domain = "ssweb.demo.olcs.dev-dvsacloud.uk";
+                break;
+            default:
+                throw new IllegalArgumentException("Environment not supported: " + env);
+        }
         org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
             String resetPasswordLink = link.attr("abs:href");
-            if (resetPasswordLink.contains("ssweb.demo.olcs.dev-dvsacloud.uk/auth/reset-password")) {
+            if (resetPasswordLink.contains(domain + "/auth/reset-password")) {
                 WebDriver driver = Browser.navigate();
                 driver.get(resetPasswordLink);
                 return resetPasswordLink;
