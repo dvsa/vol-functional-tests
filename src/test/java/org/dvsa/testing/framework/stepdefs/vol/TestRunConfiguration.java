@@ -31,6 +31,7 @@ public class TestRunConfiguration {
 //            if (Browser.isBrowserOpen() && tag.contains("readOnly")
 //            || tag.contains("grant_under_consideration") || tag.contains("transactionFees")) {
         if (isLinkPresent("Sign out", 5)) {
+            refreshPage();
             waitAndClick("Sign out", SelectorType.LINKTEXT);
         }
 //            }
