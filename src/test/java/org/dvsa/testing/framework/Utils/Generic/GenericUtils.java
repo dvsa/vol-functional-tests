@@ -22,7 +22,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -161,34 +163,12 @@ public class GenericUtils extends BasePage {
                 .replaceAll("=20", "")
                 .replaceAll("=\n", "")
                 .replaceAll("=\r", "");
-
-        String envString = Properties.get("env", true);
-        EnvironmentType env = EnvironmentType.getEnum(envString);
-        String domain;
-        switch (env) {
-            case QUALITY_ASSURANCE:
-                domain = "ssweb.qa.olcs.dev-dvsacloud.uk";
-                break;
-            case DEVELOP:
-                domain = "ssweb.dev.olcs.dev-dvsacloud.uk";
-                break;
-            case DEMO:
-                domain = "ssweb.demo.olcs.dev-dvsacloud.uk";
-                break;
-            case REGRESSION:
-                domain = "ssweb.reg.olcs.dev-dvsacloud.uk";
-                break;
-            case DAILY_ASSURANCE:
-                domain = "ssweb.da.olcs.dev-dvsacloud.uk";
-                break;
-            default:
-                throw new IllegalArgumentException("Environment not supported: " + env);
-        }
+        String domainURL = URL.build(ApplicationType.EXTERNAL.toString(), world.configuration.env, "/auth/reset-password").toString();
         org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
             String resetPasswordLink = link.attr("abs:href");
-            if (resetPasswordLink.contains(domain + "/auth/reset-password")) {
+            if (resetPasswordLink.contains(domainURL)) {
                 WebDriver driver = Browser.navigate();
                 driver.get(resetPasswordLink);
                 return resetPasswordLink;
