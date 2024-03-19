@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.Utils.Generic;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
 import activesupport.number.Int;
-import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
@@ -22,8 +21,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
@@ -163,7 +162,7 @@ public class GenericUtils extends BasePage {
                 .replaceAll("=20", "")
                 .replaceAll("=\n", "")
                 .replaceAll("=\r", "");
-        String domainURL = URL.build(ApplicationType.EXTERNAL.toString(), world.configuration.env, "/auth/reset-password").toString();
+        String domainURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/reset-password").toString();
         org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
