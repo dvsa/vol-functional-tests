@@ -51,7 +51,7 @@ public class MessagingJourney extends BasePage {
         clickById("close");
         assert (isElementPresent("//*[contains(@class,'field')]", SelectorType.XPATH));
         click("//*[@id='close']", SelectorType.XPATH);
-        waitForTextToBePresent("CLOSE");
+        waitForTextToBePresent("CLOSED");
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
     }
 
