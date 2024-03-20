@@ -9,7 +9,7 @@ Feature: Partner user external search by Address, Business name, Licence Number 
     And i login as a partner user
 
   @smoketest
-  Scenario: Business name partner external search for lorry and bus operators (resource-b)
+  Scenario: Business name partner external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","","",""
     Then search results page should display operator names containing our "business name"
     And I am able to view the applicants licence number

@@ -7,12 +7,12 @@ Feature: Internal Search
     Given i have a valid "public" "standard_national" licence
 
   @smoketest @searchLicence @int_regression
-  Scenario: Search a Licence on Internal (resource-b)
+  Scenario: Search a Licence on Internal
     When i search for and click on my licence "OB1134621"
     Then the "Licence details" page should display
 
   @smoketest @searchApplication @int_regression
-  Scenario: Search an Application on Internal (resource-b)
+  Scenario: Search an Application on Internal
     When i search for and click on my application
     Then the "Application details" page should display
 
