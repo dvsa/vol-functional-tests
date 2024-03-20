@@ -14,10 +14,6 @@ Feature: Create application page should comply to the WCAG 2.1 AA accessibility 
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence
     Then the colour of the 'Directors' section should be grey
 
-  Scenario Outline: Scan for accessibility violations
-    Given I submit and pay for a "<Licence>" licence application
+  Scenario: Scan for accessibility violations
+    And I submit and pay for a "Goods" licence application
     Then no issues should be present on the page
-
-    Examples:
-      | Licence |  |
-      | Goods   |  |

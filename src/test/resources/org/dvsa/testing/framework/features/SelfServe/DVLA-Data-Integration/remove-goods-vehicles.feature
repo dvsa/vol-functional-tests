@@ -1,4 +1,4 @@
-@VOL-84 @VOL-85 @DVLA
+@VOL-84 @VOL-85
 
 Feature: Remove a vehicle
 

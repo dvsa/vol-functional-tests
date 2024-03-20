@@ -202,13 +202,13 @@ public class InternalUIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
-        UniversalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteOverview() {
@@ -240,9 +240,6 @@ public class InternalUIJourney extends BasePage {
 
         String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
         get(internalURL);
-        if (isElementPresent("declarationRead", SelectorType.ID)) {
-            waitAndClick("declarationRead", SelectorType.ID);
-        }
         world.globalMethods.signIn(user, password);
     }
 
@@ -313,6 +310,5 @@ public class InternalUIJourney extends BasePage {
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
-
 }
 

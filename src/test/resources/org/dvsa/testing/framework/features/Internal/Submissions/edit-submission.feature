@@ -6,7 +6,7 @@ Feature: Internal users wishes to edit a submission
   Background:
     Given i have a valid "goods" "standard_national" licence
     When I create a new case
-    Then i have logged in to internal
+    Then i have logged in to internal as "admin"
     And I have a submission
 
    @edit-submission
