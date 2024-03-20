@@ -99,6 +99,7 @@ public class SelfServeNavigation extends BasePage {
                 }
                 break;
             case "variation":
+                clickByLinkText("Home");
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationId());

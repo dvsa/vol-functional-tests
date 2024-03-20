@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,11 +72,11 @@ public class PublicationsRelatedSteps extends BasePage {
                 clickByLinkText(currentPubNo);
                 waitForTextToBePresent("Open document");
 
-                if (getText("//*[@id='letter-link']",SelectorType.XPATH).isEmpty()){
+                if (getText("//*[@id='letter-link']", SelectorType.XPATH).isEmpty()) {
                     missingLinks++;
                 }
 
-                click("//*[contains(text(),'Close')]",SelectorType.XPATH);
+                click("//*[contains(text(),'Close')]", SelectorType.XPATH);
 
                 waitForElementToBeClickable(radioButtonsColumn, SelectorType.XPATH);
                 radioButtons.get(i + 1).click();
@@ -87,7 +88,7 @@ public class PublicationsRelatedSteps extends BasePage {
                 refreshPageWithJavascript();
             }
         }
-        assertEquals(0,missingLinks);
+        assertEquals(0, missingLinks);
     }
 
     @And("i generate and publish all {int} publications")
@@ -165,9 +166,13 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() throws HttpException {
-        if (world.updateLicence.getInternalUserId() == null) {world.APIJourney.createAdminUser();}
+        if (world.updateLicence.getInternalUserId() == null) {
+            world.APIJourney.createAdminUser();
+        }
 
-        if (isElementNotPresent(world.internalNavigation.adminDropdown,SelectorType.XPATH)) {world.internalNavigation.logInAsAdmin();}
+        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
+            world.internalNavigation.logInAsAdmin();
+        }
 
         world.internalNavigation.adminNavigation(AdminOption.PUBLICATIONS);
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
@@ -183,7 +188,7 @@ public class PublicationsRelatedSteps extends BasePage {
         click(matchingRadioButton, SelectorType.XPATH);
         click("publish", SelectorType.ID);
         waitForTextToBePresent("Update successful");
-    };
+    }
 
     @Then("^the publication is visible via self serve search$")
     public void thePublicationIsVisibleViaSelfServeSearch() {
@@ -192,7 +197,7 @@ public class PublicationsRelatedSteps extends BasePage {
         enterText("search", SelectorType.ID, licenceNumber);
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 1000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
-    };
+    }
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
@@ -207,9 +212,9 @@ public class PublicationsRelatedSteps extends BasePage {
         String hgvIncreaseText = String.format(" New licence authorisation will be %s Heavy goods vehicle(s)", hgvs);
         String lgvIncreaseText = String.format(" New licence authorisation will be %s Light goods vehicle(s)", lgvs);
 
-        switch(variationType){
+        switch (variationType) {
             case "HGV":
-                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvs,adaptiveVehicleTypeText.concat("(s)"));
+                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) New licence authorisation will be %s %s", operatingCentreAddress, hgvs, adaptiveVehicleTypeText.concat("(s)"), world.createApplication.getTotalOperatingCentreTrailerAuthority(), hgvs, adaptiveVehicleTypeText.concat("(s)"));
                 String hgvExpectedText = correspondenceAddress.concat(hgvOCIncreaseText);
                 LOGGER.info("AP HGV Exp text:" + hgvExpectedText);
                 LOGGER.info("AP HGV Act text:" + publicationResult.getText());
@@ -224,7 +229,7 @@ public class PublicationsRelatedSteps extends BasePage {
                 break;
 
             case "HGV and LGV":
-                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvIncreaseText,lgvIncreaseText);
+                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)%s%s", operatingCentreAddress, hgvs, adaptiveVehicleTypeText.concat("(s)"), world.createApplication.getTotalOperatingCentreTrailerAuthority(), hgvIncreaseText, lgvIncreaseText);
                 String hgvAndLgvExpectedText = correspondenceAddress.concat(hgvAndLgv);
                 LOGGER.info("AP HGVAndLGV Exp text:" + hgvAndLgvExpectedText);
                 LOGGER.info("AP HGVAndLGV Act text:" + publicationResult.getText());
@@ -257,15 +262,13 @@ public class PublicationsRelatedSteps extends BasePage {
 
         if (world.licenceCreation.isAGoodsInternationalLicence()) {
             assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", WordUtils.capitalizeFully(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH), hgvValue);
-            assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+            if (Objects.equals(lgvValue, "0")) {
+                lgvValue = "";
+                assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+            }
         } else {
             assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", adaptiveVehicleTypeText.concat("s")), SelectorType.XPATH), hgvValue);
         }
-
-        //if (world.licenceCreation.isAGoodsInternationalLicence()){
-        //    assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
-        //}
-
         assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
@@ -386,7 +389,7 @@ public class PublicationsRelatedSteps extends BasePage {
         assertEquals(expectedDate, actualDate);
     }
 
-    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath)  {
+    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) {
         List<WebElement> webElements = findElements(webElementsXpath, SelectorType.XPATH);
         if (size(fiftyResultsPerPageLink, SelectorType.XPATH) != 0) {
             click(fiftyResultsPerPageLink, SelectorType.XPATH);
