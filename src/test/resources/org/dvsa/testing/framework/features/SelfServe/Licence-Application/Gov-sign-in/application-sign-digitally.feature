@@ -2,7 +2,7 @@
 Feature: Operator signs digitally
 
 
-  Scenario Outline: Operator chooses to sign digitally (ResourceA)
+  Scenario Outline: Operator chooses to sign digitally
     Given i have a "<OperatorType>" application in progress
     When I can navigate to gov sign in
     And I sign in to gov sign in to complete the process
