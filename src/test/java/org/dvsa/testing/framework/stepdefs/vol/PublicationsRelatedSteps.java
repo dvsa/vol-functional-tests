@@ -190,8 +190,6 @@ public class PublicationsRelatedSteps extends BasePage {
         waitForTextToBePresent("Update successful");
     }
 
-    ;
-
     @Then("^the publication is visible via self serve search$")
     public void thePublicationIsVisibleViaSelfServeSearch() {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
@@ -200,8 +198,6 @@ public class PublicationsRelatedSteps extends BasePage {
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 1000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     }
-
-    ;
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
