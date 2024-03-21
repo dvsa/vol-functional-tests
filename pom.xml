@@ -255,7 +255,7 @@
                     </includes>
                     <parallel>methods</parallel>
                     <threadCount>5</threadCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
