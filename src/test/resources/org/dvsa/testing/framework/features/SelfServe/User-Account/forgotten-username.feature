@@ -1,6 +1,5 @@
 @forgotten_username
 @ss_regression
-@smoketest
 Feature: User that has forgotten their username sends request
   Scenario: User requests forgotten username
     Given I have a "goods" "standard_international" licence
