@@ -37,6 +37,7 @@ public class ForgottenUserNameSteps extends BasePage {
 
     @Then("the username is now displayed on the sign in page")
     public void theUsernameIsNowDisplayedOnTheSignInPage() {
+
         String userName = world.configuration.getForgottenUsername();
         world.globalMethods.signIn(userName, world.configuration.config.getString("adminPassword"));
         String userNameField = getValue("//*[@id='auth.login.username']", SelectorType.XPATH);
