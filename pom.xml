@@ -253,8 +253,8 @@
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>3</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <threadCount>4</threadCount>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
