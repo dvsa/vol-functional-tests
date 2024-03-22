@@ -248,7 +248,7 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <forkCount>2</forkCount>
+                    <forkCount>3</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
