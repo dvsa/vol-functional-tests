@@ -5,6 +5,5 @@
 
     Scenario: User requests forgotten username
       Given I have a "goods" "standard_international" licence
-      When I have navigated to the Forgotten User page
-      And I complete the forgotten username process
-      Then the username is now displayed on the sign in page
+      When I have forgotten my username and want it to be sent
+      Then I will be sent an email with my username
