@@ -14,7 +14,7 @@
 
         <active-support.version>2.0.1.7</active-support.version>
         <api-calls.version>2.0.3</api-calls.version>
-        <uri-constructor.version>2.0.2</uri-constructor.version>
+        <uri-constructor.version>2.0.3</uri-constructor.version>
 
         <axe-scanner-version>2.9</axe-scanner-version>
 
