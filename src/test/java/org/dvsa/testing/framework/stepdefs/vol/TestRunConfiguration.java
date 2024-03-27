@@ -26,20 +26,13 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
-        Collection<String> tags = scenario.getSourceTagNames();
-        for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")
-                    || tag.contains("grant_under_consideration") || tag.contains("transactionFees")) {
-                if (isLinkPresent("Sign out", 5)) {
-                    refreshPage();
-                    waitAndClick("Sign out", SelectorType.LINKTEXT);
-                }
-            }
+        if (isLinkPresent("Sign out", 10) && (isElementClickable("Sign out", SelectorType.LINKTEXT))) {
+            waitAndClick("Sign out", SelectorType.LINKTEXT);
         }
     }
 
-        @AfterAll
-        public static void tearDown () throws Exception {
-            Browser.closeBrowser();
-        }
+    @AfterAll
+    public static void tearDown() throws Exception {
+        Browser.closeBrowser();
     }
+}
