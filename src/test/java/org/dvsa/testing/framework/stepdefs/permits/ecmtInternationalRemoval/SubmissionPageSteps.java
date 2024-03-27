@@ -94,6 +94,12 @@ public class SubmissionPageSteps extends BasePermitPage{
         DeclarationPageJourney.completeDeclaration();
     }
 
+    @Given("I have a submission")
+    public void iHaveASubmission() {
+        world.internalNavigation.getLicence();
+        world.submissionsJourney.createAndSubmitSubmission();
+    }
+
     @And("I edit that submission")
     public void iEditThatSubmission() {
         world.submissionsJourney.editSubmission();
@@ -133,20 +139,5 @@ public class SubmissionPageSteps extends BasePermitPage{
     @Then("that file should be displayed")
     public void thatFileShouldBeDisplayed() {
         assertTrue(isTextPresent("newspaperAdvert.jpeg"));
-    }
-
-    @When("I select the TC\\/DTC Option")
-    public void iSelectTheTCDTCOption() {
-
-    }
-
-    @Then("The drop down does not include non TC users")
-    public void theDropDownDoesNotIncludeNonTCUsers() {
-    }
-
-    @And("I have a submission")
-    public void iHaveASubmission() {
-        world.internalNavigation.getLicence();
-        world.submissionsJourney.createAndSubmitSubmission();
     }
 }
