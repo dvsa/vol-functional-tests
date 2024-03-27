@@ -117,6 +117,7 @@ public class GovSignInJourney extends BasePage {
         String secretCode = getTOTPCode(key);
         waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='journey']");
         clickById("submitButton");
         clickByXPath("//*[@id='select-device-choice']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -126,7 +127,7 @@ public class GovSignInJourney extends BasePage {
     public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='journey']");
+        clickByXPath("//*[@id='journey-2']");
         waitAndClick("submitButton", SelectorType.ID);
         enterPassportDetails();
         cycletThroughSignInJourney();

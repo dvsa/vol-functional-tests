@@ -29,6 +29,10 @@ Feature: Internal users wishes to edit a submission
     When I attach a file to the submission
     Then that file should be displayed
 
+  Scenario: Check submission drop down
+    When I select the TC/DTC Option
+    Then The drop down does not include non TC users
+
 
 
 
