@@ -26,9 +26,6 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
-        if (isLinkPresent("Sign out", 10) && (isElementClickable("Sign out", SelectorType.LINKTEXT))) {
-            waitAndClick("Sign out", SelectorType.LINKTEXT);
-        }
     }
 
     @AfterAll
