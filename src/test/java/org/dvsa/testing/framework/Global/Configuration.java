@@ -46,7 +46,4 @@ public class Configuration {
         return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
     }
 
-    public String getForgottenUsername() {
-        return String.valueOf(S3.getUsernameInfoLink(world.createApplication.getTransportManagerEmailAddress()));
-    }
 }
