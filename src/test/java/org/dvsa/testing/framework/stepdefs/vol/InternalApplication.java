@@ -261,4 +261,35 @@ public class InternalApplication extends BasePage{
     public void theDocumentIsListedOnThePage() {
         assertTrue(isTextPresent("GV - Blank letter to operator"));
     }
+
+    @And("i open the operating centres and authorisation tab")
+    public void iOpenOperatingCentresAndAuthorisationTab() {
+        clickByLinkText("Operating centres and authorisation");
+    }
+
+    @Then("i can transfer an operating centre with schedule 41")
+    public void iCanAddASchedule4() throws HttpException {
+        waitAndClick("//*[@value='Add schedule 4/1']", SelectorType.XPATH);
+        waitForTextToBePresent("Schedule 4/1");
+        waitForTextToBePresent("Licence number");
+        enterText("licence-number[licenceNumber]", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+        click("form-actions[confirm]", SelectorType.NAME);
+        waitForTextToBePresent("Add Schedule 4/1");
+        click("checkall", SelectorType.ID);
+        click("transfer", SelectorType.NAME);
+        waitForTextToBePresent("The operating centre(s) have been transferred");
+        waitForTextToBePresent("Approve schedule 4/1");
+        assertTrue(isTextPresent("The operating centre(s) have been transferred"));
+        click("form-actions[save]", SelectorType.ID);
+    }
+
+    @Then("i can approve the schedule {int}")
+    public void i_can_approve_the_schedule(Integer int1) {
+        click("menu-application-decisions-approve-schedule41", SelectorType.ID);
+        waitForTextToBePresent("Is this a true schedule 4/1?");
+        click("isTrueS4", SelectorType.NAME);
+        click("form-actions[submit]", SelectorType.ID);
+        assertTrue(isTextPresent("The schedule 4/1 has been approved"));
+    }
+
 }
