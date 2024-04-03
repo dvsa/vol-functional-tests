@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.net.MalformedURLException;
 
@@ -38,7 +39,9 @@ public class GovSignIn extends BasePage {
     @Then("I register a gov sign in account to complete the process")
     public void iRegisterAGovSignInAccountToCompleteTheProcess() {
         world.govSignInJourney.registerGovAccount();
-        assertTrue(isTextPresent("You’ve successfully proved your identity. You can now continue to the service you want to use."));
+        waitForElementNotToBePresent("//*[@class='govuk-body text-centre']");
+        assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
+        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
     }
 
     @And("I am taken back to VOL Review and Declarations page")
