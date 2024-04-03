@@ -133,7 +133,7 @@ public class GovSignInJourney extends BasePage {
         cycletThroughSignInJourney();
         answerPersonalQuestions();
         if(isTitlePresent("Continue to the service you want to use",5)){
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("submitButton", SelectorType.ID);
         }
     }
 
