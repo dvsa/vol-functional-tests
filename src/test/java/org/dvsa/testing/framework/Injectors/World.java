@@ -13,7 +13,6 @@ import org.dvsa.testing.framework.Utils.Generic.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.stepdefs.vol.ForgottenUserNameSteps;
 import org.dvsa.testing.framework.stepdefs.vol.*;
 
 
@@ -96,5 +95,4 @@ public class World {
 
     public InternalUIJourney internalUIJourney;
 
-    public ForgottenUserNameSteps forgottenUserNameSteps;
 }
