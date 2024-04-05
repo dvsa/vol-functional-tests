@@ -149,17 +149,6 @@ public class SubmissionPageSteps extends BasePermitPage {
     }
 
 
-    @Then("The drop down does not include non TC users")
-    public void theDropDownDoesNotIncludeNonTCUsers(DataTable arg) {
-        List<String> expectedUsers = arg.asList(String.class);
-        WebElement dropDownElement = Browser.navigate().findElement(By.xpath("//*[@id=\"presidingTcUser_chosen\"]"));
-        List<WebElement> options = dropDownElement.findElements(By.xpath(".//ul[@class='chosen-results']/li"));
-        for (WebElement option : options) {
-            String userName = option.getText();
-            assertTrue(expectedUsers.contains(userName), "Non-TC user found in drop down: " + userName);
-        }
-    }
-
     @Given("I add and assign a Submission")
     public void iAddAndAssignASubmission() {
         world.internalNavigation.getLicence();
