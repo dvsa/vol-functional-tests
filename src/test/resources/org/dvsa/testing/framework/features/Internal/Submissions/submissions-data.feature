@@ -1,3 +1,5 @@
+@int_regression
+@internal-submissions
 
   Feature: Assign submission drop down
 
@@ -6,7 +8,8 @@
       When I create a new case
       Then i have logged in to internal as "admin"
 
-    Scenario: Check TC/DC Drop down does not contain current logged in user
+      @assign-submission
+      Scenario: Check TC/DC Drop down does not contain current logged in user
       Given I add and assign a Submission
       Then The TC/DC drop down list does not contain the current user
 
