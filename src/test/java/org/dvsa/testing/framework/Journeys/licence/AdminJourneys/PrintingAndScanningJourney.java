@@ -33,11 +33,11 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public void completeComplianceScanningDetails() {
         waitForTitleToBePresent("Scanning");
-        waitAndSelectValueFromDropDown("category", SelectorType.ID, "Compliance");
+        selectValueFromDropDown("category", SelectorType.ID, "Compliance");
         waitAndClick("subCategory", SelectorType.ID);
-        waitAndSelectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
-        waitAndSelectValueFromDropDown("description", SelectorType.ID, "Conviction Notification");
-        waitAndEnterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
+        selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
+        selectValueFromDropDown("description", SelectorType.ID, "Conviction Notification");
+        enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
         UniversalActions.clickSubmit();
     }
 
