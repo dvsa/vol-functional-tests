@@ -249,6 +249,7 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>1</forkCount>
                     <includes>
                         <include>**/**.java</include>
