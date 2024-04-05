@@ -1,5 +1,5 @@
 @int_regression
-@internal-submissions
+@internal_submissions
 
   Feature: Assign submission drop down
 
