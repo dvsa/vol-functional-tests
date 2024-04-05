@@ -50,6 +50,7 @@ public class SubmissionsJourney extends BasePage {
         clickByLinkText("Set info complete");
         UniversalActions.clickSubmit();
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
+        waitForElementToBePresent("//input[@name='fields[tcOrOther]']");
         clickByXPath("//input[@name='fields[tcOrOther]']");
         clickByXPath("//*[@id='presidingTcUser_chosen']");
     }
