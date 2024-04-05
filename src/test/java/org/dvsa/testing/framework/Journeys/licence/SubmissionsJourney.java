@@ -46,6 +46,14 @@ public class SubmissionsJourney extends BasePage {
         waitAndClick("//*[@id='presidingTcUser_chosen']/div/ul/li[2]", SelectorType.XPATH);
     }
 
+    public void checkTCDcDropDown() {
+        clickByLinkText("Set info complete");
+        UniversalActions.clickSubmit();
+        waitAndClick("Assign submission", SelectorType.LINKTEXT);
+        clickById("tcOrOther");
+        clickByXPath("//*[@id='presidingTcUser_chosen']");
+    }
+
     public void editSubmission() {
         clickByLinkText("Edit submission");
         selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
