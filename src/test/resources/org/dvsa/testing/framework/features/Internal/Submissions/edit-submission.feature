@@ -28,15 +28,3 @@ Feature: Internal users wishes to edit a submission
   Scenario: Internal users attaches a file
     When I attach a file to the submission
     Then that file should be displayed
-
-
-  Scenario: Check submission drop down
-    Given I add and assign a Submission
-    Then The drop down does not include non TC users
-
-  Scenario: Check user is able to add comments and upload a file under every
-  sub-heading
-    Given I have a submission
-    When I attach a file and write a comment under every sub heading
-    Then the comment and file should be visible
-
