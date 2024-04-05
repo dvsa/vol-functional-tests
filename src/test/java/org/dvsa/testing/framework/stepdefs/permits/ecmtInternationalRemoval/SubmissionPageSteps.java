@@ -1,17 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import activesupport.driver.Browser;
-import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
-import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
