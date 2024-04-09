@@ -29,7 +29,7 @@ public class Configuration {
         return mailhog.retrievePassword(emailSubject);
     }
 
-    public String getGovCode(){
+    public String getGovCode() throws InterruptedException {
         return String.valueOf(S3.getSignInCode());
     }
 

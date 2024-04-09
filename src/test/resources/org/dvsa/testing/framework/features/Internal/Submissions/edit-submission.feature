@@ -28,7 +28,3 @@ Feature: Internal users wishes to edit a submission
   Scenario: Internal users attaches a file
     When I attach a file to the submission
     Then that file should be displayed
-
-
-
-

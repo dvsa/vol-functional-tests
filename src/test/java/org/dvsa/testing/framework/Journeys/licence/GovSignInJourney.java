@@ -23,7 +23,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
+    String registrationEmail = "DVSA.Tester+" + random.nextInt(90000) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if (world.configuration.env.toString().equals("int")) {
@@ -95,7 +95,7 @@ public class GovSignInJourney extends BasePage {
     }
 
 
-    public void registerGovAccount() {
+    public void registerGovAccount() throws InterruptedException {
         String signInPassword = world.configuration.config.getString("signInPassword");
         if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
@@ -117,6 +117,7 @@ public class GovSignInJourney extends BasePage {
         String secretCode = getTOTPCode(key);
         waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='journey']");
         clickById("submitButton");
         clickByXPath("//*[@id='select-device-choice']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -126,13 +127,13 @@ public class GovSignInJourney extends BasePage {
     public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='journey']");
+        clickByXPath("//*[@id='journey-2']");
         waitAndClick("submitButton", SelectorType.ID);
         enterPassportDetails();
         cycletThroughSignInJourney();
         answerPersonalQuestions();
         if(isTitlePresent("Continue to the service you want to use",5)){
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("submitButton", SelectorType.ID);
         }
     }
 
