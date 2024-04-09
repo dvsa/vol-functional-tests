@@ -37,7 +37,7 @@ public class GovSignIn extends BasePage {
     }
 
     @Then("I register a gov sign in account to complete the process")
-    public void iRegisterAGovSignInAccountToCompleteTheProcess() {
+    public void iRegisterAGovSignInAccountToCompleteTheProcess() throws InterruptedException {
         world.govSignInJourney.registerGovAccount();
         waitForElementNotToBePresent("//*[@class='govuk-body text-centre']");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
