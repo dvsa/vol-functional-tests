@@ -95,7 +95,7 @@ public class GovSignInJourney extends BasePage {
     }
 
 
-    public void registerGovAccount() {
+    public void registerGovAccount() throws InterruptedException {
         String signInPassword = world.configuration.config.getString("signInPassword");
         if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
