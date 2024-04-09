@@ -23,7 +23,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
+    String registrationEmail = "DVSA.Tester+" + random.nextInt(90000) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if (world.configuration.env.toString().equals("int")) {
