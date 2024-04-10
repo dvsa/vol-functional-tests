@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import activesupport.driver.Browser;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
@@ -14,16 +15,22 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SubmissionPageSteps extends BasePermitPage{
+public class SubmissionPageSteps extends BasePermitPage {
     World world;
 
     public SubmissionPageSteps(World world) {
         this.world = world;
     }
+
+    private String internalUsername;
 
     @And("I am on the ECMT International removal submission page")
     public void iAmOnTheECMTInternationalRemovalSubmissionPage() {
@@ -139,5 +146,25 @@ public class SubmissionPageSteps extends BasePermitPage{
     @Then("that file should be displayed")
     public void thatFileShouldBeDisplayed() {
         assertTrue(isTextPresent("newspaperAdvert.jpeg"));
+    }
+
+
+    @Given("I add and assign a Submission")
+    public void iAddAndAssignASubmission() {
+        world.internalNavigation.getLicence();
+        world.submissionsJourney.createAndSubmitSubmission();
+        internalUsername = getElementValueByText("//li[@class='user-menu__item']", SelectorType.XPATH).trim().replace(":","");
+        world.submissionsJourney.checkTCDcDropDown();
+    }
+
+
+    @Then("The TC\\/DC drop down list does not contain the current user")
+    public void theTCDCDropDownListDoesNotContainTheCurrentUser() {
+        WebElement dropDownElement = Browser.navigate().findElement(By.xpath("//*[@id=\"presidingTcUser_chosen\"]"));
+        List<WebElement> options = dropDownElement.findElements(By.xpath(".//ul[@class='chosen-results']/li"));
+        for (WebElement option : options) {
+            String userName = option.getText();
+            assertNotEquals(userName, internalUsername);
+        }
     }
 }

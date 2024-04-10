@@ -56,7 +56,7 @@ public class FeesDetailsPage extends BaseDetailsPage {
     }
 
     public static void clickApprove() {
-        scrollAndClick("button#approve");
+        waitAndClick("approve", SelectorType.ID);
     }
 
     public static void clickBackToHome() {

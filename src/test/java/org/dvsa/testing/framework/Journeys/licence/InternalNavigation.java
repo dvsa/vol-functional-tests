@@ -5,7 +5,6 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -13,13 +12,11 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-
 
 public class InternalNavigation extends BasePage {
 
     World world;
-    private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private final String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
     public String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
 
@@ -80,15 +77,20 @@ public class InternalNavigation extends BasePage {
         }
     }
 
-    public void loginIntoInternal() throws HttpException {
-        String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
-        String intEnvPassword = world.configuration.config.getString("intEnvPassword");
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
-            DriverUtils.get(myURL);
-            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
-        } else {
-            world.internalNavigation.logInAsAdmin();
+    public void loginIntoInternal(String userRole) throws HttpException {
+        switch (userRole) {
+            case "limitedReadOnlyUser":
+                world.globalMethods.signIn(world.configuration.config.getString("limitedReadOnlyUser"), world.configuration.config.getString("adminPassword"));
+                break;
+            case "readOnlyUser":
+                world.globalMethods.signIn(world.configuration.config.getString("readOnlyUser"), world.configuration.config.getString("adminPassword"));
+                break;
+            case "intSystemAdmin":
+                world.globalMethods.signIn(world.configuration.config.getString("intSystemAdmin"), world.configuration.config.getString("intEnvPassword"));
+                break;
+            default:
+                world.internalNavigation.logInAsAdmin();
+                break;
         }
     }
 
@@ -118,6 +120,10 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId())));
     }
 
+    public void getCase(String caseId) {
+        get(this.url.concat(String.format("case/details/%s", caseId)));
+    }
+
     public void getCaseNote() {
         get(this.url.concat(String.format("case/%s/processing/notes", world.updateLicence.getCaseId())));
     }
@@ -128,6 +134,10 @@ public class InternalNavigation extends BasePage {
 
     public void getApplication(String applicationId) {
         get(this.url.concat(String.format("application/%s", applicationId)));
+    }
+
+    public void getTransportManagerDetails(String transportManagerId) {
+        get(this.url.concat(String.format("transport-manager/%s/details/", transportManagerId)));
     }
 
     public void getLicence() {

@@ -1,4 +1,3 @@
-@DVLA
 @WIP
 Feature: View the vehicles on a licence
 

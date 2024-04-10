@@ -50,9 +50,6 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(myURL);
         try {
-            if (isElementPresent("declarationRead", SelectorType.ID)) {
-                waitAndClick("declarationRead", SelectorType.ID);
-            }
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
             e.printStackTrace();
@@ -84,14 +81,16 @@ public class GlobalMethods extends BasePage {
             }
         }
     }
-
     public void signIn(String userName, String password) {
+        if (isElementPresent("declarationRead", SelectorType.ID)
+                && (!isElementSelected("declarationRead", SelectorType.ID))) {
+            waitAndClick("declarationRead", SelectorType.ID);
+        }
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
     }
-
     public void submit() {
         click(submitButton, SelectorType.CSS);
     }

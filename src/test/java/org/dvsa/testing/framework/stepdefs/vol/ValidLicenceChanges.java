@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
@@ -10,11 +11,12 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidLicenceChanges extends BasePage {
     private final World world;
@@ -241,5 +243,166 @@ public class ValidLicenceChanges extends BasePage {
         assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
         assertEquals(getValue("//*[@id='licence[tachographInsName]']", SelectorType.XPATH), externalAnalysisBureau);
         checkForFullMatch(safetyInspector);
+    }
+
+    @Then("i cannot make changes to the business details page")
+    public void iCannotMakeChangesToTheBusinessDetailsPage() {
+        waitAndClick("Business details", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Company name");
+        assertFalse(isElementPresent("data[tradingNames][0][name]", SelectorType.NAME));
+        assertFalse(isElementPresent("data[companyNumber][company_number]", SelectorType.NAME));
+    }
+
+    @Then("i cannot make changes to the addresses page")
+    public void iCannotMakeChangesToTheAddressesPage() {
+        waitAndClick("Addresses", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Addresses");
+        assertFalse(isElementPresent("correspondence_address[searchPostcode][postcode]", SelectorType.NAME));
+        assertFalse(isElementPresent("correspondence_address[searchPostcode][search]", SelectorType.NAME));
+        assertFalse(isElementPresent("Enter the address yourself", SelectorType.LINKTEXT));
+        assertFalse(isElementPresent("consultantAddress[searchPostcode][postcode]", SelectorType.NAME));
+    }
+
+    @Then("directors names should not be displayed as links")
+    public void directorsNamesShouldNotBeDisplayedAsLinks() {
+        waitAndClick("People", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Responsible people");
+        List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
+        for (WebElement element : names) {
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+        }
+    }
+
+    @Then("operating centre names should not be displayed as links")
+    public void operatingCentreNamesShouldNotBeDisplayedAsLinks() {
+        waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Operating centres");
+        List<WebElement> operatingCentreName = findElements("//*[@data-heading='Address']", SelectorType.XPATH);
+        for (WebElement element : operatingCentreName) {
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+        }
+        assertFalse(isElementPresent("data[totAuthHgvVehiclesFieldset][totAuthHgvVehicles]", SelectorType.NAME));
+        assertFalse(isElementPresent("data[totAuthTrailersFieldset][totAuthTrailers]", SelectorType.NAME));
+    }
+
+    @Then("safety inspector names should not be displayed as links")
+    public void safetyInspectorNamesShouldNotBeDisplayedAsLinks() {
+        waitAndClick("Safety and compliance", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Safety and compliance");
+        List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
+        for (WebElement element : names) {
+            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+        }
+    }
+
+    @Then("permit reference number should not be displayed as links")
+    public void permitReferenceNumberShouldNotBeDisplayedAsLinks() {
+        waitAndClick("IRHP Permits", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Permit Application");
+        List<WebElement> names = findElements("//*[@data-heading='Reference number']", SelectorType.XPATH);
+        for (WebElement element : names) {
+            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+        }
+    }
+
+    @Then("tm details page should not display buttons and links")
+    public void tmDetailsPageShouldNotDisplayButtonsAndLinks() {
+        waitForTextToBePresent("Details");
+        assertFalse(isElementPresent("home-address[searchPostcode][postcode]", SelectorType.NAME));
+        assertFalse(isElementPresent("home-address[searchPostcode][search]", SelectorType.NAME));
+        assertFalse(isElementPresent("Enter the address yourself", SelectorType.LINKTEXT));
+        assertFalse(isElementPresent("work-address[searchPostcode][postcode]", SelectorType.NAME));
+        assertFalse(isElementPresent("work-address[searchPostcode][search]", SelectorType.NAME));
+    }
+
+    @And("responsibilities page should not display input fields")
+    public void responsibilitiesPageShouldNotDisplayInputFields() {
+        waitAndClick("Responsibilities", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Responsibilities");
+        waitAndClick("Not set", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Operator name");
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursMon]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursThu]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursFri]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursSat]", SelectorType.NAME));
+        assertFalse(isElementPresent("details[hoursOfWeek][hoursPerWeekContent][hoursSun]", SelectorType.NAME));
+    }
+
+    @Then("irfo page should not displayed any input fields")
+    public void irfoPageShouldNotDisplayedAnyInputFields() {
+        assertFalse(isElementPresent("fields_irfoNationality__chosen", SelectorType.ID));
+        assertFalse(isElementPresent("fields[tradingNames][0][name]", SelectorType.NAME));
+        assertFalse(isElementPresent("Add another trading name", SelectorType.LINKTEXT));
+        assertFalse(isElementPresent("Add another partner detail", SelectorType.LINKTEXT));
+        assertFalse(isElementPresent("fields[irfoPartners][0][name]", SelectorType.NAME));
+        assertFalse(isElementPresent("address[searchPostcode][postcode]", SelectorType.NAME));
+        assertFalse(isElementPresent("contact[phone_secondary]", SelectorType.NAME));
+        assertFalse(isElementPresent("contact[email]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[cancel]", SelectorType.NAME));
+    }
+
+    @Then("i should not be able to add case details")
+    public void iShouldNotBeAbleToAddCaseDetails() {
+        waitAndClick("Convictions", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Convictions");
+        assertFalse(isElementPresent("add", SelectorType.ID));
+        assertFalse(isElementPresent("fields[comment]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        assertFalse(isElementPresent("fields[description]", SelectorType.NAME));
+        waitAndClick("Annual test history", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Annual test history");
+        assertFalse(isElementPresent("fields[ecmsNo]", SelectorType.NAME));
+        assertFalse(isElementPresent("fields[annualTestHistory]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        waitAndClick("Serious infringements", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Serious infringements");
+        assertFalse(isElementPresent("fields[comment]", SelectorType.NAME));
+        assertFalse(isElementPresent("add", SelectorType.ID));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        waitAndClick("Prohibitions", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Prohibitions");
+        assertFalse(isElementPresent("fields[comment]", SelectorType.NAME));
+        assertFalse(isElementPresent("add", SelectorType.ID));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[cancel]", SelectorType.NAME));
+        waitAndClick("Section statements", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Statements");
+        assertFalse(isElementPresent("add", SelectorType.ID));
+        waitAndClick("Complaints", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Complaints");
+        assertFalse(isElementPresent("add", SelectorType.ID));
+        waitAndClick("Conditions & undertakings", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Conditions & undertakings");
+        assertFalse(isElementPresent("add", SelectorType.ID));
+    }
+
+    @And("i should not be able to create snapshots")
+    public void iShouldNotBeAbleToCreateSnapshots() {
+        waitAndClick("Submissions", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Submission");
+        waitAndClick("6648", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Licensing (G) Submission");
+        assertFalse(isElementPresent("//*[contains(text(),'Reopen')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//*[contains(text(),'Return')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//*[contains(text(),'Print submission')]", SelectorType.XPATH));
+        assertFalse(isElementPresent("//*[contains(text(),'Create snapshot')]", SelectorType.XPATH));
+    }
+
+    @And("i should not be able to edit case details")
+    public void iShouldNotBeAbleToEditCaseDetails() {
+        waitAndClick("Case details", SelectorType.LINKTEXT);
+        waitForTextToBePresent("Overview");
+        waitAndClick("//*[contains(text(), 'Edit')]", SelectorType.XPATH);
+        assertFalse(isElementPresent("fields[caseType]", SelectorType.ID));
+        assertFalse(isElementPresent("//*[@id='fields_categorys__chosen']", SelectorType.XPATH));
+        assertFalse(isElementPresent("fields[description]", SelectorType.NAME));
+        assertFalse(isElementPresent("fields[ecmsNo]", SelectorType.NAME));
+        assertFalse(isElementPresent("//*[@id='fields_outcomes__chosen']", SelectorType.XPATH));
+        assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
+        assertFalse(isElementPresent("form-actions[cancel]", SelectorType.NAME));
+        waitAndClick("//*[@class='modal__close']", SelectorType.XPATH);
     }
 }

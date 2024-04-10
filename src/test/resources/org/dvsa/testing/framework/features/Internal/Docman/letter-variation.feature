@@ -5,7 +5,7 @@ Feature: Generate letter on Variation
 
   Background:
     Given i have an internal admin user
-    And i have logged in to internal
+    And i have logged in to internal as "admin"
 
     Scenario: Generate letter and filter by variation
       When I am on a licence Overview page

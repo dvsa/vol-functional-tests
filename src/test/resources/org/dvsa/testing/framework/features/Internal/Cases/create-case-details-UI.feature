@@ -9,7 +9,7 @@ Feature: Public enquiry added and published and deletion of case notes
   Background:
     Given i have a valid "goods" "standard_national" licence
     And I create a new case
-    And i have logged in to internal
+    And i have logged in to internal as "admin"
     When i url search for my licence
 
   @inquiry

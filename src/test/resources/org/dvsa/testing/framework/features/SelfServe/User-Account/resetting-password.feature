@@ -4,6 +4,7 @@
 @printAndSign
 
 Feature: resetting password with valid/invalid user
+
 Background:
   Given I create a new external user
 
@@ -13,7 +14,7 @@ Background:
     And I receive the reset password link via email
     Then I should be able to login with my new password
 
-
+  @invalid-reset
   Scenario: Reset password for invalid user
     Given i try resetting my password
     Then i will receive an error that username invalid

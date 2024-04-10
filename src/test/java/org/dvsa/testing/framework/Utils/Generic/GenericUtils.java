@@ -1,24 +1,11 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import activesupport.number.Int;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
+import activesupport.number.Int;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.jetbrains.annotations.NotNull;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.zeroturnaround.zip.ZipUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
@@ -32,7 +19,21 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.jetbrains.annotations.NotNull;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.zeroturnaround.zip.ZipUtil;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -41,7 +42,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,9 +52,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URLEncoder;
 
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
@@ -159,14 +157,17 @@ public class GenericUtils extends BasePage {
     public String getResetPasswordLink() throws InterruptedException {
         Thread.sleep(100000);
         String htmlContent = world.configuration.getPasswordResetLink();
-        String sanatisedHTML = htmlContent.replace("3D", "")
-                .replace("co=", "co")
-                .replaceAll("(nfirmationId=[^&]+)=", "$1");
-        org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
+        String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
+                .replaceAll("=0A", "")
+                .replaceAll("=20", "")
+                .replaceAll("=\n", "")
+                .replaceAll("=\r", "");
+        String domainURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/reset-password").toString();
+        org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
-            if (link.attr("abs:href").contains("ssweb")) {
-                String resetPasswordLink = link.attr("abs:href");
+            String resetPasswordLink = link.attr("abs:href");
+            if (resetPasswordLink.contains(domainURL)) {
                 WebDriver driver = Browser.navigate();
                 driver.get(resetPasswordLink);
                 return resetPasswordLink;
