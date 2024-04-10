@@ -1,6 +1,6 @@
-@messaging @ss_messaging
+@messaging @ssMessageDisplay
 
-Feature: Viewing messages tab as an external user
+Feature: External users can view the messaging tab, as well as create new messages, replies, message status, message notification count, and back button.
 
   @ss-messageheading-check
   Scenario: Viewing messaging tab from an Under Consideration application
@@ -18,7 +18,7 @@ Feature: Viewing messages tab as an external user
     * i click the messages heading
     * i click on start a new conversation link
 
-  @ss-message-replymessage
+  @ss-message-replyMessage
   Scenario: Operator reply for case worker message
     Given i have a valid "goods" "restricted" licence
     And i create an admin and url search for my licence
@@ -27,7 +27,7 @@ Feature: Viewing messages tab as an external user
     * i have logged in to self serve
     * i redirect to the message tab to respond to the case worker's message
 
-  @ss-message-openstatus-check
+  @ss-message-openStatus-check
   Scenario: Check open message status
     Given i have a valid "goods" "restricted" licence
     And i create an admin and url search for my licence

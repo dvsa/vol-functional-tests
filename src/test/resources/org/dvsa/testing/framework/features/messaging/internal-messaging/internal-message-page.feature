@@ -1,6 +1,6 @@
 @messaging @internalMessageDisplay
 
-Feature: Viewing messages tab as an internal user
+Feature: Viewing the messages tab as an internal user for various licence types and operators
 
 
   @int-message-heading
@@ -48,12 +48,6 @@ Feature: Viewing messages tab as an internal user
   When i search for and click on my licence
     Then i validate the new message count appears on the messaging tab
 
-
-  # Test can potentially be reinstated based on the implementation of VOL-4692
-# Scenario: Viewing from a Not Yet Submitted application
-#    Given i have a "goods" "restricted" partial application
-#    And i create an admin and url search for my application
-#   Then the messaging heading should not be displayed
 
 #  @int-message-task-check
 #    Scenario: Check if a task has been created in internal for the new message
