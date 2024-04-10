@@ -23,11 +23,7 @@ public class InternalSearchJourney extends BasePage {
             clickByLinkText("Interim ");
     }
 
-    public void searchAndViewLicence(String licenceNo) {
-        String licenceNumber;
-        if(world.applicationDetails.getLicenceNumber() != null) {
-            licenceNumber = world.applicationDetails.getLicenceNumber();
-        } else { licenceNumber = licenceNo;}
+    public void searchAndViewLicence(String licenceNumber) {
         internalSearchUntilTextPresent(SearchType.Licence, licenceNumber, licenceNumber);
     }
 

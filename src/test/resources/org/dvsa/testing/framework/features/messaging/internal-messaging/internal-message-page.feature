@@ -44,8 +44,8 @@ Feature: Viewing messages tab as an internal user
     * i have logged in to self serve
     * i click the messages heading
     * i click on start a new conversation link
-    * i have logged in to internal
-  And i search for and click on my licence
+    * i have logged in to internal as "admin"
+  When i search for and click on my licence
     Then i validate the new message count appears on the messaging tab
 
 
