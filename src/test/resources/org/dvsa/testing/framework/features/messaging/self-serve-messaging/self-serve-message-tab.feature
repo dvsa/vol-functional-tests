@@ -1,4 +1,4 @@
-@messages @messages-tab-visibility
+@messaging @messages-tab-visibility
 
  Feature: Viewing messages tab as an Operator user
 
