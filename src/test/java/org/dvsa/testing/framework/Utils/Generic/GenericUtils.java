@@ -350,8 +350,8 @@ public class GenericUtils extends BasePage {
 
         URI uri = URI.create(urlString);
         HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
                 new UsernamePasswordCredentials(username, password));
         // Create AuthCache instance
         AuthCache authCache = new BasicAuthCache();
@@ -359,7 +359,7 @@ public class GenericUtils extends BasePage {
         BasicScheme basicAuth = new BasicScheme();
         authCache.put(host, basicAuth);
         CloseableHttpClient httpClient =
-                HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+                HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
         HttpPost httpPost = new HttpPost(uri);
         // Add AuthCache to the execution context
         HttpClientContext localContext = HttpClientContext.create();
@@ -379,5 +379,3 @@ public class GenericUtils extends BasePage {
         return (statusCode == 201);
     }
 }
-
-
