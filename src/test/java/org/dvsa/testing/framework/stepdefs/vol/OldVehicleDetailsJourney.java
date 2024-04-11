@@ -115,5 +115,9 @@ public class OldVehicleDetailsJourney extends BasePage {
     @When("i add a vehicle {string} belonging to another application")
     public void iAddAVehicleBelongingToAnotherApplication(String vrm) {
         world.selfServeUIJourney.addAVehicleToAnApplication(vrm,"4560");
+        waitForTextToBePresent("I confirm that I would like to continue adding this vehicle");
+        waitAndClick("licence-vehicle[confirm-add]", SelectorType.ID);
+        UniversalActions.clickSubmit();
+        assertTrue(isTextPresent("The vehicle has been added"));
     }
 }
