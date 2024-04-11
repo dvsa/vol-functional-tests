@@ -91,5 +91,8 @@ public class Initialisation extends BasePage {
         world.accessibilitySteps = new AccessibilitySteps(world);
         world.selfServeUIJourney = new SelfServeUIJourney(world);
         world.internalUIJourney = new InternalUIJourney(world);
+        world.messagingJourney = new MessagingJourney(world);
+        world.messagingInternal = new MessagingInternal(world);
+        world.messagingSelfServe = new MessagingSelfServe(world);
     }
 }
