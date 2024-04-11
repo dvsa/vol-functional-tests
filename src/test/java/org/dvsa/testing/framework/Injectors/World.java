@@ -97,4 +97,8 @@ public class World {
 
     public MessagingJourney messagingJourney;
 
+    public MessagingInternal messagingInternal;
+
+    public MessagingSelfServe messagingSelfServe;
+
 }
