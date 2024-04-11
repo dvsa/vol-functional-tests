@@ -67,7 +67,7 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-        if (isTitlePresent("Create a GOV.UK One Login or sign in", 1)) {
+        if (isTitlePresent("Create your GOV.UK One Login or sign in", 1)) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
