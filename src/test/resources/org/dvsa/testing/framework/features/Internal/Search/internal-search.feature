@@ -5,6 +5,7 @@ Feature: Internal Search
 
   Background:
     Given i have a valid "public" "standard_national" licence
+    And i have logged in to internal as "admin"
 
   @smoketest @searchLicence @int_regression
   Scenario: Search a Licence on Internal
