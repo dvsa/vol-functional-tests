@@ -123,6 +123,7 @@ public class RemoveTM extends BasePage {
         waitForTextToBePresent(alertHeaderValue);
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
+        waitForTextToBePresent("The Transport Manager(s) have been removed");
     }
 
     @And("the last TM letter should be sent")

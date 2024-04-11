@@ -372,7 +372,7 @@ public class GenericUtils extends BasePage {
     public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException {
         String node = URLEncoder.encode(env + "&&api&&olcs");
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
-                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ENVIRONMENT_NAME=%s", node,env, batchCommand);
+                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ENVIRONMENT_NAME=%s", node,batchCommand,env);
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
         //you can assert against the status code here == 201
