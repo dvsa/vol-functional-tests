@@ -48,9 +48,9 @@ public class MessagingJourney extends BasePage {
     }
 
     public void archiveTheConversation() {
-        clickById("close");
-        assert (isElementPresent("//*[contains(@class,'field')]", SelectorType.XPATH));
-        click("//*[@id='close']", SelectorType.XPATH);
+        click("//button[@id='close']", SelectorType.XPATH);
+        waitForTextToBePresent("End Conversation");
+        click("//button[@id='close']", SelectorType.XPATH);
         waitForTextToBePresent("CLOSED");
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
     }
