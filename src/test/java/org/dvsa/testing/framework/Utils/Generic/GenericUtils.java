@@ -369,12 +369,13 @@ public class GenericUtils extends BasePage {
         return response.getStatusLine().getStatusCode();
     }
 
-    public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException {
+    public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode(env + "&&api&&olcs");
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ENVIRONMENT_NAME=%s", node,batchCommand,env);
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        Thread.sleep(2000);
         //you can assert against the status code here == 201
         return (statusCode == 201);
     }

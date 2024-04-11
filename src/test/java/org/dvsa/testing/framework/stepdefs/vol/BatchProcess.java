@@ -21,12 +21,12 @@ public class BatchProcess {
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
     @And("the duplicate letter job is run")
-    public void theDuplicateLetterJobIsRun() throws IOException {
+    public void theDuplicateLetterJobIsRun() throws IOException, InterruptedException {
         assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @And("the last TM letter job is run")
-    public void theLastTMLetterJobIsRun() throws IOException {
+    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
         assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 }
