@@ -45,7 +45,6 @@ public class ManageVehicle extends BasePage {
     @And("choose to add a {string} vehicle")
     public void chooseToAddAVehicle(String VRM){
         world.selfServeUIJourney.addAVehicle(VRM);
-        waitAndClick("confirm", SelectorType.ID);
         if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
             findSelectAllRadioButtonsByValue("yes");
             clickById("next");
@@ -102,12 +101,14 @@ public class ManageVehicle extends BasePage {
 
     @And("I add a vehicle belonging to another licence")
     public void iAddAVehicleBelongingToAnotherLicence() {
-        //Todo
+        world.selfServeUIJourney.addAVehicle("S679ASX");
     }
 
     @Then("I should be prompted that vehicle belongs to another licence")
     public void iShouldBePromptedThatVehicleBelongsToAnotherLicence() {
-        //Todo
+        assertTrue(isTextPresent(String.format("%s is specified on another licence.", "S679ASX")));
+        findSelectAllRadioButtonsByValue("yes");
+        clickById("next");
     }
 
     @And("I choose to remove a vehicle")
