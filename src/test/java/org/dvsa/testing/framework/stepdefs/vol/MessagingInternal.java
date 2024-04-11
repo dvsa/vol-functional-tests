@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class MessagingInternal extends BasePage {
+
     @Then("the messaging heading should be displayed")
     public void theMessagingHeadingShouldBeDisplayed() {
         MessagingJourney.messageHeading();
