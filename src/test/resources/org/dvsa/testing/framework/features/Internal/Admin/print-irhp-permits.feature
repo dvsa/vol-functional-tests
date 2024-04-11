@@ -1,3 +1,4 @@
+@eupa_regression
 Feature: Admin can print IRHP Permits
 
   Scenario:
