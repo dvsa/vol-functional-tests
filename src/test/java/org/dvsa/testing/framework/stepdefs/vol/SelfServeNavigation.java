@@ -64,4 +64,9 @@ public class SelfServeNavigation extends BasePage {
     public void iAmOnTheOperatingCentreAndAuthorisationsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
+
+    @And("i log back in as the operator")
+    public void iLogBackInAsTheOperator() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    }
 }
