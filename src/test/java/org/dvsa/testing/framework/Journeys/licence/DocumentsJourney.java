@@ -14,7 +14,7 @@ public class DocumentsJourney extends BasePage {
     public void noteDocId() {
         clickByLinkText("Docs & attachments");
         waitForPageLoad();
-        String docId = getAttribute("//a[@class='govuk-link']", SelectorType.XPATH, "govuk-link" );
+        String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
 
     }
 }
