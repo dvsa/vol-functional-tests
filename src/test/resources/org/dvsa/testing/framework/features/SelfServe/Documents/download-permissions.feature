@@ -6,8 +6,8 @@ Background:
 
   Scenario: Operator is able to download the document
     And i print a licence document
-   ## And i note the document id
-   ## And i log back in as the operator
+    And i note the document id
+    And i log back in as the operator
    ## Then i should be able to download the file
 
 
@@ -16,4 +16,4 @@ Background:
   ##  And upload a document
   ##  And i note the document id
   ##  And i log back in as the operator
-  ##  Then i should be able to download the file
+  ##  Then i should not be able to download the file

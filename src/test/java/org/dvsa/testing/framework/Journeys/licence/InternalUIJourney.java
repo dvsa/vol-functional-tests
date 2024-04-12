@@ -310,5 +310,10 @@ public class InternalUIJourney extends BasePage {
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
+
+    public void printLicence() {
+        clickByLinkText("Print licence");
+        waitForTextToBePresent("Licence printed successfully");
+    }
 }
 
