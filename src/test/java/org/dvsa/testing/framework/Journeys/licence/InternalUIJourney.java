@@ -301,6 +301,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void uploadDocument(String filePath) {
+        clickByLinkText("Docs & attachments");
         click("//*[@id='upload']", SelectorType.XPATH);
         waitForTextToBePresent("Upload document");
         waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH, "distinctiveName");
@@ -314,6 +315,8 @@ public class InternalUIJourney extends BasePage {
     public void printLicence() {
         clickByLinkText("Print licence");
         waitForTextToBePresent("Licence printed successfully");
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("GV Licence");
     }
 }
 

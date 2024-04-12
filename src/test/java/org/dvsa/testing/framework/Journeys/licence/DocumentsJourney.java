@@ -13,7 +13,6 @@ public class DocumentsJourney extends BasePage {
         this.world = world;
     }
     public void noteDocId() {
-        clickByLinkText("Docs & attachments");
         String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
     }
 
