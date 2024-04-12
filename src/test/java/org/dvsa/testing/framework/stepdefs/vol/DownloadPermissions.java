@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -17,5 +18,15 @@ public class DownloadPermissions extends BasePage {
     @And("i note the document id")
     public void iNoteTheDocumentId() {
         world.documentsJourney.noteDocId();
+    }
+
+    @Then("i should be able to download the file")
+    public void iShouldBeAbleToDownloadTheFile() {
+        world.documentsJourney.noErrorOnDownload();
+    }
+
+    @Then("i should not be able to download the file")
+    public void iShouldNotBeAbleToDownloadTheFile() {
+        world.documentsJourney.errorOnDownload();
     }
 }

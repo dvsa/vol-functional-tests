@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DocumentsJourney extends BasePage {
 
@@ -13,8 +14,16 @@ public class DocumentsJourney extends BasePage {
     }
     public void noteDocId() {
         clickByLinkText("Docs & attachments");
-        waitForPageLoad();
         String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
+    }
 
+    public void noErrorOnDownload() {
+
+        assertFalse(isTextPresent("We can't find that page"));
+    }
+
+    public void errorOnDownload() {
+
+        assertTrue(isTextPresent("We can't find that page"));
     }
 }
