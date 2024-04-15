@@ -70,11 +70,6 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i log back in as the operator")
     public void iLogBackInAsTheOperator() {
-        String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
-        String trimmedUrl = docId.substring(docId.lastIndexOf("/file") + 1);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl).toString();
-        DriverUtils.get(myURL);
-
     }
 }

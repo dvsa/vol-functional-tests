@@ -17,7 +17,7 @@ public class DownloadPermissions extends BasePage {
 
     @And("i note the document id")
     public void iNoteTheDocumentId() {
-  //      world.documentsJourney.noteDocId();
+       world.documentsJourney.noteDocId();
     }
 
     @Then("i should be able to download the file")
