@@ -6,6 +6,7 @@ public enum Tab {
     LICENCES("Licences"),
     FEES("Fees"),
     DOCUMENTS("Documents"),
+    MESSAGES("Messages"),
     PERMITS("Permits");
 
     private String title;

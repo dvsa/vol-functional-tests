@@ -25,7 +25,7 @@ Feature: Search and add a vehicle
 
   @dvla-add-vehicle-another-licence
   Scenario: Add an a vehicle belonging to another licence
-    Given I have a "goods" "standard_national" licence
+    Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     When I navigate to manage vehicle page on a licence
     And I add a vehicle belonging to another licence
     Then I should be prompted that vehicle belongs to another licence

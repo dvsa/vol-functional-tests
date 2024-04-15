@@ -32,7 +32,7 @@ public class PrintingAndScanningJourney extends BasePage {
     }
 
     public void completeComplianceScanningDetails() {
-        waitForPageLoad();
+        waitForTitleToBePresent("Scanning");
         selectValueFromDropDown("category", SelectorType.ID, "Compliance");
         waitAndClick("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");

@@ -202,4 +202,15 @@ public class InternalNavigation extends BasePage {
                 break;
         }
     }
+
+    public void navigateToPrintIRHPPermits(){
+        clickById("menu-admin-dashboard/admin-printing/irhp-permits");
+    }
+
+    public void searchForIRHPPermitsToPrint(){
+        selectValueFromDropDownByIndex("irhpPermitType", SelectorType.ID, 1);
+        waitAndClick("irhpPermitStock", SelectorType.ID);
+        selectValueFromDropDownByIndex("irhpPermitStock", SelectorType.ID, 1);
+        clickById("form-actions[search]");
+    }
 }

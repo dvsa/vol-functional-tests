@@ -18,17 +18,17 @@ public class InternalSearch extends BasePage {
     public InternalSearch(World world) {
         this.world = world;
     }
-    @When("i search for and click on my licence")
+
     @When("i search for and click on my licence {string}")
-    public void iSearchForAndClickOnMyLicence(@Nullable String licence) throws HttpException {
-        if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
-            world.internalSearchJourney.searchAndViewLicence(licence);
-        } else {
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.logInAsAdmin();
+    public void iSearchForAndClickOnMyLicence(@Nullable String licence){
             world.internalSearchJourney.searchAndViewLicence(licence);
         }
+
+    @When("i search for and click on my licence")
+    public void searchForLicence(){
+        world.internalSearchJourney.searchAndViewLicence(world.applicationDetails.getLicenceNumber());
     }
+
     @When("i search for and click on my application")
     public void iSearchForAndClickOnMyApplication() throws HttpException {
         if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
@@ -47,18 +47,15 @@ public class InternalSearch extends BasePage {
     }
     @When("i search for my psv disc")
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() {
-        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
     }
 
     @When("i search for a vehicle by registration {string}")
     public void iSearchForAVehicleByRegistration(String vrm) {
-        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewVehicleRegistration(vrm);
     }
     @When("i search for my address and click on my licence and addresses")
     public void iSearchForMyAddressAndClickOnMyLicenceAndAddresses() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalSearchJourney.searchAndViewAddress();
     }

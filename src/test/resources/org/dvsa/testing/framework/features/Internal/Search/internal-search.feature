@@ -5,6 +5,7 @@ Feature: Internal Search
 
   Background:
     Given i have a valid "public" "standard_national" licence
+    And i have logged in to internal as "admin"
 
   @smoketest @searchLicence @int_regression
   Scenario: Search a Licence on Internal
@@ -34,6 +35,6 @@ Feature: Internal Search
     Then the "Correspondence address" page should display
 
   @searchVehicle @int_regression
-  Scenario: Search for Address on Internal
+  Scenario: Search for Vehicle on Internal
     When i search for a vehicle by registration "AE83XUF"
     Then the registration "AE83XUF" should be displayed

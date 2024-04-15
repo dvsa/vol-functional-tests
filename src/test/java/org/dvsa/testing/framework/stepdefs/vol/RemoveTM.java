@@ -123,12 +123,7 @@ public class RemoveTM extends BasePage {
         waitForTextToBePresent(alertHeaderValue);
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
-    }
-
-    @And("the last TM letter job is run")
-    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        assertTrue(GenericUtils.jenkinsTest(env,world.configuration.config.getString("jenkinsUser"),world.configuration.config.getString("jenkinsAPIKey")));
+        waitForTextToBePresent("The Transport Manager(s) have been removed");
     }
 
     @And("the last TM letter should be sent")
