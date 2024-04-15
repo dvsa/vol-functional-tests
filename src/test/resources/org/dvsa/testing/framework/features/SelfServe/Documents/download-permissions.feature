@@ -1,3 +1,5 @@
+@downloadPermissions
+
 Feature: Permissions for Self Service users downloading documents
 
 Background:

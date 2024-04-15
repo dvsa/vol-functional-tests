@@ -29,13 +29,12 @@ public class DocumentsJourney extends BasePage {
         String myURL = String.valueOf(URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
         DriverUtils.get(myURL);
         wait(10000);
-        assertFalse(isTextPresent("We can't find that page"));
+        assertFalse(isTitlePresent("We can't find that page", 5));
     }
 
     public void errorOnDownload() throws InterruptedException {
         String myURL = String.valueOf(URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
         DriverUtils.get(myURL);
-        wait(10000);
-        assertTrue(isTextPresent("We can't find that page"));
+        assertTrue(isTitlePresent("We can't find that page", 5));
     }
 }
