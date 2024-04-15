@@ -5,7 +5,10 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,6 +70,11 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i log back in as the operator")
     public void iLogBackInAsTheOperator() {
+        String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
+        String trimmedUrl = docId.substring(docId.lastIndexOf("/file") + 1);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl).toString();
+        DriverUtils.get(myURL);
+
     }
 }

@@ -14,12 +14,6 @@ public class DocumentsJourney extends BasePage {
     public DocumentsJourney(World world) {
         this.world = world;
     }
-    public void noteDocId() {
-        clickByLinkText("Docs & attachments");
-        waitForPageLoad();
-        String docId = getAttribute("//a[contains(@href, '/file/')]", SelectorType.XPATH, "href");
-        String trimmedUrl = docId.substring(docId.lastIndexOf("/file") + 1);
-    }
 
     public void noErrorOnDownload() {
 
