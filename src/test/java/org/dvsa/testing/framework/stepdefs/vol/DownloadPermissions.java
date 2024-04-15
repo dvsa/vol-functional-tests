@@ -21,12 +21,18 @@ public class DownloadPermissions extends BasePage {
     }
 
     @Then("i should be able to download the file")
-    public void iShouldBeAbleToDownloadTheFile() {
+    public void iShouldBeAbleToDownloadTheFile() throws InterruptedException {
         world.documentsJourney.noErrorOnDownload();
     }
 
     @Then("i should not be able to download the file")
-    public void iShouldNotBeAbleToDownloadTheFile() {
+    public void iShouldNotBeAbleToDownloadTheFile() throws InterruptedException {
         world.documentsJourney.errorOnDownload();
+    }
+
+    @And("i change the operator correspondence to Post")
+    public void iChangeTheOperatorCorrespondenceToPost() {
+        world.internalUIJourney.changeToPostOnOperatorProfile();
+        world.internalUIJourney.navigateToLicenceFromOperatorProfile();
     }
 }

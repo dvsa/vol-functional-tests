@@ -301,7 +301,6 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void uploadDocument(String filePath) {
-        clickByLinkText("Docs & attachments");
         click("//*[@id='upload']", SelectorType.XPATH);
         waitForTextToBePresent("Upload document");
         waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH, "distinctiveName");
@@ -317,6 +316,20 @@ public class InternalUIJourney extends BasePage {
         waitForTextToBePresent("Licence printed successfully");
         clickByLinkText("Docs & attachments");
         waitForTextToBePresent("GV Licence");
+    }
+
+    public void changeToPostOnOperatorProfile() {
+        click("//p[@class='small-module__details']//a[1]", SelectorType.XPATH);
+        waitForTextToBePresent("Operator profile");
+        click("//input[@type='radio']", SelectorType.XPATH);
+        clickById("form-actions[save]");
+        waitForTextToBePresent("The operator has been updated successfully");
+    }
+
+    public void navigateToLicenceFromOperatorProfile() {
+        clickByLinkText("Licences");
+        waitForElementToBePresent("//a[@class='govuk-link']");
+        click("//a[@class='govuk-link']", SelectorType.XPATH);
     }
 }
 

@@ -12,7 +12,8 @@ Background:
 
 
   Scenario: Operator is prevented from downloading the document
-    And upload a document
+    And i change the operator correspondence to Post
+    And i print a licence document
     And i note the document id
     And i log back in as the operator
     Then i should not be able to download the file
