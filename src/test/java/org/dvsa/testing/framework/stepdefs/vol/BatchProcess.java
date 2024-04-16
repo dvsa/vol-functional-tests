@@ -56,11 +56,12 @@ public class BatchProcess extends BasePage {
 
     @Then("the registration should be marked as expired")
     public void theRegistrationShouldBeMarkedAsExpired() throws InterruptedException {
-        boolean isElementShown;
+        boolean isElementDisplayed;
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            isElementShown = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
-            assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
-        } while (!isElementShown && System.currentTimeMillis() < kickOut);
+            isElementDisplayed = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
+            refreshPage();
+        } while (!isElementDisplayed && System.currentTimeMillis() < kickOut);
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
     }
 }
