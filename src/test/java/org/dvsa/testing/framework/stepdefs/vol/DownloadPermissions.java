@@ -21,12 +21,12 @@ public class DownloadPermissions extends BasePage {
     }
 
     @Then("i should be able to download the file")
-    public void iShouldBeAbleToDownloadTheFile() throws InterruptedException {
+    public void iShouldBeAbleToDownloadTheFile() {
         world.documentsJourney.noErrorOnDownload();
     }
 
     @Then("i should not be able to download the file")
-    public void iShouldNotBeAbleToDownloadTheFile() throws InterruptedException {
+    public void iShouldNotBeAbleToDownloadTheFile() {
         world.documentsJourney.errorOnDownload();
     }
 
