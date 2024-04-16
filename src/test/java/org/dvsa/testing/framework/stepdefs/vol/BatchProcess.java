@@ -53,8 +53,9 @@ public class BatchProcess extends BasePage {
     }
 
     @Then("the registration should be marked as expired")
-    public void theRegistrationShouldBeMarkedAsExpired() {
+    public void theRegistrationShouldBeMarkedAsExpired() throws InterruptedException {
         refreshPage();
+        Thread.sleep(5000);
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "EXPIRED");
     }
 }
