@@ -46,7 +46,7 @@ public class BusRegistrationJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month) {
+    public void internalSiteAddBusNewReg(int plusOrMinusDay, int plusOrMinusMonth, int plusOrMinusYear) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"), SelectorType.CSS);
@@ -60,10 +60,10 @@ public class BusRegistrationJourney extends BasePage {
         findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 
         HashMap<String, String> dates;
-        dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
+        dates = world.globalMethods.date.getDateHashMap(plusOrMinusDay, plusOrMinusMonth, plusOrMinusYear);
         enterDateFieldsByPartialId("receivedDate", dates);
 
-        dates = world.globalMethods.date.getDateHashMap(0, month, 0);
+        dates = world.globalMethods.date.getDateHashMap(plusOrMinusDay, plusOrMinusMonth, plusOrMinusYear);
         enterDateFieldsByPartialId("effectiveDate", dates);
         UniversalActions.clickSubmit();
 

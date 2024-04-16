@@ -43,18 +43,7 @@ public class EBSRUpload extends BasePage {
 
     @And("i add a new bus registration")
     public void iAddANewBusRegistration() {
-        world.internalNavigation.getLicence();
-        world.busRegistrationJourney.internalSiteAddBusNewReg(5);
-        clickByLinkText("Register");
-        findSelectAllRadioButtonsByValue("Y");
-        UniversalActions.clickSubmit();
-        clickByLinkText("Service details");
-        clickByLinkText("TA's");
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result\"]");
-        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        UniversalActions.clickSubmit();
+        world.internalUIJourney.manualBusRegistration();
     }
 
     @When("it has been paid and granted")

@@ -243,6 +243,21 @@ public class InternalUIJourney extends BasePage {
         world.globalMethods.signIn(user, password);
     }
 
+    public void manualBusRegistration() {
+        world.internalNavigation.getLicence();
+        world.busRegistrationJourney.internalSiteAddBusNewReg(5);
+        clickByLinkText("Register");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        clickByLinkText("Service details");
+        clickByLinkText("TA's");
+        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result\"]");
+        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
+        UniversalActions.clickSubmit();
+    }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
