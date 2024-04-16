@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
@@ -55,7 +56,11 @@ public class BatchProcess extends BasePage {
 
     @Then("the registration should be marked as expired")
     public void theRegistrationShouldBeMarkedAsExpired() throws InterruptedException {
-        refreshPageWithJavascript();
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
+        boolean isElementShown;
+        long kickOut = System.currentTimeMillis() + 120000;
+        do {
+            isElementShown = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
+            assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
+        } while (!isElementShown && System.currentTimeMillis() < kickOut);
     }
 }
