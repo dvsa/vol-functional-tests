@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,8 +55,8 @@ public class BatchProcess extends BasePage {
 
     @Then("the registration should be marked as expired")
     public void theRegistrationShouldBeMarkedAsExpired() throws InterruptedException {
-        refreshPage();
         Thread.sleep(20000);
+        refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "EXPIRED");
     }
 }
