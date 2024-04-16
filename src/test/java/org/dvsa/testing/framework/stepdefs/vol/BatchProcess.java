@@ -41,6 +41,7 @@ public class BatchProcess extends BasePage {
     public void iShouldReceiveADuplicateVehicleEmail() {
 //        For this scenario to work, we need the test pipeline to have access to the read replica DB, due to the fact
 //        that we need to have the warning_letter_seed_date to be 28 days in the past
+        //SQL - UPDATE `OLCS_RDS_OLCSDB`.`licence_vehicle` SET `warning_letter_seed_date` = 'YYYY-MM-DD HH:mm:ss' WHERE (`id` = 'licenceId');
     }
 
     @When("i add a new bus registration with a past date")
