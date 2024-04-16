@@ -1,4 +1,4 @@
-@downloadPermissions
+@downloadPermissions @ss_regression @FullRegression
 
 Feature: Permissions for Self Service users downloading documents
 
