@@ -12,7 +12,6 @@ Background:
     And i log back in as the operator
     Then i should be able to download the file
 
-
   Scenario: Operator is prevented from downloading the document
     And i change the operator correspondence to Post
     And i print a licence document

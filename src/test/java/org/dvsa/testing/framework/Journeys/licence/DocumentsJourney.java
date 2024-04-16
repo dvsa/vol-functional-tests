@@ -28,7 +28,6 @@ public class DocumentsJourney extends BasePage {
     public void noErrorOnDownload() throws InterruptedException {
         String myURL = String.valueOf(URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
         DriverUtils.get(myURL);
-        wait(10000);
         assertFalse(isTitlePresent("We can't find that page", 5));
     }
 
