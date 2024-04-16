@@ -375,7 +375,7 @@ public class GenericUtils extends BasePage {
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ENVIRONMENT_NAME=%s", node,batchCommand,env);
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
-        Thread.sleep(2000);
+        Thread.sleep(4000);
         //you can assert against the status code here == 201
         return (statusCode == 201);
     }

@@ -9,10 +9,10 @@ Feature: Batch process
     And the duplicate letter job is run
     Then i should receive a duplicate vehicle email
 
-    @batch-expired-bus
+  @batch-expired-bus
   Scenario: Expire Bus Registration
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal as "admin"
     When i add a new bus registration with a past date
-    And i trigger the `expire-bus-registration` batch job
+    And i trigger the expire-bus-registration batch job
     Then the registration should be marked as expired

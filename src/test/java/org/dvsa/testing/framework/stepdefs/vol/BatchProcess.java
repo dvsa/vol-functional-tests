@@ -47,13 +47,14 @@ public class BatchProcess extends BasePage {
         world.internalUIJourney.payFee();
     }
 
-    @And("i trigger the `expire-bus-registration` batch job")
+    @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
         assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @Then("the registration should be marked as expired")
     public void theRegistrationShouldBeMarkedAsExpired() {
+        refreshPage();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "EXPIRED");
     }
 }
