@@ -3,16 +3,20 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.BatchCommands;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BatchProcess {
+public class BatchProcess extends BasePage {
 
     private final World world;
 
@@ -35,5 +39,21 @@ public class BatchProcess {
     public void iShouldReceiveADuplicateVehicleEmail() {
 //        For this scenario to work, we need the test pipeline to have access to the read replica DB, due to the fact
 //        that we need to have the warning_letter_seed_date to be 28 days in the past
+    }
+
+    @When("i add a new bus registration with a past date")
+    public void iAddANewBusRegistrationWithAPastDate() {
+        world.internalUIJourney.manualBusRegistration(0,5,0);
+        world.internalUIJourney.payFee();
+    }
+
+    @And("i trigger the `expire-bus-registration` batch job")
+    public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
+    }
+
+    @Then("the registration should be marked as expired")
+    public void theRegistrationShouldBeMarkedAsExpired() {
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "EXPIRED");
     }
 }

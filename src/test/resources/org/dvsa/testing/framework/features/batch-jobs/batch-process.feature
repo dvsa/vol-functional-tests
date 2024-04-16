@@ -9,7 +9,8 @@ Feature: Batch process
     And the duplicate letter job is run
     Then i should receive a duplicate vehicle email
 
-  Scenario: Remove duplicate vehicle
+    @batch-expired-bus
+  Scenario: Expire Bus Registration
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal as "admin"
     When i add a new bus registration with a past date
