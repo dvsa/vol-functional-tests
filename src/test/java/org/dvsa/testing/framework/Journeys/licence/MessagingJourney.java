@@ -68,7 +68,7 @@ public class MessagingJourney extends BasePage {
         selectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
         clickById("date");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Open");
-        click("//*[@id='messaging']", SelectorType.XPATH);
+        waitAndClick("//*[@id='messaging']", SelectorType.XPATH);
     }
 
     public void checkForNewTask() {
