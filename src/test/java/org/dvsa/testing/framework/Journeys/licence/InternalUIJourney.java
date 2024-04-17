@@ -332,5 +332,26 @@ public class InternalUIJourney extends BasePage {
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
+
+    public void printLicence() {
+        clickByLinkText("Print licence");
+        waitForTextToBePresent("Licence printed successfully");
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("GV Licence");
+    }
+
+    public void changeToPostOnOperatorProfile() {
+        click("//p[@class='small-module__details']//a[1]", SelectorType.XPATH);
+        waitForTextToBePresent("Operator profile");
+        click("//input[@type='radio']", SelectorType.XPATH);
+        clickById("form-actions[save]");
+        waitForTextToBePresent("The operator has been updated successfully");
+    }
+
+    public void navigateToLicenceFromOperatorProfile() {
+        clickByLinkText("Licences");
+        waitForElementToBePresent("//a[@class='govuk-link']");
+        click("//a[@class='govuk-link']", SelectorType.XPATH);
+    }
 }
 
