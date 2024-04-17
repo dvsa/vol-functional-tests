@@ -34,6 +34,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.zeroturnaround.zip.ZipUtil;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -76,7 +77,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String RegistrationNumber = String.valueOf(Int.random(0,9999));
+            String RegistrationNumber = String.valueOf(Int.random(0, 9999));
             String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -106,9 +107,9 @@ public class GenericUtils extends BasePage {
                     }
                     if ("TrafficAreaName".equals(node.getNodeName())) {
                         String trafficAreaName;
-                        if(world.configuration.env.toString().equals("int")){
+                        if (world.configuration.env.toString().equals("int")) {
                             trafficAreaName = "East";
-                        }else{
+                        } else {
                             trafficAreaName = world.updateLicence.getTrafficAreaName();
                         }
                         switch (trafficAreaName) {
@@ -349,8 +350,8 @@ public class GenericUtils extends BasePage {
 
         URI uri = URI.create(urlString);
         HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        credentialsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
                 new UsernamePasswordCredentials(username, password));
         // Create AuthCache instance
         AuthCache authCache = new BasicAuthCache();
@@ -358,7 +359,7 @@ public class GenericUtils extends BasePage {
         BasicScheme basicAuth = new BasicScheme();
         authCache.put(host, basicAuth);
         CloseableHttpClient httpClient =
-                HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+                HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
         HttpPost httpPost = new HttpPost(uri);
         // Add AuthCache to the execution context
         HttpClientContext localContext = HttpClientContext.create();
@@ -367,16 +368,15 @@ public class GenericUtils extends BasePage {
         HttpResponse response = httpClient.execute(host, httpPost, localContext);
         return response.getStatusLine().getStatusCode();
     }
-      public static boolean jenkinsTest(EnvironmentType env, String username, String password) throws IOException, InterruptedException {
+
+    public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode(env + "&&api&&olcs");
-        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/" +
-                "buildWithParameters?Run+on+Nodes=%s&COMMAND=last-tm-letter", node);
+        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
+                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node,batchCommand,env);
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url,username,password);
+        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        Thread.sleep(4000);
         //you can assert against the status code here == 201
-        return(statusCode==201);
-          }
+        return (statusCode == 201);
     }
-
-
-
+}

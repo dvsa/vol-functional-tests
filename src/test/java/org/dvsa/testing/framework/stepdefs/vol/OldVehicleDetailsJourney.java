@@ -45,12 +45,10 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @When("i add a vehicle to my application")
     public void iAddAVehicleToMyApplication() {
-        click("add", SelectorType.ID);
-        waitForTitleToBePresent("Add vehicle");
-        enterText(VRMField, SelectorType.XPATH, generatedVRM);
-        enterText(weightField, SelectorType.XPATH, generatedWeight);
-        UniversalActions.clickSubmit();
+        world.selfServeUIJourney.addAVehicleToAnApplication(generatedVRM,generatedWeight);
     }
+
+
 
     @Then("the vehicle should be appear")
     public void theVehicleShouldBeAppear() {
@@ -108,10 +106,18 @@ public class OldVehicleDetailsJourney extends BasePage {
         assertEquals(firstVRM, valueOfFirstVRMInTable);
     }
 
-
     //deprecated
     @Then("the {string} alert should appear")
     public void theAlertShouldAppear(String alertText) {
         assertTrue(isTextPresent(alertText));
+    }
+
+    @When("i add a vehicle {string} belonging to another application")
+    public void iAddAVehicleBelongingToAnotherApplication(String vrm) {
+        world.selfServeUIJourney.addAVehicleToAnApplication(vrm,"4560");
+        waitForTextToBePresent("I confirm that I would like to continue adding this vehicle");
+        waitAndClick("licence-vehicle[confirm-add]", SelectorType.ID);
+        UniversalActions.clickSubmit();
+        assertTrue(isTextPresent("The vehicle has been added"));
     }
 }

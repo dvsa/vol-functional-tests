@@ -19,7 +19,7 @@ import org.dvsa.testing.framework.stepdefs.vol.*;
 public class World {
     public GetApplicationDetails applicationDetails;
     public RegisterUser registerUser;
-    public GetUserDetails userDetails;
+    public UserDetails userDetails;
     public CreateApplication createApplication;
     public GrantLicence grantApplication;
     public InternalDetails internalDetails;
@@ -101,4 +101,5 @@ public class World {
 
     public MessagingSelfServe messagingSelfServe;
 
+    public DocumentsJourney documentsJourney;
 }

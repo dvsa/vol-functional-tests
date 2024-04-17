@@ -34,5 +34,4 @@ public enum SelfServeSection {
     public String toString() {
         return section;
     }
-
 }

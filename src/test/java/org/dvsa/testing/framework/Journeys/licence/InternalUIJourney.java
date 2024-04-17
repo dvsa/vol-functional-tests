@@ -243,6 +243,28 @@ public class InternalUIJourney extends BasePage {
         world.globalMethods.signIn(user, password);
     }
 
+    public void manualBusRegistration(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
+        world.internalNavigation.getLicence();
+        world.busRegistrationJourney.internalSiteAddBusNewReg(plusOrMinusDay,plusOrMinusMonth,plusOrMinusYear);
+        clickByLinkText("Register");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        clickByLinkText("Service details");
+        clickByLinkText("TA's");
+        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result\"]");
+        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
+        UniversalActions.clickSubmit();
+    }
+
+    public void payFee() {
+        clickByLinkText("Fees");
+        world.feeAndPaymentJourney.selectFee();
+        world.feeAndPaymentJourney.payFee("60", "cash");
+        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
+    }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
@@ -309,6 +331,27 @@ public class InternalUIJourney extends BasePage {
         UniversalActions.clickSubmit();
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
+    }
+
+    public void printLicence() {
+        clickByLinkText("Print licence");
+        waitForTextToBePresent("Licence printed successfully");
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("GV Licence");
+    }
+
+    public void changeToPostOnOperatorProfile() {
+        click("//p[@class='small-module__details']//a[1]", SelectorType.XPATH);
+        waitForTextToBePresent("Operator profile");
+        click("//input[@type='radio']", SelectorType.XPATH);
+        clickById("form-actions[save]");
+        waitForTextToBePresent("The operator has been updated successfully");
+    }
+
+    public void navigateToLicenceFromOperatorProfile() {
+        clickByLinkText("Licences");
+        waitForElementToBePresent("//a[@class='govuk-link']");
+        click("//a[@class='govuk-link']", SelectorType.XPATH);
     }
 }
 

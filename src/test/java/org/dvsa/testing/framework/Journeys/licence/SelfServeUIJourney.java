@@ -22,6 +22,8 @@ public class SelfServeUIJourney extends BasePage {
 
     private FakerUtils faker = new FakerUtils();
     private final World world;
+    private String VRMField = "//*[@name='data[vrm]']";
+    private String weightField = "//*[@name='data[platedWeight]']";
 
     public SelfServeUIJourney(World world) {
         this.world = world;
@@ -182,6 +184,15 @@ public class SelfServeUIJourney extends BasePage {
         waitAndClick("next", SelectorType.ID);
         waitAndEnterText("vehicle-search[search-value]", SelectorType.ID, licenceNumber);
         waitAndClick("vehicle-search[submit]", SelectorType.ID);
+        waitAndClick("confirm", SelectorType.ID);
+    }
+
+    public void addAVehicleToAnApplication(String vrm, String weight){
+        click("add", SelectorType.ID);
+        waitForTitleToBePresent("Add vehicle");
+        enterText(VRMField, SelectorType.XPATH, vrm);
+        enterText(weightField, SelectorType.XPATH, weight);
+        UniversalActions.clickSubmit();
     }
 
     public void removeVehicle() {
@@ -194,5 +205,4 @@ public class SelfServeUIJourney extends BasePage {
         waitAndClick("//*[@name='table[id][]'][1]", SelectorType.XPATH);
         waitAndClick("action-button", SelectorType.ID);
     }
-
 }

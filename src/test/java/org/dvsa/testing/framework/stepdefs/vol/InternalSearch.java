@@ -47,18 +47,15 @@ public class InternalSearch extends BasePage {
     }
     @When("i search for my psv disc")
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() {
-        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
     }
 
     @When("i search for a vehicle by registration {string}")
     public void iSearchForAVehicleByRegistration(String vrm) {
-        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewVehicleRegistration(vrm);
     }
     @When("i search for my address and click on my licence and addresses")
     public void iSearchForMyAddressAndClickOnMyLicenceAndAddresses() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalSearchJourney.searchAndViewAddress();
     }
