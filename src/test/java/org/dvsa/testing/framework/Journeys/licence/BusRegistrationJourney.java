@@ -46,7 +46,7 @@ public class BusRegistrationJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month) {
+    public void internalSiteAddBusNewReg(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"), SelectorType.CSS);
@@ -59,12 +59,20 @@ public class BusRegistrationJourney extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 
+        plusOrMinusDay = plusOrMinusDay == null ? 0 : plusOrMinusDay;
+        plusOrMinusMonth = plusOrMinusMonth == null ? 0 : plusOrMinusMonth;
+        plusOrMinusYear = plusOrMinusYear == null ? 0 : plusOrMinusYear;
+
         HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         enterDateFieldsByPartialId("receivedDate", dates);
 
-        dates = world.globalMethods.date.getDateHashMap(0, month, 0);
+        dates = world.globalMethods.date.getDateHashMap(plusOrMinusDay, plusOrMinusMonth, plusOrMinusYear);
         enterDateFieldsByPartialId("effectiveDate", dates);
+
+        dates = world.globalMethods.date.getDateHashMap(-2, 0, 0);
+        enterDateFieldsByPartialId("endDate", dates);
+
         UniversalActions.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
@@ -126,7 +134,7 @@ public class BusRegistrationJourney extends BasePage {
             world.APIJourney.grantLicenceAndPayFees();
         }
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        internalSiteAddBusNewReg(5);
+        internalSiteAddBusNewReg(0, 5, 0);
         payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();
     }
@@ -151,10 +159,10 @@ public class BusRegistrationJourney extends BasePage {
         refreshPageWithJavascript();
         String ebsrFileName = null;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        if(world.configuration.env.toString().equals("int")){
+        if (world.configuration.env.toString().equals("int")) {
             ebsrFileName = existingLicenceNumber.concat("EBSR.zip");
-        }else {
-             ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        } else {
+            ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         }
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
@@ -167,11 +175,11 @@ public class BusRegistrationJourney extends BasePage {
         javaScriptExecutor(jScript);
 
         if (System.getProperty("platform") == null) {
-            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/"+zipFilePath));
+            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/" + zipFilePath));
         } else {
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
-            ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(System.getProperty("user.dir").concat("/" + zipFilePath));
         }
         UniversalActions.clickSubmit();
     }
@@ -188,7 +196,7 @@ public class BusRegistrationJourney extends BasePage {
         enterDateFieldsByPartialId("receivedDate", dates);
         dates = world.globalMethods.date.getDateHashMap(0, 0, 1);
         enterDateFieldsByPartialId("effectiveDate", dates);
-        dates = world.globalMethods.date.getDateHashMap(0,0,2);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 2);
         enterDateFieldsByPartialId("endDate", dates);
         UniversalActions.clickSubmit();
     }

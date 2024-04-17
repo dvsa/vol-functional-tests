@@ -94,5 +94,6 @@ public class Initialisation extends BasePage {
         world.messagingJourney = new MessagingJourney(world);
         world.messagingInternal = new MessagingInternal(world);
         world.messagingSelfServe = new MessagingSelfServe(world);
+        world.documentsJourney = new DocumentsJourney(world);
     }
 }
