@@ -243,6 +243,28 @@ public class InternalUIJourney extends BasePage {
         world.globalMethods.signIn(user, password);
     }
 
+    public void manualBusRegistration(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
+        world.internalNavigation.getLicence();
+        world.busRegistrationJourney.internalSiteAddBusNewReg(plusOrMinusDay,plusOrMinusMonth,plusOrMinusYear);
+        clickByLinkText("Register");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        clickByLinkText("Service details");
+        clickByLinkText("TA's");
+        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result\"]");
+        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
+        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
+        UniversalActions.clickSubmit();
+    }
+
+    public void payFee() {
+        clickByLinkText("Fees");
+        world.feeAndPaymentJourney.selectFee();
+        world.feeAndPaymentJourney.payFee("60", "cash");
+        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
+    }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
