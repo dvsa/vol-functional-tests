@@ -76,6 +76,7 @@ public class MessagingJourney extends BasePage {
             waitAndClick("//*[@id='main']//div[3]/nav[1]/ul/li[3]/a", SelectorType.XPATH);
             selectMessageCheckBox();
         } else if (isTextPresent(world.applicationDetails.getLicenceNumber())) ;
+        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
     }
 
