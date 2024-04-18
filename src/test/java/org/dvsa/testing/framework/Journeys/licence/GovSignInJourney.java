@@ -20,10 +20,7 @@ public class GovSignInJourney extends BasePage {
     public GovSignInJourney(World world) {
         this.world = world;
     }
-
     Random random = new Random();
-
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(90000) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if (world.configuration.env.toString().equals("int")) {
@@ -116,7 +113,7 @@ public class GovSignInJourney extends BasePage {
             clickById("chooseWayPyi");
         }
         clickById("create-account-link");
-        waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndEnterText("email", SelectorType.ID, "DVSA.Tester+" + random.nextInt(90000) + "_" + world.DataGenerator.getOperatorUser() + "@dev-dvsacloud.uk");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
