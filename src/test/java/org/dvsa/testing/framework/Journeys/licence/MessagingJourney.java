@@ -64,22 +64,9 @@ public class MessagingJourney extends BasePage {
         clickById("send");
     }
 
-    public void selectMessageCheckBox() {
-        waitAndSelectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
-        clickById("date");
-        selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Open");
-        isElementEnabled("//*[@id='messaging']", SelectorType.XPATH);
-        waitAndClick("//*[@id='messaging']", SelectorType.XPATH);
-
-    }
-
     public void checkForNewTask() {
-        if (isTextPresent("results per page")) {
-            waitAndClick("//*[@id='main']//div[3]/nav[1]/ul/li[3]/a", SelectorType.XPATH);
-            selectMessageCheckBox();
-        } else if (isTextPresent(world.applicationDetails.getLicenceNumber())) ;
-        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
-        assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
+        clickByLinkText("Processing");
+        assertTrue(isElementPresent("New message", SelectorType.LINKTEXT));
     }
 
     public void viewNewMessage() {

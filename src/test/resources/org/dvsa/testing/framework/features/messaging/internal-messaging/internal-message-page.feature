@@ -58,7 +58,7 @@ Feature: Viewing the messages tab as an internal user for various licence types 
       * i have logged in to self serve
       * i redirect to the message tab to respond to the case worker's message
       * i have logged in to internal as "admin"
-      When i select a message check box and team
+      When i search for and click on my licence
       Then i should able to see new task created as new message for case worker
 
 
