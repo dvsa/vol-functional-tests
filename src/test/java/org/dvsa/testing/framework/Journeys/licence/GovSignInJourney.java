@@ -20,10 +20,7 @@ public class GovSignInJourney extends BasePage {
     public GovSignInJourney(World world) {
         this.world = world;
     }
-
     Random random = new Random();
-
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(90000) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if (world.configuration.env.toString().equals("int")) {
@@ -77,7 +74,20 @@ public class GovSignInJourney extends BasePage {
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-
+        if(isTextPresent("You need to confirm your name and date of birth")){
+            waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("You need to confirm your address")){
+            waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("We need to check your details")){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("Continue to the service you want to use")){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTextPresent("By continuing you agree to our updated terms of use.")) {
             waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         }
@@ -103,7 +113,7 @@ public class GovSignInJourney extends BasePage {
             clickById("chooseWayPyi");
         }
         clickById("create-account-link");
-        waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndEnterText("email", SelectorType.ID, "DVSA.Tester+" + random.nextInt(90000) + "_" + world.DataGenerator.getOperatorUser() + "@dev-dvsacloud.uk");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
