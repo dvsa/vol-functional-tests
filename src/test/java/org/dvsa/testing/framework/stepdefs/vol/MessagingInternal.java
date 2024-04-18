@@ -47,11 +47,6 @@ public class MessagingInternal extends BasePage {
         world.messagingJourney.archiveTheConversation();
     }
 
-    @When("i select a message check box and team")
-    public void iSelectAMessageCheckBoxAndTeam() {
-        world.messagingJourney.selectMessageCheckBox();
-    }
-
     @Then("i should able to see new task created as new message for case worker")
     public void iShouldAbleToSeeNewTaskCreatedAsNewMessageForCaseWorker() {
         world.messagingJourney.checkForNewTask();
