@@ -77,7 +77,20 @@ public class GovSignInJourney extends BasePage {
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-
+        if(isTextPresent("You need to confirm your name and date of birth")){
+            waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("You need to confirm your address")){
+            waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("We need to check your details")){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("Continue to the service you want to use")){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTextPresent("By continuing you agree to our updated terms of use.")) {
             waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         }
