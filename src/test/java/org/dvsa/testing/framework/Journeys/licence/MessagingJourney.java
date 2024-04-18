@@ -65,10 +65,11 @@ public class MessagingJourney extends BasePage {
     }
 
     public void selectMessageCheckBox() {
-        waitAndClick("//*[@id='messaging']", SelectorType.XPATH);
         waitAndSelectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
         clickById("date");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Open");
+        isElementEnabled("//*[@id='messaging']", SelectorType.XPATH);
+        waitAndClick("//*[@id='messaging']", SelectorType.XPATH);
 
     }
 
