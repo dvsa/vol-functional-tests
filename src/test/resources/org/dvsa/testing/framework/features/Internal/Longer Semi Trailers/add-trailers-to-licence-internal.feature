@@ -1,5 +1,3 @@
-@FullRegression
-@int_regression
 Feature: Adding trailers to a licence on internal - Longer semi and non longer semi trailers
 
   Scenario Outline: Adding longer semi trailers to a licence on internal

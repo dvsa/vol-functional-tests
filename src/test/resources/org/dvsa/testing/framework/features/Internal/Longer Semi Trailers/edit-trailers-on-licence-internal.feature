@@ -1,5 +1,3 @@
-@FullRegression
-@int_regression
 Feature: Change semi-trailer types on internal
 
   Scenario Outline: Change semi-trailer types on internal
