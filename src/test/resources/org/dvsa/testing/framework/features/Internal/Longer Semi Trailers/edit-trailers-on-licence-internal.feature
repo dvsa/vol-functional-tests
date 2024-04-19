@@ -1,4 +1,5 @@
-
+@FullRegression
+@int_regression
 Feature: Change semi-trailer types on internal
 
   Scenario Outline: Change semi-trailer types on internal
@@ -6,8 +7,6 @@ Feature: Change semi-trailer types on internal
     And on internal I add a valid trailer number "<trailerNumber>" and longer semi trailer is set to "<semiTrailer>" on the licence
     When trailer number "<trailerNumber>" is changed to longer semi trailer "<newTrailer>"
     Then the trailer "<trailerNumber>" and type "<newTrailer>" is successfully added to the trailer table
-
-
     Examples:
       | licenceType            | trailerNumber | semiTrailer | newTrailer |
       | standard_international | G5456859      | Yes         | No         |

@@ -1,6 +1,6 @@
 @ss_regression
 @accessibility
-
+@FullRegression
 Feature: Create application page should comply to the WCAG 2.1 AA accessibility standards
 
   Background:

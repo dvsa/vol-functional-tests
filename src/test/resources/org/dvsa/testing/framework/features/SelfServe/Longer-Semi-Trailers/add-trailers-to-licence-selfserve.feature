@@ -1,4 +1,6 @@
 @long-semi-trailers
+@ss_regression
+@FullRegression
 Feature: Adding trailers to a licence on self serve - Longer semi and non longer semi trailers
 
   @add-longer-trailer

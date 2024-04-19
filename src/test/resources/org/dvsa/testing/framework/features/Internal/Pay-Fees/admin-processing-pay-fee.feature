@@ -4,9 +4,7 @@
 @smoketest
 @printAndSign
 @FullRegression
-
 Feature: Admin paying fees
-
   Background:
     Given i have an internal admin user
 

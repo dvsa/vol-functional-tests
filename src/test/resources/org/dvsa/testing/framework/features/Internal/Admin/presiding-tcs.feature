@@ -1,8 +1,7 @@
 @int_regression
 @transportCommissionerSubmission
-
+@FullRegression
 Feature: Admin wishes to add and delete a Presiding tc
-
   Background:
     Given i have a valid "goods" "standard_national" licence
     And I create a new case

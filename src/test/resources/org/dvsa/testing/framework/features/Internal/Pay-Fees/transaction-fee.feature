@@ -3,9 +3,7 @@
 @FullRegression
 @printAndSign
 @transactionFees
-
 Feature: Transaction Fees Table
-
   Background:
     Given i have a valid "goods" "standard_national" licence
 

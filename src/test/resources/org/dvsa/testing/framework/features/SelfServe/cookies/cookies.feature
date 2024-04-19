@@ -1,4 +1,5 @@
 @cookies @ss_regression
+@FullRegression
 Feature: SelfServe Cookies
 
   Background:

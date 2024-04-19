@@ -1,7 +1,5 @@
 @downloadPermissions @ss_regression @FullRegression
-
 Feature: Permissions for Self Service users downloading documents
-
 Background:
   Given i have a valid "goods" "standard_national" licence
   And i create an admin and url search for my licence

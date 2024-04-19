@@ -2,7 +2,6 @@
 @OLCS-22990
 @regression
 @gov-sign-in
-
 Feature: View Surrender Menu and details on Internal
 
   Background:

@@ -2,9 +2,7 @@
 @printAndSign
 @int_regression
 @FullRegression
-
 Feature: Interim License document generation
-
   Background:
     Given i have an interim "goods" "standard_national" application
     And i create an admin and url search for my application

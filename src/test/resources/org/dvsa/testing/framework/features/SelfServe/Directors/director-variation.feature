@@ -1,6 +1,5 @@
 @SS-ADD-DIRECTOR @ss_regression @FullRegression @printAndSign
 Feature: Add a director variation
-
   Background:
     Given i have a valid "public" "standard_international" licence
     And i navigate to the "licence" directors page

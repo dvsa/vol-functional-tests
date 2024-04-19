@@ -1,4 +1,6 @@
 @long-semi-trailers
+@ss_regression
+@FullRegression
 Feature: Change semi-trailer types on self serve
 
   Scenario Outline: Change semi-trailer types on self serve

@@ -1,4 +1,4 @@
-@accessibility @ss_regression
+@accessibility @ss_regression @FullRegression
 Feature: Check the EBSR journey is accessibile
 
   Scenario:Scan for accessibility violations

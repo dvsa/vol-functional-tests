@@ -12,7 +12,7 @@ Feature: Gov sign in
   Then the application should be submitted
 
   @gov-reg
-  @ss_regression
+  @ss_regression @FullRegression
   Scenario: Register a GOV sign in account
   When I can navigate to gov sign in
   Then I register a gov sign in account to complete the process

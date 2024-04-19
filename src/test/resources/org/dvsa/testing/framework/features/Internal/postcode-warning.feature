@@ -1,7 +1,6 @@
 @INT
 @POSTCODE-WARNING
 @OLCS-17544
-
 Feature: Operating centre added in different postcode
 
   Background:

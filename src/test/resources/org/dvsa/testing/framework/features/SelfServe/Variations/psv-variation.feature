@@ -1,5 +1,5 @@
 @ss_regression @PSV_VARIATION
-
+@FullRegression
 Feature: PSV variation to make operating centre and authorisation changes
 
   @psv-restricted-op-centre-auth-increase
