@@ -45,6 +45,6 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getKeepAliveSeconds() {
-        return 30;
+        return 100;
     }
 }
