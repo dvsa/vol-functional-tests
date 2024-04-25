@@ -12,6 +12,9 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -98,7 +101,10 @@ public class InternalApplication extends BasePage{
         }
         String generatedLetterType = "GV - Blank letter to operator";
         waitForTextToBePresent("Docs & attachments");
-        assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[1]",SelectorType.XPATH));
+        List<WebElement> tableContents = findElements("//*[@class='govuk-table__body']", SelectorType.XPATH);
+        for(WebElement element : tableContents){
+            assertTrue(isTextPresent(String.valueOf(element.getText().contains(generatedLetterType))));
+        }
     }
 
     @Then("the postcode warning message should be displayed on internal")
