@@ -79,13 +79,13 @@ public class MessagingJourney extends BasePage {
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--blue')]", SelectorType.XPATH), "OPEN");
     }
 
-    public void notificationCount(){
+    public void notificationCount() {
         assertEquals(getText("//*[contains(@class,'notification-count__number')]", SelectorType.XPATH), "1");
         clickByLinkText("Messages");
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
     }
 
-    public void backToConversation(){
+    public void backToConversation() {
         click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
         click("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 ')]", SelectorType.XPATH);
         click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
@@ -103,10 +103,42 @@ public class MessagingJourney extends BasePage {
     public void disableMessaging() {
         clickByLinkText("Messages");
         clickByLinkText("Disable Messaging");
-        waitAndClick("close",SelectorType.ID);
+        waitAndClick("close", SelectorType.ID);
         waitForTextToBePresent("Messaging will be disabled for this operator");
-        click("close",SelectorType.ID);
+        click("close", SelectorType.ID);
         waitForTextToBePresent("Messaging has been disabled for this operator");
     }
+
+    public void submitMessageWithoutSelectingAnyOption() {
+        clickByLinkText("Start a new conversation");
+        clickById("send");
+    }
+
+    public void submitMessageWithoutOptions() {
+        click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
+        clickById("form-actions[submit]");
+    }
+
+    public void replyErrorMessage() {
+        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH).equals("NEW MESSAGE"))
+            ;
+        waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
+        click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
+        clickById("send");
+    }
+
+    public void replyToOperator() {
+        waitAndClick("//*[@id='main']//td/a", SelectorType.XPATH);
+        click("//*[contains(text(),'Send a reply')]", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
+        clickById("send");
+    }
+
+    public void replyOperatorErrorMessage() {
+        waitAndClick("//*[@id='main']//td/a", SelectorType.XPATH);
+        click("//*[contains(text(),'Send a reply')]", SelectorType.XPATH);
+        clickById("send");
+    }
+
 }
 
