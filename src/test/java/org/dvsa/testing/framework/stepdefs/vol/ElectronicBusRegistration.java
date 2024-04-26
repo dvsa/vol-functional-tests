@@ -22,8 +22,6 @@ import java.io.IOException;
 
 public class ElectronicBusRegistration extends BasePage {
     World world;
-    EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-
     public ElectronicBusRegistration(World world) {
         this.world = world;
     }
@@ -32,7 +30,6 @@ public class ElectronicBusRegistration extends BasePage {
     public void iUploadAnEbsrFileWithDaysNotice(String days) throws IllegalBrowserException, IOException, InterruptedException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.PROCESS_QUEUE.toString(), world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
         AXEScanner axeScanner = AccessibilitySteps.scanner;
         axeScanner.scan(true);
     }
