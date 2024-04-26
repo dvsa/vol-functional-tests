@@ -1,31 +1,38 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.system.Properties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import scanner.AXEScanner;
 
 import java.io.IOException;
 
 public class ElectronicBusRegistration extends BasePage {
     World world;
+    EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
     public ElectronicBusRegistration(World world) {
         this.world = world;
     }
 
     @When("I upload an ebsr file with {string} days notice")
-    public void iUploadAnEbsrFileWithDaysNotice(String days) throws IllegalBrowserException, IOException {
+    public void iUploadAnEbsrFileWithDaysNotice(String days) throws IllegalBrowserException, IOException, InterruptedException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.PROCESS_QUEUE.toString(), world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
         AXEScanner axeScanner = AccessibilitySteps.scanner;
         axeScanner.scan(true);
     }

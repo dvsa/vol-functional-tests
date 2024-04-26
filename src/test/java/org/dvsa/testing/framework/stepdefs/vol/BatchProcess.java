@@ -23,16 +23,17 @@ public class BatchProcess extends BasePage {
     public BatchProcess(World world) {
         this.world = world;
     }
+
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
     @And("the duplicate letter job is run")
     public void theDuplicateLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(), world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @Then("i should receive a duplicate vehicle email")
@@ -44,13 +45,13 @@ public class BatchProcess extends BasePage {
 
     @When("i add a new bus registration with a past date")
     public void iAddANewBusRegistrationWithAPastDate() {
-        world.internalUIJourney.manualBusRegistration(0,5,0);
+        world.internalUIJourney.manualBusRegistration(0, 5, 0);
         world.internalUIJourney.payFee();
     }
 
     @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(), world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @Then("the registration should be marked as expired")
