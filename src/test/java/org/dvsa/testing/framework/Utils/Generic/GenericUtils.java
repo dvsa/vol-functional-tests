@@ -20,7 +20,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -45,7 +44,6 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -372,10 +370,11 @@ public class GenericUtils extends BasePage {
     }
 
     public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
-        String batchRunCliURL = URLEncoder.encode(String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
-                "buildWithParameters?Run+on+Nodes=%s&&api&&olcs&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", env, batchCommand, env), StandardCharsets.UTF_8);
+        String node = URLEncoder.encode(env + "&&api&&olcs");
+        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
+                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node,batchCommand,env);
 
-        int statusCode = kickOffJenkinsJob(batchRunCliURL, username, password);
+        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
         Thread.sleep(4000);
         //you can assert against the status code here == 201
         return (statusCode == 201);
