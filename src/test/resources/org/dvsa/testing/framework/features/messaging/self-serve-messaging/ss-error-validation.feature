@@ -5,7 +5,7 @@ Feature: Check for error validation on message page of an external application.
   Background:
     Given i have a valid "goods" "restricted" licence
 
-  @ss-newconversation-error-message
+  @ss-new-conversation-error-message
   Scenario: When the operator attempts to send a message without selecting an option, an error message will be displayed.
     And i have logged in to self serve
     * i click the messages heading
