@@ -4,10 +4,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class MessagingInternal extends BasePage {
+    private static final String CategoryErrorMessage = "Select a Category";
+    private static final String TextFieldErrorMessage = "Enter message";
 
     private final World world;
 
@@ -55,5 +56,27 @@ public class MessagingInternal extends BasePage {
     @And("the internal user disables messaging")
     public void theInternalUserDisablesMessaging() {
         world.messagingJourney.disableMessaging();
+    }
+
+    @When("i sent a new message without selecting a category and text from internal application")
+    public void iSentANewMessageWithoutSelectingACategoryAndTextFromInternalApplication() {
+        world.messagingJourney.submitMessageWithoutOptions();
+    }
+
+    @Then("the error message will display on message page")
+    public void theErrorMessageWillDisplayOnMessagePage() {
+        assert (isTextPresent(CategoryErrorMessage));
+        assert (isTextPresent(TextFieldErrorMessage));
+    }
+
+    @And("i reply for the operators message")
+    public void iReplyForTheOperatorsMessage() {
+        world.messagingJourney.replyToOperator();
+    }
+
+    @And("i reply to operator without a text to validate an error message")
+    public void iReplyToOperatorWithoutATextToValidateAnErrorMessage() {
+        world.messagingJourney.replyOperatorErrorMessage();
+        assert (isTextPresent(TextFieldErrorMessage));
     }
 }
