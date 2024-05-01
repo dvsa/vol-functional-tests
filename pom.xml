@@ -36,7 +36,6 @@
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
         <jvmMemory>2048</jvmMemory>
@@ -58,15 +57,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+			<dependency>
+				<groupId>org.dvsa.testing.lib</groupId>
+				<artifactId>active-support</artifactId>
+				<version>2.0.1.10</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>maven-releases</id>
-            <url>${nexus.releases}</url>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -271,12 +268,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <!--  Nexus Configuration  -->
-    <distributionManagement>
-        <repository>
-            <id>maven-releases</id>
-            <url>${nexus.releases}</url>
-        </repository>
-    </distributionManagement>
 </project>

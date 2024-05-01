@@ -1,0 +1,10 @@
+downloadDirectory=/path/to/download
+adminUser=admin
+limitedReadOnlyUser=limitedUser
+readOnlyUser=readOnlyUser
+adminPassword=secret
+defaultPassword=default
+bucketName=my-bucket
+intUsername=integrationUser
+region=us-west-1
+internalNewPassword=newSecret

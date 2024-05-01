@@ -1,0 +1,86 @@
+on:
+  workflow_call:
+
+env:
+  DOWNLOAD_DIRECTORY: '/path/to/download'
+  ADMIN_USER: 'admin'
+  LIMITED_READ_ONLY_USER: 'limitedUser'
+  READ_ONLY_USER: 'readOnlyUser'
+  ADMIN_PASSWORD: 'secret'
+  DEFAULT_PASSWORD: 'default'
+  BUCKET_NAME: 'my-bucket'
+  INT_USERNAME: 'integrationUser'
+  REGION: 'eu-west-1'
+  INTERNAL_NEW_PASSWORD: 'newSecret'
+  PARTNER_USER: 'partnerUser'
+  LOCAL_AUTHORITY_USER: 'localAuthorityUser'
+  PARTNER_USER_PASSWORD: 'partnerPassword'
+  CARD_NUMBER: '1234567890123456'
+  CARD_EXPIRY_MONTH: '12'
+  CARD_EXPIRY_YEAR: '2025'
+  GRID_URL: 'https://example.com/grid'
+  SIGN_IN_USERNAME: 'signInUser'
+  SIGN_IN_PASSWORD: 'signInPassword'
+  BASIC_AUTH_USER_NAME: 'basicAuthUser'
+  BASIC_AUTH_PASSWORD: 'basicAuthPassword'
+  AUTH_KEY: 'abcd1234'
+  INTEGRATION_USERNAME: 'integrationUser'
+  INTEGRATION_PASSWORD: 'integrationPassword'
+  # GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+  GITHUB_TOKEN: 'MySup3rS3cret'
+  INT_ENV_USERNAME: 'intEnvUser'
+  INT_ENV_PASSWORD: 'intEnvPassword'
+  INT_SYSTEM_ADMIN: 'intSystemAdmin'
+  INT_SUBMIT_APP_USER_NAME: 'intSubmitAppUser'
+  INT_PARTNER_USER: 'intPartnerUser'
+  JENKINS_API_KEY: 'jenkinsAPIKey'
+  JENKINS_USER: 'jenkinsUser'
+
+jobs:
+  generate-application-conf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate application.conf
+        run: |
+          mkdir -p src/test/resources
+          echo 'downloadDirectory = "${{ env.DOWNLOAD_DIRECTORY }}"' > src/test/resources/application.conf
+          echo 'adminUser = "${{ env.ADMIN_USER }}"' >> src/test/resources/application.conf
+          echo 'limitedReadOnlyUser = "${{ env.LIMITED_READ_ONLY_USER }}"' >> src/test/resources/application.conf
+          echo 'readOnlyUser = "${{ env.READ_ONLY_USER }}"' >> src/test/resources/application.conf
+          echo 'adminPassword = "${{ env.ADMIN_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'defaultPassword = "${{ env.DEFAULT_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'bucketName = "${{ env.BUCKET_NAME }}"' >> src/test/resources/application.conf
+          echo 'intUsername = "${{ env.INT_USERNAME }}"' >> src/test/resources/application.conf
+          echo 'region = "${{ env.REGION }}"' >> src/test/resources/application.conf
+          echo 'internalNewPassword = "${{ env.INTERNAL_NEW_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'partnerUser = "${{ env.PARTNER_USER }}"' >> src/test/resources/application.conf
+          echo 'localAuthorityUser = "${{ env.LOCAL_AUTHORITY_USER }}"' >> src/test/resources/application.conf
+          echo 'partnerUserPassword = "${{ env.PARTNER_USER_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'cardNumber = "${{ env.CARD_NUMBER }}"' >> src/test/resources/application.conf
+          echo 'cardExpiryMonth = "${{ env.CARD_EXPIRY_MONTH }}"' >> src/test/resources/application.conf
+          echo 'cardExpiryYear = "${{ env.CARD_EXPIRY_YEAR }}"' >> src/test/resources/application.conf
+          echo 'gridURL = "${{ env.GRID_URL }}"' >> src/test/resources/application.conf
+          echo 'signInUsername = "${{ env.SIGN_IN_USERNAME }}"' >> src/test/resources/application.conf
+          echo 'signInPassword = "${{ env.SIGN_IN_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'basicAuthUserName = "${{ env.BASIC_AUTH_USER_NAME }}"' >> src/test/resources/application.conf
+          echo 'basicAuthPassword = "${{ env.BASIC_AUTH_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'AUTH_KEY = "${{ env.AUTH_KEY }}"' >> src/test/resources/application.conf
+          echo 'integrationUsername = "${{ env.INTEGRATION_USERNAME }}"' >> src/test/resources/application.conf
+          echo 'integrationPassword = "${{ env.INTEGRATION_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'githubToken = "${{ env.GITHUB_TOKEN }}"' >> src/test/resources/application.conf
+          echo 'intEnvUsername = "${{ env.INT_ENV_USERNAME }}"' >> src/test/resources/application.conf
+          echo 'intEnvPassword = "${{ env.INT_ENV_PASSWORD }}"' >> src/test/resources/application.conf
+          echo 'intSystemAdmin = "${{ env.INT_SYSTEM_ADMIN }}"' >> src/test/resources/application.conf
+          echo 'intSubmitAppUserName = "${{ env.INT_SUBMIT_APP_USER_NAME }}"' >> src/test/resources/application.conf
+          echo 'intPartnerUser = "${{ env.INT_PARTNER_USER }}"' >> src/test/resources/application.conf
+          echo 'jenkinsAPIKey = "${{ env.JENKINS_API_KEY }}"' >> src/test/resources/application.conf
+          echo 'jenkinsUser = "${{ env.JENKINS_USER }}"' >> src/test/resources/application.conf
+
+      - name: Deploy application config
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppConfig
+          path: src/test/resources/

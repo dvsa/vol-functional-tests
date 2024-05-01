@@ -4,7 +4,6 @@ on:
   workflow_call:
     inputs:
       account:
-        description: "Environment to start"
         type: string
         required: true
       platform_env:
@@ -40,14 +39,11 @@ jobs:
         for b in $res
         do
           if [ "$MODE" = "start" ]; then
-            echo "Now enabling compute environment $b ..."
             aws batch update-compute-environment --region eu-west-1 --compute-environment $b --state ENABLED
           elif [ "$MODE" = "stop" ]; then
-            echo "Now disabling compute environment $b ..."
             aws batch update-compute-environment --region eu-west-1 --compute-environment $b --state DISABLED
           else
             echo "Invalid value for mode [$MODE]"
             exit 1
           fi
-          sleep 2
         done

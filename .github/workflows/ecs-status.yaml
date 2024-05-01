@@ -1,0 +1,76 @@
+name: Manage ECS Service
+
+on:
+  workflow_call:
+    inputs:
+      account: 
+        description: 'account to connect'
+        type: string
+        required: true
+      cluster:
+        description: 'ECS Cluster Name'
+        type: string
+        required: true
+      service:
+        description: 'ECS Service Name'
+        type: string
+        required: true
+      desired_count:
+        description: 'Desired Task Count'
+        type: number
+        required: true
+        default: 1
+      force_start:
+        description: 'Force New Deployment'
+        type: string
+        required: true
+        default: 'yes'
+      
+jobs:
+  manage-ecs-service:
+    name: Deploy to AWS
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        AWS_OIDC_ROLE: ${{ vars[format('ACCOUNT_{0}_TF_OIDC_ROLE', inputs.account)] || vars.TF_OIDC_ROLE }}
+        AWS_REGION: ${{ vars[format('ACCOUNT_{0}_TF_AWS_REGION', inputs.account)] || vars.TF_AWS_REGION }}
+        aws-region: eu-west-1
+
+    - name: Manage ECS Service
+      id: manage-service
+      env:
+        CLUSTER: ${{ inputs.cluster }}
+        SERVICE: ${{ inputs.service }}
+        DESIRED_COUNT: ${{ inputs.desired_count }}
+        FORCE_START: ${{ inputs.force_start }}
+      run: |
+        current_desired_count=$(aws ecs describe-services --cluster $CLUSTER --services $SERVICE --query 'services[0].desiredCount' --output text)
+
+        if [ "$current_desired_count" -lt "$DESIRED_COUNT" ]; then
+          aws ecs update-service --cluster $CLUSTER --service $SERVICE --desired-count $DESIRED_COUNT
+          echo "::set-output name=action::update"
+        else
+          if [ "$FORCE_START" = "yes" ]; then
+            aws ecs update-service --cluster $CLUSTER --service $SERVICE --desired-count $DESIRED_COUNT --force-new-deployment
+            echo "::set-output name=action::force-update"
+          else
+            echo "Requirement already satisfied. Actual [$current_desired_count]. Requested [$DESIRED_COUNT]..."
+            echo "::set-output name=action::no-op"
+          fi
+        fi
+
+    - name: Notify on Update
+      if: ${{ steps.manage-service.outputs.action == 'update' }}
+      run: |
+        echo "Service updated with desired count ${{ inputs.desired_count }}"
+
+    - name: Notify on Force Update
+      if: ${{ steps.manage-service.outputs.action == 'force-update' }}
+      run: |
+        echo "Service updated with desired count ${{ inputs.desired_count }} and forced redeployment"

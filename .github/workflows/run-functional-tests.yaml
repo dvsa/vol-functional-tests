@@ -1,20 +1,25 @@
 name: Functional Test Workflow
 
 on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
   workflow_dispatch:
     inputs:
-      platform:
-        description: I dont know what this value is
-        required: true
-        default: 'ubuntu'
       environment:
         description: 'Environment to execute tests'
         required: true
         type: choice
         options:
           - qa
-          - int
-          - preprod
+          - da
+          - ps
+          - dev
+          - reg
+        default: qa
       branch:
         description: 'Branch to run tests against'
         required: true
@@ -22,22 +27,25 @@ on:
       browser:
         description: 'Browser to run tests on'
         required: true
+        type: choice
+        options: 
+          - Firefox
+          - Chrome
+          - Edge
+        default: Chrome
       browser_version:
         description: 'Browser version to run tests on'
         required: true
-      grid_url:
-        description: 'Browser version to run tests on'
-        required: true
-        default: "https://selenium-hub.olcs.dev-dvsacloud.uk/"
       tags:
         description: 'Test tags to include (comma-separated)'
         required: false
         type: choice
         options:
-          - '@smoketest'
-          - '@ss_regression'
-          - '@int_regression'
-          - '@FullRegression'
+          - 'smoketest'
+          - 'ss_regression'
+          - 'int_regression'
+          - 'FullRegression'
+        default: 'int_regression'
       excluded_tags:
         description: 'Test tags to exclude (comma-separated)'
         required: false
@@ -45,36 +53,56 @@ on:
         description: 'Clear Maven cache before running tests'
         required: false
         default: 'false'
-      # timeout:
-      #   description: 'Timeout in minutes for job execution'
-      #   required: false
       compute_mode: 
         description: 'Start or stop the selenium grid cluster platform'
         required: false
         default: 'false'
+      ecs_status: 
+        description: 'Check status of the ECS cluster'
+        required: false
+        default: 'false'
 
 jobs:
-  compute_env: 
-    name: Check Compute Environment
-    if: ${{ inputs.compute_mode == 'true' }}
-    uses: ./.github/workflows/compute-env.yaml
-    with:
-      account: nonprod
-      platform_env: ${{ inputs.environment }}
-      mode: ${{ inputs.compute_mode }}
-    permissions:
-      contents: read
-      id-token: write
-      pull-requests: write
+
+  app_config: 
+    name: Generate application config
+    uses: ./.github/workflows/app-config.yaml
+
+  # compute_env: 
+  #   name: Check Compute Environment
+  #   if: ${{ inputs.compute_mode == 'true' }}
+  #   uses: ./.github/workflows/compute-env.yaml
+  #   with:
+  #     account: nonprod
+  #     platform_env: ${{ inputs.environment }}
+  #     mode: ${{ inputs.compute_mode }}
+
+  # ecs_status: 
+  #   name: Check ECS Status
+  #   if: ${{ inputs.ecs_status == 'true' }}
+  #   uses: ./.github/workflows/ecs-status.yaml
+  #   with:
+  #     account: nonprod
+  #     platform_env: ${{ inputs.environment }}
+  #     mode: ${{ inputs.compute_mode }}
 
   maven-test:
     runs-on: ubuntu-latest
-    needs: compute_env
+    needs: 
+      - app_config
+    #   - compute_env
+    #   - app_config
     strategy:
       max-parallel: 4
     steps:
       - name: Checkout Project Branch from GitHub
         uses: actions/checkout@v4
+
+      - name: Download AppConfig artefact
+        uses: actions/download-artifact@v4
+        with:
+          name: AppConfig
+          path: src/test/resources/application.conf
 
       - name: Install Java Corretto 11
         uses: actions/setup-java@v4
@@ -92,8 +120,6 @@ jobs:
           PLATFORM_ENV: ${{ inputs.environment }}
           BROWSER_NAME: ${{ inputs.browser }}
           BROWSER_VERSION: ${{ inputs.browser_version }}
-          PLATFORM: ${{ inputs.platform }}
-          GRID_URL: ${{ inputs.grid_url }}
           EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
           TAGS: ${{ inputs.tags }}
         run: |
@@ -101,16 +127,24 @@ jobs:
             -Denv=${PLATFORM_ENV} \
             -Dbrowser=${BROWSER_NAME} \
             -DbrowserVersion=${BROWSER_VERSION} \
-            -Dplatform=${PLATFORM} \
-            -DgridURL="${GRID_URL}" \
             -Dtag.name="(not ${EXCLUDE_TAGS})" \
-            -Dcucumber.filter.tags="${TAGS}" \
-            -Dwdm.proxy="proxy.web-app.uk:999" \
-            -Dhttps.proxyHost="proxy.web-app.uk:999" \
-            -Dhttps.proxyPort=3128 \
-            -Dhttp.proxyHost="proxy.web-app.uk:999" \
-            -Dhttp.proxyPort=3128 \
-            -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.web-app.uk"
+            -Dcucumber.filter.tags="@${TAGS}" \
+
+        # run: |
+          # mvn clean verify -U \
+          #   -Denv=${PLATFORM_ENV} \
+          #   -Dbrowser=${BROWSER_NAME} \
+          #   -DbrowserVersion=${BROWSER_VERSION} \
+          #   -Dplatform="Linux" \
+          #   -DgridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/" \
+          #   -Dtag.name="(not ${EXCLUDE_TAGS})" \
+          #   -Dcucumber.filter.tags="@${TAGS}" \
+          #   -Dwdm.proxy="proxy.ci.olcs.dev-dvsacloud.uk:3128" \
+          #   -Dhttps.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+          #   -Dhttps.proxyPort=3128 \
+          #   -Dhttp.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+          #   -Dhttp.proxyPort=3128 \
+          #   -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk"
 
       - name: Generate Allure Report
         run: mvn allure:report
@@ -120,4 +154,4 @@ jobs:
         with:
           name: allure-report
           path: target/site/allure-maven-plugin
-          retention-days: 90
+          retention-days: 30
