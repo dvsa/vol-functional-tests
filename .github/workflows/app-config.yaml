@@ -43,7 +43,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate application.conf
+      - name: Generate application config
+        id: appConfig
         run: |
           mkdir -p src/test/resources
           echo 'downloadDirectory = "${{ env.DOWNLOAD_DIRECTORY }}"' > src/test/resources/application.conf
@@ -83,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AppConfig
-          path: src/test/resources/
+          path: src/test/resources/application.conf
