@@ -6,20 +6,13 @@ on:
       - opened
       - edited
       - synchronize
-
+      
   workflow_dispatch:
     inputs:
       environment:
         description: 'Environment to execute tests'
         required: true
-        type: choice
-        options:
-          - qa
-          - da
-          - ps
-          - dev
-          - reg
-        default: qa
+        default: int
       branch:
         description: 'Branch to run tests against'
         required: true
@@ -49,60 +42,47 @@ on:
       excluded_tags:
         description: 'Test tags to exclude (comma-separated)'
         required: false
-      clear_maven_cache:
-        description: 'Clear Maven cache before running tests'
-        required: false
-        default: 'false'
-      compute_mode: 
-        description: 'Start or stop the selenium grid cluster platform'
-        required: false
-        default: 'false'
-      ecs_status: 
-        description: 'Check status of the ECS cluster'
-        required: false
-        default: 'false'
 
 jobs:
 
-  app_config: 
-    name: Generate application config
-    uses: ./.github/workflows/app-config.yaml
-
-  # compute_env: 
-  #   name: Check Compute Environment
-  #   if: ${{ inputs.compute_mode == 'true' }}
-  #   uses: ./.github/workflows/compute-env.yaml
-  #   with:
-  #     account: nonprod
-  #     platform_env: ${{ inputs.environment }}
-  #     mode: ${{ inputs.compute_mode }}
-
-  # ecs_status: 
-  #   name: Check ECS Status
-  #   if: ${{ inputs.ecs_status == 'true' }}
-  #   uses: ./.github/workflows/ecs-status.yaml
-  #   with:
-  #     account: nonprod
-  #     platform_env: ${{ inputs.environment }}
-  #     mode: ${{ inputs.compute_mode }}
+  url-checker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Check URL
+      env:
+        URL: "https://www.example.com"
+      run: |
+        import requests
+        
+        try:
+            response = requests.get("${{ env.URL }}")
+            response.raise_for_status()
+            print(f"URL {response.url} is accessible.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error checking URL: {e}")
+            exit(1)
+      shell: python
 
   maven-test:
     runs-on: ubuntu-latest
     needs: 
-      - app_config
-    #   - compute_env
-    #   - app_config
-    strategy:
-      max-parallel: 4
+      - url-checker
     steps:
       - name: Checkout Project Branch from GitHub
         uses: actions/checkout@v4
-
-      - name: Download AppConfig artefact
-        uses: actions/download-artifact@v4
-        with:
-          name: AppConfig
-          path: src/test/resources/application.conf
 
       - name: Install Java Corretto 11
         uses: actions/setup-java@v4
@@ -111,47 +91,38 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Clear Maven cache
-        if: ${{ inputs.clear_maven_cache == 'true' }}
-        run: mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false
+      # - name: Deploy Maven Tests to ${{ inputs.environment }}
+      #   env:
+      #     PLATFORM_ENV: ${{ inputs.environment }}
+      #     BROWSER_NAME: ${{ inputs.browser }}
+      #     BROWSER_VERSION: ${{ inputs.browser_version }}
+      #     EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
+      #     TAGS: ${{ inputs.tags }}
+      #   run: |
+      #     mvn clean verify -U \
+      #       -Denv=${PLATFORM_ENV} \
+      #       -Dbrowser=${BROWSER_NAME} \
+      #       -DbrowserVersion=${BROWSER_VERSION} \
+      #       -Dplatform="Linux" \
+      #       -DgridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/" \
+      #       -Dtag.name="(not ${EXCLUDE_TAGS})" \
+      #       -Dcucumber.filter.tags="@${TAGS}" \
+      #       -Dwdm.proxy="proxy.ci.olcs.dev-dvsacloud.uk:3128" \
+      #       -Dhttps.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+      #       -Dhttps.proxyPort=3128 \
+      #       -Dhttp.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+      #       -Dhttp.proxyPort=3128 \
+      #       -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk"
 
-      - name: Deploy Maven Tests to ${{ inputs.environment }}
-        env:
-          PLATFORM_ENV: ${{ inputs.environment }}
-          BROWSER_NAME: ${{ inputs.browser }}
-          BROWSER_VERSION: ${{ inputs.browser_version }}
-          EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
-          TAGS: ${{ inputs.tags }}
-        run: |
-          mvn clean verify -U \
-            -Denv=${PLATFORM_ENV} \
-            -Dbrowser=${BROWSER_NAME} \
-            -DbrowserVersion=${BROWSER_VERSION} \
-            -Dtag.name="(not ${EXCLUDE_TAGS})" \
-            -Dcucumber.filter.tags="@${TAGS}" \
-
-        # run: |
-          # mvn clean verify -U \
-          #   -Denv=${PLATFORM_ENV} \
-          #   -Dbrowser=${BROWSER_NAME} \
-          #   -DbrowserVersion=${BROWSER_VERSION} \
-          #   -Dplatform="Linux" \
-          #   -DgridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/" \
-          #   -Dtag.name="(not ${EXCLUDE_TAGS})" \
-          #   -Dcucumber.filter.tags="@${TAGS}" \
-          #   -Dwdm.proxy="proxy.ci.olcs.dev-dvsacloud.uk:3128" \
-          #   -Dhttps.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
-          #   -Dhttps.proxyPort=3128 \
-          #   -Dhttp.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
-          #   -Dhttp.proxyPort=3128 \
-          #   -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk"
-
-      - name: Generate Allure Report
-        run: mvn allure:report
+      # - name: Generate Allure Report
+      #   run: mvn allure:report
 
       - name: Deploy Allure Report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: target/site/allure-maven-plugin
+          path: |
+            target/site/allure-maven-plugin
+            **/**/BUILD/*.xml
           retention-days: 30
+          if-no-files-found: error
