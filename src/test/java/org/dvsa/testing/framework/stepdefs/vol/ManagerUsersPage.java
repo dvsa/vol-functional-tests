@@ -70,10 +70,6 @@ public class ManagerUsersPage extends BasePage {
     @Then("i remove the user")
     public void i_remove_the_user() {
         clickByCSS("button.left-aligned.govuk-button.govuk-button--secondary");
-    }
-
-    @Then("i confirm the user removal")
-    public void i_confirm_the_user_removal() {
         UniversalActions.clickSubmit();
     }
 
