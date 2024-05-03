@@ -42,6 +42,10 @@ on:
       excluded_tags:
         description: 'Test tags to exclude (comma-separated)'
         required: false
+      grid_url: 
+        description: 'The URL of the Selenium Grid'
+        required: true
+        default: 'https://selenium-hub.olcs.dev-dvsacloud.uk/'
 
 jobs:
 
@@ -61,14 +65,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
         
-    - name: Check URL
+    - name: Selenium Grid URL Check
       env:
-        URL: "https://www.example.com"
+        GRID_URL: 'https://selenium-hub.olcs.dev-dvsacloud.uk/'
       run: |
         import requests
         
         try:
-            response = requests.get("${{ env.URL }}")
+            response = requests.get("${{ env.GRID_URL }}")
             response.raise_for_status()
             print(f"URL {response.url} is accessible.")
         except requests.exceptions.RequestException as e:
@@ -91,31 +95,31 @@ jobs:
           java-version: '11'
           cache: maven
 
-      # - name: Deploy Maven Tests to ${{ inputs.environment }}
-      #   env:
-      #     PLATFORM_ENV: ${{ inputs.environment }}
-      #     BROWSER_NAME: ${{ inputs.browser }}
-      #     BROWSER_VERSION: ${{ inputs.browser_version }}
-      #     EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
-      #     TAGS: ${{ inputs.tags }}
-      #   run: |
-      #     mvn clean verify -U \
-      #       -Denv=${PLATFORM_ENV} \
-      #       -Dbrowser=${BROWSER_NAME} \
-      #       -DbrowserVersion=${BROWSER_VERSION} \
-      #       -Dplatform="Linux" \
-      #       -DgridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/" \
-      #       -Dtag.name="(not ${EXCLUDE_TAGS})" \
-      #       -Dcucumber.filter.tags="@${TAGS}" \
-      #       -Dwdm.proxy="proxy.ci.olcs.dev-dvsacloud.uk:3128" \
-      #       -Dhttps.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
-      #       -Dhttps.proxyPort=3128 \
-      #       -Dhttp.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
-      #       -Dhttp.proxyPort=3128 \
-      #       -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk"
+      - name: Deploy Maven Tests to ${{ inputs.environment }}
+        env:
+          PLATFORM_ENV: ${{ inputs.environment }}
+          BROWSER_NAME: ${{ inputs.browser }}
+          BROWSER_VERSION: ${{ inputs.browser_version }}
+          EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
+          TAGS: ${{ inputs.tags }}
+        run: |
+          mvn clean verify -U \
+            -Denv=${PLATFORM_ENV} \
+            -Dbrowser=${BROWSER_NAME} \
+            -DbrowserVersion=${BROWSER_VERSION} \
+            -Dplatform="Linux" \
+            -DgridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/" \
+            -Dtag.name="(not ${EXCLUDE_TAGS})" \
+            -Dcucumber.filter.tags="@${TAGS}" \
+            -Dwdm.proxy="proxy.ci.olcs.dev-dvsacloud.uk:3128" \
+            -Dhttps.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+            -Dhttps.proxyPort=3128 \
+            -Dhttp.proxyHost="proxy.ci.olcs.dev-dvsacloud.uk" \
+            -Dhttp.proxyPort=3128 \
+            -Dhttp.nonProxyHosts="172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk"
 
-      # - name: Generate Allure Report
-      #   run: mvn allure:report
+      - name: Generate Allure Report
+        run: mvn allure:report
 
       - name: Deploy Allure Report
         uses: actions/upload-artifact@v4
