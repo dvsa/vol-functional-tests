@@ -1,4 +1,5 @@
 @manage-users
+@ss_regression
 
 Feature: Manage users - removal of users via the users list
 
