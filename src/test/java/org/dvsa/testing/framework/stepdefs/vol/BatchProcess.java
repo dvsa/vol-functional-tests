@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.aws.s3.SecretsManager;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -28,12 +27,12 @@ public class BatchProcess extends BasePage {
 
     @And("the duplicate letter job is run")
     public void theDuplicateLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @Then("i should receive a duplicate vehicle email")
@@ -51,7 +50,7 @@ public class BatchProcess extends BasePage {
 
     @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),world.configuration.config.getString("jenkinsUser"), world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @Then("the registration should be marked as expired")

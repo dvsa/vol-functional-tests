@@ -2,22 +2,30 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class MessagingSelfServe extends BasePage {
 
-        private final World world;
-
-        public MessagingSelfServe(World world) {
-            this.world = world;
-        }
+    private static final String CategoryErrorMessage = "Select a Category";
+    private static final String LicenceOrApplicationErrorMessage = "Select an application or licence ID";
+    private static final String TextFieldErrorMessage = "Enter message";
 
 
-        @Then("i click on start a new conversation link")
+    private final World world;
+
+    public MessagingSelfServe(World world) {
+        this.world = world;
+    }
+
+
+    @Then("i click on start a new conversation link")
     public void iClickOnStartANewConversationLink() {
-            world.messagingJourney.createNewConversation();
+        world.messagingJourney.createNewConversation();
     }
 
     @And("i redirect to the message tab to respond to the case worker's message")
@@ -28,19 +36,18 @@ public class MessagingSelfServe extends BasePage {
 
     @Then("i view the new message that the caseworker has sent")
     public void iViewTheNewMessageThatTheCaseworkerHasSent() {
-            world.messagingInternal.iClickTheMessagesHeading();
+        world.messagingInternal.iClickTheMessagesHeading();
         world.messagingJourney.viewNewMessage();
     }
 
     @And("i have opened a new message, which will appear as open")
     public void iHaveOpenedANewMessageWhichWillAppearAsOpen() {
-            world.messagingJourney.openMessageStatusCheck();
+        world.messagingJourney.openMessageStatusCheck();
     }
 
     @Then("i validate the new message count appears on the messaging tab")
     public void iValidateTheNewMessageCountAppearsOnTheMessagingTab() {
         world.messagingJourney.notificationCount();
-
     }
 
     @Then("i click on back button to redirect to conversation page")
@@ -58,5 +65,25 @@ public class MessagingSelfServe extends BasePage {
     public void theMessagesTabIsDisplayedOnTheDashboard() {
         clickByLinkText("Home");
         world.messagingJourney.messageTabShown();
+    }
+
+    @When("i sent a new message without selecting a category, licence or application number and text")
+    public void iSentANewMessageWithoutSelectingAnyOption() {
+        world.messagingJourney.submitMessageWithoutSelectingAnyOption();
+    }
+
+    @Then("i should get an error message")
+    public void iShouldGetAnErrorMessage() {
+        assertTrue(isTextPresent(CategoryErrorMessage));
+        assertTrue(isTextPresent(LicenceOrApplicationErrorMessage));
+        assertTrue(isTextPresent(TextFieldErrorMessage));
+    }
+
+
+    @Then("i send a reply without entering a message in the text field, and an error message will appear.")
+    public void iSendAReplyWithoutEnteringAMessageInTheTextFieldAndAnErrorMessageWillAppear() {
+        world.messagingInternal.iClickTheMessagesHeading();
+        world.messagingJourney.replyErrorMessage();
+        assertTrue(isTextPresent(TextFieldErrorMessage));
     }
 }

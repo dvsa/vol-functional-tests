@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
@@ -44,8 +43,8 @@ public class CreateNewOperatorLicense extends BasePage {
 
     @When("I log in as a Local Authority User")
     public void iLogInAsALocalAuthorityUser() {
-        String user = SecretsManager.getSecretValue("localAuthorityUser");
-        String password = SecretsManager.getSecretValue("defaultPassword");
+        String user = world.configuration.config.getString("localAuthorityUser");
+        String password = world.configuration.config.getString("defaultPassword");
 
         if (getDriver().getCurrentUrl().contains("dashboard")) {
             clickByLinkText("Sign out");
