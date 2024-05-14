@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import activesupport.aws.s3.SecretsManager;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
@@ -81,13 +80,13 @@ public class InternalNavigation extends BasePage {
     public void loginIntoInternal(String userRole) throws HttpException {
         switch (userRole) {
             case "limitedReadOnlyUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                world.globalMethods.signIn(world.configuration.config.getString("limitedReadOnlyUser"), world.configuration.config.getString("adminPassword"));
                 break;
             case "readOnlyUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                world.globalMethods.signIn(world.configuration.config.getString("readOnlyUser"), world.configuration.config.getString("adminPassword"));
                 break;
             case "intSystemAdmin":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
+                world.globalMethods.signIn(world.configuration.config.getString("intSystemAdmin"), world.configuration.config.getString("intEnvPassword"));
                 break;
             default:
                 world.internalNavigation.logInAsAdmin();
