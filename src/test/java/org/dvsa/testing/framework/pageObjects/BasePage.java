@@ -127,6 +127,10 @@ public abstract class BasePage extends DriverUtils {
         findElement(selector, SelectorType.NAME).click();
     }
 
+    protected static void clickByCSS(@NotNull String selector) {
+        findElement(selector, SelectorType.CSS).click();
+    }
+
     protected static void selectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue) {
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByVisibleText(listValue);
