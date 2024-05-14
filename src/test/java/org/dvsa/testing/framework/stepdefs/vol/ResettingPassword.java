@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
@@ -48,7 +49,7 @@ public class ResettingPassword extends BasePage {
 
     @Then("I should be able to login with my new password")
     public void iShouldBeAbleToLoginWithMyNewPassword() {
-        String passWord = world.configuration.config.getString("adminPassword");
+        String passWord = SecretsManager.getSecretValue("adminPassword");
         waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
         waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
         clickById("auth.login.button");

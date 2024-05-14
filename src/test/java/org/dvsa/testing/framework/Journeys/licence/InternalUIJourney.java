@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.dates.Dates;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang3.StringUtils;
@@ -235,8 +236,8 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void loginIntoInternalAsExistingAdmin() {
-        String user = world.configuration.config.getString("adminUser");
-        String password = world.configuration.config.getString("defaultPassword");
+        String user = SecretsManager.getSecretValue("adminUser");
+        String password = SecretsManager.getSecretValue("defaultPassword");
 
         String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
         get(internalURL);

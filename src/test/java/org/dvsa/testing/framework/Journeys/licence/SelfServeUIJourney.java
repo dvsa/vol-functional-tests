@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
@@ -48,7 +49,7 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void resetSelfServePassword() {
-        String passWord = world.configuration.config.getString("adminPassword");
+        String passWord = SecretsManager.getSecretValue("adminPassword");
         waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
         waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
         click(nameAttribute("input", "submit"), SelectorType.CSS);
