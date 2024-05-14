@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
@@ -101,7 +102,7 @@ public class APIJourney {
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), world.configuration.config.getString("internalNewPassword"));
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
     }
 
     public void grantLicenceAndPayFees() throws HttpException {
