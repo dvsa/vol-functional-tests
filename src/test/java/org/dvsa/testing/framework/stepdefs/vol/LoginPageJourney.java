@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -21,7 +22,7 @@ public class LoginPageJourney extends BasePage {
         if (isElementPresent("declarationRead", SelectorType.ID)) {
             waitAndClick("declarationRead", SelectorType.ID);
         }
-        world.globalMethods.signIn(username, world.configuration.config.getString("adminPassword"));
+        world.globalMethods.signIn(username, SecretsManager.getSecretValue("adminPassword"));
         this.userId = username;
     }
 
@@ -38,13 +39,13 @@ public class LoginPageJourney extends BasePage {
 
     @When("I attempt to login with a {string} with an email format")
     public void iAttemptToLoginWithAWithAnEmailFormat(String usernames) {
-        world.globalMethods.signIn(usernames, world.configuration.config.getString("adminPassword"));
+        world.globalMethods.signIn(usernames, SecretsManager.getSecretValue("adminPassword"));
         this.userId = usernames;
     }
 
     @When("I attempt to login with {string} that share the same email address")
     public void iAttemptToLoginWithThatShareTheSameEmailAddress(String users) {
-        world.globalMethods.signIn(users, world.configuration.config.getString("adminPassword"));
+        world.globalMethods.signIn(users, SecretsManager.getSecretValue("adminPassword"));
         this.userId = users;
     }
 }

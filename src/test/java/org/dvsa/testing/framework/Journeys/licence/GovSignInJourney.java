@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -30,8 +31,8 @@ public class GovSignInJourney extends BasePage {
         if (isTextPresent("Declaration information")) {
             clickById("sign");
         }
-        String userName = world.configuration.config.getString("basicAuthUserName");
-        String passWord = world.configuration.config.getString("basicAuthPassword");
+        String userName = SecretsManager.getSecretValue("basicAuthUserName");
+        String passWord = SecretsManager.getSecretValue("basicAuthPassword");
         try {
             URL redirectURL = new URL(Browser.navigate().getCurrentUrl());
             String urlWithUnsecureProtocol = redirectURL.getProtocol().concat(String.format("://%s:%s@" + redirectURL.getAuthority() + redirectURL.getFile(), userName, passWord));
@@ -42,9 +43,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
-        String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
-        String signInUsername = world.configuration.config.getString("signInUsername");
-        String signInPassword = world.configuration.config.getString("signInPassword");
+        String AUTH_KEY = SecretsManager.getSecretValue("AUTH_KEY");
+        String signInUsername = SecretsManager.getSecretValue("signInUsername");
+        String signInPassword = SecretsManager.getSecretValue("signInPassword");
 
         if(Browser.navigate().getCurrentUrl().contains("updated")){
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -106,7 +107,7 @@ public class GovSignInJourney extends BasePage {
 
 
     public void registerGovAccount() throws InterruptedException {
-        String signInPassword = world.configuration.config.getString("signInPassword");
+        String signInPassword = SecretsManager.getSecretValue("signInPassword");
         if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
