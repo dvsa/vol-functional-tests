@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.Global;
 
-import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
@@ -43,7 +42,7 @@ public class GlobalMethods extends BasePage {
     }
 
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
-        String newPassword = SecretsManager.getSecretValue("internalNewPassword");
+        String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
