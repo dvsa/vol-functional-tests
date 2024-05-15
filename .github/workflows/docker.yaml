@@ -6,9 +6,6 @@ on:
       ref:
         type: string
         required: false
-      project:
-        type: string
-        required: true
       version:
         type: string
         required: true
