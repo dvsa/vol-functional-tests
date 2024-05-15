@@ -55,7 +55,7 @@ jobs:
         name: generate settings xml
         with:
           servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
-          output_file: ./vol-functional-tests/settings.xml
+          output_file: ./settings.xml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
