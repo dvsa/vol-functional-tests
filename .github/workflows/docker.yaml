@@ -48,12 +48,14 @@ jobs:
     name: Build ${{ inputs.push && 'and push' || '' }}
     runs-on: ubuntu-latest
     steps:
+      
+      - uses: actions/checkout@v4
+
       - uses: whelk-io/maven-settings-xml-action@v22
         name: generate settings xml
         with:
           servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
-      
-      - uses: actions/checkout@v4
+          output_file: ./vol-functional-tests/settings.xml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -104,8 +106,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ env.WORKING_DIR }}
-          build-contexts: |
-              maven-settings=/home/runner/.m2
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}

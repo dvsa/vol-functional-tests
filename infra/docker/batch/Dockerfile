@@ -16,7 +16,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     rm -f awscliv2.zip
 
 COPY ./vol-functional-tests .
-COPY --from=maven-settings settings.xml ~/.m2/settings.xml
+COPY ./vol-functional-tests/settings.xml ~/.m2/settings.xml
 
 CMD ["/bin/sh", "-c", "./vol-functional-tests/run.sh"]
 
