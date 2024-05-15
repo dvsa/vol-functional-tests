@@ -98,8 +98,6 @@ jobs:
         run: |
           aws ecr batch-delete-image --repository-name vol-functional-tests/vft --image-ids imageTag=latest
 
-      - run: ls -al /home/runner/.m2/
-        name: test for ls
 
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
