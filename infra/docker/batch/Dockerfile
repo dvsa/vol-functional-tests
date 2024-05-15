@@ -18,8 +18,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 # COPY --from=maven-settings settings.xml ~/.m2/settings.xml
 
 COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
-# COPY --from=repo vol-functional-tests .
 
-COPY ../../../../vol-functional-tests .
+FROM repo AS prod
+COPY ./vol-functional-tests .
 
 CMD ["/bin/sh", "-c", "./vol-functional-tests/run.sh"]
