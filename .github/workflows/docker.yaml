@@ -105,7 +105,7 @@ jobs:
           context: ${{ env.WORKING_DIR }}
           build-contexts: |
               maven-settings=/home/runner/.m2
-              repo=.
+              repo=./..
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
