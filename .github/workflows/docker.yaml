@@ -104,6 +104,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ env.WORKING_DIR }}
+          build-contexts: HOME='~/.m2/settings.xml'
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
