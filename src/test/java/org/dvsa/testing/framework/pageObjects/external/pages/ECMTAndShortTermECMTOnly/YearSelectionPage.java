@@ -23,7 +23,7 @@ public class YearSelectionPage extends BasePermitPage {
 
     public void selectECMTValidityPeriod() {
         if (isYearChoicePresent()) {
-            String year = "2023";
+            String year = "2024";
             String selector = String.format("//label[contains(text(),'%s')]", year);
             scrollAndClick(selector, SelectorType.XPATH);
             world.basePermitJourney.setYearChoice(year);
