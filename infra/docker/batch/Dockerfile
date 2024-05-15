@@ -2,6 +2,8 @@
 
 FROM maven:3.9.6-amazoncorretto-11 as maven
 
+WORKDIR /app
+
 RUN yum update -y && \
     yum install -y zip-3.* unzip-6.*  && \
     yum clean all && \
