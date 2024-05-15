@@ -36,19 +36,23 @@ jobs:
         with:
           dockerfile: ${{ env.WORKING_DIR }}/Dockerfile
   
-  settings-xml:
-    name: generate settings xml
-    runs-on: ubuntu-latest
-    steps:
-      - uses: whelk-io/maven-settings-xml-action@v22
-        with:
-          servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
+  # settings-xml:
+  #   name: generate settings xml
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: whelk-io/maven-settings-xml-action@v22
+  #       with:
+  #         servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
 
   build:
-    needs: settings-xml
     name: Build ${{ inputs.push && 'and push' || '' }}
     runs-on: ubuntu-latest
     steps:
+      - uses: whelk-io/maven-settings-xml-action@v22
+        name: generate settings xml
+        with:
+          servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
+      
       - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
