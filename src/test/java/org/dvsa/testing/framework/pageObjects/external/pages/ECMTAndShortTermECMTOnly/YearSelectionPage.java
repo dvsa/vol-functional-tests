@@ -5,6 +5,9 @@ import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
+import java.time.Year;
+import java.util.Random;
+
 public class YearSelectionPage extends BasePermitPage {
 
     World world;
@@ -23,13 +26,17 @@ public class YearSelectionPage extends BasePermitPage {
 
     public void selectECMTValidityPeriod() {
         if (isYearChoicePresent()) {
-            String year = "2024";
+            int currentYear = Year.now().getValue();
+            int nextYear = currentYear + 1;
+            Random random = new Random();
+            String year = random.nextBoolean() ? String.valueOf(currentYear) : String.valueOf(nextYear);
             String selector = String.format("//label[contains(text(),'%s')]", year);
             scrollAndClick(selector, SelectorType.XPATH);
             world.basePermitJourney.setYearChoice(year);
         }
         saveAndContinue();
     }
+
 
     public  boolean isYearChoicePresent() {
         return isElementPresent("//input[@type='radio']", SelectorType.XPATH);
