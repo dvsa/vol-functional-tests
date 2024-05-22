@@ -21,6 +21,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
 
-COPY ../vol-functional-tests .
+RUN ls -al 
+
+COPY ../../../../vol-functional-tests .
 
 CMD ["/bin/sh", "-c", "./vol-functional-tests/run.sh"]
