@@ -15,13 +15,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-# COPY --from=maven-settings settings.xml ~/.m2/settings.xml
-
-# define env variable which doesn't change
-
-# COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
-
-RUN echo ${pwd} 
+COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
 
 COPY . ./app
 
