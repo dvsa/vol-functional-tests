@@ -15,7 +15,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-COPY ./settings.xml ~/.m2/settings.xml
+COPY ../settings.xml ~/.m2/settings.xml
 
 COPY . ./app
 
