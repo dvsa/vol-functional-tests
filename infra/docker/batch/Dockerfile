@@ -19,10 +19,10 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # define env variable which doesn't change
 
-COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
+# COPY /home/runner/.m2/settings.xml ~/.m2/settings.xml
 
-RUN ls -al 
+RUN echo ${pwd} 
 
-COPY ../../../../vol-functional-tests .
+COPY . ./app
 
 CMD ["/bin/sh", "-c", "./vol-functional-tests/run.sh"]
