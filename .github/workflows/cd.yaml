@@ -27,10 +27,9 @@ jobs:
 
   docker:
     name: Docker
-    if: ${{ needs.release-please.outputs.release_created || needs.orchestrator.outputs.changed-directories }}
+    if: ${{ needs.release-please.outputs.release_created }}
     uses: ./.github/workflows/docker.yaml
     with:
-      project: "vol-functional-test"
       version: 'latest'
       push: true
       is-release: ${{needs.release-please.outputs.release_created}}

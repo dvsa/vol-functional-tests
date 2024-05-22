@@ -69,8 +69,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.REGISTRY }}/vol-functional-tests/vft
-            ${{ env.REGISTRY_MIRROR }}/dvsa/vol-functional-tests/vft
+            ${{ env.REGISTRY }}/vol-qa/vft
+            ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
           tags: |
             type=sha,prefix=,format=short
             type=semver,enable=${{ inputs.is-release }},pattern={{version}},value=${{ inputs.version }}
@@ -107,11 +107,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: . #${{ env.WORKING_DIR }}
+          context: . 
           file: infra/docker/batch/Dockerfile
-          # build-contexts: |
-          #     maven-settings=/home/runner/.m2
-          #     repo=./..
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -132,5 +129,5 @@ jobs:
           plugin_name: com.amazonaws.signer.notation.plugin
           plugin_url: https://d2hvyiie56hcat.cloudfront.net/linux/amd64/plugin/latest/notation-aws-signer-plugin.zip
           plugin_checksum: cccfe8fdcdf853d83fd57ffc80524eddda75ad7ae9d9a257b087007230ec02f9
-          key_id: arn:aws:signer:eu-west-1:054614622558:/signing-profiles/vol_vft_20240313124948142600000001
-          target_artifact_reference: ${{ env.REGISTRY }}/vol-vft/${{ inputs.project }}@${{ steps.build-and-push.outputs.digest }}
+          key_id: arn:aws:signer:eu-west-1:054614622558:/signing-profiles/vol_qa20240522124422657400000001
+          target_artifact_reference: ${{ env.REGISTRY }}/vol-qa/vft@${{ steps.build-and-push.outputs.digest }}
