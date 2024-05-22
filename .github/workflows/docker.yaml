@@ -107,7 +107,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: ${{ env.WORKING_DIR }}
+          context: . #${{ env.WORKING_DIR }}
+          file: infra/docker/batch/
           # build-contexts: |
           #     maven-settings=/home/runner/.m2
           #     repo=./..
