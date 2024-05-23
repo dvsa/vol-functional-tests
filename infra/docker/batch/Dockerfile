@@ -17,6 +17,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 COPY ./settings.xml ~/.m2/settings.xml
 
-COPY . ./app
+COPY . .
 
-CMD ["/bin/sh", "-c", "./vol-functional-tests/run.sh"]
+CMD ["/bin/sh", "-c", "./run.sh"]
