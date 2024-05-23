@@ -33,7 +33,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: true
+      push: false
     permissions:
       contents: read
       id-token: write
