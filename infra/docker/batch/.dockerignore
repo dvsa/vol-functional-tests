@@ -1,0 +1,8 @@
+# Ignore everything by default
+*
+
+# But include these files and folders
+!src/
+!lib/
+!pom.xml
+!run.sh

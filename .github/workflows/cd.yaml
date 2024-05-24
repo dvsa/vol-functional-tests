@@ -1,0 +1,45 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  release-please:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          release-type: node
+          target-branch: ${{ github.ref_name }}
+
+  docker:
+    name: Docker
+    if: ${{ needs.release-please.outputs.release_created }}
+    uses: ./.github/workflows/docker.yaml
+    with:
+      version: 'latest'
+      push: true
+      is-release: ${{needs.release-please.outputs.release_created}}
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+
+
+
+
+
+
