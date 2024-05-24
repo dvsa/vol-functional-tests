@@ -2,6 +2,20 @@
 
 FROM maven:3.9.6-amazoncorretto-11 as maven
 
+ENV proxyHost=
+ENV proxyPort=
+ENV noProxyJava=
+ENV platformEnv=
+ENV browserName=
+ENV browserVersion=
+ENV platform=
+ENV gridURL=
+ENV exclude_tags=
+ENV cucumberTags=
+
+
+
+
 WORKDIR /app
 
 RUN yum update -y && \
