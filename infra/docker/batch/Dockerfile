@@ -2,6 +2,8 @@
 
 FROM maven:3.9.6-amazoncorretto-11 as maven
 
+# mvn clean verify -U -Denv=qa -Dbrowser=edge -DbrowserVersion=103 -Dplatform=LINUX -DgridURL=https://selenium-hub.olcs.dev-dvsacloud.uk/ '-Dtag.name=(not *)' -Dcucumber.filter.tags=@smoketest -Dwdm.proxy=proxy.ci.olcs.dev-dvsacloud.uk:3128 -Dhttps.proxyHost=proxy.ci.olcs.dev-dvsacloud.uk -Dhttps.proxyPort=3128 -Dhttp.proxyHost=proxy.ci.olcs.dev-dvsacloud.uk -Dhttp.proxyPort=3128 '-Dhttp.nonProxyHosts=172.17/12|localhost|127.0.0.1|*.olcs.dev-dvsacloud.uk'
+
 ENV proxyHost=
 ENV proxyPort=
 ENV noProxyJava=
@@ -9,7 +11,7 @@ ENV platformEnv=
 ENV browserName=
 ENV browserVersion=
 ENV platform=
-ENV gridURL=
+ENV gridURL=https://selenium-hub.olcs.dev-dvsacloud.uk/
 ENV exclude_tags=
 ENV cucumberTags=
 
