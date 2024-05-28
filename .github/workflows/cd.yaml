@@ -32,7 +32,7 @@ jobs:
     with:
       version: 'latest'
       push: true
-      is-release: ${{needs.release-please.outputs.release_created}}
+      is-release: true
     permissions:
       contents: read
       id-token: write
