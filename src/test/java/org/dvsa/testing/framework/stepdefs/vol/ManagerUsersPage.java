@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -60,4 +61,26 @@ public class ManagerUsersPage extends BasePage {
             world.APIJourney.createAdminUser();
         }
     }
+
+    @Then("{string} users show in the user table")
+    public void the_new_user_shows_in_the_user_table(String userCount) {
+        assertTrue(isTextPresent(userCount +" Current users"));
+    }
+
+    @Then("i remove the user")
+    public void i_remove_the_user() {
+        clickByCSS("button.left-aligned.govuk-button.govuk-button--secondary");
+        UniversalActions.clickSubmit();
+    }
+
+    @Then("the new user does not show in the user table")
+    public void the_new_user_does_not_show_in_the_user_table() {
+        assertTrue(isTextPresent("1 Current user"));
+    }
+
+    @Given("the transport manager is displayed in the users list")
+    public void the_transport_manager_is_displayed_in_the_users_list() {
+        assertTrue(isTextPresent("Transport Manager"));
+    }
+
 }

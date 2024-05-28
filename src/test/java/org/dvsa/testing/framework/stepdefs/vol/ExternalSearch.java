@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,10 +27,10 @@ public class ExternalSearch extends BasePage {
 
     @And("i login as a partner user")
     public void iLoginAsAPartnerUser() {
-        String user = world.configuration.config.getString("partnerUser");
-        String password = world.configuration.config.getString("partnerUserPassword");
-        String intUser = world.configuration.config.getString("intPartnerUser");
-        String intPassword = world.configuration.config.getString("intEnvPassword");
+        String user = SecretsManager.getSecretValue("partnerUser");
+        String password = SecretsManager.getSecretValue("partnerUserPassword");
+        String intUser = SecretsManager.getSecretValue("intPartnerUser");
+        String intPassword = SecretsManager.getSecretValue("intEnvPassword");
 
         if (getDriver().getCurrentUrl().contains("dashboard")) {
             clickByLinkText("Sign out");
@@ -153,7 +154,7 @@ public class ExternalSearch extends BasePage {
 
     @And("i search for a vehicle")
     public void iSearchForAVehicle() {
-        String searchVrm = world.configuration.config.getString("testLicenceVrm");
+        String searchVrm = SecretsManager.getSecretValue("testLicenceVrm");
         waitForTitleToBePresent("Find vehicles");
         enterText("search", SelectorType.ID,searchVrm);
         clickById("submit");
