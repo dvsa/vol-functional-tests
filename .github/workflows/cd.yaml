@@ -30,7 +30,7 @@ jobs:
     if: ${{needs.release-please.outputs.release_created}}
     uses: ./.github/workflows/docker.yaml
     with:
-      version: 'latest'
+      version: ${{ needs.release-please.outputs.tag_name }}
       push: true
       is-release: true
     permissions:
