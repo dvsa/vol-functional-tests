@@ -90,8 +90,7 @@ jobs:
         if: ${{ inputs.push }}
         run: |
           aws ecr batch-delete-image --repository-name vol-functional-tests/vft --image-ids imageTag=latest
-
-
+          
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
@@ -105,7 +104,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       
-          
+
       - name: Setup Notation CLI
         if: ${{ inputs.push }}
         uses: notaryproject/notation-action/setup@v1
