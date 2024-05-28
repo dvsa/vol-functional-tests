@@ -89,7 +89,7 @@ jobs:
       - name: Untag existing latest image in ECR
         if: ${{ inputs.push }}
         run: |
-          aws ecr batch-delete-image --repository-name vol-functional-tests/vft --image-ids imageTag=latest
+          aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
           
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
