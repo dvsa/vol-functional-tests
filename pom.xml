@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>2.1</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
-
-        <active-support.version>2.2.1</active-support.version>
-
+        <active-support.version>2.0.1.8</active-support.version>
         <api-calls.version>2.0.3</api-calls.version>
         <uri-constructor.version>2.0.2</uri-constructor.version>
 
@@ -36,7 +36,7 @@
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <nexus.releases/>
+        <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
         <jvmMemory>2048</jvmMemory>
@@ -61,6 +61,24 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>maven-releases</id>
+            <url>${nexus.releases}</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+
+        </repository>
+        <repository>
+            <id>dvsa-github-packages</id>
+            <url>https://maven.pkg.github.com/dvsa</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -266,26 +284,11 @@
         </plugins>
     </build>
 
-
-    <repositories>
-        <repository>
-            <id>dvsa-github-packages</id>
-            <name>GitHub dvsa Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/dvsa/*</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
+    <!--  Nexus Configuration  -->
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>GitHub dvsa Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/dvsa/vol-functional-tests</url>
+            <id>maven-releases</id>
+            <url>${nexus.releases}</url>
         </repository>
     </distributionManagement>
 </project>
