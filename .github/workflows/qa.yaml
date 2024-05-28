@@ -1,0 +1,109 @@
+name: Functional Test Workflow
+
+on:
+      
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to execute tests'
+        required: true
+        default: qa
+      branch:
+        description: 'Branch to run tests against'
+        required: true
+        default: main
+      browser:
+        description: 'Browser to run tests on'
+        required: true
+        type: choice
+        options: 
+          - Firefox
+          - Chrome
+          - Edge
+        default: Chrome
+      browser_version:
+        description: 'Browser version to run tests on'
+        required: true
+      tags:
+        description: 'Test tags to include (comma-separated)'
+        required: false
+        type: choice
+        options:
+          - 'smoketest'
+          - 'ss_regression'
+          - 'int_regression'
+          - 'FullRegression'
+        default: 'smoketest'
+      excluded_tags:
+        description: 'Test tags to exclude (comma-separated)'
+        required: false
+jobs:
+
+  url-checker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Selenium Grid URL Check
+      env:
+        GRID_URL: 'https://selenium-hub.olcs.dev-dvsacloud.uk/'
+      run: |
+        import requests
+        
+        try:
+            response = requests.get("${{ env.GRID_URL }}")
+            response.raise_for_status()
+            print(f"URL {response.url} is accessible.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error checking URL: {e}")
+            exit(1)
+      shell: python
+
+  maven-test:
+    runs-on: ubuntu-latest
+    needs: 
+      - url-checker
+    steps:
+      - name: Checkout Project Branch from GitHub
+        uses: actions/checkout@v4
+
+      - name: Install Java Corretto 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+          cache: maven
+
+      - name: Deploy Maven Tests to ${{ inputs.environment }}
+        env:
+          PLATFORM_ENV: ${{ inputs.environment }}
+          BROWSER_NAME: ${{ inputs.browser }}
+          BROWSER_VERSION: ${{ inputs.browser_version }}
+          EXCLUDE_TAGS: ${{ inputs.excluded_tags }}
+          TAGS: ${{ inputs.tags }}
+        run: |
+
+
+      - name: Generate Allure Report
+        run: mvn allure:report
+
+      - name: Deploy Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: |
+            target/site/allure-maven-plugin
+            **/**/BUILD/*.xml
+          retention-days: 30
+          if-no-files-found: error
