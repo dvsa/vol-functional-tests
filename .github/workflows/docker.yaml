@@ -46,7 +46,7 @@ jobs:
       - uses: whelk-io/maven-settings-xml-action@v22
         name: generate settings xml
         with:
-          servers: '[{ "id":"github-vol-active-support", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
+          servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
           output_file: ./settings.xml
       
       - name: Set up Docker Buildx
@@ -54,6 +54,7 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
+        
         uses: docker/metadata-action@v5
         with:
           images: |
