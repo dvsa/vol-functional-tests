@@ -18,7 +18,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 COPY . .
 
-RUN mv settings.xml /root/.m2/settings.xml
+COPY ./settings.xml /root/.m2/settings.xml
 
 RUN chmod +x ./run.sh
 
