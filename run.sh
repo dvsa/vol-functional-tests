@@ -35,8 +35,7 @@ check_environment_variables() {
     "cucumberTags"
     "resultsTargetBucket"
     "resultsTargetBucketPath"
-    "resultsBuildNumber"
-    "RUN-BUILDID"
+    "buildId"
     "proxyHost"
     "proxyPort"
     "noProxyJava"
@@ -62,7 +61,7 @@ echo "Now running [ mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=$
 if [ $? -eq 0 ]; then
   mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags="${cucumberTags}"
   zip -qr allure.zip target Reports
-  aws s3 cp allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${resultsBuildNumber}-${RUN-BUILDID}/
+  aws s3 cp allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${resultsBuildNumber}-${buildId}/
 else
   echo "Maven command failed!"
 fi

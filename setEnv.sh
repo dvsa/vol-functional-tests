@@ -1,1 +1,3 @@
-set -o allexport && source .env && set +o allexport
+while read line; do
+    export $line
+done < .env
