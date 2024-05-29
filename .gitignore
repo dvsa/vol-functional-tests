@@ -144,3 +144,6 @@ mockApiData
 /Findings.txt
 
 /LOGS
+
+.env 
+.env.local
