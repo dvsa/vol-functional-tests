@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.3.0](https://github.com/dvsa/vol-functional-tests/compare/v2.2.8...v2.3.0) (2024-05-30)
+
+
+### Features
+
+* updating run.sh bug fix parameters ([6be6983](https://github.com/dvsa/vol-functional-tests/commit/6be69831d909d0a02dbcaaa6536d149c017c7a68))
+
 ## [2.2.8](https://github.com/dvsa/vol-functional-tests/compare/v2.2.7...v2.2.8) (2024-05-29)
 
 
