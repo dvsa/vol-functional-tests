@@ -38,7 +38,6 @@ check_environment_variables() {
     "buildId"
     "proxyHost"
     "proxyPort"
-
   )
 
   # Check if any of the required variables are not set
