@@ -1,5 +1,61 @@
 # Revision History for the VOL Functional Tests
 
+## [2.0.0](https://github.com/dvsa/vol-functional-tests/compare/v2.3.1...v2.0.0) (2024-06-03)
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([53e673b](https://github.com/dvsa/vol-functional-tests/commit/53e673b89c6dbceb30ed6983f9a4cc38d7d7686b))
+
+## [2.3.1](https://github.com/dvsa/vol-functional-tests/compare/v2.3.0...v2.3.1) (2024-05-31)
+
+
+### Miscellaneous Chores
+
+* release 2.3.1 ([1d7b284](https://github.com/dvsa/vol-functional-tests/commit/1d7b284c967f34ecf012e194345521bc66d5acd2))
+
+## [2.3.0](https://github.com/dvsa/vol-functional-tests/compare/v2.2.8...v2.3.0) (2024-05-30)
+
+
+### Features
+
+* updating run.sh bug fix parameters ([6be6983](https://github.com/dvsa/vol-functional-tests/commit/6be69831d909d0a02dbcaaa6536d149c017c7a68))
+
+## [2.2.8](https://github.com/dvsa/vol-functional-tests/compare/v2.2.7...v2.2.8) (2024-05-29)
+
+
+### Miscellaneous Chores
+
+* release 2.2.8 ([20292b0](https://github.com/dvsa/vol-functional-tests/commit/20292b0a39655612bedea05b188a4f5f9b4e72ae))
+
+## [2.2.7](https://github.com/dvsa/vol-functional-tests/compare/v2.2.6...v2.2.7) (2024-05-29)
+
+
+### Miscellaneous Chores
+
+* release 2.2.7 ([e10e473](https://github.com/dvsa/vol-functional-tests/commit/e10e47386f79a912f66797c1cda4bc5be6beb955))
+
+## [2.2.6](https://github.com/dvsa/vol-functional-tests/compare/v2.2.5...v2.2.6) (2024-05-29)
+
+
+### Miscellaneous Chores
+
+* release 2.2.6 ([c1c6cb0](https://github.com/dvsa/vol-functional-tests/commit/c1c6cb0e0ab126627287c8687f313587dd9eb716))
+
+## [2.2.5](https://github.com/dvsa/vol-functional-tests/compare/v2.2.4...v2.2.5) (2024-05-29)
+
+
+### Miscellaneous Chores
+
+* release 2.2.5 ([1fa1aab](https://github.com/dvsa/vol-functional-tests/commit/1fa1aab54d0fdb1d32fab326a8a2f5041a0b75c6))
+
+## [2.2.4](https://github.com/dvsa/vol-functional-tests/compare/v2.2.3...v2.2.4) (2024-05-28)
+
+
+### Miscellaneous Chores
+
+* release 2.2.4 ([7ca2982](https://github.com/dvsa/vol-functional-tests/commit/7ca29821b373cd6464378b8d3c281b73a4677ceb))
+
 ## [2.2.3](https://github.com/dvsa/vol-functional-tests/compare/v2.2.2...v2.2.3) (2024-05-28)
 
 
