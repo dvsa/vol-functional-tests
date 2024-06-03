@@ -1,5 +1,21 @@
 # Revision History for the VOL Functional Tests
 
+## [2.0.0](https://github.com/dvsa/vol-functional-tests/compare/v2.3.0...v2.0.0) (2024-06-03)
+
+
+### Features
+
+* adding in additional batch parameters to support sync testing workflows ([2b52610](https://github.com/dvsa/vol-functional-tests/commit/2b52610d5aafec877532e9721016240c9cfb00b6))
+* adding in additional batch parameters to support sync testing workflows ([e76a6c7](https://github.com/dvsa/vol-functional-tests/commit/e76a6c7c5452861658ebfe8a565350ae0064b9b6))
+* changed uri-constructor version to 2.0.4 ([275d62d](https://github.com/dvsa/vol-functional-tests/commit/275d62d9ae4d211af356627a12f1d217a7a6bcdf))
+* Update pom.xml ([8477dfe](https://github.com/dvsa/vol-functional-tests/commit/8477dfecc16d9f26e9a12d7ff7d34a39f4533105))
+
+
+### Miscellaneous Chores
+
+* release 2.0.0 ([53e673b](https://github.com/dvsa/vol-functional-tests/commit/53e673b89c6dbceb30ed6983f9a4cc38d7d7686b))
+* release 2.3.1 ([1d7b284](https://github.com/dvsa/vol-functional-tests/commit/1d7b284c967f34ecf012e194345521bc66d5acd2))
+
 ## [2.3.0](https://github.com/dvsa/vol-functional-tests/compare/v2.2.0...v2.3.0) (2024-06-03)
 
 
