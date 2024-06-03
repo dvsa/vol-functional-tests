@@ -49,11 +49,10 @@ jobs:
       browser_version: 103
       exclude_tags:
       cucumber_tags: "@smoketest"
-      build_id: "devtest-${{ needs.release-please.outputs.tag_name }}"
+      build_id: "smoketest-${{ needs.release-please.outputs.tag_name }}"
       maven_options:
     permissions:
       contents: read
       id-token: write
     needs:
-      - release-please
       - docker
