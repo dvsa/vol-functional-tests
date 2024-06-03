@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.2.0](https://github.com/dvsa/vol-functional-tests/compare/v2.1.0...v2.2.0) (2024-06-03)
+
+
+### Features
+
+* Update pom.xml ([8477dfe](https://github.com/dvsa/vol-functional-tests/commit/8477dfecc16d9f26e9a12d7ff7d34a39f4533105))
+
 ## [2.1.0](https://github.com/dvsa/vol-functional-tests/compare/v2.0.0...v2.1.0) (2024-06-03)
 
 
