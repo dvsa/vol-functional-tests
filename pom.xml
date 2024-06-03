@@ -6,13 +6,14 @@
     <artifactId>vol-functional-tests</artifactId>
     <version>2.3.0</version>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
         <active-support.version>2.2.1</active-support.version>
-        <api-calls.version>2.0.3</api-calls.version>
-        <uri-constructor.version>2.0.2</uri-constructor.version>
+        <api-calls.version>2.0.7</api-calls.version>
+        <uri-constructor.version>2.0.4</uri-constructor.version>
 
         <axe-scanner-version>2.9</axe-scanner-version>
 
@@ -164,7 +165,7 @@
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
-            <artifactId>uri-constructor</artifactId>
+            <artifactId>vol-uri-constructor</artifactId>
             <version>${uri-constructor.version}</version>
         </dependency>
         <dependency>
