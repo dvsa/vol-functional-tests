@@ -1,0 +1,128 @@
+name: Sync Testing Workflow AWS Batch Job
+
+on:
+  workflow_call:
+    inputs:
+      push:
+        type: boolean
+        required: true
+        default: false
+      platform_env:
+        type: string
+        required: true
+      browser_name: 
+        type: string
+      browser_version: 
+        type: string 
+      exclude_tags:
+        type: string
+        required: false
+      cucumber_tags:
+        type: string
+      build_id:
+        type: string
+      maven_options:
+        type: string
+        required: false
+
+env:
+  JOB_NAME: ${{ inputs.build_id }}
+  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
+  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
+  AWS_OIDC_ROLE: ${{ vars[format('ACCOUNT_nonprod_TF_OIDC{0}_ROLE', (inputs.push && '' || '_READONLY'))] || (inputs.push && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE) }}
+  AWS_REGION: ${{ vars.TF_AWS_REGION }}
+  
+jobs:
+  run-sync-batch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Submit AWS Batch Job
+        id: submit-job
+        run: |
+          JOB_ID=$(aws batch submit-job \
+            --job-name ${{ env.JOB_NAME }} \
+            --job-queue ${{ env.JOB_QUEUE }} \
+            --job-definition ${{ env.JOB_DEFINITION }} \
+            --container-overrides '{
+              "command": [
+                "/bin/sh",
+                "-c",
+                "./run.sh"
+              ],
+              "environment": [
+                {
+                  "name": "platformEnv",
+                  "value": "${{ inputs.platform_env }}"
+                },
+                {
+                  "name": "browserName",
+                  "value": "${{ inputs.browser_name }}"
+                },
+                {
+                  "name": "browserVersion",
+                  "value": "${{ inputs.browser_version }}"
+                },
+                {
+                  "name": "exclude_tags",
+                  "value": "${{ inputs.exclude_tags }}"
+                },
+                {
+                  "name": "cucumberTags",
+                  "value": "${{ inputs.cucumber_tags }}"
+                },
+                {
+                  "name": "buildId",
+                  "value": "${{ inputs.build_id }}"
+                },
+                {
+                  "name": "mavenOptions",
+                  "value": "${{ inputs.maven_options }}"
+                }
+              ]
+            }')
+
+          jobId=$(echo $JOB_ID | jq -r '.jobId')
+          echo "job_id=$jobId" >> $GITHUB_OUTPUT
+
+      - name: Wait for Job Completion
+        env:
+          JOB_ID: ${{ steps.submit-job.outputs.job_id }}
+        run: |
+            TIME_OUT=15
+            JOB_ID=${{ env.JOB_ID }}
+            count=0
+
+            while true; do
+              JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
+
+              if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
+                echo "Final job status: $JOB_STATUS"
+                break
+              fi
+
+              echo "Job status: $JOB_STATUS"
+
+              ((TIME_OUT++))
+
+              if [ $count -ge $TIME_OUT ]; then
+                echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
+                exit 1
+              fi
+
+              sleep 60
+            done
+
+            if [ "$JOB_STATUS" == "FAILED" ]; then
+              echo "AWS Batch job failed"
+              exit 1
+            fi
+    
+      - name: Job Succeeded
+        if: success()
+        run: echo "AWS Batch job completed successfully!"
