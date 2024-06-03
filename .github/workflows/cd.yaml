@@ -47,9 +47,9 @@ jobs:
       platform_env: QA
       browser_name: chrome
       browser_version: 103
-      exclude_tags:
+      exclude_tags: "notags"
       cucumber_tags: "@smoketest"
-      build_id: "SmokeTest-${{ needs.release-please.outputs.tag_name }}"
+      build_id: "SmokeTest-1234"
       maven_options:
     permissions:
       contents: read
