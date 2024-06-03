@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.3.0](https://github.com/dvsa/vol-functional-tests/compare/v2.2.0...v2.3.0) (2024-06-03)
+
+
+### Features
+
+* adding in additional batch parameters to support sync testing workflows ([e76a6c7](https://github.com/dvsa/vol-functional-tests/commit/e76a6c7c5452861658ebfe8a565350ae0064b9b6))
+
 ## [2.2.0](https://github.com/dvsa/vol-functional-tests/compare/v2.1.0...v2.2.0) (2024-06-03)
 
 
