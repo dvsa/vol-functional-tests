@@ -4,6 +4,7 @@ Feature: Gov sign in
   Background:
     Given i have a "Goods" application in progress
 
+  @ss_regression
   Scenario: Login to sign in
   When I can navigate to gov sign in
   Then I sign in to gov sign in to complete the process
@@ -12,7 +13,6 @@ Feature: Gov sign in
   Then the application should be submitted
 
   @gov-reg
-  @ss_regression
   Scenario: Register a GOV sign in account
   When I can navigate to gov sign in
   Then I register a gov sign in account to complete the process
