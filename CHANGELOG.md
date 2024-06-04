@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.4.0](https://github.com/dvsa/vol-functional-tests/compare/v2.3.5...v2.4.0) (2024-06-04)
+
+
+### Features
+
+* bump up api calls ([eddd10c](https://github.com/dvsa/vol-functional-tests/commit/eddd10ca4df4cbc2666671efe69bfb0af72fdd1f))
+
 ## [2.3.5](https://github.com/dvsa/vol-functional-tests/compare/v2.3.4...v2.3.5) (2024-06-03)
 
 
