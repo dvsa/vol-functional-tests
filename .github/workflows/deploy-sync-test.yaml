@@ -1,12 +1,14 @@
 name: Sync Testing Workflow AWS Batch Job
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
-      push:
-        type: boolean
+      account:
         required: true
-        default: false
+        type: choice
+        options:
+          - sync
+          - async
       platform_env:
         type: string
         required: true
@@ -29,7 +31,7 @@ env:
   JOB_NAME: ${{ inputs.build_id }}
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
-  AWS_OIDC_ROLE: ${{ vars[format('ACCOUNT_nonprod_TF_OIDC{0}_ROLE', (inputs.push && '' || '_READONLY'))] || (inputs.push && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE) }}
+  AWS_OIDC_ROLE: ${{ vars.TF_OIDC_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   
 jobs:
@@ -122,6 +124,25 @@ jobs:
               echo "AWS Batch job failed"
               exit 1
             fi
+
+      - name: Upload to GitHub
+        env:
+          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
+          BUCKET_KEY: "vol-functional-tests"
+          REPORT_NAME: "allure.zip"
+        run: |
+          mkdir -p ./upload/${{ inputs.build_id }}
+          aws s3api get-object \
+          --bucket ${{ env.BUCKET_NAME }} \
+          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+  
+      - name: Upload Report artefact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.build_id }}
+          path: "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
     
       - name: Job Succeeded
         if: success()

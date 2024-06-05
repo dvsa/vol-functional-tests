@@ -38,21 +38,3 @@ jobs:
       id-token: write
       packages: write
     needs: release-please
-
-  run-batch:
-    name: Run AWS Batch Sync Test
-    uses: ./.github/workflows/deploy-sync-test.yaml
-    with:
-      push: true
-      platform_env: QA
-      browser_name: chrome
-      browser_version: 103
-      exclude_tags: "notags"
-      cucumber_tags: "@smoketest"
-      build_id: "SmokeTest-1234"
-      maven_options:
-    permissions:
-      contents: read
-      id-token: write
-    needs:
-      - docker
