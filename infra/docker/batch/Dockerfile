@@ -10,6 +10,12 @@ RUN yum update -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
+# Install temporary tools
+
+RUN yum install -y nc-* net-tools-* traceroute-* iputils-*  && \
+    yum clean all && \
+    rm -rf /var/cache/yum
+
 # Install latest version of the aws cli 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
