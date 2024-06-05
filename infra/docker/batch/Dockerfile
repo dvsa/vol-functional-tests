@@ -12,7 +12,7 @@ RUN yum update -y && \
 
 # Install temporary tools
 
-RUN yum install -y nc-* net-tools-* traceroute-* iputils-*  && \
+RUN yum install -y nmap-ncat-* net-tools-* traceroute-* iputils-*  && \
     yum clean all && \
     rm -rf /var/cache/yum
 
