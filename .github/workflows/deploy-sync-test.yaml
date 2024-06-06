@@ -3,7 +3,7 @@ name: Sync Testing Workflow AWS Batch Job
 on:
   workflow_dispatch:
     inputs:
-      account:
+      test:
         required: true
         type: choice
         options:
@@ -27,12 +27,16 @@ on:
         type: string
         required: false
 
+permissions:
+  contents: read
+  id-token: write
+
 env:
   JOB_NAME: ${{ inputs.build_id }}
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_OIDC_ROLE: ${{ inputs.sync && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
+  AWS_OIDC_ROLE: ${{ ( inputs.sync == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   
 jobs:
