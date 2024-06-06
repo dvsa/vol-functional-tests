@@ -2,6 +2,12 @@
 version: v1.25.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+   SNYK-JAVA-ORGBOUNCYCASTLE-6612984:
+    - '*':
+        reason: None Given
+        expires: 2024-06-08T15:46:16.314Z
+        created: 2024-05-09T15:46:16.322Z
+
   SNYK-JAVA-DOM4J-174153:
     - '*':
         reason: None Given
