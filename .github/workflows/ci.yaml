@@ -5,6 +5,8 @@ on:
 
 permissions:
   contents: read
+  packages: write
+
 
 jobs:
   get-version:
@@ -24,10 +26,23 @@ jobs:
         run: |
           echo "#### App versions:" >> $GITHUB_STEP_SUMMARY
           echo "**vft**: \`${{ steps.vft-version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+  security:
+    name: Security
+    uses: ./.github/workflows/security.yaml
+    secrets: inherit
+
+  build-maven:      
+    name: build with Maven
+    uses: ./.github/workflows/maven.yaml
+    with:
+        maven-goal: package -DskipTests 
+    needs: 
+      - security
+      - get-version
 
   docker:
     name: Docker
-    needs: get-version 
+    needs: build-maven 
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
