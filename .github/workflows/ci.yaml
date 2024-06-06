@@ -36,11 +36,13 @@ jobs:
     uses: ./.github/workflows/maven.yaml
     with:
         maven-goal: package
-    needs: security
+    needs: 
+      - security
+      - get-version
 
   docker:
     name: Docker
-    needs: get-version 
+    needs: build-maven 
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
