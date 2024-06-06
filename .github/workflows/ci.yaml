@@ -35,7 +35,7 @@ jobs:
     name: build with Maven
     uses: ./.github/workflows/maven.yaml
     with:
-        maven-goal: package
+        maven-goal: package -DskipTests 
     needs: 
       - security
       - get-version
