@@ -36,7 +36,7 @@ env:
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_OIDC_ROLE: ${{ ( inputs.sync == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
+  AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   
 jobs:
