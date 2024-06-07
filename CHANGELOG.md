@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.1](https://github.com/dvsa/vol-functional-tests/compare/v2.6.0...v2.6.1) (2024-06-07)
+
+
+### Bug Fixes
+
+* amended docker workflow for setttings.xml ([c5e3e3a](https://github.com/dvsa/vol-functional-tests/commit/c5e3e3ac47937665ee5480db0e3d15da6e042a8a))
+
 ## [2.6.0](https://github.com/dvsa/vol-functional-tests/compare/v2.5.1...v2.6.0) (2024-06-07)
 
 
