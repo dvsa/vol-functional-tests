@@ -26,7 +26,29 @@ on:
       maven_options:
         type: string
         required: false
-
+  workflow_call:
+    inputs:
+      test:
+        required: true
+        type: string
+        default: 'sync'
+      platform_env:
+        type: string
+        required: true
+      browser_name: 
+        type: string
+      browser_version: 
+        type: string 
+      exclude_tags:
+        type: string
+        required: false
+      cucumber_tags:
+        type: string
+      build_id:
+        type: string
+      maven_options:
+        type: string
+        required: false
 permissions:
   contents: read
   id-token: write
