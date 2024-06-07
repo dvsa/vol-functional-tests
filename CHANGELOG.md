@@ -1,5 +1,19 @@
 # Revision History for the VOL Functional Tests
 
+## [2.5.0](https://github.com/dvsa/vol-functional-tests/compare/v2.4.2...v2.5.0) (2024-06-07)
+
+
+### Features
+
+* added both types of trigger ([cd3201c](https://github.com/dvsa/vol-functional-tests/commit/cd3201c239e34ca3dafee00d8a8a5bfc8aca1bd9))
+* debugging OIDC role assume fix ([4b8fcb8](https://github.com/dvsa/vol-functional-tests/commit/4b8fcb8d57ecd40ab6331d6d1bad040a70d07c7d))
+* debugging sync workflow github action oidc permissions ([3defd65](https://github.com/dvsa/vol-functional-tests/commit/3defd65749c40bc0493d64d21da318a4eff71d92))
+
+
+### Bug Fixes
+
+* adding in GH settings for mvn to pull packages ([e810ff2](https://github.com/dvsa/vol-functional-tests/commit/e810ff2b2af571c4cc472e034e246187ac9779b2))
+
 ## [2.4.2](https://github.com/dvsa/vol-functional-tests/compare/v2.4.1...v2.4.2) (2024-06-06)
 
 
