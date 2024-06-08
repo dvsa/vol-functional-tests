@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.2](https://github.com/dvsa/vol-functional-tests/compare/v2.6.1...v2.6.2) (2024-06-08)
+
+
+### Bug Fixes
+
+* settings file fix ([3d810aa](https://github.com/dvsa/vol-functional-tests/commit/3d810aa28617cde2b7c7abd9daf5b40b48060550))
+
 ## [2.6.1](https://github.com/dvsa/vol-functional-tests/compare/v2.6.0...v2.6.1) (2024-06-07)
 
 
