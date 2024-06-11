@@ -1,5 +1,19 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.3](https://github.com/dvsa/vol-functional-tests/compare/v2.6.2...v2.6.3) (2024-06-11)
+
+
+### Features
+
+* Update axe lib version ([9cf5e29](https://github.com/dvsa/vol-functional-tests/commit/9cf5e29cbee1646ead0fabd9e08370d9e4067aa6))
+* Update pom.xml active support version ([2405da7](https://github.com/dvsa/vol-functional-tests/commit/2405da795341ea2f8a75a7742496e7d969acf680))
+
+
+### Miscellaneous Chores
+
+* release 2.6.3 ([bb1787c](https://github.com/dvsa/vol-functional-tests/commit/bb1787ca77e15df44995fb9fd873003aa1fd769c))
+* release 2.6.3 ([2629f61](https://github.com/dvsa/vol-functional-tests/commit/2629f6156645a188dce6c85797972e5807c559ec))
+
 ## [2.6.2](https://github.com/dvsa/vol-functional-tests/compare/v2.6.1...v2.6.2) (2024-06-08)
 
 
