@@ -3,8 +3,6 @@ FROM maven:3.9.6-amazoncorretto-11 as maven
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
-ARG GitHubServiceUser 
-ARG GitHubServicePassword 
 
 ENV proxyHost = $proxyHost
 ENV proxyPort = $proxyPort
@@ -25,10 +23,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
-RUN  sed -i "s|SECRET_GITHUB_USER|$GitHubServiceUser|g" /root/.m2/settings.xml && \
-     sed -i "s|SECRET_GITHUB_TOKEN|$GitHubServicePassword|g" /root/.m2/settings.xml && \
-     sed -i "s|PROXY_HOST|${proxyHost}|g" /root/.m2/settings.xml && \
-     sed -i "s|PROXY_PORT|${proxyPort}|g" /root/.m2/settings.xml
+
 
 RUN chmod +x ./run.sh
 
