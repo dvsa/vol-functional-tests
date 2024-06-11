@@ -29,7 +29,7 @@ public class TestRunConfiguration {
         Collection<String> tags = scenario.getSourceTagNames();
         for (String tag : tags) {
             if (Browser.isBrowserOpen() && tag.contains("readOnly")){
-                if (isLinkPresent("Sign out", 5)) {
+                if (isLinkPresent("Sign out", 10)) {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }

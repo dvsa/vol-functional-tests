@@ -38,7 +38,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>2048</jvmMemory>
+        <jvmMemory>4000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -260,12 +260,12 @@
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>1</forkCount>
+                    <forkCount>3</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
+                    <threadCount>3</threadCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>

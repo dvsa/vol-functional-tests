@@ -44,12 +44,12 @@ public class GlobalMethods extends BasePage {
 
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = SecretsManager.getSecretValue("internalNewPassword");
-        String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
+        String domainURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
-        DriverUtils.get(myURL);
+        DriverUtils.get(domainURL);
         try {
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
