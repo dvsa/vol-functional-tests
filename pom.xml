@@ -145,7 +145,7 @@
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
-            <artifactId>vol-uri-constructor</artifactId>
+            <artifactId>uri-constructor</artifactId>
             <version>${uri-constructor.version}</version>
         </dependency>
         <dependency>
