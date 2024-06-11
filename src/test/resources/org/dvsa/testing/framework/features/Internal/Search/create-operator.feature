@@ -1,7 +1,7 @@
 @create-operator
 @INT-SMOKE
 @int_regression
-
+@FullRegression
 Feature: Create operator from search results
 
   Background:

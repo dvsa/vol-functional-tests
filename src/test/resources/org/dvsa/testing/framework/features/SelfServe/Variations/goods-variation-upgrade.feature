@@ -1,5 +1,6 @@
 @ss_regression
 @SS-GOODS-VAR-UPGRADE
+@FullRegression
 
 Feature: Goods variation upgrade with interim
 
