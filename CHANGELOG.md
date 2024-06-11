@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.4](https://github.com/dvsa/vol-functional-tests/compare/v2.6.3...v2.6.4) (2024-06-11)
+
+
+### Bug Fixes
+
+* amending secrets n workflow ([a8d3272](https://github.com/dvsa/vol-functional-tests/commit/a8d32721c240b708222ad89e0d9f814fd12860fd))
+
 ## [2.6.3](https://github.com/dvsa/vol-functional-tests/compare/v2.6.2...v2.6.3) (2024-06-11)
 
 
