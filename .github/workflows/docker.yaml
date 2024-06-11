@@ -46,8 +46,8 @@ jobs:
       - uses: whelk-io/maven-settings-xml-action@v22
         name: generate settings xml
         with:
-          servers: '[{ "id":"dvsa-github-packages", "username": ${{secrets.SERVICE_USER}}, "password": ${{secrets.SERVICE_USER_TOKEN}}, "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } }]'
-          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": ${{vars.CI_PROXY}}, "port": ${{vars.CI_PROXYPORT}} }]'
+          servers: '[{ "id":"dvsa-github-packages", "username": "${{secrets.SERVICE_USER}}", "password": "${{secrets.SERVICE_USER_TOKEN}}", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } }]'
+          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${{vars.CI_PROXY}}", "port": "${{vars.CI_PROXYPORT}}" }]'
           output_file: ./settings.xml
           
       - name: Set up Docker Buildx
