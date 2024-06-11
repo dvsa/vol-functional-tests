@@ -1,6 +1,6 @@
 @int_regression
 @internal_submissions
-
+@FullRegression
   Feature: Assign submission drop down
 
     Background:
