@@ -46,6 +46,7 @@ jobs:
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
+    secrets: inherit
     with:
       version: ${{ needs.get-version.outputs.vft }}
       push: false
