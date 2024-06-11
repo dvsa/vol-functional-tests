@@ -3,10 +3,9 @@ FROM maven:3.9.6-amazoncorretto-11 as maven
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
-ARG GitHubServiceUser
-ARG GitHubServicePassword
-ARG proxyHost
-ARG proxyPort
+ARG GitHubServiceUser = /run/secrets/GitHubServiceUser
+ARG GitHubServicePassword = /run/secrets/GitHubServicePassword
+
 
 WORKDIR /app
 
@@ -30,8 +29,5 @@ RUN  sed -i "s|SECRET_GITHUB_USER|$GitHubServiceUser|g" /root/.m2/settings.xml &
      sed -i "s|PROXY_PORT|$proxyPort|g" /root/.m2/settings.xml
 
 RUN chmod +x ./run.sh
-
-ENV proxyHost = "$proxyHost"
-ENV proxyPort = "$proxyPort"
 
 CMD ["/bin/sh", "-c", "./run.sh"]
