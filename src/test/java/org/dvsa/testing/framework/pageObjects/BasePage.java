@@ -413,7 +413,10 @@ public abstract class BasePage extends DriverUtils {
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class);
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
 
         wait.until(WebDriver ->
                 ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
@@ -454,7 +457,9 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
                 .ignoring(ElementNotInteractableException.class);
+
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
@@ -478,8 +483,10 @@ public abstract class BasePage extends DriverUtils {
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class);
-
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
         wait.until(webDriver ->
                 visibilityOf(getDriver().findElement(By.xpath(
                         selector))));
@@ -491,7 +498,10 @@ public abstract class BasePage extends DriverUtils {
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(InvalidElementStateException.class)
-                .ignoring(StaleElementReferenceException.class);
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
 
         wait.until((Function<WebDriver, WebElement>) driver ->
                 wait.until(elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
