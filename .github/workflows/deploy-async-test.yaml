@@ -1,0 +1,136 @@
+name: ASync Testing Workflow AWS EventBridge
+
+on:
+  workflow_dispatch:
+    inputs:
+      test:
+        required: true
+        type: choice
+        options:
+          - async
+          - sync
+      platform_env:
+        type: string
+        required: true
+      browser_name: 
+        type: string
+      browser_version: 
+        type: string 
+      exclude_tags:
+        type: string
+        required: false
+      cucumber_tags:
+        type: string
+      build_id:
+        type: string
+      maven_options:
+        type: string
+        required: false
+  workflow_call:
+    inputs:
+      test:
+        required: true
+        type: string
+        default: 'sync'
+      platform_env:
+        type: string
+        required: true
+      browser_name: 
+        type: string
+      browser_version: 
+        type: string 
+      exclude_tags:
+        type: string
+        required: false
+      cucumber_tags:
+        type: string
+      build_id:
+        type: string
+      maven_options:
+        type: string
+        required: false
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  JOB_NAME: ${{ inputs.build_id }}
+  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
+  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
+  REPORT_NAME: "allure.zip"
+  AWS_OIDC_ROLE: ${{ ( inputs.test == 'async' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
+  AWS_REGION: ${{ vars.TF_AWS_REGION }}
+  
+jobs:
+  run-event-bridge:
+    name: run sync test on AWS Batch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Submit AWS Batch Job
+        id: submit-job
+        run: |
+          # event_pattern='{
+          #   "Detail": "{                
+          #     "platformEnv": "${{ inputs.platform_env }}",
+          #     "browserName": "${{ inputs.browser_name }}",
+          #     "browserVersion": "${{ inputs.browser_version }}",
+          #     "exclude_tags": "${{ inputs.exclude_tags }}",
+          #     "cucumberTags": "${{ inputs.cucumber_tags }}",
+          #     "runId": "${{ inputs.build_id }}"
+          #   }",
+          #   "DetailType": : "[ 
+          #     "SeleniumAsyncTest" 
+          #   ]",  
+          #   "Source" : [ 
+          #     "GitHubAction" 
+          #   ]
+          # }'
+          event_pattern='
+          {
+            "Detail": {
+              "platformEnv": "QA",
+              "browserName": "chrome",
+              "browserVersion": "125",
+              "exclude_tags": "none",
+              "cucumberTags": "@smoketest",
+              "runId": "build_123"
+            },
+            "DetailType": ["SeleniumAsyncTest"],
+            "Source": [ "GitHubAction" ]
+          }'
+  
+          aws put-events --entries [ $event_pattern ] 
+
+  # upload-batch-report:
+  #   name: upload sync report to github
+  #   needs: run-sync-batch
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Upload to GitHub
+  #       env:
+  #         JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
+  #         BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
+  #         BUCKET_KEY: "vol-functional-tests"
+  #       run: |
+  #         mkdir -p ./upload/${{ inputs.build_id }}
+  #         aws s3api get-object \
+  #         --bucket ${{ env.BUCKET_NAME }} \
+  #         --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+  #         "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+  
+  #     - name: Upload Report artefact
+  #       id: upload
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ${{ inputs.build_id }}
+  #         path: "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+    
+  #     - name: Job Succeeded
+  #       if: success()
+  #       run: echo "AWS Batch job completed successfully!"
