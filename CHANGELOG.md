@@ -1,5 +1,17 @@
 # Revision History for the VOL Functional Tests
 
+## [2.8.0](https://github.com/dvsa/vol-functional-tests/compare/v2.7.0...v2.8.0) (2024-06-12)
+
+
+### Features
+
+* applying async worflow to execute event batch ([ef85364](https://github.com/dvsa/vol-functional-tests/commit/ef8536407ed2208635045f5862d44557017cd245))
+
+
+### Bug Fixes
+
+* amended env| ([25be08c](https://github.com/dvsa/vol-functional-tests/commit/25be08cfe8619015f09887e0fe3a9d4dc3a1a264))
+
 ## [2.7.0](https://github.com/dvsa/vol-functional-tests/compare/v2.6.9...v2.7.0) (2024-06-12)
 
 
