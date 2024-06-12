@@ -25,14 +25,7 @@ env:
   AWS_OIDC_ROLE: ${{ vars[format('ACCOUNT_nonprod_TF_OIDC{0}_ROLE', (inputs.push && '' || '_READONLY'))] || (inputs.push && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE) }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   BATCH_SETTINGS: '[{ "id": "dvsa-github-packages","username": "${{secrets.SERVICE_USER}}","password": "${{secrets.SERVICE_USER_TOKEN}}", }]'
-  RUNNER_SETTINGS: '[{ "id": "dvsa-github-packages","configuration": {
-            "httpHeaders": {
-                "property": {
-                    "name": "Authorization",
-                    "value": "Bearer ${{ secrets.GITHUB_TOKEN }}"
-                }
-            }
-        } }]'
+  RUNNER_SETTINGS: '[{ "id": "dvsa-github-packages","configuration": {"httpHeaders": {"property": {"name": "Authorization","value": "Bearer ${{ secrets.GITHUB_TOKEN }}"}}} }]'
   
 jobs:
   lint:
