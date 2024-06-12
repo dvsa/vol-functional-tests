@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.7.0](https://github.com/dvsa/vol-functional-tests/compare/v2.6.9...v2.7.0) (2024-06-12)
+
+
+### Features
+
+* pull bucket name from secrets manager ([c25afca](https://github.com/dvsa/vol-functional-tests/commit/c25afca3855d1e52c926d906006b3b0e543584f8))
+
 ## [2.6.9](https://github.com/dvsa/vol-functional-tests/compare/v2.6.8...v2.6.9) (2024-06-12)
 
 
