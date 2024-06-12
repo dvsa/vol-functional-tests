@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Global;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.mailhog.Mailhog;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
@@ -18,7 +19,7 @@ public class Configuration {
     }
 
     public String getBucketName() {
-        return config.getString("bucketName");
+        return SecretsManager.getSecretValue("bucketName");
     }
 
     public String getTempPassword(String emailAddress) {
