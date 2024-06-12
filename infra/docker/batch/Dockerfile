@@ -4,8 +4,8 @@ ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 
-ENV proxyHost = $proxyHost
-ENV proxyPort = $proxyPort
+ENV proxyHost=$proxyHost
+ENV proxyPort=$proxyPort
 
 WORKDIR /app
 
