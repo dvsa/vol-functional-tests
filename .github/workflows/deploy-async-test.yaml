@@ -54,10 +54,6 @@ permissions:
   id-token: write
 
 env:
-  JOB_NAME: ${{ inputs.build_id }}
-  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
-  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
-  REPORT_NAME: "allure.zip"
   AWS_OIDC_ROLE: ${{ ( inputs.test == 'async' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   
@@ -72,40 +68,14 @@ jobs:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Submit AWS Batch Job
-        id: submit-job
+      - name: Execute AWS EventBridge 
+        id: create-job
         run: |
-          # event_pattern='{
-          #   "Detail": "{                
-          #     "platformEnv": "${{ inputs.platform_env }}",
-          #     "browserName": "${{ inputs.browser_name }}",
-          #     "browserVersion": "${{ inputs.browser_version }}",
-          #     "exclude_tags": "${{ inputs.exclude_tags }}",
-          #     "cucumberTags": "${{ inputs.cucumber_tags }}",
-          #     "runId": "${{ inputs.build_id }}"
-          #   }",
-          #   "DetailType": : "[ 
-          #     "SeleniumAsyncTest" 
-          #   ]",  
-          #   "Source" : [ 
-          #     "GitHubAction" 
-          #   ]
-          # }'
-          event_pattern='
-          {
-            "Detail": {
-              "platformEnv": "QA",
-              "browserName": "chrome",
-              "browserVersion": "125",
-              "exclude_tags": "none",
-              "cucumberTags": "@smoketest",
-              "runId": "build_123"
-            },
-            "DetailType": ["SeleniumAsyncTest"],
-            "Source": [ "GitHubAction" ]
-          }'
-  
-          aws put-events --entries [ $event_pattern ] 
+          # aws events put-events --entries aws events put-events --entries 
+          EVENT_DETAILS='[ { "Source": "GitHubAction", "Detail": "{  \"runId\": \"${{ inputs.build_id }}\", \"platformEnv\": \"${{ inputs.platform_env }}\", \"browserName\": \"${{ inputs.browser_name }}\", \"browserVersion\": \"${{ inputs.browser_version }}\", \"${{ inputs.exclude_tags }}\": \"none\", \"cucumberTags\": \"${{ inputs.cucumber_tags }}\" }", "EventBusName": "default", "DetailType": "SeleniumAsyncTest" } ]'
+          echo $EVENT_DETAILS > entries.json
+          aws events put-events --entries file://entries.json
+
 
   # upload-batch-report:
   #   name: upload sync report to github
