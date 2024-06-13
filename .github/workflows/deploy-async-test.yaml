@@ -72,7 +72,7 @@ jobs:
         id: create-job
         run: |
           # aws events put-events --entries aws events put-events --entries 
-          EVENT_DETAILS='   [ { "Source": "GitHubAction", "Detail": "{ \"runId\": \"${{ inputs.build_id }}\", \"platformEnv\": \"${{ inputs.platform_env }}\", \"browserName\": \"${{ inputs.browser_name }}\", \"browserVersion\": \"${{ inputs.browser_version }}\", \"excludeTags\": \"${{ inputs.exclude_tags }}\", \"cucumberTags\": \"${{ inputs.cucumber_tags }}\" }", "EventBusName": "default", "DetailType": "SeleniumAsyncTest" }]'
+          EVENT_DETAILS='[ { "Source": "GitHubAction", "Detail": "{ \"runId\": \"${{ inputs.build_id }}\", \"platformEnv\": \"${{ inputs.platform_env }}\", \"browserName\": \"${{ inputs.browser_name }}\", \"browserVersion\": \"${{ inputs.browser_version }}\", \"excludeTags\": \"${{ inputs.exclude_tags }}\", \"cucumberTags\": \"${{ inputs.cucumber_tags }}\" }", "EventBusName": "default", "DetailType": "SeleniumAsyncTest" }]'
           echo $EVENT_DETAILS > entries.json
           aws events put-events --entries file://entries.json
 
