@@ -45,7 +45,11 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
-        clickByXPath("//*[@class='govuk-button']");
+        if (isElementPresent("create-account-link", SelectorType.ID)) {
+            clickById("create-account-link");
+        } else {
+            clickByXPath("//*[@class='govuk-button']");
+        }
         String AUTH_KEY = SecretsManager.getSecretValue("AUTH_KEY");
         String signInUsername = SecretsManager.getSecretValue("signInUsername");
         String signInPassword = SecretsManager.getSecretValue("signInPassword");
