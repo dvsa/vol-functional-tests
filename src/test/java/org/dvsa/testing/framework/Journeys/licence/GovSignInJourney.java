@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -10,12 +12,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
+import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
 
 
 public class GovSignInJourney extends BasePage {
 
-    private final World world;
+    private World world;
 
     public GovSignInJourney(World world) {
         this.world = world;
