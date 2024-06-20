@@ -1,5 +1,15 @@
 # Revision History for the VOL Functional Tests
 
+## [2.9.0](https://github.com/dvsa/vol-functional-tests/compare/v2.8.0...v2.9.0) (2024-06-14)
+
+
+### Features
+
+* configuring async workflow to execute batch job with event target list ([fcbd7a7](https://github.com/dvsa/vol-functional-tests/commit/fcbd7a7357fb705a9fd469b389e2ddd7e91f762b))
+* fixing event bridge command line bug for exclude tags ([c36dd37](https://github.com/dvsa/vol-functional-tests/commit/c36dd37545fa97b9e044fe62361779660dffd84d))
+* Update pom.xml api calls version ([aa7705c](https://github.com/dvsa/vol-functional-tests/commit/aa7705c1ddfb461a037222c5aab87b47893da36d))
+* white space bug fix ([9f8c873](https://github.com/dvsa/vol-functional-tests/commit/9f8c8738498f8da8c248da8b59cb6eb419cce70f))
+
 ## [2.8.0](https://github.com/dvsa/vol-functional-tests/compare/v2.7.0...v2.8.0) (2024-06-12)
 
 
