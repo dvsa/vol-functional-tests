@@ -3,8 +3,6 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -45,7 +43,6 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
-        clickByXPath("//*[@class='govuk-button']");
         String AUTH_KEY = SecretsManager.getSecretValue("AUTH_KEY");
         String signInUsername = SecretsManager.getSecretValue("signInUsername");
         String signInPassword = SecretsManager.getSecretValue("signInPassword");
@@ -54,7 +51,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-       //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
+        //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
         if (isElementPresent("sign-in-button", SelectorType.ID))
         {
             waitAndClick("sign-in-button", SelectorType.ID);
