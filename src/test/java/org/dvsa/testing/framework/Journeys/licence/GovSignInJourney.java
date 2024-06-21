@@ -219,6 +219,8 @@ public class GovSignInJourney extends BasePage {
                 answerBankingQuestion();
             } else if (isTitlePresent("When did you take out a loan?", 2)) {
                 answerPersonalLoanStart();
+            } else if (isTitlePresent("How much of your loan do you have left to pay back?",2)) {
+                answerPersonalLoanOutstanding();
             }
             if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)) {
                 break;
@@ -241,6 +243,13 @@ public class GovSignInJourney extends BasePage {
     public void answerPersonalLoanStart() {
         if (isTextPresent("None of the above / does not apply")) {
             clickById("Q00036-NONEOFTHEABOVEDOESNOTAPPLY");
+        }
+        clickById("continue");
+    }
+
+    public void answerPersonalLoanOutstanding() {
+        if (isTextPresent("OVER £6,500 UP TO £6,750")) {
+            clickById("Q00039-OVER6500UPTO6750");
         }
         clickById("continue");
     }
