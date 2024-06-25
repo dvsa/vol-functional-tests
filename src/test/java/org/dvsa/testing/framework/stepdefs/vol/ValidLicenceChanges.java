@@ -297,8 +297,10 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("permit reference number should not be displayed as links")
     public void permitReferenceNumberShouldNotBeDisplayedAsLinks() {
-        waitAndClick("IRHP Permits", SelectorType.LINKTEXT);
-        waitForTextToBePresent("Permit Application");
+        waitAndClick("ANNULAR LIMITED", SelectorType.LINKTEXT);
+        waitForTextToBePresent("ANNULAR LIMITED");
+        waitAndClick("IRFO", SelectorType.LINKTEXT);
+        waitAndClick("GV Permits", SelectorType.LINKTEXT);
         List<WebElement> names = findElements("//*[@data-heading='Reference number']", SelectorType.XPATH);
         for (WebElement element : names) {
             assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
