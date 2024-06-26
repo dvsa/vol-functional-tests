@@ -48,8 +48,8 @@ public class PublicHolidays extends BasePage {
     @Then("that edited holiday should be displayed")
     public void thatEditedHolidayShouldBeDisplayed() {
         String actualDate = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
-        String expectedEditedDate = LocalDate.now().plusMonths(7).plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        assertEquals(expectedEditedDate, actualDate);
+        String expectedDate = LocalDate.now().plusMonths(7).plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        assertEquals(expectedDate, actualDate);
     }
 
     @Given("an admin deletes a public holiday")
