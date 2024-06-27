@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InternalSearchJourney extends BasePage {
 
@@ -45,8 +45,21 @@ public class InternalSearchJourney extends BasePage {
         clickByLinkText("Licence discs");
     }
 
-    public void searchAndViewVehicleRegistration(String vehicleRegistration) {
-        internalSearchUntilTextPresent(SearchType.Vehicle, vehicleRegistration, vehicleRegistration);
+    public void searchAndViewVehicleRegistration() {
+        enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+        click("//*[@name='submit']", SelectorType.XPATH);
+        searchAndViewLicence(world.applicationDetails.getLicenceNumber());
+        clickByLinkText("Vehicles");
+    }
+
+    public void registeredVRMDisplay() {
+        String vrm = BasePage.getElementValueByText("//*[@id='application_vehicle-safety_vehicle-psv']//table/tbody/tr[1]/td[1]/button", SelectorType.XPATH);
+        selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Vehicle");
+        replaceText("//*[@name='search']", SelectorType.XPATH, vrm);
+        click("//*[@name='submit']", SelectorType.XPATH);
+        refreshPageUntilElementAppears("//*[contains(text(),'1 Vehicle')]", SelectorType.XPATH);
+        waitForTextToBePresent("1 Vehicle");
+        assertTrue(isTextPresent(vrm));
     }
 
     public void searchAndViewAddress() {
@@ -62,7 +75,7 @@ public class InternalSearchJourney extends BasePage {
             isLinkPresent = isTextPresent(searchString);
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
-        if(!searchType.name().equals("Vehicle")) {
+        if (!searchType.name().equals("Vehicle")) {
             waitAndClick(linkText, SelectorType.LINKTEXT);
         }
     }
