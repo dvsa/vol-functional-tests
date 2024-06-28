@@ -3,7 +3,7 @@ This project holds functional tests for the VOL website. These end to end tests 
 
 ## Prerequisite 
 The following technologies should be installed on your system.
-* Java JDK 8
+* Java JDK 11
 * Maven 3
 
 ## Technologies
@@ -45,4 +45,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 
 
 ##EUPA refactor
-- Add documentation on the changes and how to modify things.
+- Add documentation on the changes and how to modify things
