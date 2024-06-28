@@ -48,6 +48,14 @@ public class Continuations extends BasePage {
         world.continuationJourney.continueLicenceWithVerifyAndPay();
     }
 
+    @And("the operator partially completes a continuation in self serve")
+    public void theOperatorPartiallyCompletesAContinuationInSelfServe() {
+        world.continuationJourney.partiallyCompleteContinuation();
+    }
+
+
+
+
     @Then("the continuation should be approved and a snapshot generated on Internal")
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();

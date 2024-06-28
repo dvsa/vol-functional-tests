@@ -64,4 +64,10 @@ public class BatchProcess extends BasePage {
         } while (!isElementDisplayed && System.currentTimeMillis() < kickOut);
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
     }
+
+    @And("i trigger the digital-continuation-reminders batch job")
+    public void iTriggerTheDigitalContinuationReminderBatchJob() throws IOException, InterruptedException {
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.CONTINUATIONS_REMINDER.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+    }
+
 }
