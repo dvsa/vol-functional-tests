@@ -12,7 +12,7 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
         <active-support.version>2.2.2</active-support.version>
-        <api-calls.version>2.5.0</api-calls.version>
+        <api-calls.version>2.5.1</api-calls.version>
         <uri-constructor.version>2.0.4</uri-constructor.version>
 
         <axe-scanner-version>2.11.0</axe-scanner-version>
@@ -38,7 +38,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>2048</jvmMemory>
+        <jvmMemory>4000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -110,16 +110,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -270,12 +260,12 @@
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>1</forkCount>
+                    <forkCount>3</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
+                    <threadCount>3</threadCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>

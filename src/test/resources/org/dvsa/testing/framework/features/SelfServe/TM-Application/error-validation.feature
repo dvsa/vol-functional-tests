@@ -1,5 +1,6 @@
 @ss_regression
 @TM-validation
+@FullRegression
 Feature: Error Validation for TM Application
 
   Background:
