@@ -45,4 +45,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 
 
 ##EUPA refactor
-- Add documentation on the changes and how to modify things.
+- Add documentation on the changes and how to modify things
