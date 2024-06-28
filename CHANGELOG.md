@@ -1,5 +1,30 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.5](https://github.com/dvsa/vol-functional-tests/compare/v2.9.0...v2.6.5) (2024-06-28)
+
+
+### Features
+
+* added tags ([2cb9b0d](https://github.com/dvsa/vol-functional-tests/commit/2cb9b0da002286038210387641fd8b7b714887e0))
+* lgv snapshots ([b1742ec](https://github.com/dvsa/vol-functional-tests/commit/b1742ece45cecdfae4f617fe8d7e8c0eab4dbdf5))
+
+
+### Bug Fixes
+
+* updated settings.xml ([9e845fe](https://github.com/dvsa/vol-functional-tests/commit/9e845fe1bc47388f173fe223740f6e34f7c55d8a))
+
+
+### Miscellaneous Chores
+
+* release 2.6.5 ([ee4b6cf](https://github.com/dvsa/vol-functional-tests/commit/ee4b6cf29fe56d7088c81d0d905725ceaf44fa8c))
+* release 2.6.5 ([ca0fe5c](https://github.com/dvsa/vol-functional-tests/commit/ca0fe5c832aa88c2e6145755e18a0773dfec6d23))
+* release 2.6.5 ([847068b](https://github.com/dvsa/vol-functional-tests/commit/847068b15f7acbdcfad07744e6718e33804c96ff))
+* release 2.6.5 ([d4a0acd](https://github.com/dvsa/vol-functional-tests/commit/d4a0acd18f55a439ede72ad0e03cbb353e9d559c))
+* release 2.6.5 ([0b6fcc1](https://github.com/dvsa/vol-functional-tests/commit/0b6fcc121b463ec93d8c729aec4ae63288bd9e6d))
+* release 2.6.5 ([c9e92a1](https://github.com/dvsa/vol-functional-tests/commit/c9e92a11b5e6860a7e61df72f9b848675330acfa))
+* release 2.6.5 ([0b61886](https://github.com/dvsa/vol-functional-tests/commit/0b618863987936ee01496189a1c93b9436f0b17c))
+* release 2.6.7 ([38322b1](https://github.com/dvsa/vol-functional-tests/commit/38322b1729ec43035ab793dc7a137b72743770ac))
+
 ## [2.9.0](https://github.com/dvsa/vol-functional-tests/compare/v2.8.0...v2.9.0) (2024-06-14)
 
 
