@@ -1,5 +1,49 @@
 # Revision History for the VOL Functional Tests
 
+## [2.6.5](https://github.com/dvsa/vol-functional-tests/compare/v2.6.5...v2.6.5) (2024-06-28)
+
+
+### Features
+
+* added tags ([2cb9b0d](https://github.com/dvsa/vol-functional-tests/commit/2cb9b0da002286038210387641fd8b7b714887e0))
+* added tags ([41fdbb3](https://github.com/dvsa/vol-functional-tests/commit/41fdbb38089e1c27065b4482f7fafb01ddf24bfd))
+* applying async worflow to execute event batch ([ef85364](https://github.com/dvsa/vol-functional-tests/commit/ef8536407ed2208635045f5862d44557017cd245))
+* configuring async workflow to execute batch job with event target list ([fcbd7a7](https://github.com/dvsa/vol-functional-tests/commit/fcbd7a7357fb705a9fd469b389e2ddd7e91f762b))
+* fixing event bridge command line bug for exclude tags ([c36dd37](https://github.com/dvsa/vol-functional-tests/commit/c36dd37545fa97b9e044fe62361779660dffd84d))
+* lgv snapshots ([b1742ec](https://github.com/dvsa/vol-functional-tests/commit/b1742ece45cecdfae4f617fe8d7e8c0eab4dbdf5))
+* lgv snapshots ([785dcf3](https://github.com/dvsa/vol-functional-tests/commit/785dcf30bcd5bd61093caba401a91ff52ae2ad25))
+* pull bucket name from secrets manager ([c25afca](https://github.com/dvsa/vol-functional-tests/commit/c25afca3855d1e52c926d906006b3b0e543584f8))
+* Update pom.xml api calls version ([aa7705c](https://github.com/dvsa/vol-functional-tests/commit/aa7705c1ddfb461a037222c5aab87b47893da36d))
+* white space bug fix ([9f8c873](https://github.com/dvsa/vol-functional-tests/commit/9f8c8738498f8da8c248da8b59cb6eb419cce70f))
+
+
+### Bug Fixes
+
+* amended env| ([25be08c](https://github.com/dvsa/vol-functional-tests/commit/25be08cfe8619015f09887e0fe3a9d4dc3a1a264))
+* secrets inherited ([ede7df9](https://github.com/dvsa/vol-functional-tests/commit/ede7df91d7ccfaba75a0cb362d5e45ab7ea608a2))
+* secrets inherited ([429aac0](https://github.com/dvsa/vol-functional-tests/commit/429aac0efb4dfde51c9e67a7c435a8e902b094d5))
+* updated settings.xml ([9e845fe](https://github.com/dvsa/vol-functional-tests/commit/9e845fe1bc47388f173fe223740f6e34f7c55d8a))
+* updated settings.xml ([d403f4a](https://github.com/dvsa/vol-functional-tests/commit/d403f4a9db73ca1450d13d99048e32051923b787))
+
+
+### Miscellaneous Chores
+
+* release 2.6.5 ([ee4b6cf](https://github.com/dvsa/vol-functional-tests/commit/ee4b6cf29fe56d7088c81d0d905725ceaf44fa8c))
+* release 2.6.5 ([ca0fe5c](https://github.com/dvsa/vol-functional-tests/commit/ca0fe5c832aa88c2e6145755e18a0773dfec6d23))
+* release 2.6.5 ([847068b](https://github.com/dvsa/vol-functional-tests/commit/847068b15f7acbdcfad07744e6718e33804c96ff))
+* release 2.6.5 ([d4a0acd](https://github.com/dvsa/vol-functional-tests/commit/d4a0acd18f55a439ede72ad0e03cbb353e9d559c))
+* release 2.6.5 ([0b6fcc1](https://github.com/dvsa/vol-functional-tests/commit/0b6fcc121b463ec93d8c729aec4ae63288bd9e6d))
+* release 2.6.5 ([c9e92a1](https://github.com/dvsa/vol-functional-tests/commit/c9e92a11b5e6860a7e61df72f9b848675330acfa))
+* release 2.6.5 ([0b61886](https://github.com/dvsa/vol-functional-tests/commit/0b618863987936ee01496189a1c93b9436f0b17c))
+* release 2.6.5 ([24fb261](https://github.com/dvsa/vol-functional-tests/commit/24fb261caa0cfe04ab271b3bf7ee2bd2a89e8fe1))
+* release 2.6.5 ([3b1ff49](https://github.com/dvsa/vol-functional-tests/commit/3b1ff49342af6627e93452eaeb6ae90a3c11fee5))
+* release 2.6.5 ([1c0d6a2](https://github.com/dvsa/vol-functional-tests/commit/1c0d6a2d25b6d5eb6237140f9483e08726eb7f0c))
+* release 2.6.7 ([38322b1](https://github.com/dvsa/vol-functional-tests/commit/38322b1729ec43035ab793dc7a137b72743770ac))
+* release 2.6.7 ([a6fe501](https://github.com/dvsa/vol-functional-tests/commit/a6fe501a49a68f262a03307140004c0562ebedb7))
+* release 2.6.7 ([3b5d770](https://github.com/dvsa/vol-functional-tests/commit/3b5d770a80f1dd1f2d00791459cdf5ad8c628146))
+* release 2.6.8 ([ce66851](https://github.com/dvsa/vol-functional-tests/commit/ce66851a1f73138a45410fa50e38c2d9aa0881bd))
+* release 2.6.9 ([9e97a5f](https://github.com/dvsa/vol-functional-tests/commit/9e97a5fdd6c27b1959f023ce27484a43edbdf299))
+
 ## [2.9.0](https://github.com/dvsa/vol-functional-tests/compare/v2.8.0...v2.9.0) (2024-06-14)
 
 
