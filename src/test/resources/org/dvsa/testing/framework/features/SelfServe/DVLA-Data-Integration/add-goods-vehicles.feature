@@ -47,7 +47,7 @@ Feature: Search and add a vehicle
     Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
     And the licence discs number should be updated
 
-
+ @error-message-display
   Scenario: Error validation
     Given I have a "goods" "standard_national" licence
     When I navigate to manage vehicle page on a licence
