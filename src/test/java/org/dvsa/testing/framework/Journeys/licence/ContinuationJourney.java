@@ -59,6 +59,14 @@ public class ContinuationJourney extends BasePage {
         completeContinuationPayOrSubmit();
     }
 
+    public void partiallyCompleteContinuation(){
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+        clickContinueLicenceOnSelfServe();
+        click("submit", SelectorType.ID);
+        completeContinuationsReviewPage();
+        completeContinuationConditionsAndUndertakingsPage();
+    }
+
     public void clickContinueLicenceOnSelfServe()  {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
