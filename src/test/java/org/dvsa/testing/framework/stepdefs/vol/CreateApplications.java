@@ -65,6 +65,7 @@ public class CreateApplications extends BasePage {
         waitForTextToBePresent("Would you like to use a stored card?");
         selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
         UniversalActions.clickPay();
+        waitForElementToBePresent("csc");
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);
