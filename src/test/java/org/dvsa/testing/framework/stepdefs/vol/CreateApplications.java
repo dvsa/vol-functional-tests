@@ -65,7 +65,7 @@ public class CreateApplications extends BasePage {
         waitForTextToBePresent("Would you like to use a stored card?");
         selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
         UniversalActions.clickPay();
-        scrollAndClick("csc");
+        waitAndClick("//*[@id='scp_tdsv2AdditionalInfoPage_csc_input']", SelectorType.XPATH);
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);
