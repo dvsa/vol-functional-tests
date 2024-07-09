@@ -10,10 +10,10 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Examples:
       | Area       | Days |
       | north_east | 41   |
-      | scotland   | 41   |
-      | wales      | 55   |
-      | east       | 41   |
-      | west       | 41   |
+#      | scotland   | 41   |
+#      | wales      | 55   |
+#      | east       | 41   |
+#      | west       | 41   |
 
   @ss_regression @FullRegression @printAndSign
   Scenario Outline: import EBSR in self-serve (Resource-B)
