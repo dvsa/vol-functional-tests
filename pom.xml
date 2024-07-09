@@ -66,6 +66,27 @@
         <repository>
             <id>maven-releases</id>
             <url>${nexus.releases}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>dvsa-github-packages</id>
+            <url>https://maven.pkg.github.com/dvsa/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 
