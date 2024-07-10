@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>2.1</version>
+    <version>2.9.2-SNAPSHOT</version>
 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
-        <active-support.version>2.0.1.7A</active-support.version>
-        <api-calls.version>2.5.1.2X</api-calls.version>
-        <uri-constructor.version>2.0.3</uri-constructor.version>
+        <active-support.version>2.2.2</active-support.version>
+        <api-calls.version>2.5.1</api-calls.version>
+        <uri-constructor.version>2.0.4</uri-constructor.version>
 
-        <axe-scanner-version>2.9</axe-scanner-version>
+        <axe-scanner-version>2.11.0</axe-scanner-version>
 
 
         <allure-cucumber7-jvm.version>2.25.0</allure-cucumber7-jvm.version>
@@ -66,6 +64,27 @@
         <repository>
             <id>maven-releases</id>
             <url>${nexus.releases}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>dvsa-github-packages</id>
+            <url>https://maven.pkg.github.com/dvsa/*</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 
@@ -91,16 +110,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -146,7 +155,7 @@
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
-            <artifactId>uri-constructor</artifactId>
+            <artifactId>vol-uri-constructor</artifactId>
             <version>${uri-constructor.version}</version>
         </dependency>
         <dependency>
@@ -250,13 +259,14 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <forkCount>2</forkCount>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                    <forkCount>3</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>4</threadCount>
-                    <reuseForks>false</reuseForks>
+                    <threadCount>3</threadCount>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
