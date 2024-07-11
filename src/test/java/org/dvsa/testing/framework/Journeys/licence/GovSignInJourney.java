@@ -105,7 +105,7 @@ public class GovSignInJourney extends BasePage {
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
+       // waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
         waitAndEnterText("confirm-password", SelectorType.ID, signInPassword);

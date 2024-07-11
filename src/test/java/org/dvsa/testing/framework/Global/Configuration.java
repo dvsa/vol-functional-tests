@@ -29,10 +29,6 @@ public class Configuration {
         return mailhog.retrievePassword(emailSubject);
     }
 
-    public String getGovCode(){
-        return String.valueOf(S3.getSignInCode());
-    }
-
 
     public String getPasswordResetLink() {
         return String.valueOf(S3.getPasswordResetLink(world.registerUser.getEmailAddress()));
