@@ -59,7 +59,7 @@ Feature: Users should have functionality based on their system role
   @readonly-irhp-permits
   Scenario Outline: Limited Read only and Read Only should not be able to view permit number as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB2073506"
+    When i search for and click on my licence "OC1057274"
     Then permit reference number should not be displayed as links
     Examples:
       | User                |
@@ -80,7 +80,7 @@ Feature: Users should have functionality based on their system role
   @readonly-irfo
   Scenario Outline: Limited Read only and Read Only should not be able to view buttons input fields on IRFO page
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB2073506"
+    When i search for and click on my licence "OC1057274"
     Then irfo page should not displayed any input fields
     Examples:
       | User                |

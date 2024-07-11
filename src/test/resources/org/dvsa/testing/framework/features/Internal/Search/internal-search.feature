@@ -36,5 +36,5 @@ Feature: Internal Search
 
   @searchVehicle
   Scenario: Search for Vehicle on Internal
-    When i search for a vehicle by registration "AE83XUF"
-    Then the registration "AE83XUF" should be displayed
+    And i select and search for a vehicle by registration
+    Then the registered VRM should display
