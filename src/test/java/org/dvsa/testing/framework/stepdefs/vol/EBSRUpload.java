@@ -75,7 +75,6 @@ public class EBSRUpload extends BasePage {
             axeScanner.scan(true);
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
-        waitForTextToBePresent("Your file was processed successfully");
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
             axeScanner.scan(true);

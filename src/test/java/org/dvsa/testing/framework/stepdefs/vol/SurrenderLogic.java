@@ -1,23 +1,22 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
-import org.apache.hc.core5.http.HttpException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.datatable.DataTable;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -219,10 +218,6 @@ public class SurrenderLogic extends BasePage {
         assertTrue(isTextPresent(page));
     }
 
-    @Then("the registration {string} should be displayed")
-    public void theRegistrationShouldBedDisplayed(String vrm) {
-        assertTrue(isTextPresent(vrm));
-    }
 
     @When("the caseworker attempts to withdraw the surrender")
     public void theCaseworkerAttemptsToWithdrawTheSurrender() throws HttpException {
