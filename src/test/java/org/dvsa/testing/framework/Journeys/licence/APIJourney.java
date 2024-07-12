@@ -1,19 +1,22 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import activesupport.aws.s3.SecretsManager;
-import org.apache.hc.core5.http.HttpException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.aws.s3.SecretsManager;
 import activesupport.dates.Dates;
-import activesupport.system.Properties;
 import apiCalls.enums.*;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Injectors.World;
 import org.joda.time.LocalDate;
+import java.util.UUID;
 
 public class APIJourney {
 
     private final World world;
     public static int tmCount;
+
+    private static final Logger LOGGER = LogManager.getLogger(APIJourney.class);
     Dates date = new Dates(LocalDate::new);
 
     public APIJourney(World world) throws MissingRequiredArgument {
@@ -21,8 +24,10 @@ public class APIJourney {
     }
 
     public void createAdminUser() throws MissingRequiredArgument, HttpException {
+        String requestId = UUID.randomUUID().toString();
+        LOGGER.info("RequestID: {}, Creating internal admin user with role: {} and type: {}", requestId, UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
-    }
+        LOGGER.info("RequestID: {}, Internal admin user creation completed.", requestId);    }
 
     public void nIAddressBuilder() {
         world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);

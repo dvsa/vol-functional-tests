@@ -9,6 +9,8 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
@@ -17,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManagerUsersPage extends BasePage {
     private final World world;
+
+    private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
     Initialisation initialisation;
 
     public ManagerUsersPage(World world) {
@@ -59,6 +63,7 @@ public class ManagerUsersPage extends BasePage {
             System.out.println("API NOT CURRENT SUPPORTED ON THIS ENV");
         } else {
             world.APIJourney.createAdminUser();
+            LOGGER.info("Admin user creation request sent.");
         }
     }
 
