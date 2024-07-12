@@ -1,6 +1,7 @@
 @INT-SEARCH
 @FullRegression
 @printAndSign
+@api
 Feature: Internal Search
 
   Background:
@@ -17,7 +18,7 @@ Feature: Internal Search
     When i search for and click on my application
     Then the "Application details" page should display
 
-  @searchCase @int_regression
+  @searchCase @int_regression @
   Scenario: Search a Case on Internal
     And I create a new case
     When i search for and click on my case
