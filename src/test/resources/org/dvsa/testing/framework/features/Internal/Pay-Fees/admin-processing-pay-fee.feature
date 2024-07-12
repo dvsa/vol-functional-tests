@@ -4,6 +4,7 @@
 @smoketest
 @printAndSign
 @FullRegression
+@api
 
 Feature: Admin paying fees
 

@@ -1,4 +1,5 @@
-@int_regression @unlicensed_operator
+@int_regression @unlicensed_operator @api
+
 Feature: Unlicensed operator
 
   Background:

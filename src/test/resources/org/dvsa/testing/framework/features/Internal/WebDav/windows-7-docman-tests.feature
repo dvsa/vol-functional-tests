@@ -1,5 +1,6 @@
 @Docman
-  
+@api
+
 Feature: All docman functionality tests
 
   Scenario: Check link is being generated for publication

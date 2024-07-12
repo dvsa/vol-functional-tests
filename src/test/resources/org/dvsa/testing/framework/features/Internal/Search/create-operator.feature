@@ -2,6 +2,8 @@
 @INT-SMOKE
 @int_regression
 @FullRegression
+@api
+
 Feature: Create operator from search results
 
   Background:

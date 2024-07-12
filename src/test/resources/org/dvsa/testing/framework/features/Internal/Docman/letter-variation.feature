@@ -1,5 +1,6 @@
 @INT-SMOKE
 @letter-variation
+@api
 
 Feature: Generate letter on Variation
 
