@@ -147,3 +147,4 @@ mockApiData
 
 .env 
 .env.local
+.env.conf
