@@ -14,8 +14,12 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import java.util.List;
+import java.util.UUID;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
@@ -27,6 +31,8 @@ public class ManageApplications extends BasePage {
     Initialisation initialisation;
     String fileName = "src/test/resources/";
     public static String existingLicenceNumber;
+
+    private static final Logger LOGGER = LogManager.getLogger(ManageApplications.class);
 
     public ManageApplications(World world) {
         this.world = world;
@@ -221,10 +227,24 @@ public class ManageApplications extends BasePage {
         world.licenceCreation.createLGVOnlyLicence(NIFlag);
     }
 
+
     @Given("i have a valid {string} {string} licence")
     public void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.licenceCreation.createLicence(operatorType, licenceType);
+        String requestId = UUID.randomUUID().toString();
+        LOGGER.info("RequestID: {}, Starting process to create application for operatorType: {} and licenceType: {}", requestId, operatorType, licenceType);
+
+        try {
+            LOGGER.info("RequestID: {}, Registering and getting user details for UserType.EXTERNAL", requestId);
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+
+            LOGGER.info("RequestID: {}, Creating application with operatorType: {} and licenceType: {}", requestId, operatorType, licenceType);
+            world.licenceCreation.createApplication(operatorType, licenceType);
+
+            LOGGER.info("RequestID: {}, Application creation process completed.", requestId);
+        } catch (HttpException e) {
+            LOGGER.error("RequestID: {}, Error occurred during application creation: {}", requestId, e.getMessage(), e);
+            throw e;
+        }
     }
 
     @Given("i have a {string} application in progress")
