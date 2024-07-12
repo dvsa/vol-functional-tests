@@ -5,16 +5,16 @@ import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
-
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("org/dvsa/testing/framework")
-@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "src/test/resources/org/dvsa/testing/framework/features")
+@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME, value = "src/test/resources/org/dvsa/testing/framework/features")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "org.dvsa.testing.framework")
 @ConfigurationParameter(key = Constants.EXECUTION_DRY_RUN_PROPERTY_NAME, value = "false")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm")
-
-
+@Execution(ExecutionMode.CONCURRENT)
 public class RunCucumberTests {
 }
