@@ -5,8 +5,11 @@ import org.junit.platform.engine.support.hierarchical.ParallelExecutionConfigura
 import org.junit.platform.engine.support.hierarchical.ParallelExecutionConfigurationStrategy;
 
 import java.util.concurrent.ForkJoinPool;
+import java.util.logging.Logger;
 import java.util.function.Predicate;
-public class CustomRunner implements ParallelExecutionConfiguration, ParallelExecutionConfigurationStrategy  {
+
+public class CustomRunner implements ParallelExecutionConfiguration, ParallelExecutionConfigurationStrategy {
+    private static final Logger LOGGER = Logger.getLogger(CustomRunner.class.getName());
     private static final int FIXED_PARALLELISM = 3;
 
     static {
@@ -15,6 +18,7 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public ParallelExecutionConfiguration createConfiguration(final ConfigurationParameters configurationParameters) {
+        LOGGER.info("Creating ParallelExecutionConfiguration with fixed parallelism: " + FIXED_PARALLELISM);
         return this;
     }
 
@@ -25,6 +29,7 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getParallelism() {
+        LOGGER.info("Returning parallelism level: " + FIXED_PARALLELISM);
         return FIXED_PARALLELISM;
     }
 
