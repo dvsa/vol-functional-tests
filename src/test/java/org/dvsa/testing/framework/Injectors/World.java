@@ -19,7 +19,7 @@ import org.dvsa.testing.framework.stepdefs.vol.*;
 public class World {
     public GetApplicationDetails applicationDetails;
     public RegisterUser registerUser;
-    public UserDetails userDetails;
+    public GetUserDetails userDetails;
     public CreateApplication createApplication;
     public GrantLicence grantApplication;
     public InternalDetails internalDetails;

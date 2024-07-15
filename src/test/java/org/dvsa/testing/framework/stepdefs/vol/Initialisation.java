@@ -25,7 +25,7 @@ public class Initialisation extends BasePage {
     public Initialisation (World world) {
         this.world = world;
         world.registerUser = new RegisterUser();
-        world.userDetails = new UserDetails();
+        world.userDetails = new GetUserDetails();
         world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
         world.applicationDetails = new GetApplicationDetails(world.createApplication);
         world.grantApplication = new GrantLicence(world.createApplication);
