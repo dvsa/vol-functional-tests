@@ -14,7 +14,7 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
         <active-support.version>2.0.1.7A</active-support.version>
-        <api-calls.version>2.5.1.4LOGGING</api-calls.version>
+        <api-calls.version>2.5.1.1</api-calls.version>
         <uri-constructor.version>2.0.3</uri-constructor.version>
 
         <axe-scanner-version>2.9</axe-scanner-version>
@@ -40,7 +40,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>6000</jvmMemory>
+        <jvmMemory>4000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -255,7 +255,7 @@
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>4</threadCount>
+                    <threadCount>3</threadCount>
                     <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
