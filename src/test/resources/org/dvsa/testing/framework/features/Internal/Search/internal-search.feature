@@ -6,7 +6,6 @@ Feature: Internal Search
 
   Background:
     Given i have a valid "public" "standard_national" licence
-    And i have logged in to internal as "admin"
 
   @smoketest @searchLicence @int_regression
   Scenario: Search a Licence on Internal
@@ -26,6 +25,7 @@ Feature: Internal Search
 
   @psv-disc
   Scenario: Search a PSV Disc on Internal
+    Given i have logged in to internal as "admin"
     And discs have been added to my licence
     When i search for my psv disc
     And the licence discs should be present
