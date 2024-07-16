@@ -16,7 +16,6 @@ public class APIJourney {
     private final World world;
     public static int tmCount;
 
-    private static final Logger LOGGER = LogManager.getLogger(APIJourney.class);
     Dates date = new Dates(LocalDate::new);
 
     public APIJourney(World world) throws MissingRequiredArgument {
@@ -24,10 +23,7 @@ public class APIJourney {
     }
 
     public void createAdminUser() throws MissingRequiredArgument, HttpException {
-        //     String requestId = UUID.randomUUID().toString();
-        //   LOGGER.info("RequestID: {}, Creating internal admin user with role: {} and type: {}", requestId, UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
-        //    LOGGER.info("RequestID: {}, Internal admin user creation completed.", requestId);    }
     }
 
     public void nIAddressBuilder() {
