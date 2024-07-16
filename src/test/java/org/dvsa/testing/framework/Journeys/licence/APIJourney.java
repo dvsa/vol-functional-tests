@@ -24,10 +24,11 @@ public class APIJourney {
     }
 
     public void createAdminUser() throws MissingRequiredArgument, HttpException {
-        String requestId = UUID.randomUUID().toString();
-        LOGGER.info("RequestID: {}, Creating internal admin user with role: {} and type: {}", requestId, UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
+        //     String requestId = UUID.randomUUID().toString();
+        //   LOGGER.info("RequestID: {}, Creating internal admin user with role: {} and type: {}", requestId, UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
-        LOGGER.info("RequestID: {}, Internal admin user creation completed.", requestId);    }
+        //    LOGGER.info("RequestID: {}, Internal admin user creation completed.", requestId);    }
+    }
 
     public void nIAddressBuilder() {
         world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
