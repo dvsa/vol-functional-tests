@@ -12,10 +12,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -35,10 +35,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -60,7 +60,7 @@ env:
   REPORT_NAME: "allure.zip"
   AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
-  
+
 jobs:
   run-sync-batch:
     name: run sync test on AWS Batch
@@ -179,13 +179,19 @@ jobs:
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
+      - name: Install Allure
+        run: |
+          sudo apt-add-repository -y ppa:qameta/allure
+          sudo apt-get update
+          sudo apt-get install -y allure
+
       - name: Unzip Allure Report
         run: |
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
 
       - name: Generate Allure Report
         run: |
-          allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
+          allure generate ./upload/${{ inputs.build_id }}/allure-results -o ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Copy Allure History
         if: always()
