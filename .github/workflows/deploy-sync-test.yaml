@@ -166,8 +166,8 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-            
-      - name: Upload to GitHub
+
+      - name: Download Allure Report from S3
         env:
           JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
           BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
@@ -178,14 +178,28 @@ jobs:
           --bucket ${{ env.BUCKET_NAME }} \
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
-  
-      - name: Upload Report artefact
-        id: upload
-        uses: actions/upload-artifact@v4
+
+      - name: Unzip Allure Report
+        run: |
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Generate Allure Report
+        run: |
+          allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Copy Allure History
+        if: always()
+        run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
+          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+
+      - name: Upload Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: ${{ inputs.build_id }}
-          path: "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
-    
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+
       - name: Job Succeeded
         if: success()
         run: echo "AWS Batch job completed successfully!"
