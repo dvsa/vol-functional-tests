@@ -197,8 +197,8 @@ jobs:
       - name: Upload Allure Report to GitHub Pages
         uses: actions/upload-artifact@v3
         with:
-          publish_branch: allure-report
-          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+          name: allure-report
+          path: ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
