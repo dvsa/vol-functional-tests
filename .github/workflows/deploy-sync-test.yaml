@@ -193,11 +193,18 @@ jobs:
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-results -o ./upload/${{ inputs.build_id }}/allure-report
 
+      - name: Load previous Allure history
+        if: always()
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
       - name: Copy Allure History
         if: always()
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
-          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+          cp -r gh-pages/allure-report/history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
