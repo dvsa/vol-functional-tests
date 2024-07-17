@@ -160,7 +160,6 @@ jobs:
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -179,26 +178,39 @@ jobs:
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
-      - name: Install Allure
-        run: |
-          curl -o allure-commandline.tgz -L https://github.com/allure-framework/allure2/releases/download/2.17.2/allure-2.17.2.tgz
-          tar -zxvf allure-commandline.tgz
-          sudo mv allure-2.17.2 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+      - name: Install Allure CLI
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g allure-commandline --save-dev
 
       - name: Unzip Allure Report
         run: |
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Generate Allure Report
         run: |
-          allure generate ./upload/${{ inputs.build_id }}/allure-results -o ./upload/${{ inputs.build_id }}/allure-report
+          allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Copy Allure History
+        if: always()
+        run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
+          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
 
       - name: Upload Allure Report to GitHub Pages
-        uses: actions/upload-artifact@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: allure-report
-          path: ./upload/${{ inputs.build_id }}/allure-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Upload Unzipped Allure Report to S3
+        env:
+          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
+          BUCKET_KEY: "vol-functional-tests"
+        run: |
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
