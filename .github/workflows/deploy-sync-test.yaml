@@ -188,17 +188,24 @@ jobs:
 
       - name: Unzip Allure Report
         run: |
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Generate Allure Report
         run: |
-          allure generate ./upload/${{ inputs.build_id }}/allure-results -o ./upload/${{ inputs.build_id }}/allure-report
+          allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Copy Allure History
+        if: always()
+        run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
+          cp -r main/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
 
       - name: Upload Allure Report to GitHub Pages
-        uses: actions/upload-artifact@v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: allure-report
-          path: ./upload/${{ inputs.build_id }}/allure-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
