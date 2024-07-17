@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.10.0](https://github.com/dvsa/vol-functional-tests/compare/v2.9.2...v2.10.0) (2024-07-17)
+
+
+### Features
+
+* upload allure to github pages ([0bb97cc](https://github.com/dvsa/vol-functional-tests/commit/0bb97cc429e4fc120893051604e80decdc9ca952))
+
 ## [2.9.2](https://github.com/dvsa/vol-functional-tests/compare/v2.9.1...v2.9.2) (2024-07-12)
 
 
