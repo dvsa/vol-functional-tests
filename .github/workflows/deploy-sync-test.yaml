@@ -68,6 +68,9 @@ jobs:
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -120,9 +123,10 @@ jobs:
             }')
 
           jobId=$(echo $JOB_ID | jq -r '.jobId')
-          echo "job_id=$jobId" >> $GITHUB_OUTPUT
+          echo "job_id=$jobId" >> $GITHUB_ENV
 
       - name: Wait for Job Completion
+        id: wait-job
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
@@ -160,6 +164,9 @@ jobs:
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -174,36 +181,44 @@ jobs:
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
-          --bucket ${{ env.BUCKET_NAME }} \
-          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+            --bucket ${{ env.BUCKET_NAME }} \
+            --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
-      - name: Install Allure CLI
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm install -g allure-commandline --save-dev
+      - name: Verify Downloaded Zip
+        run: |
+          if [ -f "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" ]; then
+            echo "Downloaded zip file exists."
+            unzip -l "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+          else
+            echo "Downloaded zip file does not exist."
+            exit 1
+          fi
 
       - name: Unzip Allure Report
         run: |
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
+          unzip -o ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Verify Unzipped Report Directory
+        run: |
+          if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
+            echo "Allure report directory exists."
+            ls -l ./upload/${{ inputs.build_id }}/allure-report
+          else
+            echo "Allure report directory not found."
+            exit 1
+          fi
 
       - name: Debug Output - Contents of report directory
         run: |
           ls -l ./upload/${{ inputs.build_id }}/allure-report
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
-           ls -l ./upload/${{ inputs.build_id }}/allure-report/history
-           ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/data || echo "No data directory"
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/history || echo "No history directory"
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets || echo "No widgets directory"
 
       - name: Generate Allure Report
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
-
-      - name: Copy Allure History
-        if: always()
-        run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
-          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -213,9 +228,6 @@ jobs:
           publish_dir: ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Upload Unzipped Allure Report to S3
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
         run: |
           aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
 
