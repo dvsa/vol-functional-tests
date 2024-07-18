@@ -188,6 +188,13 @@ jobs:
         run: |
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
+      - name: Debug Output - Contents of report directory
+        run: |
+          ls -l ./upload/${{ inputs.build_id }}/allure-report
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
+           ls -l ./upload/${{ inputs.build_id }}/allure-report/history
+           ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
+
       - name: Generate Allure Report
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
@@ -210,7 +217,7 @@ jobs:
           BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
           BUCKET_KEY: "vol-functional-tests"
         run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
