@@ -45,6 +45,7 @@ public class ManageVehicle extends BasePage {
     @And("choose to add a {string} vehicle")
     public void chooseToAddAVehicle(String VRM){
         world.selfServeUIJourney.addAVehicle(VRM);
+        waitAndClick("confirm", SelectorType.ID);
         if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
             findSelectAllRadioButtonsByValue("yes");
             clickById("next");
