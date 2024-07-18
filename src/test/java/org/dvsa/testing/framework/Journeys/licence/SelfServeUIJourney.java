@@ -185,6 +185,9 @@ public class SelfServeUIJourney extends BasePage {
         waitAndClick("next", SelectorType.ID);
         waitAndEnterText("vehicle-search[search-value]", SelectorType.ID, licenceNumber);
         waitAndClick("vehicle-search[submit]", SelectorType.ID);
+        if(isTextPresent(String.format("A vehicle has been found with registration"))){
+            waitAndClick("confirm", SelectorType.ID);
+        }
     }
 
     public void addAVehicleToAnApplication(String vrm, String weight){
