@@ -12,10 +12,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -35,10 +35,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -49,6 +49,7 @@ on:
       maven_options:
         type: string
         required: false
+
 permissions:
   contents: write
   id-token: write
@@ -60,7 +61,7 @@ env:
   REPORT_NAME: "allure.zip"
   AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
-  
+
 jobs:
   run-sync-batch:
     name: run sync test on AWS Batch
@@ -160,9 +161,6 @@ jobs:
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -180,32 +178,12 @@ jobs:
       - name: Install Allure CLI
         uses: actions/setup-node@v2
         with:
-         node-version: '14'
+          node-version: '14'
       - run: npm install -g allure-commandline --save-dev
-
-      - name: Verify Downloaded Zip
-        run: |
-          if [ -f "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" ]; then
-            echo "Downloaded zip file exists."
-            unzip -l "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
-          else
-            echo "Downloaded zip file does not exist."
-            exit 1
-          fi
 
       - name: Unzip Allure Report
         run: |
-          unzip -o ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
-
-      - name: Verify Unzipped Report Directory
-        run: |
-          if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
-            echo "Allure report directory exists."
-            ls -l ./upload/${{ inputs.build_id }}/allure-report
-          else
-            echo "Allure report directory not found."
-            exit 1
-          fi
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Debug Output - Contents of report directory
         run: |
@@ -218,16 +196,24 @@ jobs:
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
 
+      - name: Upload Unzipped Allure Report to S3
+        env:
+          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
+          BUCKET_KEY: "vol-functional-tests"
+        run: |
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+
+      - name: Copy Allure History
+        run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
+          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./upload/${{ inputs.build_id }}/allure-report
-
-      - name: Upload Unzipped Allure Report to S3
-        run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
