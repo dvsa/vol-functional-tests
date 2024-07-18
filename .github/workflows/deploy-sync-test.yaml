@@ -181,9 +181,15 @@ jobs:
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
-            --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+          --bucket ${{ env.BUCKET_NAME }} \
+          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+
+      - name: Install Allure CLI
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g allure-commandline --save-dev
 
       - name: Verify Downloaded Zip
         run: |
