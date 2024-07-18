@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.10.2](https://github.com/dvsa/vol-functional-tests/compare/v2.10.1...v2.10.2) (2024-07-18)
+
+
+### Bug Fixes
+
+* dvla-add-vehicle parallel change to main ([bd73119](https://github.com/dvsa/vol-functional-tests/commit/bd73119c37cf401017c090399f1d440008453631))
+
 ## [2.10.1](https://github.com/dvsa/vol-functional-tests/compare/v2.10.0...v2.10.1) (2024-07-17)
 
 
