@@ -68,6 +68,13 @@ jobs:
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     steps:
+      - name: Debug Output - Contents of report directory
+        run: |
+          ls -l ./upload/${{ inputs.build_id }}/allure-report
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/history
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -120,9 +127,10 @@ jobs:
             }')
 
           jobId=$(echo $JOB_ID | jq -r '.jobId')
-          echo "job_id=$jobId" >> $GITHUB_OUTPUT
+          echo "job_id=$jobId" >> $GITHUB_ENV
 
       - name: Wait for Job Completion
+        id: wait-job
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
@@ -174,9 +182,9 @@ jobs:
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
-          --bucket ${{ env.BUCKET_NAME }} \
-          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+            --bucket ${{ env.BUCKET_NAME }} \
+            --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
       - name: Install Allure CLI
         uses: actions/setup-node@v2
@@ -206,11 +214,15 @@ jobs:
           publish_dir: ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Upload Unzipped Allure Report to S3
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
         run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
+
+      - name: Debug Output - Contents of report directory after upload
+        run: |
+          ls -l ./upload/${{ inputs.build_id }}/allure-report
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/history
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
 
       - name: Job Succeeded
         if: success()
