@@ -64,12 +64,15 @@ env:
 
 jobs:
   run-sync-batch:
-    name: run sync test on AWS Batch
+    name: Run Sync Test on AWS Batch
     runs-on: ubuntu-latest
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     steps:
-      - name: Configure AWS credentials
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
@@ -120,48 +123,48 @@ jobs:
               ]
             }')
 
-          jobId=$(echo $JOB_ID | jq -r '.jobId')
-          echo "job_id=$jobId" >> $GITHUB_OUTPUT
+          echo "::set-output name=job_id::$JOB_ID"
 
       - name: Wait for Job Completion
+        id: wait-job
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
-            TIME_OUT=15
-            JOB_ID=${{ env.JOB_ID }}
-            count=0
+          TIME_OUT=15
+          JOB_ID=${{ env.JOB_ID }}
+          count=0
 
-            while true; do
-              JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
+          while true; do
+            JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
 
-              if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
-                echo "Final job status: $JOB_STATUS"
-                break
-              fi
+            if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
+              echo "Final job status: $JOB_STATUS"
+              break
+            fi
 
-              echo "Job status: $JOB_STATUS"
+            echo "Job status: $JOB_STATUS"
 
-              ((TIME_OUT++))
+            ((TIME_OUT++))
 
-              if [ $count -ge $TIME_OUT ]; then
-                echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
-                exit 1
-              fi
-
-              sleep 60
-            done
-
-            if [ "$JOB_STATUS" == "FAILED" ]; then
-              echo "AWS Batch job failed"
+            if [ $count -ge $TIME_OUT ]; then
+              echo "Batch JOB with id=${{ env.JOB_ID }} timed out. Exiting."
               exit 1
             fi
 
-  upload-batch-report:
-    name: Upload Sync Report to GitHub
+            sleep 60
+          done
+
+          if [ "$JOB_STATUS" == "FAILED" ]; then
+            echo "AWS Batch job failed"
+            exit 1
+          fi
+
+  generate-allure-report:
+    name: Generate and Upload Allure Report
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
@@ -179,41 +182,38 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install -g allure-commandline --save-dev
 
       - name: Unzip Allure Report
         run: |
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
-      - name: Debug Output - Contents of report directory
+      - name: Verify Downloaded Files
         run: |
           ls -l ./upload/${{ inputs.build_id }}/allure-report
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/data || echo "No data directory"
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/history || echo "No history directory"
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets || echo "No widgets directory"
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/history
+          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
 
       - name: Generate Allure Report
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
 
-      - name: Upload Unzipped Allure Report to S3
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
+      - name: Verify Generated Report
         run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+          allure report list ./upload/${{ inputs.build_id }}/allure-report
 
-      - name: Copy Allure History
+      - name: Upload Allure Report to GitHub Pages and S3
         run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
-          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+          # GitHub Pages
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report
+          cp -r ./upload/${{ inputs.build_id }}/allure-report/* ./upload/${{ inputs.build_id }}/allure-report/
+          # S3
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
 
-      - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+      - name: Echo Allure Report URL
+        run: |
+          REPORT_URL="https://devapp-olcs-pri-olcs-autotest-s3.s3.amazonaws.com/vol-functional-tests/${{ inputs.build_id }}/allure-report/index.html"
+          echo "Allure Report URL: $REPORT_URL"
 
       - name: Job Succeeded
         if: success()
