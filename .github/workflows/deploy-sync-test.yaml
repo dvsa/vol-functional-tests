@@ -12,10 +12,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name:
+      browser_name: 
         type: string
-      browser_version:
-        type: string
+      browser_version: 
+        type: string 
       exclude_tags:
         type: string
         required: false
@@ -35,10 +35,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name:
+      browser_name: 
         type: string
-      browser_version:
-        type: string
+      browser_version: 
+        type: string 
       exclude_tags:
         type: string
         required: false
@@ -60,7 +60,7 @@ env:
   REPORT_NAME: "allure.zip"
   AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
-
+  
 jobs:
   run-sync-batch:
     name: run sync test on AWS Batch
@@ -156,7 +156,7 @@ jobs:
             fi
 
   upload-batch-report:
-    name: upload sync report to github
+    name: Upload Sync Report to GitHub
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
@@ -167,21 +167,17 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Download Allure Report from S3
-        env:
-          JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
-          --bucket ${{ env.BUCKET_NAME }} \
-          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+            --bucket "devapp-olcs-pri-olcs-autotest-s3" \
+            --key "vol-functional-tests/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
       - name: Install Allure CLI
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+         node-version: '14'
       - run: npm install -g allure-commandline --save-dev
 
       - name: Unzip Allure Report
