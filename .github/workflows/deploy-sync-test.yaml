@@ -168,46 +168,30 @@ jobs:
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
-      - name: Install Allure CLI
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-      - run: npm install -g allure-commandline --save-dev
-
       - name: Unzip Allure Report
         run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
       - name: Verify Unzipped Report Directory
         run: |
-         if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
-            echo "Allure report directory exists."
-            ls -l ./upload/${{ inputs.build_id }}/allure-report
-          else
-            echo "Allure report directory not found."
-            exit 1
-          fi
+          if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
+             echo "Allure report directory exists."
+             ls -l ./upload/${{ inputs.build_id }}/allure-report
+           else
+             echo "Allure report directory not found."
+             exit 1
+           fi
 
-      - name: Debug Output - Contents of report directory after upload
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
-        run: |
-          ls -l ./upload/${{ inputs.build_id }}/allure-report
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/data
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/history
-          ls -l ./upload/${{ inputs.build_id }}/allure-report/widgets
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
-      
+      - name: Install Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11' # or any version your project requires
+          distribution: 'maven'
 
-      - name: Generate Allure Report
+      - name: Run Allure Report with Maven
         run: |
-          allure generate --clean --single-file ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
-      - name: Copy Allure History
-        if: always()
-        run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
-          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+          mvn allure:report
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
