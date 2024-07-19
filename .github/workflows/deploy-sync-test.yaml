@@ -183,6 +183,12 @@ jobs:
              exit 1
            fi
 
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v3
+        with:
+         java-version: '11'
+         maven-version: '3.8.6'
+
       - name: Run Allure Report with Maven
         run: |
           mvn allure:report
