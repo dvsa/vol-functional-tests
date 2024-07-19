@@ -191,6 +191,7 @@ jobs:
 
       - name: Run Allure Report with Maven
         run: |
+          mvn clean verify
           mvn allure:report
 
       - name: Upload Allure Report to GitHub Pages
