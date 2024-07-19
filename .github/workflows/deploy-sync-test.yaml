@@ -148,7 +148,6 @@ jobs:
           if [ "$JOB_STATUS" == "FAILED" ]; then
             echo "AWS Batch job failed"
             exit 1
-          fi
 
   upload-batch-report:
     name: upload sync report to github
@@ -158,40 +157,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Download Allure Report from S3
-        env:
-          JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
-        run: |
-          mkdir -p ./upload/${{ inputs.build_id }}
-          aws s3api get-object \
-          --bucket ${{ env.BUCKET_NAME }} \
-          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
-
-      - name: Set Up Java and Maven
+      - name: Set up Java and Maven
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Generate Allure Report with Maven
+      - name: Run Tests to Generate Allure Results
         run: |
-          mvn allure:report
+          mvn clean test -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml
 
-      - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./target/allure-report
+      - name: Generate Allure Report
+        run: |
+          mvn allure:report -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml
+
+      - name: Commit and Push Allure Report to gh-pages
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin gh-pages
+          git checkout gh-pages || git checkout --orphan gh-pages
+          rm -rf *
+          cp -r /home/runner/work/vol-functional-tests/vol-functional-tests/target/allure-report/* .
+          git add .
+          git commit -m "chore: Deploy Allure report to GitHub Pages"
+          git push -f origin gh-pages
 
       - name: Job Succeeded
         if: success()
