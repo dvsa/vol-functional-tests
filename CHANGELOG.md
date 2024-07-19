@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.10.3](https://github.com/dvsa/vol-functional-tests/compare/v2.10.2...v2.10.3) (2024-07-19)
+
+
+### Bug Fixes
+
+* internal login search fix applied to main ([22aec53](https://github.com/dvsa/vol-functional-tests/commit/22aec53b5c34a856154630c80a399dac52bdfd8e))
+
 ## [2.10.2](https://github.com/dvsa/vol-functional-tests/compare/v2.10.1...v2.10.2) (2024-07-18)
 
 
