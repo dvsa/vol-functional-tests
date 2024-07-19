@@ -31,7 +31,6 @@ hs_err_pid*
 # Icon must end with two \r
 Icon
 
-
 # Thumbnails
 ._*
 
@@ -90,9 +89,12 @@ $RECYCLE.BIN/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-##Miscillenious
+##Miscellaneous
 # Maven
-target/
+# Exclude everything in target directory except allure-results
+target/*
+!target/allure-results/
+!target/allure-results/**/
 
 # IntelliJ project files
 *.iml
@@ -113,7 +115,6 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
-
 
 *.swp
 release.properties
