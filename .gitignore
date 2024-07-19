@@ -145,9 +145,6 @@ mockApiData
 
 /LOGS
 
-.env
+.env 
 .env.local
 .env.conf
-
-
-!target/allure-report/
