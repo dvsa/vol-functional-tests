@@ -49,7 +49,6 @@ on:
       maven_options:
         type: string
         required: false
-
 permissions:
   contents: write
   id-token: write
@@ -123,40 +122,42 @@ jobs:
               ]
             }')
 
-          echo "::set-output name=job_id::$JOB_ID"
+          jobId=$(echo $JOB_ID | jq -r '.jobId')
+          echo "job_id=$jobId" >> $GITHUB_OUTPUT
 
       - name: Wait for Job Completion
         id: wait-job
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
-          TIME_OUT=15
-          JOB_ID=${{ env.JOB_ID }}
-          count=0
+            TIME_OUT=15
+            JOB_ID=${{ env.JOB_ID }}
+            count=0
 
-          while true; do
-            JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
+            while true; do
+              JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
 
-            if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
-              echo "Final job status: $JOB_STATUS"
-              break
-            fi
+              if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
+                echo "Final job status: $JOB_STATUS"
+                break
+              fi
 
-            echo "Job status: $JOB_STATUS"
+              echo "Job status: $JOB_STATUS"
 
-            ((TIME_OUT++))
+              ((TIME_OUT++))
 
-            if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timed out. Exiting."
+              if [ $count -ge $TIME_OUT ]; then
+                echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
+                exit 1
+              fi
+
+              sleep 60
+            done
+
+            if [ "$JOB_STATUS" == "FAILED" ]; then
+              echo "AWS Batch job failed"
               exit 1
             fi
-
-            sleep 60
-          done
-
-          if [ "$JOB_STATUS" == "FAILED" ]; then
-            echo "AWS Batch job failed"
-            exit 1
 
   generate-allure-report:
     name: Generate and Upload Allure Report
@@ -199,7 +200,12 @@ jobs:
 
       - name: Verify Generated Report
         run: |
-          allure report list ./upload/${{ inputs.build_id }}/allure-report
+          if ! grep -q '"total":0' ./upload/${{ inputs.build_id }}/allure-report/widgets/summary.json; then
+            echo "Allure report contains test cases."
+          else
+            echo "Allure report shows 0 test cases. Exiting with error."
+            exit 1
+          fi
 
       - name: Upload Allure Report to GitHub Pages and S3
         run: |
