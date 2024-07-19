@@ -167,6 +167,7 @@ jobs:
           --bucket ${{ env.BUCKET_NAME }} \
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+
       - name: Install Allure CLI
         uses: actions/setup-node@v2
         with:
