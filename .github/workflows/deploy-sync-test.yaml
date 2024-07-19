@@ -183,12 +183,6 @@ jobs:
              exit 1
            fi
 
-      - name: Install Maven
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11' # or any version your project requires
-          distribution: 'maven'
-
       - name: Run Allure Report with Maven
         run: |
           mvn allure:report
