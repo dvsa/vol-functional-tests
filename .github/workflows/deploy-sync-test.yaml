@@ -148,6 +148,7 @@ jobs:
           if [ "$JOB_STATUS" == "FAILED" ]; then
             echo "AWS Batch job failed"
             exit 1
+          fi
 
   upload-batch-report:
     name: upload sync report to github
@@ -181,25 +182,16 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Run Tests to Generate Allure Results
+      - name: Generate Allure Report with Maven
         run: |
-          mvn clean test -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml
+          mvn allure:report
 
-      - name: Generate Allure Report
-        run: |
-          mvn allure:report -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml
-
-      - name: Commit and Push Allure Report to gh-pages
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git fetch origin gh-pages
-          git checkout gh-pages || git checkout --orphan gh-pages
-          rm -rf *
-          cp -r /home/runner/work/vol-functional-tests/vol-functional-tests/target/allure-report/* .
-          git add .
-          git commit -m "chore: Deploy Allure report to GitHub Pages"
-          git push -f origin gh-pages
+      - name: Upload Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./target/allure-report
 
       - name: Job Succeeded
         if: success()
