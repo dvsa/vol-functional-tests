@@ -187,12 +187,12 @@ jobs:
         uses: actions/setup-java@v3
         with:
          java-version: '11'
-         maven-version: '3.8.6'
+         distribution: 'adoptopenjdk'
 
       - name: Run Allure Report with Maven
         run: |
           mvn clean verify
-          mvn allure:report
+          mvn io.qameta.allure:allure-maven:report
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
