@@ -186,6 +186,7 @@ jobs:
           else
             echo "Allure report directory not found."
             exit 1
+          fi
 
       - name: Debug Output - Contents of report directory after upload
         env:
