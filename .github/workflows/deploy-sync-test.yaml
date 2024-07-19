@@ -12,10 +12,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -35,10 +35,10 @@ on:
       platform_env:
         type: string
         required: true
-      browser_name: 
+      browser_name:
         type: string
-      browser_version: 
-        type: string 
+      browser_version:
+        type: string
       exclude_tags:
         type: string
         required: false
@@ -60,7 +60,7 @@ env:
   REPORT_NAME: "allure.zip"
   AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
-  
+
 jobs:
   run-sync-batch:
     name: run sync test on AWS Batch
@@ -195,25 +195,27 @@ jobs:
         run: |
           allure generate ./upload/${{ inputs.build_id }}/allure-report --clean -o ./upload/${{ inputs.build_id }}/allure-report
 
-      - name: Copy Allure History
-        if: always()
+      - name: Verify Generated Report
         run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-report/history
-          cp -r gh-pages/allure-history/* ./upload/${{ inputs.build_id }}/allure-report/history || true
+          if ! grep -q '"total":0' ./upload/${{ inputs.build_id }}/allure-report/widgets/summary.json; then
+            echo "Allure report contains test cases."
+          else
+            echo "Allure report shows 0 test cases. Exiting with error."
+            exit 1
+          fi
 
-      - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
-
-      - name: Upload Unzipped Allure Report to S3
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
+      - name: Upload Allure Report to GitHub Pages and S3
         run: |
+          # GitHub Pages
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-report
+          cp -r ./upload/${{ inputs.build_id }}/allure-report/* ./upload/${{ inputs.build_id }}/allure-report/
+          # S3
           aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://devapp-olcs-pri-olcs-autotest-s3/vol-functional-tests/${{ inputs.build_id }}/allure-report
+
+      - name: Echo Allure Report URL
+        run: |
+          REPORT_URL="https://devapp-olcs-pri-olcs-autotest-s3.s3.amazonaws.com/vol-functional-tests/${{ inputs.build_id }}/allure-report/index.html"
+          echo "Allure Report URL: $REPORT_URL"
 
       - name: Job Succeeded
         if: success()
