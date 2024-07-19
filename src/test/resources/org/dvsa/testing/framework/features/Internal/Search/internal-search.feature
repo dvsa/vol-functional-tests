@@ -17,7 +17,7 @@ Feature: Internal Search
     When i search for and click on my application
     Then the "Application details" page should display
 
-  @searchCase @int_regression @
+  @searchCase @int_regression
   Scenario: Search a Case on Internal
     Given I have a "goods" "restricted" licence
     And I create a new case
