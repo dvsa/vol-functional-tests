@@ -68,6 +68,9 @@ jobs:
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -120,6 +123,7 @@ jobs:
             }')
           jobId=$(echo $JOB_ID | jq -r '.jobId')
           echo "job_id=$jobId" >> $GITHUB_OUTPUT
+
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
@@ -145,11 +149,15 @@ jobs:
             echo "AWS Batch job failed"
             exit 1
           fi
+
   upload-batch-report:
     name: upload sync report to github
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -168,20 +176,11 @@ jobs:
           --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
           "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
-      - name: Unzip Allure Report
-        run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-report
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
-
-      - name: Verify Unzipped Report Directory
-        run: |
-          if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
-             echo "Allure report directory exists."
-             ls -l ./upload/${{ inputs.build_id }}/allure-report
-           else
-             echo "Allure report directory not found."
-             exit 1
-           fi
+      - name: Set Up Java and Maven
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
 
       - name: Run Allure Report with Maven
         run: |
