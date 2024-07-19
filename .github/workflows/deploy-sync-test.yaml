@@ -157,7 +157,6 @@ jobs:
           if [ "$JOB_STATUS" == "FAILED" ]; then
             echo "AWS Batch job failed"
             exit 1
-          fi
 
   generate-allure-report:
     name: Generate and Upload Allure Report
