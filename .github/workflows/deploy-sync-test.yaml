@@ -178,6 +178,15 @@ jobs:
         run: |
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-report
 
+      - name: Verify Unzipped Report Directory
+        run: |
+         if [ -d "./upload/${{ inputs.build_id }}/allure-report" ]; then
+            echo "Allure report directory exists."
+            ls -l ./upload/${{ inputs.build_id }}/allure-report
+          else
+            echo "Allure report directory not found."
+            exit 1
+
       - name: Debug Output - Contents of report directory after upload
         env:
           BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
