@@ -183,12 +183,6 @@ jobs:
              exit 1
            fi
 
-      - name: Set up Java and Maven
-        uses: actions/setup-java@v3
-        with:
-         java-version: '11'
-         distribution: 'adoptopenjdk'
-
       - name: Run Allure Report with Maven
         run: |
           mvn clean verify
