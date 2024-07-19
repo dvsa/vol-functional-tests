@@ -182,9 +182,9 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Run Allure Report with Maven
+      - name: Generate Allure Report with Maven
         run: |
-          mvn io.qameta.allure:allure-maven:report
+          mvn allure:report -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -199,11 +199,6 @@ jobs:
           BUCKET_KEY: "vol-functional-tests"
         run: |
           aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
-
-      - name: Echo Allure Report URL
-        run: |
-          REPORT_URL="https://devapp-olcs-pri-olcs-autotest-s3.s3.amazonaws.com/vol-functional-tests/${{ inputs.build_id }}/allure-report/index.html"
-          echo "Allure Report URL: $REPORT_URL"
 
       - name: Job Succeeded
         if: success()
