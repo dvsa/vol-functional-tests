@@ -263,6 +263,14 @@ public class InternalApplication extends BasePage{
         waitForTextToBePresent("1 Docs & attachments");
     }
 
+    @And("i save and email the letter")
+    public void iSaveAndEmailTheLetter() {
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Send letter");
+        click("form-actions[email]",SelectorType.ID);
+        waitForTextToBePresent("The document has been saved and sent by email");
+    }
+
     @Then("the document is listed on the page")
     public void theDocumentIsListedOnThePage() {
         assertTrue(isTextPresent("GV - Blank letter to operator"));
