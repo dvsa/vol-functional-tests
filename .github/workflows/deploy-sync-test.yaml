@@ -182,10 +182,17 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Generate Allure Report with Maven
+      - name: Install Allure CLI
+        run: |
+          npm install -g allure-commandline --save-dev
+
+      - name: Unzip Allure Report
         run: |
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
-          mvn allure:report -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml -Dallure.results.directory=./upload/${{ inputs.build_id }}/allure-results -Dallure.report.directory=./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Generate Allure Report with Maven
+        run: |
+          mvn allure:report -Dallure.results.directory=./upload/${{ inputs.build_id }}/allure-results -Dallure.report.directory=./upload/${{ inputs.build_id }}/allure-report
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
