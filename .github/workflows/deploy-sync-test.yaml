@@ -151,7 +151,7 @@ jobs:
           fi
 
   upload-batch-report:
-    name: upload sync report to github
+    name: Upload Sync Report to GitHub
     needs: run-sync-batch
     runs-on: ubuntu-latest
     steps:
@@ -186,7 +186,7 @@ jobs:
         run: |
           npm install -g allure-commandline --save-dev
 
-      - name: Unzip Allure Report
+      - name: Unzip Allure Results
         run: |
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
 
