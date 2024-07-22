@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.0](https://github.com/dvsa/vol-functional-tests/compare/v2.10.3...v2.11.0) (2024-07-22)
+
+
+### Features
+
+* install mvn allure cli ([4ab26e9](https://github.com/dvsa/vol-functional-tests/commit/4ab26e913af4f10b504d7a1d2757a5a893b0769c))
+* maven based report generation into s3 ([9e42c06](https://github.com/dvsa/vol-functional-tests/commit/9e42c06419e6b75fc2b75a0a3809d8eeb89dd032))
+
 ## [2.10.3](https://github.com/dvsa/vol-functional-tests/compare/v2.10.2...v2.10.3) (2024-07-19)
 
 
