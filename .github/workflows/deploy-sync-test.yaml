@@ -172,41 +172,39 @@ jobs:
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
-          --bucket ${{ env.BUCKET_NAME }} \
-          --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-          "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
-
-      - name: Set Up Java and Maven
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Install Allure CLI
-        run: |
-          npm install -g allure-commandline --save-dev
+            --bucket ${{ env.BUCKET_NAME }} \
+            --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
+          mkdir -p ./upload/${{ inputs.build_id }}/allure-results
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
+          ls -R ./upload/${{ inputs.build_id }}/allure-results
 
-      - name: Generate Allure Report with Maven
+      - name: Verify Allure Report Files
         run: |
-          mvn -X allure:report -Dallure.results.directory=allure-results -Dallure.report.directory=/allure-results/upload/${{ inputs.build_id }}/allure-report
+          # Check if index.html exists
+          if [ -f "./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin/index.html" ]; then
+            echo "Allure report index.html found."
+          else
+            echo "Allure report index.html not found."
+            exit 1
+          fi
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+          publish_dir: ./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin
 
       - name: Upload Unzipped Allure Report to S3
         env:
           BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
           BUCKET_KEY: "vol-functional-tests"
         run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
