@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.1](https://github.com/dvsa/vol-functional-tests/compare/v2.11.0...v2.11.1) (2024-07-22)
+
+
+### Bug Fixes
+
+* revert delete of save and email step def in main ([4916492](https://github.com/dvsa/vol-functional-tests/commit/4916492c408c5a16a0fb6a4b6989cf293747dc6f))
+
 ## [2.11.0](https://github.com/dvsa/vol-functional-tests/compare/v2.10.3...v2.11.0) (2024-07-22)
 
 
