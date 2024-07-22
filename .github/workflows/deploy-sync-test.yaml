@@ -184,14 +184,22 @@ jobs:
 
       - name: Generate Allure Report with Maven
         run: |
-          mvn allure:report
+          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
+          mvn allure:report -f /home/runner/work/vol-functional-tests/vol-functional-tests/pom.xml -Dallure.results.directory=./upload/${{ inputs.build_id }}/allure-results -Dallure.report.directory=./upload/${{ inputs.build_id }}/allure-report
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./target/allure-report
+          publish_dir: ./upload/${{ inputs.build_id }}/allure-report
+
+      - name: Upload Unzipped Allure Report to S3
+        env:
+          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
+          BUCKET_KEY: "vol-functional-tests"
+        run: |
+          aws s3 sync ./upload/${{ inputs.build_id }}/allure-report s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
 
       - name: Job Succeeded
         if: success()
