@@ -167,8 +167,8 @@ jobs:
       - name: Download Allure Report from S3
         env:
           JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
+          BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
+          BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}
           aws s3api get-object \
@@ -199,12 +199,8 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin
 
-      - name: Upload Unzipped Allure Report to S3
-        env:
-          BUCKET_NAME: "devapp-olcs-pri-olcs-autotest-s3"
-          BUCKET_KEY: "vol-functional-tests"
-        run: |
-          aws s3 sync ./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/allure-report
+      - name: Report location
+        run: echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET }}/${{vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
 
       - name: Job Succeeded
         if: success()

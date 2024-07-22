@@ -257,8 +257,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <skip>true</skip>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
                     <includes>
