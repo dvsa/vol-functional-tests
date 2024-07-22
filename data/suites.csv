@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Mon Jul 22 11:32:56 UTC 2024","Mon Jul 22 11:34:19 UTC 2024","82768","","User should be able to view the checker page before registering as a Self Service user","","SS user can view checker page not logged in","","SS user can view checker page not logged in",""
+"passed","Mon Jul 22 11:32:56 UTC 2024","Mon Jul 22 11:33:39 UTC 2024","43432","","User should be able to view the checker page before registering as a Self Service user","","SS user can view checker page while logged in","","SS user can view checker page while logged in",""

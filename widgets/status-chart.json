@@ -1,0 +1,1 @@
+[{"uid":"5c59f1a6ce9dbec4","name":"SS user can view checker page not logged in","time":{"start":1721647976463,"stop":1721648059231,"duration":82768},"status":"broken","severity":"normal"},{"uid":"8d47fb47bb7ad28","name":"SS user can view checker page while logged in","time":{"start":1721647976465,"stop":1721648019897,"duration":43432},"status":"passed","severity":"normal"}]

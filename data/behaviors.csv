@@ -1,0 +1,3 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","User should be able to view the checker page before registering as a Self Service user","SS user can view checker page not logged in","0","1","0","0","0"
+"","User should be able to view the checker page before registering as a Self Service user","SS user can view checker page while logged in","0","0","1","0","0"
