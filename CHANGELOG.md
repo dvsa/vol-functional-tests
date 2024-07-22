@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.2](https://github.com/dvsa/vol-functional-tests/compare/v2.11.1...v2.11.2) (2024-07-22)
+
+
+### Bug Fixes
+
+* amend config to secretsmanager ([4771484](https://github.com/dvsa/vol-functional-tests/commit/4771484fe13f5773c076824255ad3b4e12383523))
+* amend report output ([587051d](https://github.com/dvsa/vol-functional-tests/commit/587051d3120177eb3c8d53e3425a3d75fa873503))
+
 ## [2.11.1](https://github.com/dvsa/vol-functional-tests/compare/v2.11.0...v2.11.1) (2024-07-22)
 
 
