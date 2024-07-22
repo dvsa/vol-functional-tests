@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.3](https://github.com/dvsa/vol-functional-tests/compare/v2.11.2...v2.11.3) (2024-07-22)
+
+
+### Bug Fixes
+
+* changed to cd into target ([0a984d4](https://github.com/dvsa/vol-functional-tests/commit/0a984d4142bbf289d3929af96068059bfd22f893))
+
 ## [2.11.2](https://github.com/dvsa/vol-functional-tests/compare/v2.11.1...v2.11.2) (2024-07-22)
 
 
