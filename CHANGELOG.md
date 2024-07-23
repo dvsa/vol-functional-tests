@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.5](https://github.com/dvsa/vol-functional-tests/compare/v2.11.4...v2.11.5) (2024-07-23)
+
+
+### Bug Fixes
+
+* [WARNING]  Parameter 'reportingOutputDirectory' is read-only, must not be used in configuration ([4d9a884](https://github.com/dvsa/vol-functional-tests/commit/4d9a88421dfab3b6c1c33cd8bf56f9e034651c66))
+* amended zip command to previous in run.sh ([3bc8ef8](https://github.com/dvsa/vol-functional-tests/commit/3bc8ef85fd75d0e79932bf70336ef9f1ac5d759f))
+
 ## [2.11.4](https://github.com/dvsa/vol-functional-tests/compare/v2.11.3...v2.11.4) (2024-07-23)
 
 
