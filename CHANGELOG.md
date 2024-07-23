@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.12](https://github.com/dvsa/vol-functional-tests/compare/v2.11.11...v2.11.12) (2024-07-23)
+
+
+### Bug Fixes
+
+* missed else - reverted run.sh ([97a77cd](https://github.com/dvsa/vol-functional-tests/commit/97a77cd892c60cf5fcec4a2749379bfe3e84f4ea))
+* missed else - reverted run.sh ([f33a025](https://github.com/dvsa/vol-functional-tests/commit/f33a0251f5e413d58fc74ada8c8daea5cfb47ed8))
+
 ## [2.11.11](https://github.com/dvsa/vol-functional-tests/compare/v2.11.10...v2.11.11) (2024-07-23)
 
 
