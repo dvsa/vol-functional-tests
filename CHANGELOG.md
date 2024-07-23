@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.11](https://github.com/dvsa/vol-functional-tests/compare/v2.11.10...v2.11.11) (2024-07-23)
+
+
+### Bug Fixes
+
+* added -fae on mvn command ([4890176](https://github.com/dvsa/vol-functional-tests/commit/4890176850d5a0d3748b59e26639547b1f851491))
+* added -fae on mvn command ([02efa0e](https://github.com/dvsa/vol-functional-tests/commit/02efa0e97ac667d07c390037f98bdd96835945d1))
+
 ## [2.11.10](https://github.com/dvsa/vol-functional-tests/compare/v2.11.9...v2.11.10) (2024-07-23)
 
 
