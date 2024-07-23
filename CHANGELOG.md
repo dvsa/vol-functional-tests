@@ -1,5 +1,70 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.10](https://github.com/dvsa/vol-functional-tests/compare/v2.11.9...v2.11.10) (2024-07-23)
+
+
+### Bug Fixes
+
+* reintroduce plugin step ([81bb605](https://github.com/dvsa/vol-functional-tests/commit/81bb60538c0b9af0bbea20ebd058783f15018d78))
+
+## [2.11.9](https://github.com/dvsa/vol-functional-tests/compare/v2.11.8...v2.11.9) (2024-07-23)
+
+
+### Bug Fixes
+
+* zip allure ([218591a](https://github.com/dvsa/vol-functional-tests/commit/218591ab4a5f2328be112d5547be444328b5868b))
+
+## [2.11.8](https://github.com/dvsa/vol-functional-tests/compare/v2.11.7...v2.11.8) (2024-07-23)
+
+
+### Bug Fixes
+
+* close if ([cc9d8e2](https://github.com/dvsa/vol-functional-tests/commit/cc9d8e2b78b336434b36a2cdd2fc64931276d6a2))
+
+## [2.11.7](https://github.com/dvsa/vol-functional-tests/compare/v2.11.6...v2.11.7) (2024-07-23)
+
+
+### Bug Fixes
+
+* rebuild mvn command ([617e3e7](https://github.com/dvsa/vol-functional-tests/commit/617e3e738d10f72ef202cc2123e148be77aefd2c))
+
+## [2.11.6](https://github.com/dvsa/vol-functional-tests/compare/v2.11.5...v2.11.6) (2024-07-23)
+
+
+### Bug Fixes
+
+* amended zip command to previous in run.sh ([d447421](https://github.com/dvsa/vol-functional-tests/commit/d4474216d8dec00c63675c99f2958d90edc7f610))
+
+## [2.11.5](https://github.com/dvsa/vol-functional-tests/compare/v2.11.4...v2.11.5) (2024-07-23)
+
+
+### Bug Fixes
+
+* [WARNING]  Parameter 'reportingOutputDirectory' is read-only, must not be used in configuration ([4d9a884](https://github.com/dvsa/vol-functional-tests/commit/4d9a88421dfab3b6c1c33cd8bf56f9e034651c66))
+* amended zip command to previous in run.sh ([3bc8ef8](https://github.com/dvsa/vol-functional-tests/commit/3bc8ef85fd75d0e79932bf70336ef9f1ac5d759f))
+
+## [2.11.4](https://github.com/dvsa/vol-functional-tests/compare/v2.11.3...v2.11.4) (2024-07-23)
+
+
+### Bug Fixes
+
+* amended the run sh ourtput to match workflow ([6308a26](https://github.com/dvsa/vol-functional-tests/commit/6308a26b83950c4c0354bce5ee36eafc8c996b77))
+
+## [2.11.3](https://github.com/dvsa/vol-functional-tests/compare/v2.11.2...v2.11.3) (2024-07-22)
+
+
+### Bug Fixes
+
+* changed to cd into target ([0a984d4](https://github.com/dvsa/vol-functional-tests/commit/0a984d4142bbf289d3929af96068059bfd22f893))
+
+## [2.11.2](https://github.com/dvsa/vol-functional-tests/compare/v2.11.1...v2.11.2) (2024-07-22)
+
+
+### Bug Fixes
+
+* amend config to secretsmanager ([4771484](https://github.com/dvsa/vol-functional-tests/commit/4771484fe13f5773c076824255ad3b4e12383523))
+* amend report output ([587051d](https://github.com/dvsa/vol-functional-tests/commit/587051d3120177eb3c8d53e3425a3d75fa873503))
+
 ## [2.11.1](https://github.com/dvsa/vol-functional-tests/compare/v2.11.0...v2.11.1) (2024-07-22)
 
 

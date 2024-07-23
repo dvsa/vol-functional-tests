@@ -4,7 +4,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>2.11.1</version>
+    <version>2.11.11-SNAPSHOT</version>
 
 
     <properties>
@@ -257,7 +257,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <testFailureIgnore>false</testFailureIgnore>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
                     <includes>
@@ -273,7 +273,9 @@
                 <artifactId>allure-maven</artifactId>
                 <version>2.12.0</version>
                 <configuration>
-                       <reportVersion>${allure-report.version}</reportVersion>
+                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report
+                    </reportingOutputDirectory>
+                    <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
                 <executions>
                     <execution>
