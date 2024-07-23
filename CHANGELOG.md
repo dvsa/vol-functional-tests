@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.4](https://github.com/dvsa/vol-functional-tests/compare/v2.11.3...v2.11.4) (2024-07-23)
+
+
+### Bug Fixes
+
+* amended the run sh ourtput to match workflow ([6308a26](https://github.com/dvsa/vol-functional-tests/commit/6308a26b83950c4c0354bce5ee36eafc8c996b77))
+
 ## [2.11.3](https://github.com/dvsa/vol-functional-tests/compare/v2.11.2...v2.11.3) (2024-07-22)
 
 
