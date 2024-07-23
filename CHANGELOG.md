@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.7](https://github.com/dvsa/vol-functional-tests/compare/v2.11.6...v2.11.7) (2024-07-23)
+
+
+### Bug Fixes
+
+* rebuild mvn command ([617e3e7](https://github.com/dvsa/vol-functional-tests/commit/617e3e738d10f72ef202cc2123e148be77aefd2c))
+
 ## [2.11.6](https://github.com/dvsa/vol-functional-tests/compare/v2.11.5...v2.11.6) (2024-07-23)
 
 
