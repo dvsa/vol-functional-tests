@@ -64,6 +64,7 @@ if [ $? -eq 0 ]; then
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/ --recursive
   aws s3 cp ../allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
+  fi
 else
   echo "Maven command failed!"
 fi
