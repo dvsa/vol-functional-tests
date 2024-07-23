@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.10](https://github.com/dvsa/vol-functional-tests/compare/v2.11.9...v2.11.10) (2024-07-23)
+
+
+### Bug Fixes
+
+* reintroduce plugin step ([81bb605](https://github.com/dvsa/vol-functional-tests/commit/81bb60538c0b9af0bbea20ebd058783f15018d78))
+
 ## [2.11.9](https://github.com/dvsa/vol-functional-tests/compare/v2.11.8...v2.11.9) (2024-07-23)
 
 
