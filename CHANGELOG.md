@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.9](https://github.com/dvsa/vol-functional-tests/compare/v2.11.8...v2.11.9) (2024-07-23)
+
+
+### Bug Fixes
+
+* zip allure ([218591a](https://github.com/dvsa/vol-functional-tests/commit/218591ab4a5f2328be112d5547be444328b5868b))
+
 ## [2.11.8](https://github.com/dvsa/vol-functional-tests/compare/v2.11.7...v2.11.8) (2024-07-23)
 
 
