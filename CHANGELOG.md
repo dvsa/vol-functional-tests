@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.8](https://github.com/dvsa/vol-functional-tests/compare/v2.11.7...v2.11.8) (2024-07-23)
+
+
+### Bug Fixes
+
+* close if ([cc9d8e2](https://github.com/dvsa/vol-functional-tests/commit/cc9d8e2b78b336434b36a2cdd2fc64931276d6a2))
+
 ## [2.11.7](https://github.com/dvsa/vol-functional-tests/compare/v2.11.6...v2.11.7) (2024-07-23)
 
 
