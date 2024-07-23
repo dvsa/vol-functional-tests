@@ -273,7 +273,9 @@
                 <artifactId>allure-maven</artifactId>
                 <version>2.12.0</version>
                 <configuration>
-                       <reportVersion>${allure-report.version}</reportVersion>
+                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report
+                    </reportingOutputDirectory>
+                    <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
                 <executions>
                     <execution>
