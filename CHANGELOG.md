@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.6](https://github.com/dvsa/vol-functional-tests/compare/v2.11.5...v2.11.6) (2024-07-23)
+
+
+### Bug Fixes
+
+* amended zip command to previous in run.sh ([d447421](https://github.com/dvsa/vol-functional-tests/commit/d4474216d8dec00c63675c99f2958d90edc7f610))
+
 ## [2.11.5](https://github.com/dvsa/vol-functional-tests/compare/v2.11.4...v2.11.5) (2024-07-23)
 
 
