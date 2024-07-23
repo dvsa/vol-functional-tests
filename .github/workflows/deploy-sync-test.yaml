@@ -132,6 +132,7 @@ jobs:
           JOB_ID=${{ env.JOB_ID }}
           count=0
           while true; do
+            aws logs tail /aws/batch/OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER/main
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
               echo "Final job status: $JOB_STATUS"
