@@ -182,23 +182,6 @@ jobs:
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
           ls -R ./upload/${{ inputs.build_id }}/allure-results
 
-      - name: Verify Allure Report Files
-        run: |
-          # Check if index.html exists
-          if [ -f "./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin/index.html" ]; then
-            echo "Allure report index.html found."
-          else
-            echo "Allure report index.html not found."
-            exit 1
-          fi
-
-      - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./upload/${{ inputs.build_id }}/allure-results/target/site/allure-maven-plugin
-
       - name: Report location
         run: echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET }}/${{vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
 
