@@ -28,7 +28,7 @@ Feature: Goods Variation increase vehicle count for an OC
     And i create an admin and url search for my variation
     Then the "Variation Fee for application" fee should be paid
 
-  @CPMS_tests
+  @CPMS_tests @create_variation @container
   Scenario Outline: Create a variation and add operating centre for standard non-international licences
     Given i have a valid "goods" "<LicenceType>" licence
     And a selfserve user creates a variation and adds an operating centre with "7" HGVs and "7" trailers

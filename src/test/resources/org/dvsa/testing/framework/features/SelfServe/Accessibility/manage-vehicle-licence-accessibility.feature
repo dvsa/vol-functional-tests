@@ -25,6 +25,7 @@ Feature: Check that manage vehicle journey is accessible
     And i scan for accessibility violations
     Then no issues should be present on the page
 
+  @vehicle_removal @container
   Scenario: Confirm vehicle removal
     And I want to confirm a vehicle removal
     And i scan for accessibility violations

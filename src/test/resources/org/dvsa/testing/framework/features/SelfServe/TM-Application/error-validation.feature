@@ -15,6 +15,7 @@ Feature: Error Validation for TM Application
     When i add an operator as a transport manager with a future DOB
     Then two TM DOB errors should display
 
+  @error_message_from_TM @container
   Scenario: Error message for TM with no hours worked
     When i add an operator as a transport manager with a no hours worked
     Then two worked hours errors should display

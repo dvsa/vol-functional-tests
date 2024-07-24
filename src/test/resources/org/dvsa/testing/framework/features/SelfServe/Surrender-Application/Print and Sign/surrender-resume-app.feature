@@ -44,7 +44,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
-
+  @discs_page @container
   Scenario Outline: Leave current discs page and return back to current discs page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
