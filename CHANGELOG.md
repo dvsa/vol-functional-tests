@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.13](https://github.com/dvsa/vol-functional-tests/compare/v2.11.12...v2.11.13) (2024-07-24)
+
+
+### Bug Fixes
+
+* chnage mvn report run ([894c09f](https://github.com/dvsa/vol-functional-tests/commit/894c09f3687428987d87bce88986c60e7c18d6a9))
+
 ## [2.11.12](https://github.com/dvsa/vol-functional-tests/compare/v2.11.11...v2.11.12) (2024-07-23)
 
 
