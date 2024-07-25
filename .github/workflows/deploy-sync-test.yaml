@@ -182,11 +182,11 @@ jobs:
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
           ls -R ./upload/${{ inputs.build_id }}/allure-results
 
-      - name: Publish Surefire Report
-        uses: scacap/action-surefire-report@v2
-        with:
-          files: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
-          fail_on_test_failures: true
+#      - name: Publish Surefire Report
+#        uses: scacap/action-surefire-report@v2
+#        with:
+#          files: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
+#          fail_on_test_failures: true
 
       - name: Report location
         run: echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET }}/${{vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
