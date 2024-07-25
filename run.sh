@@ -66,7 +66,7 @@ if [ $? -eq 0 ]; then
   zip -qr allure.zip target 
   mvn allure:report
   cd target
-  aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/ --recursive
+  aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/allure-maven-plugin --recursive
   aws s3 cp ../allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
   echo "Maven command failed!"
