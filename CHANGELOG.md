@@ -1,5 +1,23 @@
 # Revision History for the VOL Functional Tests
 
+## [2.11.8](https://github.com/dvsa/vol-functional-tests/compare/v2.11.8...v2.11.8) (2024-07-25)
+
+
+### Bug Fixes
+
+* added -fae on mvn command ([4890176](https://github.com/dvsa/vol-functional-tests/commit/4890176850d5a0d3748b59e26639547b1f851491))
+* added -fae on mvn command ([02efa0e](https://github.com/dvsa/vol-functional-tests/commit/02efa0e97ac667d07c390037f98bdd96835945d1))
+* chnage mvn report run ([894c09f](https://github.com/dvsa/vol-functional-tests/commit/894c09f3687428987d87bce88986c60e7c18d6a9))
+* missed else - reverted run.sh ([97a77cd](https://github.com/dvsa/vol-functional-tests/commit/97a77cd892c60cf5fcec4a2749379bfe3e84f4ea))
+* missed else - reverted run.sh ([f33a025](https://github.com/dvsa/vol-functional-tests/commit/f33a0251f5e413d58fc74ada8c8daea5cfb47ed8))
+* reintroduce plugin step ([81bb605](https://github.com/dvsa/vol-functional-tests/commit/81bb60538c0b9af0bbea20ebd058783f15018d78))
+* zip allure ([218591a](https://github.com/dvsa/vol-functional-tests/commit/218591ab4a5f2328be112d5547be444328b5868b))
+
+
+### Miscellaneous Chores
+
+* bump to 2.11.8 ([bac8fa1](https://github.com/dvsa/vol-functional-tests/commit/bac8fa1dc283895ddb569e8b5bfbd948a659b7fd))
+
 ## [2.11.8](https://github.com/dvsa/vol-functional-tests/compare/v2.11.13...v2.11.8) (2024-07-25)
 
 
