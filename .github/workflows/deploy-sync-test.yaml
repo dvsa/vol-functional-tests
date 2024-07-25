@@ -183,7 +183,7 @@ jobs:
           ls -R ./upload/${{ inputs.build_id }}/allure-results
 
       - name: Publish Surefire Report
-        uses: scacap/action-surefire-report@v2
+        uses: scacap/action-surefire-report@latest
         with:
           files: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
           fail_on_test_failures: true
