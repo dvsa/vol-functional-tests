@@ -176,6 +176,12 @@ jobs:
             --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
             "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
 
+      - name: Publish Surefire Report
+        uses: scacap/action-surefire-report@v2
+        with:
+         files: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
+         fail_on_test_failures: true
+
       - name: Unzip Allure Results
         run: |
           mkdir -p ./upload/${{ inputs.build_id }}/allure-results
