@@ -138,17 +138,23 @@ public class ManageApplications extends BasePage {
     }
 
     @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
-    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
-        if (Integer.parseInt(noOfLicences) > 9) {
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences,String operatorType,String licenceType,String vehicles,String vehicleAuth) throws HttpException {
+        if (Integer.parseInt(noOfLicences)>9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
-        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
-        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
-        for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
+        synchronized(world.APIJourney) {
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        }
+        synchronized(world.createApplication) {
+            world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
+            world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
+            world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
+        }
+        for (int i=0;i<Integer.parseInt(noOfLicences);i++) {
             TrafficArea ta = trafficAreaList()[i];
-            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+            synchronized(world.licenceCreation) {
+                world.licenceCreation.createLicenceWithTrafficArea(operatorType,licenceType,ta);
+            }
         }
     }
 
