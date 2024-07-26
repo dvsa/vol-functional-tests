@@ -196,4 +196,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
-        run: echo "AWS Batch job and report upload completed successfully!"
+        run: echo "AWS Batch job completed successfully!"
