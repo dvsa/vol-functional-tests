@@ -1,5 +1,20 @@
 # Revision History for the VOL Functional Tests
 
+## [2.12.4](https://github.com/dvsa/vol-functional-tests/compare/v2.12.3...v2.12.4) (2024-07-26)
+
+
+### Bug Fixes
+
+* artefact store ([a3b0fde](https://github.com/dvsa/vol-functional-tests/commit/a3b0fde839ae113d6af7add511c62f20d3c44204))
+* artefact store ([0bd33a2](https://github.com/dvsa/vol-functional-tests/commit/0bd33a2ca458a26965b863ffb9970417783247c4))
+
+## [2.12.3](https://github.com/dvsa/vol-functional-tests/compare/v2.12.2...v2.12.3) (2024-07-26)
+
+
+### Bug Fixes
+
+* ? amend reports workflow call ([4803db1](https://github.com/dvsa/vol-functional-tests/commit/4803db1143242414cadcd99751ae43d57d960f6e))
+
 ## [2.12.2](https://github.com/dvsa/vol-functional-tests/compare/v2.12.1...v2.12.2) (2024-07-26)
 
 

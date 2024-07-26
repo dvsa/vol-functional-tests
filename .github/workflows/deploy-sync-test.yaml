@@ -183,6 +183,11 @@ jobs:
           unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
           ls -R ./upload/${{ inputs.build_id }}/allure-results
 
+      - name: store allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: ./upload/${{ inputs.build_id }}/allure-results
 
       - name: Report location
         run: echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"

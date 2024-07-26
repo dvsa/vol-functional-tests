@@ -22,7 +22,36 @@ describe('main', () => {
         (parse as jest.Mock).mockReturnValue(new Promise((resolve) => resolve(results)));   
         (core.getInput as jest.Mock).mockReturnValueOnce(filePath);
         await run.default();
-        expect(core.setOutput).toHaveBeenCalledWith('results', results);
+        expect(core.summary.addHeading).toHaveBeenCalledWith('Test Results');
+       
+    })
+    test('should call parse and add table to summary', async () => {
+        const filePath = 'path/to/file.xml';
+        const results = {
+            tests: 2,
+            failures: 1,
+            errors: 1,
+            skipped: 0
+        };
+        (parse as jest.Mock).mockReturnValue(new Promise((resolve) => resolve(results)));   
+        (core.getInput as jest.Mock).mockReturnValueOnce(filePath);
+        (core.summary.addHeading as jest.Mock).mockReturnValueOnce(core.summary);
+        await run.default();
+        expect(core.summary.addHeading).toHaveBeenLastCalledWith('Test Results');
+        expect(core.summary.addTable).toHaveBeenLastCalledWith([
+            [
+                { data: 'Tests', header: true },
+                { data: 'Failures', header: true },
+                { data: 'Errors', header: true },
+                { data: 'Skipped', header: true }
+            ],
+            [
+                "2",
+                "1",
+                "1",
+                "0"
+            ]
+        ]);
     })
     test('should handle error', async () => {
         const filePath = 'path/to/file.xml';
