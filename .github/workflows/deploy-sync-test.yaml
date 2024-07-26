@@ -52,6 +52,7 @@ on:
 permissions:
   contents: write
   id-token: write
+  checks:   write
 
 env:
   JOB_NAME: ${{ inputs.build_id }}
@@ -185,7 +186,7 @@ jobs:
       - name: Publish Surefire Report
         uses: scacap/action-surefire-report@v1.8.0
         with:
-          files: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
+          report_paths: '**/upload/${{ inputs.build_id }}/allure-results/TEST-*.xml'
           fail_on_test_failures: true
 
       - name: Report location
