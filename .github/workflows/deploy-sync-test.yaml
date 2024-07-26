@@ -201,7 +201,7 @@ jobs:
 
   job-succeeded:
     name: Job Succeeded
-    needs: [run-sync-batch]
+    needs: [run-sync-batch, upload-batch-report]
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
