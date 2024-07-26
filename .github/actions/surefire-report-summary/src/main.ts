@@ -9,7 +9,12 @@ async function run(): Promise<void> {
     
     core.debug(`file-path: ${filePath}`);
     const results = await parse( read(filePath) );
-    core.setOutput('results', results);
+    await core.summary.addHeading('Test Results')
+    .addTable([
+      [{data: 'Tests', header: true}, {data: 'Failures', header: true}, {data: 'Errors', header: true},{data: 'Skipped', header: true}],
+      [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
+    ])
+    .write();
     await failOnTestFailures(results) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
   } catch (error) {
     core.setFailed(`${(error as Error)?.message ?? error}`)
