@@ -187,6 +187,10 @@ jobs:
       - name: Report location
         run: echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
 
+      - name: Upload Allure Report to GitHub Pages
+        uses: ./.github/workflows/report.yaml
+        with:
+          build_id: ${{ inputs.build_id }}
 
   job-succeeded:
     name: Job Succeeded
