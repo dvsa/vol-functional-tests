@@ -24,14 +24,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-results
-          path: allure-results
-
-      - name: List files
-        runs: ls -R allure-results
-
+          
       - name: Upload Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./allure-results/target/site/allure-maven-plugin
+          publish_dir: ./target/site/allure-maven-plugin
