@@ -188,14 +188,7 @@ jobs:
         with:
           name: allure-results
           path: ./upload/${{ inputs.build_id }}/allure-results
-
-      - name: Report location
-        run: |
-          echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
-          echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html" >> $GITHUB_STEP_SUMMARY
-          
-
-
+    
   report:
     name: display report
     needs: upload-batch-report
@@ -205,7 +198,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-results
-          
+
+      - name: console output report
+        run: |
+          echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
+     
       - name: Get Summary
         id: get-summary
         uses: ./.github/actions/surefire-report-summary
@@ -213,7 +210,10 @@ jobs:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failure: true
         
-
+      - name: Report location
+        run: |
+            echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html" >> $GITHUB_STEP_SUMMARY
+            
   job-succeeded:
     name: Job Succeeded
     needs: [report]
