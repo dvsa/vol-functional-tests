@@ -193,15 +193,25 @@ jobs:
      
 
   report:
-    name: Upload Allure Report to GitHub Pages
+    name: display report
     needs: upload-batch-report
-    uses: ./.github/workflows/report.yaml
-    with:
-      build_id: ${{ inputs.build_id }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Summary
+        id: get-summary
+        uses: ./.github/actions/surefire-report-summary
+        with:
+          file-path: ./upload/${{ inputs.build_id }}/sure-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
+          fail-on-test-failure: true
+      - name: Add to summary
+        run: |
+          echo "#### Test Results:" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.get-summary.outputs.results }}" >> $GITHUB_STEP_SUMMARY  
+          
 
   job-succeeded:
     name: Job Succeeded
-    needs: [run-sync-batch, upload-batch-report]
+    needs: [report]
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
