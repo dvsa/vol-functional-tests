@@ -1,24 +1,24 @@
-name: Upload Allure Report to GitHub Pages
+name: Upload Allure Report
 
 on:
   workflow_call:
     inputs:
       build_id:
-        type: string
+        description: 'Build ID for the Allure report'
         required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
 
 jobs:
-  upload-report:
+  upload-allure-report:
+    name: Upload Allure Report to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up GitHub Pages
-        uses: actions/configure-pages@v3
-        with:
-          pages-branch: gh-pages
-          commit-message: Deploy Allure Report to GitHub Pages
+        uses: actions/checkout@v4
 
       - name: Upload Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
