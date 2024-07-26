@@ -62,9 +62,10 @@ if [ $? -eq 0 ]; then
   else
     mvn --batch-mode clean verify -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dcucumber.options="-- io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
   fi
+  
+  mvn allure:report
   # create the report zip file
   zip -qr allure.zip target 
-  mvn allure:report
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
   aws s3 cp ../allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/

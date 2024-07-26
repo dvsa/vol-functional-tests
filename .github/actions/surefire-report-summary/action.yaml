@@ -1,0 +1,10 @@
+name: 'surefire-=report-summary'
+description: 'gets summary form surefire report'
+inputs:
+  file-path:
+    required: true
+    description: 'file path to the file containing the surefire report'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+  post: 'dist/index.js'
