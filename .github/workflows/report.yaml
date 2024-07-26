@@ -10,7 +10,7 @@ on:
 
 permissions:
   contents: write
-  packages: write
+ 
 
 jobs:
   upload-allure-report:
