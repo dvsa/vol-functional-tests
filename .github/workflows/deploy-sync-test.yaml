@@ -190,10 +190,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Upload Allure Report to GitHub Pages
-        uses: ./.github/workflows/report.yaml
-        with:
-          build_id: ${{ inputs.build_id }}
+     
+
+  report:
+    name: Upload Allure Report to GitHub Pages
+    needs: upload-batch-report
+    uses: ./.github/workflows/report.yaml
+    with:
+      build_id: ${{ inputs.build_id }}
 
   job-succeeded:
     name: Job Succeeded
