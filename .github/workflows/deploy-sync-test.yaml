@@ -194,7 +194,7 @@ jobs:
 
   job-succeeded:
     name: Job Succeeded
-    needs: [run-sync-batch, call-report-job]
+    needs: [run-sync-batch]
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
