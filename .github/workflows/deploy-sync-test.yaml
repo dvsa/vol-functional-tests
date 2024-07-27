@@ -204,7 +204,7 @@ jobs:
 
       - name: console output report
         run: |
-          echo "Allure report is available at s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
      
       - name: Get Summary
         id: get-summary
@@ -213,7 +213,7 @@ jobs:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: true
           # todo change to right s3 website path
-          report-path: "s3://${{ secrets.S3_REPORT_BUCKET }}/${{ secrets.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
+          report-path: "s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
       
             
   job-succeeded:

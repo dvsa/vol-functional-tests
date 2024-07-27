@@ -55,7 +55,7 @@ function run() {
                 [{ data: 'Tests', header: true }, { data: 'Failures', header: true }, { data: 'Errors', header: true }, { data: 'Skipped', header: true }],
                 [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
             ])
-                .addLink('Test Results', reportPath)
+                .addLink('View Test Results', reportPath)
                 .write();
             (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
         }
