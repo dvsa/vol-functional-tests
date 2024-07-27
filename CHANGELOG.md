@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.12.6](https://github.com/dvsa/vol-functional-tests/compare/v2.12.5...v2.12.6) (2024-07-27)
+
+
+### Bug Fixes
+
+* modify workflow ([a43d63d](https://github.com/dvsa/vol-functional-tests/commit/a43d63d6775b5d591504ee13edd30899eb3a26a8))
+
 ## [2.12.5](https://github.com/dvsa/vol-functional-tests/compare/v2.12.4...v2.12.5) (2024-07-27)
 
 
