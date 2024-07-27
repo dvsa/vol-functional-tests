@@ -4,6 +4,9 @@ inputs:
   file-path:
     required: true
     description: 'file path to the file containing the surefire report'
+  report-path:
+    required: true
+    description: 'path to the file where the summary will be written'
   fail-on-test-failures:
     required: false
     description: 'if true, the action will fail if there are test failures'

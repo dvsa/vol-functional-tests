@@ -1,12 +1,13 @@
 import * as core from '@actions/core'
 import {parse, read} from './reader'
 import { Results } from './types';
+import { report } from 'process';
 
 
 async function run(): Promise<void> {
   try {
     const filePath:string = core.getInput('file-path', {required: true});
-    
+    const reportPath:string = core.getInput('report-path', {required: true});
     core.debug(`file-path: ${filePath}`);
     const results = await parse( read(filePath) );
     await core.summary.addHeading('Test Results')
@@ -14,6 +15,7 @@ async function run(): Promise<void> {
       [{data: 'Tests', header: true}, {data: 'Failures', header: true}, {data: 'Errors', header: true},{data: 'Skipped', header: true}],
       [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
     ])
+    .addLink('Test Results', reportPath)
     .write();
     await failOnTestFailures(results) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
   } catch (error) {
