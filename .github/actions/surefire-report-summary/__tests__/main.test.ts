@@ -25,6 +25,21 @@ describe('main', () => {
         expect(core.summary.addHeading).toHaveBeenCalledWith('Test Results');
        
     })
+    test('should add link to summary', async () => {
+        const reportPath = 'link';
+        const results = {
+            tests: 2,
+            failures: 1,
+            errors: 1,
+            skipped: 0
+        };
+        (parse as jest.Mock).mockReturnValue(new Promise((resolve) => resolve(results)));
+        (core.getInput as jest.Mock).mockReturnValue(reportPath);
+        (core.summary.addHeading as jest.Mock).mockReturnValueOnce(core.summary);
+        (core.summary.addTable as jest.Mock).mockReturnValueOnce(core.summary);
+        await run.default();
+        expect(core.summary.addLink).toHaveBeenCalledWith('View Test Results', reportPath);
+    })
     test('should call parse and add table to summary', async () => {
         const filePath = 'path/to/file.xml';
         const results = {
