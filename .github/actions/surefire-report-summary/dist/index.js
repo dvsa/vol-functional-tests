@@ -47,6 +47,7 @@ function run() {
         var _a;
         try {
             const filePath = core.getInput('file-path', { required: true });
+            const reportPath = core.getInput('report-path', { required: true });
             core.debug(`file-path: ${filePath}`);
             const results = yield (0, reader_1.parse)((0, reader_1.read)(filePath));
             yield core.summary.addHeading('Test Results')
@@ -54,6 +55,7 @@ function run() {
                 [{ data: 'Tests', header: true }, { data: 'Failures', header: true }, { data: 'Errors', header: true }, { data: 'Skipped', header: true }],
                 [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
             ])
+                .addLink('Test Results', reportPath)
                 .write();
             (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
         }
