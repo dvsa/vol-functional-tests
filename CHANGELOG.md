@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.12.5](https://github.com/dvsa/vol-functional-tests/compare/v2.12.4...v2.12.5) (2024-07-27)
+
+
+### Bug Fixes
+
+* location of files ([2f6af82](https://github.com/dvsa/vol-functional-tests/commit/2f6af82e83af3eb3fadc453a66379194c3b5266c))
+* table output and tests ([70316e8](https://github.com/dvsa/vol-functional-tests/commit/70316e8366ba59316beb65b660b594265f08077e))
+
 ## [2.12.4](https://github.com/dvsa/vol-functional-tests/compare/v2.12.3...v2.12.4) (2024-07-26)
 
 
