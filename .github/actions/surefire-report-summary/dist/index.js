@@ -1,126 +1,6 @@
 require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3109:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.main = exports.failOnTestFailures = void 0;
-const core = __importStar(__nccwpck_require__(2186));
-const reader_1 = __nccwpck_require__(7433);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        var _a;
-        try {
-            const filePath = core.getInput('file-path', { required: true });
-            const reportPath = core.getInput('report-path', { required: true });
-            core.debug(`file-path: ${filePath}`);
-            core.debug(`report-path: ${filePath}`);
-            const results = yield (0, reader_1.parse)((0, reader_1.read)(filePath));
-            yield core.summary.addHeading('Test Results')
-                .addTable([
-                [{ data: 'Tests', header: true }, { data: 'Failures', header: true }, { data: 'Errors', header: true }, { data: 'Skipped', header: true }],
-                [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
-            ])
-                .addLink('View Test Results', reportPath)
-                .write();
-            core.debug(`Results: ${JSON.stringify(results)}`);
-            (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
-        }
-        catch (error) {
-            core.setFailed(`${(_a = error === null || error === void 0 ? void 0 : error.message) !== null && _a !== void 0 ? _a : error}`);
-        }
-    });
-}
-const failOnTestFailures = (results) => __awaiter(void 0, void 0, void 0, function* () {
-    const fail_on_test_failures = core.getInput('fail-on-test-failures') === 'true';
-    if (!fail_on_test_failures) {
-        return false;
-    }
-    return results.failures > 0;
-});
-exports.failOnTestFailures = failOnTestFailures;
-exports.main = run;
-
-
-/***/ }),
-
-/***/ 7433:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.read = exports.parse = void 0;
-const xmldom_1 = __nccwpck_require__(9213);
-const fs_1 = __nccwpck_require__(7147);
-const parse = (xml) => __awaiter(void 0, void 0, void 0, function* () {
-    const doc = new xmldom_1.DOMParser().parseFromString(xml, 'text/xml');
-    const tests = doc.documentElement.getAttribute('tests');
-    const failures = doc.documentElement.getAttribute('failures');
-    const errors = doc.documentElement.getAttribute('errors');
-    const skipped = doc.documentElement.getAttribute('skipped');
-    if (!tests || !failures || !errors || !skipped)
-        throw new Error('Invalid XML format');
-    return {
-        tests: tests ? parseInt(tests) : 0,
-        failures: failures ? parseInt(failures) : 0,
-        errors: errors ? parseInt(errors) : 0,
-        skipped: skipped ? parseInt(skipped) : 0
-    };
-});
-exports.parse = parse;
-const read = (path) => {
-    return (0, fs_1.readFileSync)(path, 'utf8');
-};
-exports.read = read;
-
-
-/***/ }),
-
 /***/ 7351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -30278,6 +30158,126 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.failOnTestFailures = void 0;
+exports.run = run;
+const core = __importStar(__nccwpck_require__(2186));
+const reader_1 = __nccwpck_require__(2203);
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        var _a;
+        try {
+            const filePath = core.getInput('file-path', { required: true });
+            const reportPath = core.getInput('report-path', { required: true });
+            core.debug(`file-path: ${filePath}`);
+            core.debug(`report-path: ${filePath}`);
+            const results = yield (0, reader_1.parse)((0, reader_1.read)(filePath));
+            yield core.summary.addHeading('Test Results')
+                .addTable([
+                [{ data: 'Tests', header: true }, { data: 'Failures', header: true }, { data: 'Errors', header: true }, { data: 'Skipped', header: true }],
+                [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
+            ])
+                .addLink('View Test Results', reportPath)
+                .write();
+            core.debug(`Results: ${JSON.stringify(results)}`);
+            (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
+        }
+        catch (error) {
+            core.setFailed(`${(_a = error === null || error === void 0 ? void 0 : error.message) !== null && _a !== void 0 ? _a : error}`);
+        }
+    });
+}
+const failOnTestFailures = (results) => __awaiter(void 0, void 0, void 0, function* () {
+    const fail_on_test_failures = core.getInput('fail-on-test-failures') === 'true';
+    if (!fail_on_test_failures) {
+        return false;
+    }
+    return results.failures > 0;
+});
+exports.failOnTestFailures = failOnTestFailures;
+
+
+/***/ }),
+
+/***/ 2203:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.read = exports.parse = void 0;
+const xmldom_1 = __nccwpck_require__(9213);
+const fs_1 = __nccwpck_require__(7147);
+const parse = (xml) => __awaiter(void 0, void 0, void 0, function* () {
+    const doc = new xmldom_1.DOMParser().parseFromString(xml, 'text/xml');
+    const tests = doc.documentElement.getAttribute('tests');
+    const failures = doc.documentElement.getAttribute('failures');
+    const errors = doc.documentElement.getAttribute('errors');
+    const skipped = doc.documentElement.getAttribute('skipped');
+    if (!tests || !failures || !errors || !skipped)
+        throw new Error('Invalid XML format');
+    return {
+        tests: tests ? parseInt(tests) : 0,
+        failures: failures ? parseInt(failures) : 0,
+        errors: errors ? parseInt(errors) : 0,
+        skipped: skipped ? parseInt(skipped) : 0
+    };
+});
+exports.parse = parse;
+const read = (path) => {
+    return (0, fs_1.readFileSync)(path, 'utf8');
+};
+exports.read = read;
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -32165,13 +32165,19 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(3109);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const main_1 = __nccwpck_require__(399);
+(0, main_1.run)();
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
