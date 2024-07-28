@@ -39,7 +39,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.failOnTestFailures = void 0;
+exports.main = exports.failOnTestFailures = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const reader_1 = __nccwpck_require__(7433);
 function run() {
@@ -49,6 +49,7 @@ function run() {
             const filePath = core.getInput('file-path', { required: true });
             const reportPath = core.getInput('report-path', { required: true });
             core.debug(`file-path: ${filePath}`);
+            core.debug(`report-path: ${filePath}`);
             const results = yield (0, reader_1.parse)((0, reader_1.read)(filePath));
             yield core.summary.addHeading('Test Results')
                 .addTable([
@@ -57,6 +58,7 @@ function run() {
             ])
                 .addLink('View Test Results', reportPath)
                 .write();
+            core.debug(`Results: ${JSON.stringify(results)}`);
             (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
         }
         catch (error) {
@@ -72,7 +74,7 @@ const failOnTestFailures = (results) => __awaiter(void 0, void 0, void 0, functi
     return results.failures > 0;
 });
 exports.failOnTestFailures = failOnTestFailures;
-exports["default"] = run;
+exports.main = run;
 
 
 /***/ }),
