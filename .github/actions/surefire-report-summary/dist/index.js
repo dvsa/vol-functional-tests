@@ -30218,6 +30218,7 @@ function run() {
                 .write();
             core.debug(`Results: ${JSON.stringify(results)}`);
             (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
+            (yield (0, exports.failOnTestErrors)(results)) ? core.setFailed('Test errors found') : core.info('fail-on-test-errors is false, ignoring test errors');
         }
         catch (error) {
             core.setFailed(`${(_a = error === null || error === void 0 ? void 0 : error.message) !== null && _a !== void 0 ? _a : error}`);
