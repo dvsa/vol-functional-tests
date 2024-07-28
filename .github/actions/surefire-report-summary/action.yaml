@@ -10,6 +10,9 @@ inputs:
   fail-on-test-failures:
     required: false
     description: 'if true, the action will fail if there are test failures'
+  fail-on-test-errors:
+    required: false
+    description: 'if true, the action will fail if there are test errors'
 runs:
   using: 'node20'
   main: 'dist/index.js'
