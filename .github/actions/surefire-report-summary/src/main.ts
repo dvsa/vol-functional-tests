@@ -4,7 +4,7 @@ import { Results } from './types';
 
 
 
-async function run(): Promise<void> {
+export async function run(): Promise<void> {
   try {
     const filePath:string = core.getInput('file-path', {required: true});
     const reportPath:string = core.getInput('report-path', {required: true});
@@ -34,5 +34,3 @@ export const failOnTestFailures = async (results: Results): Promise<boolean> => 
    }
   return results.failures > 0;
 }
-
-export const main = run;

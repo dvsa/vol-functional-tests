@@ -1,6 +1,6 @@
 import {expect, test, jest, beforeEach, describe} from '@jest/globals'
 import * as core from '@actions/core'
-import * as run from '../src/main';
+import { run } from '../src/main';
 import { parse } from '../src/reader';
 
 
@@ -21,7 +21,7 @@ describe('main', () => {
         };
         (parse as jest.Mock).mockReturnValue(new Promise((resolve) => resolve(results)));   
         (core.getInput as jest.Mock).mockReturnValueOnce(filePath);
-        await run.main();
+        await run();
         expect(core.summary.addHeading).toHaveBeenCalledWith('Test Results');
        
     })
@@ -37,7 +37,7 @@ describe('main', () => {
         (core.getInput as jest.Mock).mockReturnValue(reportPath);
         (core.summary.addHeading as jest.Mock).mockReturnValueOnce(core.summary);
         (core.summary.addTable as jest.Mock).mockReturnValueOnce(core.summary);
-        await run.main();
+        await run();
         expect(core.summary.addLink).toHaveBeenCalledWith('View Test Results', reportPath);
     })
     test('should call parse and add table to summary', async () => {
@@ -51,7 +51,7 @@ describe('main', () => {
         (parse as jest.Mock).mockReturnValue(new Promise((resolve) => resolve(results)));   
         (core.getInput as jest.Mock).mockReturnValueOnce(filePath);
         (core.summary.addHeading as jest.Mock).mockReturnValueOnce(core.summary);
-        await run.main();
+        await run();
         expect(core.summary.addHeading).toHaveBeenLastCalledWith('Test Results');
         expect(core.summary.addTable).toHaveBeenLastCalledWith([
             [
@@ -73,7 +73,7 @@ describe('main', () => {
         const error = new Error('Invalid XML format');
         (parse as jest.Mock).mockReturnValue(new Promise((_, reject) => reject(error)));
         (core.getInput as jest.Mock).mockReturnValueOnce(filePath);
-        await run.main();
+        await run();
         expect(core.setFailed).toHaveBeenCalledWith(error.message);
     })
     
