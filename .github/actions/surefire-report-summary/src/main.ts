@@ -20,6 +20,7 @@ export async function run(): Promise<void> {
     .write();
     core.debug(`Results: ${JSON.stringify(results)}`);
     await failOnTestFailures(results) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
+    await failOnTestErrors(results) ? core.setFailed('Test errors found') : core.info('fail-on-test-errors is false, ignoring test errors');
   } catch (error) {
     core.setFailed(`${(error as Error)?.message ?? error}`)
   }

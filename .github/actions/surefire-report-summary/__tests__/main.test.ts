@@ -38,7 +38,7 @@ describe('main', () => {
         (core.summary.addHeading as jest.Mock).mockReturnValueOnce(core.summary);
         (core.summary.addTable as jest.Mock).mockReturnValueOnce(core.summary);
         await run();
-        expect(core.summary.addLink).toHaveBeenCalledWith('View Test Results', reportPath);
+        expect(core.summary.addLink).toHaveBeenCalledWith('View Test Results report', reportPath);
     })
     test('should call parse and add table to summary', async () => {
         const filePath = 'path/to/file.xml';
