@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import {parse, read} from './reader'
 import { Results } from './types';
-import { report } from 'process';
+
 
 
 async function run(): Promise<void> {
@@ -35,4 +35,4 @@ export const failOnTestFailures = async (results: Results): Promise<boolean> => 
   return results.failures > 0;
 }
 
-export default run;
+export const main = run;
