@@ -30196,7 +30196,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.failOnTestFailures = void 0;
+exports.failOnTestErrors = exports.failOnTestFailures = void 0;
 exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
 const reader_1 = __nccwpck_require__(2203);
@@ -30214,7 +30214,7 @@ function run() {
                 [{ data: 'Tests', header: true }, { data: 'Failures', header: true }, { data: 'Errors', header: true }, { data: 'Skipped', header: true }],
                 [results.tests.toString(), results.failures.toString(), results.errors.toString(), results.skipped.toString()]
             ])
-                .addLink('View Test Results', reportPath)
+                .addLink('View Test Results report', reportPath)
                 .write();
             core.debug(`Results: ${JSON.stringify(results)}`);
             (yield (0, exports.failOnTestFailures)(results)) ? core.setFailed('Test failures found') : core.info('fail-on-test-failures is false, ignoring test failures');
@@ -30232,6 +30232,14 @@ const failOnTestFailures = (results) => __awaiter(void 0, void 0, void 0, functi
     return results.failures > 0;
 });
 exports.failOnTestFailures = failOnTestFailures;
+const failOnTestErrors = (results) => __awaiter(void 0, void 0, void 0, function* () {
+    const fail_on_test_errors = core.getInput('fail-on-test-errors') === 'true';
+    if (!fail_on_test_errors) {
+        return false;
+    }
+    return results.errors > 0;
+});
+exports.failOnTestErrors = failOnTestErrors;
 
 
 /***/ }),
