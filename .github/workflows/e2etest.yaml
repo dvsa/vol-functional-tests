@@ -21,8 +21,6 @@ on:
         required: false
       cucumber_tags:
         type: string
-      build_id:
-        type: string
       maven_options:
         type: string
         required: false
@@ -48,8 +46,6 @@ on:
       cucumber_tags:
         type: string
         default: '@smoke'
-      build_id:
-        type: string
       maven_options:
         type: string
         required: false
