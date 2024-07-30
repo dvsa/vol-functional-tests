@@ -63,6 +63,16 @@ env:
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
 
 jobs:
+  create-job-name:
+    name: Create Job Name
+    runs-on: ubuntu-latest
+    outputs:
+      job_name: ${{ steps.set-job-name.outputs.job_name }}
+    steps:
+      - name: Set Job Name
+        id: set-job-name
+        run: echo "JOB_NAME=${{ inputs.test }}+"-" + date +"%Y-%m-%d %T %H:%M"  +"-"+ ${{env.JOB_NAME }}" >> $GITHUB_ENV
+        
   run-sync-batch:
     name: run sync test on AWS Batch
     runs-on: ubuntu-latest
@@ -115,7 +125,7 @@ jobs:
                 },
                 {
                   "name": "buildId",
-                  "value": "${{ github.run_id }}"
+                  "value": "${{  }}"
                 },
                 {
                   "name": "mavenOptions",
@@ -172,23 +182,23 @@ jobs:
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
         run: |
-          mkdir -p ./upload/${{ github.run_id }}
+          mkdir -p ./upload/${{env.JOB_NAME }}
           aws s3api get-object \
             --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{ github.run_id }}/${{ env.REPORT_NAME }}" \
-            "./upload/${{ github.run_id }}/${{ env.REPORT_NAME }}"
+            --key "${{ env.BUCKET_KEY }}/${{env.JOB_NAME }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{env.JOB_NAME }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
-          mkdir -p ./upload/${{ github.run_id }}/allure-results
-          unzip ./upload/${{ github.run_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ github.run_id }}/allure-results
-          ls -R ./upload/${{ github.run_id }}/allure-results
+          mkdir -p ./upload/${{env.JOB_NAME }}/allure-results
+          unzip ./upload/${{env.JOB_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.JOB_NAME }}/allure-results
+          ls -R ./upload/${{env.JOB_NAME }}/allure-results
 
       - name: store allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: ./upload/${{ github.run_id }}/allure-results
+          path: ./upload/${{env.JOB_NAME }}/allure-results
     
   report:
     name: display report
@@ -205,17 +215,17 @@ jobs:
 
       - name: console output report
         run: |
-          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ github.run_id }}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
      
       - name: Get Summary
         id: get-summary
         uses: ./.github/actions/surefire-report-summary
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
-          fail-on-test-failures: false
+          fail-on-test-failures: true
           fail-on-test-errors: false
           # todo change to right s3 website path
-          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ github.run_id }}/site/allure-maven-plugin/index.html"
+          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
       
             
   job-succeeded:
