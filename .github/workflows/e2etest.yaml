@@ -125,7 +125,7 @@ jobs:
                 },
                 {
                   "name": "buildId",
-                  "value": "${{  }}"
+                  "value": "${{ env.JOB_NAME }}"
                 },
                 {
                   "name": "mavenOptions",
