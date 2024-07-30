@@ -71,10 +71,11 @@ jobs:
     steps:
       - name: Set Job Name
         id: set-job-name
-        run: echo "JOB_NAME= "${{ inputs.test }}-"`date +"%Y-%m-%d%H%M-"${{env.JOB_NAME }}`" >> $GITHUB_ENV
+        run: echo "JOB_NAME= "${{ inputs.test }}-"`date +"%Y-%m-%d%H%M-"`${{env.JOB_NAME }}" >> $GITHUB_ENV
         
   run-sync-batch:
     name: run sync test on AWS Batch
+    needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
