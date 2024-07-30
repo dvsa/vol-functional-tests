@@ -1,4 +1,4 @@
-name: Sync Testing Workflow AWS Batch Job
+name: End to end test
 
 on:
   workflow_dispatch:
@@ -37,13 +37,17 @@ on:
         required: true
       browser_name:
         type: string
+        default: 'chrome'
       browser_version:
         type: string
+        default: '125'
       exclude_tags:
         type: string
         required: false
+        default: 'none'
       cucumber_tags:
         type: string
+        default: '@smoke'
       build_id:
         type: string
       maven_options:
