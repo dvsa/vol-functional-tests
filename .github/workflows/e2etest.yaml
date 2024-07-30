@@ -1,4 +1,4 @@
-name: Sync Testing Workflow AWS Batch Job
+name: End to end test
 
 on:
   workflow_dispatch:
@@ -21,8 +21,6 @@ on:
         required: false
       cucumber_tags:
         type: string
-      build_id:
-        type: string
       maven_options:
         type: string
         required: false
@@ -37,15 +35,17 @@ on:
         required: true
       browser_name:
         type: string
+        default: 'chrome'
       browser_version:
         type: string
+        default: '125'
       exclude_tags:
         type: string
         required: false
+        default: 'none'
       cucumber_tags:
         type: string
-      build_id:
-        type: string
+        default: '@smoke'
       maven_options:
         type: string
         required: false
@@ -55,7 +55,7 @@ permissions:
   checks:   write
 
 env:
-  JOB_NAME: ${{ inputs.build_id }}
+  JOB_NAME: ${{ github.run_id }}
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
@@ -115,7 +115,7 @@ jobs:
                 },
                 {
                   "name": "buildId",
-                  "value": "${{ inputs.build_id }}"
+                  "value": "${{ github.run_id }}"
                 },
                 {
                   "name": "mavenOptions",
@@ -172,23 +172,23 @@ jobs:
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
         run: |
-          mkdir -p ./upload/${{ inputs.build_id }}
+          mkdir -p ./upload/${{ github.run_id }}
           aws s3api get-object \
             --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{ inputs.build_id }}/${{ env.REPORT_NAME }}" \
-            "./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }}"
+            --key "${{ env.BUCKET_KEY }}/${{ github.run_id }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ github.run_id }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
-          mkdir -p ./upload/${{ inputs.build_id }}/allure-results
-          unzip ./upload/${{ inputs.build_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ inputs.build_id }}/allure-results
-          ls -R ./upload/${{ inputs.build_id }}/allure-results
+          mkdir -p ./upload/${{ github.run_id }}/allure-results
+          unzip ./upload/${{ github.run_id }}/${{ env.REPORT_NAME }} -d ./upload/${{ github.run_id }}/allure-results
+          ls -R ./upload/${{ github.run_id }}/allure-results
 
       - name: store allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: ./upload/${{ inputs.build_id }}/allure-results
+          path: ./upload/${{ github.run_id }}/allure-results
     
   report:
     name: display report
@@ -205,7 +205,7 @@ jobs:
 
       - name: console output report
         run: |
-          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ github.run_id }}/site/allure-maven-plugin/index.html"
      
       - name: Get Summary
         id: get-summary
@@ -215,7 +215,7 @@ jobs:
           fail-on-test-failures: false
           fail-on-test-errors: false
           # todo change to right s3 website path
-          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ inputs.build_id }}/site/allure-maven-plugin/index.html"
+          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ github.run_id }}/site/allure-maven-plugin/index.html"
       
             
   job-succeeded:
