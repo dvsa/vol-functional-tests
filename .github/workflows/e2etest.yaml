@@ -186,7 +186,7 @@ jobs:
           JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
-          
+          FOLDER_NAME: ${{env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
