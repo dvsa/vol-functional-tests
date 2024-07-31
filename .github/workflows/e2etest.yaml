@@ -181,15 +181,12 @@ jobs:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
 
-          name: List Job Directory Contents
-          run: |
-            aws s3 ls s3://${{ vars.S3_REPORT_BUCKET }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ env.JOB_NAME }}/
-
       - name: Download Allure Report from S3
         env:
           JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
+          JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
         run: |
           mkdir -p ./upload/${{env.JOB_NAME }}
           aws s3api get-object \
@@ -212,6 +209,8 @@ jobs:
   report:
     name: display report
     needs: upload-batch-report
+    env:
+      JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
