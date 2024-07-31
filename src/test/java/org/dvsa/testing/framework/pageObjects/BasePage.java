@@ -644,4 +644,8 @@ public abstract class BasePage extends DriverUtils {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
     }
+
+    public boolean pageContains(String text) {
+        return getDriver().getPageSource().contains(text);
+    }
 }
