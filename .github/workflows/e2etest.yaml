@@ -170,7 +170,7 @@ jobs:
     needs: run-sync-batch
     runs-on: ubuntu-latest
     env:
-      JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
+      FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -186,31 +186,31 @@ jobs:
           JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
-          JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
+          
         run: |
-          mkdir -p ./upload/${{env.JOB_NAME }}
+          mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
             --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{env.JOB_NAME }}/${{ env.REPORT_NAME }}" \
-            "./upload/${{env.JOB_NAME }}/${{ env.REPORT_NAME }}"
+            --key "${{ env.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
-          mkdir -p ./upload/${{env.JOB_NAME }}/allure-results
-          unzip ./upload/${{env.JOB_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.JOB_NAME }}/allure-results
-          ls -R ./upload/${{env.JOB_NAME }}/allure-results
+          mkdir -p ./upload/${{env.FOLDER_NAME }}/allure-results
+          unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
+          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: store allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: ./upload/${{env.JOB_NAME }}/allure-results
+          path: ./upload/${{env.FOLDER_NAME }}/allure-results
 
   report:
     name: display report
     needs: upload-batch-report
     env:
-      JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
+      REPORT_KEY: ${{ needs.create-job-name.outputs.job_name }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -223,7 +223,7 @@ jobs:
 
       - name: console output report
         run: |
-          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
@@ -233,7 +233,7 @@ jobs:
           fail-on-test-failures: true
           fail-on-test-errors: false
           # todo change to right s3 website path
-          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
+          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
 
   job-succeeded:
