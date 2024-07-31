@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class PublicHolidayJourney extends BasePage {
     private World world;
@@ -18,7 +19,12 @@ public class PublicHolidayJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
-        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +2);
+        String formattedDate = date.getFormattedDate(0,0,2, "dd/MM/yyyy");
+        String[] dateParts = formattedDate.split("/");
+        LinkedHashMap<String, String> currentDate = new LinkedHashMap<>();
+        currentDate.put("day", dateParts[0]);
+        currentDate.put("month",dateParts[1]);
+        currentDate.put("year", dateParts[1]);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         UniversalActions.clickSubmit();
         UniversalActions.closeAlert();

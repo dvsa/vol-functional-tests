@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.dates.Dates;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
@@ -19,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PublicHolidays extends BasePage {
     private final World world;
 
+    Dates date = new Dates(org.joda.time.LocalDate::new);
+
     public PublicHolidays(World world) {this.world = world;}
 
     @When("I am on the public holidays page")
@@ -35,7 +38,7 @@ public class PublicHolidays extends BasePage {
     @Then("that holiday should be displayed")
     public void thatHolidayShouldBeDisplayed() {
         String actualDate = getText("tbody>tr:nth-child(1)>td:nth-child(1)", SelectorType.CSS).trim();
-        String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String expectedDate = date.getFormattedDate(0,0,2, "dd/MM/yyyy");
         waitForTitleToBePresent("Public holidays");
         assertEquals(expectedDate, actualDate);
     }
