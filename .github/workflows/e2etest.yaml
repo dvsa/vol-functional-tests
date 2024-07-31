@@ -71,9 +71,10 @@ jobs:
       - name: Set Job Name
         id: set-job-name
         run: |
-            echo "${{ inputs.test }}-${{ github.event.repository.updated_at}}-${{github.run_id }} | sed 's/:/-/g'" >> $GITHUB_OUTPUT
+            buildtime=$(date +"%Y%m%d%H%M%S")
+            echo "${{ inputs.test }}-$buildtime-${{github.run_id }}" >> $GITHUB_OUTPUT
   run-sync-batch:
-    name: run sync test on AWS Batch
+    name: run sync test on AWS Batch  
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
