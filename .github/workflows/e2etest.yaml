@@ -72,7 +72,7 @@ jobs:
       - name: Set Job Name
         id: set-job-name
         run: |
-            echo "JOB_NAME= ${{ inputs.test }}-$(date +'%Y-%m-%d%H%M-')${{env.JOB_NAME }}" >> $GITHUB_ENV
+            echo "JOB_NAME= ${{ inputs.test }}-${{ github.event.repository.updated_at}}-${{env.JOB_NAME }} | sed 's/:/-/g'" >> $GITHUB_ENV
   run-sync-batch:
     name: run sync test on AWS Batch
     needs: create-job-name
