@@ -74,7 +74,7 @@ jobs:
             buildtime=$(date +"%Y%m%d%H%M%S")
             echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
   run-sync-batch:
-    name: run sync test on AWS Batch  
+    name: run sync test on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
@@ -90,7 +90,7 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-          
+
 
       - name: Submit AWS Batch Job
         id: submit-job
@@ -169,6 +169,8 @@ jobs:
     name: Upload Sync Report to GitHub
     needs: run-sync-batch
     runs-on: ubuntu-latest
+    env:
+      JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -202,7 +204,7 @@ jobs:
         with:
           name: allure-results
           path: ./upload/${{env.JOB_NAME }}/allure-results
-    
+
   report:
     name: display report
     needs: upload-batch-report
@@ -219,7 +221,7 @@ jobs:
       - name: console output report
         run: |
           echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
-     
+
       - name: Get Summary
         id: get-summary
         uses: ./.github/actions/surefire-report-summary
@@ -229,8 +231,8 @@ jobs:
           fail-on-test-errors: false
           # todo change to right s3 website path
           report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.JOB_NAME }}/site/allure-maven-plugin/index.html"
-      
-            
+
+
   job-succeeded:
     name: Job Succeeded
     needs: [report]
