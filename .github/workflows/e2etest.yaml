@@ -167,7 +167,7 @@ jobs:
 
   upload-batch-report:
     name: Upload Sync Report to GitHub
-    needs: run-sync-batch
+    needs: [run-sync-batch, create-job-name]
     runs-on: ubuntu-latest
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
@@ -208,7 +208,7 @@ jobs:
 
   report:
     name: display report
-    needs: upload-batch-report
+    needs: [upload-batch-report, create-job-name]
     env:
       REPORT_KEY: ${{ needs.create-job-name.outputs.job_name }}
     runs-on: ubuntu-latest
