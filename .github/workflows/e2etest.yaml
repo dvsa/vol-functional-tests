@@ -55,7 +55,6 @@ permissions:
   checks:   write
 
 env:
-  JOB_NAME: ${{ github.run_id }}
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
@@ -72,13 +71,15 @@ jobs:
       - name: Set Job Name
         id: set-job-name
         run: |
-            echo "JOB_NAME= ${{ inputs.test }}-${{ github.event.repository.updated_at}}-${{env.JOB_NAME }} | sed 's/:/-/g'" >> $GITHUB_ENV
+            echo "${{ inputs.test }}-${{ github.event.repository.updated_at}}-${{env.JOB_NAME }} | sed 's/:/-/g'" >> $GITHUB_OUTPUT
   run-sync-batch:
     name: run sync test on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
+    env:
+      JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
