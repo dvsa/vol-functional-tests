@@ -6,7 +6,11 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class PublicHolidayJourney extends BasePage {
     private World world;
@@ -18,8 +22,20 @@ public class PublicHolidayJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
-        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +2);
-        enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
+
+        LocalDate startDate = LocalDate.now().plusYears(1);
+        LocalDate endDate = LocalDate.now().plusYears(3);
+        long days = startDate.until(endDate).getDays();
+        LocalDate randomDate = startDate.plusDays(new Random().nextInt((int) days + 1));
+        String formattedDate = randomDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        String[] dateParts = formattedDate.split("/");
+        LinkedHashMap<String, String> dateFields = new LinkedHashMap<>();
+        dateFields.put("day", dateParts[0]);
+        dateFields.put("month", dateParts[1]);
+        dateFields.put("year", dateParts[2]);
+
+        enterDateFieldsByPartialId("fields[holidayDate]", dateFields);
         UniversalActions.clickSubmit();
         UniversalActions.closeAlert();
     }

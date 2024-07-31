@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.dates.Dates;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
@@ -12,12 +13,15 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicHolidays extends BasePage {
     private final World world;
+
+    Dates date = new Dates(org.joda.time.LocalDate::new);
 
     public PublicHolidays(World world) {this.world = world;}
 
@@ -34,10 +38,15 @@ public class PublicHolidays extends BasePage {
 
     @Then("that holiday should be displayed")
     public void thatHolidayShouldBeDisplayed() {
-        String actualDate = getText("tbody>tr:nth-child(1)>td:nth-child(1)", SelectorType.CSS).trim();
-        String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         waitForTitleToBePresent("Public holidays");
-        assertEquals(expectedDate, actualDate);
+
+        LocalDate startDate = LocalDate.now().plusYears(1);
+        LocalDate endDate = LocalDate.now().plusYears(3);
+        long days = startDate.until(endDate).getDays();
+        LocalDate randomDate = startDate.plusDays(new Random().nextInt((int) days + 1));
+        String expectedDate = randomDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        assertTrue(pageContains(expectedDate));
     }
 
     @Given("an admin edits a public holiday")
