@@ -51,6 +51,19 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
+       //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
+        if (isElementPresent("sign-in-button", SelectorType.ID))
+        {
+            waitAndClick("sign-in-button", SelectorType.ID);
+            waitAndEnterText("email", SelectorType.ID, signInUsername);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndEnterText("password", SelectorType.ID, signInPassword);
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+            String authCode = getTOTPCode(AUTH_KEY);
+            waitAndEnterText("code", SelectorType.ID, authCode);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+
         if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
@@ -65,16 +78,7 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-        if (isTitlePresent("Create your GOV.UK One Login or sign in", 1)) {
-            waitAndClick("sign-in-button", SelectorType.ID);
-            waitAndEnterText("email", SelectorType.ID, signInUsername);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndEnterText("password", SelectorType.ID, signInPassword);
-            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-            String authCode = getTOTPCode(AUTH_KEY);
-            waitAndEnterText("code", SelectorType.ID, authCode);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
+
         if(isTextPresent("You need to confirm your name and date of birth")){
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -111,9 +115,8 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
-            clickById("chooseWayPyi");
+            clickById("create-account-link");
         }
-        clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, "DVSA.Tester+" + random.nextInt(90000) + "_" + world.DataGenerator.getOperatorUser() + "@dev-dvsacloud.uk");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
@@ -209,21 +212,41 @@ public class GovSignInJourney extends BasePage {
                 answerMonthlyPaymentQuestion();
             } else if (isTitlePresent("When was the other person on your mortgage born??", 2)) {
                 answerOtherPersonQuestion();
-            } else if (isTitlePresent("What is the name of your loan provider?", 2))
+            } else if (isTitlePresent("What is the name of your loan provider?", 2)) {
                 answerBankingQuestion();
+            } else if (isTitlePresent("When did you take out a loan?", 2)) {
+                answerPersonalLoanStart();
+            } else if (isTitlePresent("How much of your loan do you have left to pay back?",2)) {
+                answerPersonalLoanOutstanding();
+            }
             if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)) {
                 break;
             }
         }
     }
 
+
     public void answerPersonalLoan() {
-        if (isTextPresent("UP TO £ 600")) {
+        if (isTextPresent("UP TO £ 6750")) {
             clickById("Q00042");
         } else if (isTextPresent("OVER £550 UP TO £600")) {
             clickById("Q00042-OVER550UPTO600");
         } else {
             clickById("Q00042-NONEOFTHEABOVEDOESNOTAPPLY");
+        }
+        clickById("continue");
+    }
+
+    public void answerPersonalLoanStart() {
+        if (isTextPresent("None of the above / does not apply")) {
+            clickById("Q00036-NONEOFTHEABOVEDOESNOTAPPLY");
+        }
+        clickById("continue");
+    }
+
+    public void answerPersonalLoanOutstanding() {
+        if (isTextPresent("OVER £6,500 UP TO £6,750")) {
+            clickById("Q00039-OVER6500UPTO6750");
         }
         clickById("continue");
     }
