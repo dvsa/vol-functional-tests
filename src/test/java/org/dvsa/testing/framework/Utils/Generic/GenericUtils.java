@@ -380,6 +380,20 @@ public class GenericUtils extends BasePage {
         return (statusCode == 201);
     }
 
+    public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
+        String node = URLEncoder.encode(env + "&&api&&olcs");
+        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
+                        "buildWithParameters?delay=0sec&INCLUDED_TYPES=%s&EXCLUDED_TYPES=%s&ENVIRONMENT_NAME=%s",
+                URLEncoder.encode(includedTypes, "UTF-8"),
+                URLEncoder.encode(excludedTypes, "UTF-8"),
+                URLEncoder.encode(String.valueOf(env), "UTF-8"));
+
+        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        Thread.sleep(4000);
+        return (statusCode == 201);
+        // Cannot use this yet as the sudo commmand on the process queue requires a password
+    }
+
     public static  String readXML() throws IOException {
         String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
         String xmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
