@@ -24,6 +24,7 @@ public class BatchProcess extends BasePage {
     public BatchProcess(World world) {
         this.world = world;
     }
+
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
     @And("the duplicate letter job is run")
@@ -31,11 +32,10 @@ public class BatchProcess extends BasePage {
         assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
     }
 
-//    @And("the last TM letter job is run")
-//    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-//        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
-//    }
-
+    @And("the last TM letter job is run")
+    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
+        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+    }
     @Then("i should receive a duplicate vehicle email")
     public void iShouldReceiveADuplicateVehicleEmail() {
 //        For this scenario to work, we need the test pipeline to have access to the read replica DB, due to the fact
@@ -65,8 +65,8 @@ public class BatchProcess extends BasePage {
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
     }
 
-    @When("i trigger the ebsr process queue")
-    public void iTriggerTheEbsrProcessQueue() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
-    }
+//    @When("i trigger the ebsr process queue")
+//    public void iTriggerTheEbsrProcessQueue() throws IOException, InterruptedException {
+//        assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+//    }
 }
