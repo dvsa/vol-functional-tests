@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.14.0](https://github.com/dvsa/vol-functional-tests/compare/v2.13.0...v2.14.0) (2024-08-01)
+
+
+### Features
+
+* readwritelock ([65589d4](https://github.com/dvsa/vol-functional-tests/commit/65589d4b58d6c9493488d564fa84a97f186f0c1e))
+
 ## [2.13.0](https://github.com/dvsa/vol-functional-tests/compare/v2.12.10...v2.13.0) (2024-08-01)
 
 
