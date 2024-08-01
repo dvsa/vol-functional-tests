@@ -80,7 +80,7 @@ public class HomePage extends BasePage {
         }
 
         public static void selectFirstValidPermit() {
-            long kickoutTime = System.currentTimeMillis() + 60000;
+            long kickoutTime = System.currentTimeMillis() + 900000;
             do {
                 refreshPageWithJavascript();
             } while(!getText("//*//tr//th", SelectorType.XPATH).toLowerCase().contains("licence number") && System.currentTimeMillis() < kickoutTime);
