@@ -7,7 +7,9 @@ public enum BatchCommands {
     EXPIRE_BUS_REGISTRATION("batch:expire-bus-registration"),
     PROCESS_QUEUE("batch:process-queue"),
     BATCH_CLI("Batch_Run_Cli_New"),
-    BATCH_PROCESS_QUEUE("Batch_Process_Queue_New");
+    BATCH_PROCESS_QUEUE("Batch_Process_Queue_New"),
+    EBSR_QUEUE("que_typ_ebsr_pack");
+
 
     private final String batchJobName;
 
