@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.13.0](https://github.com/dvsa/vol-functional-tests/compare/v2.12.10...v2.13.0) (2024-08-01)
+
+
+### Features
+
+* sync blocks for thread safety ([894f312](https://github.com/dvsa/vol-functional-tests/commit/894f3121c5e9a4c0b3e6973422231295a5ddc8da))
+
 ## [2.12.10](https://github.com/dvsa/vol-functional-tests/compare/v2.12.9...v2.12.10) (2024-08-01)
 
 
