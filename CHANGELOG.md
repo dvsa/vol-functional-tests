@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.16.0](https://github.com/dvsa/vol-functional-tests/compare/v2.15.0...v2.16.0) (2024-08-02)
+
+
+### Features
+
+* reduce runners ([b1dcc5d](https://github.com/dvsa/vol-functional-tests/commit/b1dcc5df928ba4738b2b404a63cd9bf4d84c0a22))
+* remove bus ([3ad8033](https://github.com/dvsa/vol-functional-tests/commit/3ad8033086f5375269fcd187c7a1938c316a4f43))
+
 ## [2.15.0](https://github.com/dvsa/vol-functional-tests/compare/v2.14.1...v2.15.0) (2024-08-02)
 
 
