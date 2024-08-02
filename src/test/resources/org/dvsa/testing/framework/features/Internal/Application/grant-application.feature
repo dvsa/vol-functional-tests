@@ -3,6 +3,7 @@
 @grant_under_consideration
 @FullRegression
 @localsmoke
+@containers-smoke
 
 Feature: Grant under consideration application
 
