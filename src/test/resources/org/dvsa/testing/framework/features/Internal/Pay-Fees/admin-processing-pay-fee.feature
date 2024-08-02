@@ -4,6 +4,7 @@
 @smoketest
 @printAndSign
 @FullRegression
+@containers-smoke
 
 Feature: Admin paying fees
 

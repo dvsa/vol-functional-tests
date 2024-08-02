@@ -1,4 +1,4 @@
-@OLCS-7284 @ss_regression @gov-sign-in @smoketest @FullRegression
+@OLCS-7284 @ss_regression @gov-sign-in @smoketest @FullRegression @containers-smoke
 Feature: Operator signs digitally
 
 

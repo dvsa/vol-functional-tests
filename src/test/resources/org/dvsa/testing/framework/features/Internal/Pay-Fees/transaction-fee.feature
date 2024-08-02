@@ -3,6 +3,7 @@
 @FullRegression
 @printAndSign
 @transactionFees
+@containers-smoke
 
 Feature: Transaction Fees Table
 
