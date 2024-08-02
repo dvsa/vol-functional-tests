@@ -1,7 +1,7 @@
 @DVLA @VOL-147 @ss_regression @FullRegression @printAndSign
 Feature: Search and add a vehicle
 
-  @smoketest @dvla-add-vehicle @localsmoke
+  @smoketest @dvla-add-vehicle @localsmoke @containers-smoke
   Scenario Outline: Add a vehicle to a licence
     Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence
