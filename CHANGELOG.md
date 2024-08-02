@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.15.0](https://github.com/dvsa/vol-functional-tests/compare/v2.14.1...v2.15.0) (2024-08-02)
+
+
+### Features
+
+* containers smoke tag ([42c0b5c](https://github.com/dvsa/vol-functional-tests/commit/42c0b5c08846f87d11c5f6baf1498cac224a5c95))
+
 ## [2.14.1](https://github.com/dvsa/vol-functional-tests/compare/v2.14.0...v2.14.1) (2024-08-02)
 
 
