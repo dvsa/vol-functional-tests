@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.17.0](https://github.com/dvsa/vol-functional-tests/compare/v2.16.0...v2.17.0) (2024-08-02)
+
+
+### Features
+
+* runners ([e037588](https://github.com/dvsa/vol-functional-tests/commit/e0375889ad05e30d4146e87df7707be136bd425b))
+
 ## [2.16.0](https://github.com/dvsa/vol-functional-tests/compare/v2.15.0...v2.16.0) (2024-08-02)
 
 
