@@ -59,6 +59,7 @@ public class CreateApplications extends BasePage {
                 .filter(x -> x.getText().contains(app))
                 .findAny().ifPresent(WebElement::click);
 
+        UniversalActions.refreshPageWithJavascript();
         waitForElementToBePresent("//*[contains(text(),'Review and declarations')]");
         waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
