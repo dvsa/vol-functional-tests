@@ -12,11 +12,16 @@ import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.openqa.selenium.WebElement;
 
 
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GrantApplication extends BasePage {
     World world;
     private ValidatableResponse apiResponse;
+
+    ReadWriteLock lock = new ReentrantReadWriteLock();
 
     public GrantApplication(World world) {
         this.world = world;
@@ -24,7 +29,9 @@ public class GrantApplication extends BasePage {
 
     @When("I grant licence")
     public void iGrantLicence() throws HttpException {
+        lock.writeLock().lock();
         apiResponse = world.grantApplication.grantLicence();
+        lock.writeLock().unlock();
     }
 
     @Then("the licence should be granted")
