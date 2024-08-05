@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.17.2](https://github.com/dvsa/vol-functional-tests/compare/v2.17.1...v2.17.2) (2024-08-05)
+
+
+### Miscellaneous Chores
+
+* bump to 2.17.2 ([162a510](https://github.com/dvsa/vol-functional-tests/commit/162a5102ba3c862037719a4a17f10f9b71bc8273))
+
 ## [2.17.1](https://github.com/dvsa/vol-functional-tests/compare/v2.17.0...v2.17.1) (2024-08-02)
 
 
