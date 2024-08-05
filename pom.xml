@@ -259,7 +259,7 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>3</forkCount>
+                    <forkCount>2</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
