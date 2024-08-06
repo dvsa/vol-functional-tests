@@ -132,6 +132,7 @@ public class FeeAndPaymentJourney extends BasePage {
         while (attempt < MAX_RETRIES && !success) {
             try {
                 attempt++;
+                UniversalActions.refreshPageWithJavascript();
                 waitForTextToBePresent("Card Number*");
                 waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecret("cardNumber"));
                 waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryMonth"));
