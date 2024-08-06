@@ -32,7 +32,7 @@ public class ManageApplications extends BasePage {
     String fileName = "src/test/resources/";
     public static String existingLicenceNumber;
 
-    ReadWriteLock lock = new ReentrantReadWriteLock();
+   private static final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     public ManageApplications(World world) {
         this.world = world;
@@ -300,17 +300,24 @@ public class ManageApplications extends BasePage {
 
     @Given("i have a {string} application in progress")
     public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
-        if (operatorType.equals("Goods")) {
-            operatorType = OperatorType.GOODS.name();
-        } else operatorType = OperatorType.PUBLIC.name();
-        world.createApplication.setOperatorType(operatorType);
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourney.createApplication();
-        refreshPageWithJavascript();
-        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
-        world.selfServeNavigation.navigateThroughApplication();
-        if (!world.configuration.env.equals("local")) {
-            world.selfServeUIJourney.signDeclaration();
+        lock.writeLock().lock();
+        try {
+            if (operatorType.equals("Goods")) {
+                operatorType = OperatorType.GOODS.name();
+            } else {
+                operatorType = OperatorType.PUBLIC.name();
+            }
+            world.createApplication.setOperatorType(operatorType);
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.createApplication();
+            refreshPageWithJavascript();
+            world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
+            world.selfServeNavigation.navigateThroughApplication();
+            if (!world.configuration.env.equals("local")) {
+                world.selfServeUIJourney.signDeclaration();
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 
