@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.18.0](https://github.com/dvsa/vol-functional-tests/compare/v2.17.3...v2.18.0) (2024-08-06)
+
+
+### Features
+
+* cpms retry ([fa270d8](https://github.com/dvsa/vol-functional-tests/commit/fa270d8cdd9b7a715a3a46adb9aaeb89fbd4880e))
+
 ## [2.17.3](https://github.com/dvsa/vol-functional-tests/compare/v2.17.2...v2.17.3) (2024-08-06)
 
 
