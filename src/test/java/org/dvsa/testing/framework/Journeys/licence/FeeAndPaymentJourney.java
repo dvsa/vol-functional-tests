@@ -6,6 +6,8 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 
 import java.util.HashMap;
 
@@ -124,22 +126,40 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void customerPaymentModule() {
+        final int MAX_RETRIES = 3;
+        int attempt = 0;
+        boolean success = false;
+        while (attempt < MAX_RETRIES && !success) {
+            try {
+                attempt++;
+                UniversalActions.refreshPageWithJavascript();
+                waitForTextToBePresent("Card Number*");
+                waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecret("cardNumber"));
+                waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryMonth"));
+                waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryYear"));
+                waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
 
-        waitForTextToBePresent("Card Number*");
-        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecret("cardNumber"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryMonth"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryYear"));
-        waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
-        if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
-            click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
-        }
-        click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
-        enterCardHolderDetails();
-        waitForTextToBePresent("Payment Confirmation Page");
-        click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
-        if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
-            waitForTextToBePresent("Online Payments");
-            click("//*[@value='Save']", SelectorType.XPATH);
+                if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
+                    click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
+                }
+                click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
+                enterCardHolderDetails();
+                waitForTextToBePresent("Payment Confirmation Page");
+
+                click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
+
+                if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
+                    waitForTextToBePresent("Online Payments");
+                    click("//*[@value='Save']", SelectorType.XPATH);
+                }
+
+                success = true;
+            } catch (TimeoutException | NoSuchElementException e) {
+                if (attempt >= MAX_RETRIES) {
+                    throw e;
+                }
+                System.out.println("Retry attempt " + attempt + " due to " + e.getMessage());
+            }
         }
     }
 
