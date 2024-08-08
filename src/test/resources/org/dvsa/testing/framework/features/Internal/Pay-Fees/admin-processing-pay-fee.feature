@@ -4,7 +4,7 @@
 @smoketest
 @printAndSign
 @FullRegression
-@containers-smoke
+@ec2-smoke
 
 Feature: Admin paying fees
 

@@ -2,7 +2,7 @@
 @smoketest
 @ss_regression
 @FullRegression
-@containers-smoke
+@ec2-smoke
 Feature: Sign surrender
 
   Background:
