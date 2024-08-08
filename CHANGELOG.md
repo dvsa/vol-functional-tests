@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.20.0](https://github.com/dvsa/vol-functional-tests/compare/v2.19.2...v2.20.0) (2024-08-08)
+
+
+### Features
+
+* memory ([d4cc2ec](https://github.com/dvsa/vol-functional-tests/commit/d4cc2ec3f9ce8533317954c530a68d1fdb52defa))
+
 ## [2.19.2](https://github.com/dvsa/vol-functional-tests/compare/v2.19.1...v2.19.2) (2024-08-08)
 
 
