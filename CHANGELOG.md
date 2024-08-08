@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.21.0](https://github.com/dvsa/vol-functional-tests/compare/v2.20.0...v2.21.0) (2024-08-08)
+
+
+### Features
+
+* tag name change & writelock ([5873a02](https://github.com/dvsa/vol-functional-tests/commit/5873a02bb1267ebcd5bde001abefa3ac78332ac2))
+
 ## [2.20.0](https://github.com/dvsa/vol-functional-tests/compare/v2.19.2...v2.20.0) (2024-08-08)
 
 
