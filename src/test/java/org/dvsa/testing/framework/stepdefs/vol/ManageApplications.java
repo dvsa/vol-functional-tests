@@ -225,17 +225,30 @@ public class ManageApplications extends BasePage {
 
     @Given("i have a {string} {string} {string} application in traffic area")
     public void iHaveAnApplicationInTrafficArea(String operatorType, String licenceType, String Region, DataTable trafficAreaTable) throws HttpException {
-        if (Region.equals("NI".toUpperCase())) {
+        if (Region.equalsIgnoreCase("NI")) {
             Region = "Y";
         } else {
             Region = "N";
         }
         world.createApplication.setNiFlag(Region);
+
         List<String> trafficAreas = trafficAreaTable.asList(String.class);
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+
         for (String ta : trafficAreas) {
-            TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
-            world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
+            try {
+                lock.writeLock().lock();
+                TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
+                world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid TrafficArea: " + ta);
+                throw e;
+            } catch (HttpException e) {
+                System.err.println("HTTP Exception: " + e.getMessage());
+                throw e;
+            } finally {
+                lock.writeLock().unlock();
+            }
         }
     }
 
@@ -300,17 +313,24 @@ public class ManageApplications extends BasePage {
 
     @Given("i have a {string} application in progress")
     public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
-        if (operatorType.equals("Goods")) {
-            operatorType = OperatorType.GOODS.name();
-        } else operatorType = OperatorType.PUBLIC.name();
-        world.createApplication.setOperatorType(operatorType);
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourney.createApplication();
-        refreshPageWithJavascript();
-        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
-        world.selfServeNavigation.navigateThroughApplication();
-        if (!world.configuration.env.equals("local")) {
-            world.selfServeUIJourney.signDeclaration();
+        lock.writeLock().lock();
+        try {
+            if (operatorType.equals("Goods")) {
+                operatorType = OperatorType.GOODS.name();
+            } else {
+                operatorType = OperatorType.PUBLIC.name();
+            }
+            world.createApplication.setOperatorType(operatorType);
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.createApplication();
+            refreshPageWithJavascript();
+            world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
+            world.selfServeNavigation.navigateThroughApplication();
+            if (!world.configuration.env.equals("local")) {
+                world.selfServeUIJourney.signDeclaration();
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 

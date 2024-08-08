@@ -1,7 +1,7 @@
 @DVLA @VOL-147 @ss_regression @FullRegression @printAndSign
 Feature: Search and add a vehicle
 
-  @smoketest @dvla-add-vehicle @localsmoke @containers-smoke
+  @smoketest @dvla-add-vehicle @localsmoke @ec2-smoke
   Scenario Outline: Add a vehicle to a licence
     Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence
@@ -30,7 +30,7 @@ Feature: Search and add a vehicle
     And I add a vehicle belonging to another licence
     Then I should be prompted that vehicle belongs to another licence
 
-  @dvla-remove-vehicle @localsmoke @containers-smoke
+  @dvla-remove-vehicle @localsmoke @ec2-smoke
   Scenario: Remove vehicle on licence
     Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence
@@ -38,7 +38,7 @@ Feature: Search and add a vehicle
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
-  @dvla-reprint @localsmoke @containers-smoke
+  @dvla-reprint @localsmoke @ec2-smoke
   Scenario: Reprint vehicle disc on licence
     Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     And discs have been added to my licence
