@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import apiCalls.Utils.generic.SecretsManager;
+import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -126,9 +126,9 @@ public class FeeAndPaymentJourney extends BasePage {
     public void customerPaymentModule() {
 
         waitForTextToBePresent("Card Number*");
-        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecret("cardNumber"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryMonth"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, SecretsManager.getSecret("cardExpiryYear"));
+        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardNumber"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardExpiryMonth"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, SecretsManager.getSecretValue("cardExpiryYear"));
         waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
         if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
