@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.23.0](https://github.com/dvsa/vol-functional-tests/compare/v2.22.0...v2.23.0) (2024-08-09)
+
+
+### Features
+
+* tag removal ([f07792e](https://github.com/dvsa/vol-functional-tests/commit/f07792e7933c60ccc6ee3a816fc31f834a152cf5))
+
 ## [2.22.0](https://github.com/dvsa/vol-functional-tests/compare/v2.21.0...v2.22.0) (2024-08-09)
 
 
