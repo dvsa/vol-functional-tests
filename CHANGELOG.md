@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.24.0](https://github.com/dvsa/vol-functional-tests/compare/v2.23.0...v2.24.0) (2024-08-09)
+
+
+### Features
+
+* reduce concurrency ([03dde22](https://github.com/dvsa/vol-functional-tests/commit/03dde22370ecb33ecc0baf8698c16cbf3135785e))
+
 ## [2.23.0](https://github.com/dvsa/vol-functional-tests/compare/v2.22.0...v2.23.0) (2024-08-09)
 
 
