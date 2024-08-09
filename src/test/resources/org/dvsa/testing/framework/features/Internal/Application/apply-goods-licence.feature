@@ -5,6 +5,7 @@
 @CPMS_tests
 @FullRegression
 @APIsmoke
+@ec2-smoke
 
 Feature: Apply for a goods licence
 

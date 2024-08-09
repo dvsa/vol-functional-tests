@@ -1,6 +1,7 @@
 @int_regression
 @transportCommissionerSubmission
 @FullRegression
+@ec2-smoke
 Feature: Admin wishes to add and delete a Presiding tc
 
   Background:
