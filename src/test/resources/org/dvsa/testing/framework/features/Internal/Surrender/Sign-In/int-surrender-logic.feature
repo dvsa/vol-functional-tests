@@ -9,7 +9,7 @@ Feature: Logic for Surrender menu item
   Background:
     Given i have a valid "goods" "standard_national" licence
 
-
+  @ec2-smoke
   Scenario: Surrender Licence
     And my application to surrender is under consideration
     When the caseworker approves the surrender

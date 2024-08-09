@@ -20,18 +20,18 @@ public class APIJourney {
         this.world = world;
     }
 
-    public void createAdminUser() throws MissingRequiredArgument, HttpException {
+    public synchronized void createAdminUser() throws MissingRequiredArgument, HttpException {
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
-    public void nIAddressBuilder() {
+    public synchronized void nIAddressBuilder() {
         world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
         world.createApplication.setTrafficArea(TrafficArea.NORTHERN_IRELAND);
         world.createApplication.setCountryCode("NI");
         world.createApplication.setNiFlag("Y");
     }
 
-    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws HttpException {
+    public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws HttpException {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
@@ -43,7 +43,7 @@ public class APIJourney {
         world.updateLicence.getLicenceTrafficArea();
     }
 
-    public void createApplication() throws HttpException {
+    public synchronized void createApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -68,12 +68,12 @@ public class APIJourney {
         world.createApplication.applicationReviewAndDeclare();
     }
 
-    public void submitApplication() throws HttpException {
+    public synchronized void submitApplication() throws HttpException {
         world.createApplication.submitApplication();
         world.applicationDetails.getApplicationLicenceDetails();
     }
 
-    public void createSpecialRestrictedApplication() throws HttpException {
+    public synchronized void createSpecialRestrictedApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -82,12 +82,12 @@ public class APIJourney {
         world.createApplication.submitTaxiPhv();
     }
 
-    public void createSpecialRestrictedLicence() throws HttpException {
+    public synchronized void createSpecialRestrictedLicence() throws HttpException {
         world.APIJourney.createSpecialRestrictedApplication();
         world.APIJourney.submitApplication();
     }
 
-    public void createPartialApplication() throws HttpException {
+    public synchronized void createPartialApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -98,14 +98,14 @@ public class APIJourney {
         world.createApplication.addFinancialEvidence();
     }
 
-    public void registerAndGetUserDetails(String userType) throws HttpException {
+    public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
     }
 
-    public void grantLicenceAndPayFees() throws HttpException {
+    public synchronized void grantLicenceAndPayFees() throws HttpException {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {

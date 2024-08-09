@@ -12,7 +12,7 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     When I search for a lorry and bus operator by "address","","","",""
     Then search results page addresses should only display address belonging to our post code
 
-  @smoketest @ss_regression @ec2-smoke
+  @smoketest @ss_regression
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","","",""
     Then search results page should display operator names containing our "businessName"

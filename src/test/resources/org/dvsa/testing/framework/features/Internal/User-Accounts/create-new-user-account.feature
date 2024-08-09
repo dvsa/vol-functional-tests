@@ -2,6 +2,7 @@
 @add-user
 @FullRegression
 @printAndSign
+@ec2-smoke
 
 Feature: Create a new Internal User
 
