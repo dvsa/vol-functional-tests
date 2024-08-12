@@ -36,8 +36,10 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 `JDK not installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/lib/security/cacerts`
 
 ## Refactoring todos
-## Java 17
-- Scope out upgrading to Java 17
+
+- Upgrade to Java 17
+- Refactor Java 11 Methods to Java 17 
+- Rewrite the tests for Playwright 
 
 ##EUPA refactor
 - Add documentation on the changes and how to modify things
