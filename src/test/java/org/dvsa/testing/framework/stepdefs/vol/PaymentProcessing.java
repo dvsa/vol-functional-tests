@@ -96,6 +96,6 @@ public class PaymentProcessing extends BasePage {
         assertNotNull(getText("//li[8]/dd", SelectorType.XPATH));
         assertNotNull(getText("//li[9]/dd", SelectorType.XPATH));
         assertNotNull(getText("//li[10]/dd", SelectorType.XPATH));
-        assertEquals("COMPLETE", getText("//li[11]/dd", SelectorType.XPATH));
+        assertEquals("Complete", getText("//li[11]/dd", SelectorType.XPATH));
     }
 }
