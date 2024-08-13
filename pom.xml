@@ -35,7 +35,6 @@
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
         <jvmMemory>9000</jvmMemory>
@@ -61,21 +60,6 @@
     </dependencyManagement>
 
     <repositories>
-        <repository>
-            <id>maven-releases</id>
-            <url>${nexus.releases}</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-
-        </repository>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
         <repository>
             <id>dvsa-github-packages</id>
             <url>https://maven.pkg.github.com/dvsa/*</url>
@@ -293,8 +277,9 @@
     <!--  Nexus Configuration  -->
     <distributionManagement>
         <repository>
-            <id>maven-releases</id>
-            <url>${nexus.releases}</url>
+            <id>github</id>
+            <name>GitHub dvsa Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/dvsa/vol-functional-tests</url>
         </repository>
     </distributionManagement>
 </project>
