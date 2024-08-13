@@ -15,7 +15,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @stored_cards @smoketest @printAndSign @localsmoke
+  @stored_cards @ec2_smoke @printAndSign @localsmoke
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
@@ -30,7 +30,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-   @NI_application @smoketest @ec2-smoke
+   @NI_application @ec2_smoke @smoke
    Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

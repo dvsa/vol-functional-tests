@@ -1,10 +1,10 @@
 @Admin-Payment-Processing
 @int_regression
 @CPMS_tests
-@smoketest
+@ec2_smoke
 @printAndSign
 @FullRegression
-@ec2-smoke
+@smoke
 
 Feature: Admin paying fees
 

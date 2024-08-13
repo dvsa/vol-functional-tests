@@ -5,7 +5,7 @@ Feature: Unlicensed operator
     Given i have an internal admin user
     And i have logged in to internal as "admin"
 
-  @unlicensed_operator_add @smoketest @localsmoke @ec2-smoke
+  @unlicensed_operator_add @ec2_smoke @localsmoke @smoke
   Scenario: Create unlicensed operator
     When i create an unlicensed operator
     Then the operator should be created

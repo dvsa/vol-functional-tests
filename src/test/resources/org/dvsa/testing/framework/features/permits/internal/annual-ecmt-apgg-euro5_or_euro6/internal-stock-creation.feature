@@ -1,4 +1,4 @@
-@smoketest @eupa_regression @localsmoke
+@ec2_smoke @eupa_regression @localsmoke
 Feature: Annual ECMT APGG Euro 5 or Euro 6 stock creation
 
   Background:

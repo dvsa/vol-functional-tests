@@ -1,9 +1,9 @@
 @int_regression
-@smoketest
+@ec2_smoke
 @FullRegression
 @printAndSign
 @transactionFees
-@ec2-smoke
+@smoke
 
 Feature: Transaction Fees Table
 
