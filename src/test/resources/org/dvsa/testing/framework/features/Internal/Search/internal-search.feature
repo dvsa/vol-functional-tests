@@ -3,14 +3,14 @@
 @printAndSign
 Feature: Internal Search
 
-  @smoketest @searchLicence @int_regression
+  @ec2_smoke @searchLicence @int_regression
   Scenario: Search a Licence on Internal
     Given I have a "goods" "restricted" application
     And I log in as an internal user with admin privileges
     When i search for and click on my licence "OB1134621"
     Then the "Licence details" page should display
 
-  @smoketest @searchApplication @int_regression
+  @ec2_smoke @searchApplication @int_regression
   Scenario: Search an Application on Internal
     Given I have a "goods" "restricted" application
     When i search for and click on my application

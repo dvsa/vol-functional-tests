@@ -3,7 +3,7 @@
 @grant_under_consideration
 @FullRegression
 @localsmoke
-@ec2-smoke
+@smoke
 
 Feature: Grant under consideration application
 

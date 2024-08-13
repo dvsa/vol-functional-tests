@@ -11,7 +11,7 @@ Feature: Create an Account
   @FullRegression
   @printAndSign
   @localsmoke
-  @ec2-smoke
+  @smoke
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
     Given I am on the registration page
     And an Operator with no licence
