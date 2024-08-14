@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GoodVarIncreaseVehicle extends BasePage {
     private final World world;
@@ -57,7 +58,7 @@ public class GoodVarIncreaseVehicle extends BasePage {
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH,"All");
         waitForTextToBePresent("Grant Fee for application");
-        assertEquals(getText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]",SelectorType.XPATH),"PAID");
+        assertTrue(getElementValueByText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH).equalsIgnoreCase("PAID"));
     }
 
     @And("a selfserve user creates a variation and adds an operating centre")

@@ -118,7 +118,7 @@ public class SurrenderJourney extends BasePage {
         world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
         checkSignInConfirmation();
         refreshPageWithJavascript();
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        assertTrue(getElementValueByText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH).equalsIgnoreCase("SURRENDER UNDER CONSIDERATION"));
             axeScanner.scan(true);
         }
 
