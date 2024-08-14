@@ -241,6 +241,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <argLine>-Xmx${jvmMemory}m</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>2</forkCount>
