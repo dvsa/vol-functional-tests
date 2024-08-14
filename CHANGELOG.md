@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.28.0](https://github.com/dvsa/vol-functional-tests/compare/v2.27.0...v2.28.0) (2024-08-14)
+
+
+### Features
+
+* forks ([c72d14c](https://github.com/dvsa/vol-functional-tests/commit/c72d14c7659f5f0c3fb5428d24a609dfd824c073))
+
 ## [2.27.0](https://github.com/dvsa/vol-functional-tests/compare/v2.26.1...v2.27.0) (2024-08-14)
 
 
