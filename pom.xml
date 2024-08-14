@@ -37,7 +37,7 @@
         <zt-zip.version>1.15</zt-zip.version>
         <java.version>11</java.version>
 
-        <jvmMemory>12000</jvmMemory>
+        <jvmMemory>8250</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -244,12 +244,12 @@
                     <argLine>-Xmx${jvmMemory}m</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>4</forkCount>
+                    <forkCount>2</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>4</threadCount>
+                    <threadCount>2</threadCount>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
