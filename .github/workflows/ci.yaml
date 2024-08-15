@@ -40,21 +40,10 @@ jobs:
       - security
       - get-version
 
-  get-push:
-    name: Determine if we should push the container
-    runs-on: ubuntu-latest
-    outputs:
-      push: ${{ steps.get-label.outputs.push }}
-    steps:
-     - name: get-label
-       run: |
-        echo "push=${{ contains(github.pull_request.labels.*.name, 'test-branch')}}" >> $GITHUB_OUTPUT 
-
   docker:
     name: Docker
     needs: 
       - build-maven 
-      - get-push
       - get-version
     strategy:
       fail-fast: false
@@ -62,7 +51,7 @@ jobs:
     secrets: inherit
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ needs.get-push.outputs.push }}
+      push: ${{ contains(github.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
       contents: read
       id-token: write
