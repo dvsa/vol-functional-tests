@@ -48,7 +48,7 @@ jobs:
     steps:
      - name: get-label
        run: |
-        echo "push="${{ contains(github.pull_request.labels.*.name, 'test-branch')}} >> $GITHUB_OUTPUT 
+        echo "push=${{ contains(github.pull_request.labels.*.name, 'test-branch')}}" >> $GITHUB_OUTPUT 
 
   docker:
     name: Docker
