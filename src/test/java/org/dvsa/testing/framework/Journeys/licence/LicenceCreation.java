@@ -18,7 +18,7 @@ public class LicenceCreation {
         this.world = world;
     }
 
-    public void createApplication(String operatorType, String licenceType) throws HttpException {
+    public synchronized void createApplication(String operatorType, String licenceType) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setOperatorType(operatorType);
@@ -33,7 +33,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
+    public synchronized void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         lock.lock();
         try {
             if (operatorType.equals("public") && licenceType.equals("restricted") && Integer.parseInt(vehicles) > 2) {
@@ -51,7 +51,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
+    public synchronized void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setTrafficArea(trafficArea);
@@ -62,7 +62,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createSubmittedApplication(String operatorType, String licenceType) throws HttpException {
+    public synchronized void createSubmittedApplication(String operatorType, String licenceType) throws HttpException {
         lock.lock();
         try {
             createApplication(operatorType, licenceType);
@@ -72,7 +72,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
+    public synchronized void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         lock.lock();
         try {
             createApplicationWithVehicles(operatorType, licenceType, vehicles);
@@ -82,7 +82,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLicence(String operatorType, String licenceType) throws HttpException {
+    public synchronized void createLicence(String operatorType, String licenceType) throws HttpException {
         lock.lock();
         try {
             createSubmittedApplication(operatorType, licenceType);
@@ -92,7 +92,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
+    public synchronized void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         lock.lock();
         try {
             createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
@@ -102,7 +102,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
+    public synchronized void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setTrafficArea(trafficArea);
@@ -113,7 +113,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createNILicence(String operatorType, String licenceType) throws HttpException {
+    public synchronized void createNILicence(String operatorType, String licenceType) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setNiFlag("Y");
@@ -123,7 +123,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLGVOnlyApplication(String NIFlag) throws HttpException {
+    public synchronized void createLGVOnlyApplication(String NIFlag) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
@@ -137,7 +137,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createSubmittedLGVOnlyApplication(String NIFlag) throws HttpException {
+    public synchronized void createSubmittedLGVOnlyApplication(String NIFlag) throws HttpException {
         lock.lock();
         try {
             createLGVOnlyApplication(NIFlag);
@@ -147,7 +147,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLGVOnlyLicence(String NIFlag) throws HttpException {
+    public synchronized void createLGVOnlyLicence(String NIFlag) throws HttpException {
         lock.lock();
         try {
             createSubmittedLGVOnlyApplication(NIFlag);
@@ -157,7 +157,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) throws HttpException {
+    public synchronized void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) throws HttpException {
         lock.lock();
         try {
             world.createApplication.setTrafficArea(trafficArea);
@@ -169,56 +169,26 @@ public class LicenceCreation {
     }
 
     public boolean isGoodsLicence() {
-        lock.lock();
-        try {
-            return world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString());
-        } finally {
-            lock.unlock();
-        }
+        return world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString());
     }
 
     public boolean isPSVLicence() {
-        lock.lock();
-        try {
-            return world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString());
-        } finally {
-            lock.unlock();
-        }
+        return world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString());
     }
 
     public boolean isAGoodsInternationalLicence() {
-        lock.lock();
-        try {
-            return isGoodsLicence() && isAnInternationalLicence();
-        } finally {
-            lock.unlock();
-        }
+        return isGoodsLicence() && isAnInternationalLicence();
     }
 
     public boolean isAnInternationalLicence() {
-        lock.lock();
-        try {
-            return world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
-        } finally {
-            lock.unlock();
-        }
+        return world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
     }
 
     public boolean isARestrictedLicence() {
-        lock.lock();
-        try {
-            return world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString());
-        } finally {
-            lock.unlock();
-        }
-    }
+        return world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString());
+   }
 
     public boolean isLGVOnlyLicence() {
-        lock.lock();
-        try {
-            return world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString());
-        } finally {
-            lock.unlock();
-        }
+        return world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString());
     }
 }
