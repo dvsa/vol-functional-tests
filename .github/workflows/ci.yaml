@@ -44,14 +44,7 @@ jobs:
     name: Determine if we should push the container
     runs-on: ubuntu-latest
     outputs:
-      push: ${{ steps.vft-version.outputs.version }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - id: vft-version
-        uses: ./.github/actions/get-app-version
+      push: contains(github.pull_request.labels.*.name, 'test-branch')
 
   docker:
     name: Docker
@@ -62,7 +55,7 @@ jobs:
     secrets: inherit
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ needs.get-push.outputs.vft }}
+      push: ${{ needs.get-push.outputs.push }}
     permissions:
       contents: read
       id-token: write
