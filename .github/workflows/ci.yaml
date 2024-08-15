@@ -44,7 +44,11 @@ jobs:
     name: Determine if we should push the container
     runs-on: ubuntu-latest
     outputs:
-      push: contains(github.pull_request.labels.*.name, 'test-branch')
+      push: ${{ steps.get-label.outputs.push }}
+    steps:
+     - name: get-label
+       run: |
+        echo "push=" contains(github.pull_request.labels.*.name, 'test-branch') >> $GITHUB_OUTPUT 
 
   docker:
     name: Docker
