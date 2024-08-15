@@ -52,7 +52,10 @@ jobs:
 
   docker:
     name: Docker
-    needs: build-maven 
+    needs: 
+      - build-maven 
+      - get-push
+      - get-version
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
