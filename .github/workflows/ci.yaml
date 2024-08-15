@@ -51,7 +51,7 @@ jobs:
     secrets: inherit
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ contains(github.pull_request.labels.*.name, 'test-branch') || false}}
+      push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
       contents: read
       id-token: write
