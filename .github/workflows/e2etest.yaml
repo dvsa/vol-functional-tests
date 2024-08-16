@@ -73,6 +73,7 @@ jobs:
         run: |
             buildtime=$(date +"%Y%m%d%H%M%S")
             echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
+
   run-sync-batch:
     name: run sync test on AWS Batch
     needs: create-job-name
@@ -90,6 +91,7 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
+          role-duration-seconds: 7200
 
 
       - name: Submit AWS Batch Job
