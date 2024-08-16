@@ -38,6 +38,8 @@ public class InternalUIJourney extends BasePage {
         enterText(addressSelector, SelectorType.ID, postcode);
         waitAndClick("address[searchPostcode][search]", SelectorType.ID);
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
+        UniversalActions.refreshPageWithJavascript();
+        waitForElementToBePresent("address[searchPostcode][addresses]");
         waitAndSelectByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
     }
 
