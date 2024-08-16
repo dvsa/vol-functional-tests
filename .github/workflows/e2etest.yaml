@@ -6,9 +6,6 @@ on:
       test:
         required: true
         type: choice
-        options:
-          - sync
-          - async
       platform_env:
         type: string
         required: true
@@ -29,7 +26,6 @@ on:
       test:
         required: true
         type: string
-        default: 'sync'
       platform_env:
         type: string
         required: true
@@ -73,8 +69,9 @@ jobs:
         run: |
             buildtime=$(date +"%Y%m%d%H%M%S")
             echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
-  run-sync-batch:
-    name: run sync test on AWS Batch
+
+  run-batch:
+    name: run test on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
@@ -90,6 +87,7 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
+          role-duration-seconds: 7200
 
 
       - name: Submit AWS Batch Job
@@ -166,8 +164,8 @@ jobs:
           fi
 
   upload-batch-report:
-    name: Upload Sync Report to GitHub
-    needs: [run-sync-batch, create-job-name]
+    name: Upload Report to GitHub
+    needs: [run-batch, create-job-name]
     runs-on: ubuntu-latest
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
@@ -183,7 +181,7 @@ jobs:
 
       - name: Download Allure Report from S3
         env:
-          JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
+          JOB_ID: ${{ needs.run-batch.outputs.job_id }}
           BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
           FOLDER_NAME: ${{env.FOLDER_NAME }}
