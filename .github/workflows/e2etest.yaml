@@ -1,13 +1,11 @@
-name: End to end test
+name: End to End Test
 
 on:
   workflow_dispatch:
     inputs:
-      test:
-        type: choice
-        options:
-          - sync
-          - async
+      test_type:
+        required: false
+        type: string
       platform_env:
         type: string
         required: true
@@ -25,7 +23,8 @@ on:
         required: false
   workflow_call:
     inputs:
-      test:
+      test_type:
+        required: false
         type: string
         default: 'sync'
       platform_env:
@@ -47,17 +46,25 @@ on:
       maven_options:
         type: string
         required: false
+    secrets:
+      aws_oidc_role:
+        required: true
+      tf_aws_region:
+        required: true
+      s3_report_bucket:
+        required: true
+      s3_report_bucket_key:
+        required: true
+
 permissions:
   contents: write
   id-token: write
-  checks:   write
+  checks: write
 
 env:
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
-  AWS_REGION: ${{ vars.TF_AWS_REGION }}
 
 jobs:
   create-job-name:
@@ -69,11 +76,11 @@ jobs:
       - name: Set Job Name
         id: set-job-name
         run: |
-            buildtime=$(date +"%Y%m%d%H%M%S")
-            echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
+          buildtime=$(date +"%Y%m%d%H%M%S")
+          echo "job_name=${{ github.event.inputs.test_type || inputs.test_type }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
-  run-sync-batch:
-    name: run sync test on AWS Batch
+  run-tests:
+    name: Run Tests on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
@@ -87,10 +94,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-          role-duration-seconds: 7200
-
+          role-to-assume: ${{ secrets.aws_oidc_role }}
+          aws-region: ${{ secrets.tf_aws_region }}
 
       - name: Submit AWS Batch Job
         id: submit-job
@@ -108,23 +113,23 @@ jobs:
               "environment": [
                 {
                   "name": "platformEnv",
-                  "value": "${{ inputs.platform_env }}"
+                  "value": "${{ github.event.inputs.platform_env || inputs.platform_env }}"
                 },
                 {
                   "name": "browserName",
-                  "value": "${{ inputs.browser_name }}"
+                  "value": "${{ github.event.inputs.browser_name || inputs.browser_name }}"
                 },
                 {
                   "name": "browserVersion",
-                  "value": "${{ inputs.browser_version }}"
+                  "value": "${{ github.event.inputs.browser_version || inputs.browser_version }}"
                 },
                 {
                   "name": "exclude_tags",
-                  "value": "${{ inputs.exclude_tags }}"
+                  "value": "${{ github.event.inputs.exclude_tags || inputs.exclude_tags }}"
                 },
                 {
                   "name": "cucumberTags",
-                  "value": "${{ inputs.cucumber_tags }}"
+                  "value": "${{ github.event.inputs.cucumber_tags || inputs.cucumber_tags }}"
                 },
                 {
                   "name": "buildId",
@@ -132,7 +137,7 @@ jobs:
                 },
                 {
                   "name": "mavenOptions",
-                  "value": "${{ inputs.maven_options }}"
+                  "value": "${{ github.event.inputs.maven_options || inputs.maven_options }}"
                 }
               ]
             }')
@@ -178,15 +183,15 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.aws_oidc_role }}
+          aws-region: ${{ secrets.tf_aws_region }}
 
       - name: Download Allure Report from S3
         env:
-          JOB_ID: ${{ needs.run-sync-batch.outputs.job_id }}
-          BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
-          BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
-          FOLDER_NAME: ${{env.FOLDER_NAME }}
+          JOB_ID: ${{ needs.run-tests.outputs.job_id }}
+          BUCKET_NAME: ${{ secrets.s3_report_bucket }}
+          BUCKET_KEY: ${{ secrets.s3_report_bucket_key }}
+          FOLDER_NAME: ${{ env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
@@ -200,15 +205,15 @@ jobs:
           unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
           ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
-      - name: store allure results
+      - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: ./upload/${{env.FOLDER_NAME }}/allure-results
 
   report:
-    name: display report
-    needs: [upload-batch-report, create-job-name]
+    name: Display Report
+    needs: upload-report
     env:
       REPORT_KEY: ${{ needs.create-job-name.outputs.job_name }}
     runs-on: ubuntu-latest
@@ -221,9 +226,9 @@ jobs:
         with:
           name: allure-results
 
-      - name: console output report
+      - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET  }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ secrets.s3_report_bucket }}/${{ secrets.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
@@ -232,13 +237,11 @@ jobs:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: true
           fail-on-test-errors: true
-          # todo change to right s3 website path
-          report-path: "https://${{ vars.S3_REPORT_BUCKET  }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
-
+          report-path: "https://${{ secrets.s3_report_bucket }}.s3.amazonaws.com/${{ secrets.s3_report_bucket_key }}/${{env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
     name: Job Succeeded
-    needs: [report]
+    needs: report
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
