@@ -195,7 +195,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
         enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 1000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 6000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     }
 
