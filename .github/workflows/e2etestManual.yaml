@@ -1,0 +1,58 @@
+name: End to End Test Manual Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform_env:
+        type: string
+        required: true
+      browser_name:
+        type: string
+        required: true
+      browser_version:
+        type: string
+        required: true
+      cucumber_tags:
+        type: string
+        required: true
+      exclude_tags:
+        type: string
+        required: false
+      maven_options:
+        type: string
+        required: false
+      aws_region:
+        type: string
+        required: true
+      aws_oidc_role:
+        type: string
+        required: true
+      s3_report_bucket:
+        type: string
+        required: true
+      s3_report_bucket_key:
+        type: string
+        required: true
+      job_definition:
+        type: string
+        required: true
+      job_queue:
+        type: string
+        required: true
+
+jobs:
+  call-reusable-workflow:
+    uses: vol-functional-tests/.github/workflows/e2etests.yml@main
+    with:
+      platform_env: ${{ inputs.platform_env }}
+      browser_name: ${{ inputs.browser_name }}
+      browser_version: ${{ inputs.browser_version }}
+      cucumber_tags: ${{ inputs.cucumber_tags }}
+      exclude_tags: ${{ inputs.exclude_tags }}
+      maven_options: ${{ inputs.maven_options }}
+      aws_region: ${{ inputs.aws_region }}
+      aws_oidc_role: ${{ inputs.aws_oidc_role }}
+      s3_report_bucket: ${{ inputs.s3_report_bucket }}
+      s3_report_bucket_key: ${{ inputs.s3_report_bucket_key }}
+      job_definition: ${{ inputs.job_definition }}
+      job_queue: ${{ inputs.job_queue }}
