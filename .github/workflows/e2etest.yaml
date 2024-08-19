@@ -21,9 +21,7 @@ on:
       maven_options:
         type: string
         required: false
-      aws_region:
-        type: string
-        required: true
+
 
 
   workflow_call:
