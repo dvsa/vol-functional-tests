@@ -42,12 +42,12 @@ jobs:
       - name: Call Reusable Workflow
         uses: vol-functional-tests/.github/workflows/e2etests.yml@main
         with:
-          platform_env: ${{ github.event.inputs.platform_env }}
-          browser_name: ${{ github.event.inputs.browser_name }}
-          browser_version: ${{ github.event.inputs.browser_version }}
-          cucumber_tags: ${{ github.event.inputs.cucumber_tags }}
-          exclude_tags: ${{ github.event.inputs.exclude_tags }}
-          maven_options: ${{ github.event.inputs.maven_options }}
+          platform_env: ${{ inputs.platform_env }}
+          browser_name: ${{ inputs.browser_name }}
+          browser_version: ${{ inputs.browser_version }}
+          cucumber_tags: ${{ inputs.cucumber_tags }}
+          exclude_tags: ${{ inputs.exclude_tags }}
+          maven_options: ${{ inputs.maven_options }}
           aws_region: ${{ steps.parse-aws-settings.outputs.aws_region }}
           aws_oidc_role: ${{ steps.parse-aws-settings.outputs.aws_oidc_role }}
           s3_report_bucket: ${{ steps.parse-aws-settings.outputs.s3_report_bucket }}
