@@ -1,4 +1,4 @@
-name: End to End test
+name: End to End Test
 
 on:
   workflow_dispatch:
@@ -41,12 +41,15 @@ on:
         required: true
       browser_name:
         type: string
+        default: 'edge'
         required: true
       browser_version:
         type: string
+        default: '125'
         required: true
       cucumber_tags:
         type: string
+        default: '@smoke'
         required: true
       exclude_tags:
         type: string
