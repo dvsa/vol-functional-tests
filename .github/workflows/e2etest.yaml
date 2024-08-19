@@ -33,6 +33,12 @@ on:
       s3_report_bucket_key:
         type: string
         required: true
+      job_definition:
+        type: string
+        required: true
+      job_queue:
+        type: string
+        required: true
 
   workflow_call:
     inputs:
@@ -57,12 +63,6 @@ on:
       maven_options:
         type: string
         required: false
-      job_queue:
-        type: string
-        required: true
-      job_definition:
-        type: string
-        required: true
       aws_region:
         type: string
         required: true
@@ -73,6 +73,12 @@ on:
         type: string
         required: true
       s3_report_bucket_key:
+        type: string
+        required: true
+      job_definition:
+        type: string
+        required: true
+      job_queue:
         type: string
         required: true
 
