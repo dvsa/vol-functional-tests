@@ -24,21 +24,7 @@ on:
       aws_region:
         type: string
         required: true
-      aws_oidc_role:
-        type: string
-        required: true
-      s3_report_bucket:
-        type: string
-        required: true
-      s3_report_bucket_key:
-        type: string
-        required: true
-      job_definition:
-        type: string
-        required: true
-      job_queue:
-        type: string
-        required: true
+
 
   workflow_call:
     inputs:
