@@ -21,12 +21,6 @@ on:
       maven_options:
         type: string
         required: false
-      job_queue:
-          type: string
-          required: true
-      job_definition:
-          type: string
-          required: true
       aws_region:
         type: string
         required: true
@@ -39,10 +33,6 @@ on:
       s3_report_bucket_key:
         type: string
         required: true
-      report_name:
-      type: string
-      default: 'allure.zip'
-
 
   workflow_call:
     inputs:
@@ -85,9 +75,6 @@ on:
       s3_report_bucket_key:
         type: string
         required: true
-      report_name:
-          type: string
-          default: 'allure.zip'
 
 permissions:
   contents: write
