@@ -94,19 +94,20 @@ jobs:
       aws_oidc_role: ${{ steps.parse-aws-settings.outputs.aws_oidc_role }}
       s3_report_bucket: ${{ steps.parse-s3-bucket.outputs.s3_report_bucket }}
       s3_report_bucket_key: ${{ steps.parse-s3-bucket.outputs.s3_report_bucket_key }}
-      steps:
-        - name: Parse AWS Settings
-          id: parse-aws-settings
-          run: |
-            IFS=',' read -r region role <<< "${{ inputs.aws_settings }}"
-            echo "::set-output name=aws_region::$region"
-            echo "::set-output name=aws_oidc_role::$role"
-        - name: Parse S3 Bucket Info
-          id: parse-s3-bucket
-          run: |
-            IFS=',' read -r bucket key_prefix <<< "${{ inputs.s3_bucket }}"
-            echo "::set-output name=s3_report_bucket::$bucket"
-            echo "::set-output name=s3_report_bucket_key::$key_prefix"
+    steps:
+      - name: Parse AWS Settings
+        id: parse-aws-settings
+        run: |
+          IFS=',' read -r region role <<< "${{ inputs.aws_settings }}"
+          echo "::set-output name=aws_region::$region"
+          echo "::set-output name=aws_oidc_role::$role"
+
+      - name: Parse S3 Bucket Info
+        id: parse-s3-bucket
+        run: |
+          IFS=',' read -r bucket key_prefix <<< "${{ inputs.s3_bucket }}"
+          echo "::set-output name=s3_report_bucket::$bucket"
+          echo "::set-output name=s3_report_bucket_key::$key_prefix"
 
 
   create-job-name:
