@@ -10,11 +10,16 @@ import apiCalls.enums.*;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class APIJourney {
 
     private final World world;
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
+
+    private static final Lock lock = new ReentrantLock();
 
     public APIJourney(World world) throws MissingRequiredArgument {
         this.world = world;
@@ -69,10 +74,14 @@ public class APIJourney {
     }
 
     public synchronized void submitApplication() throws HttpException {
-        world.createApplication.submitApplication();
-        world.applicationDetails.getApplicationLicenceDetails();
+        lock.lock();
+        try {
+            world.createApplication.submitApplication();
+            world.applicationDetails.getApplicationLicenceDetails();
+        } finally {
+            lock.unlock();
+        }
     }
-
     public synchronized void createSpecialRestrictedApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
