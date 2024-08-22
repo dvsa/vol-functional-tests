@@ -72,7 +72,6 @@ public class ManageApplications extends BasePage {
     @Given("I have a submitted {string} {string} application")
     public synchronized void iHaveASubmittedApplication(String operatorType, String licenceType) throws HttpException {
         lock.writeLock().lock();
-        try {
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
         } finally {
