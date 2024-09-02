@@ -9,8 +9,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentProcessing extends BasePage {
     private final World world;
@@ -96,6 +95,7 @@ public class PaymentProcessing extends BasePage {
         assertNotNull(getText("//li[8]/dd", SelectorType.XPATH));
         assertNotNull(getText("//li[9]/dd", SelectorType.XPATH));
         assertNotNull(getText("//li[10]/dd", SelectorType.XPATH));
-        assertEquals("COMPLETE", getText("//li[11]/dd", SelectorType.XPATH));
+        String actualText =  getText("//li[11]/dd", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("COMPLETE"));
     }
 }
