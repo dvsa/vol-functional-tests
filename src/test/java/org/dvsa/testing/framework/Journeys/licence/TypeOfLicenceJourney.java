@@ -22,35 +22,35 @@ public class TypeOfLicenceJourney extends BasePage {
     public String mixedFleet = String.format("//input[@value='%s']", VehicleType.MIXED_FLEET.asString());
     public String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
     public String[] expectedStandardNationalOrMixedFleetStatusArray = new String[]{
-            "Type of licence\nCOMPLETE",
-            "Business type\nNOT STARTED",
-            "Business details\nCAN'T START YET",
-            "Addresses\nCAN'T START YET",
-            "Directors\nCAN'T START YET",
-            "Operating centres and authorisation\nNOT STARTED",
-            "Financial evidence\nCAN'T START YET",
-            "Transport Managers\nCAN'T START YET",
-            "Vehicles\nCAN'T START YET",
-            "Safety and compliance\nNOT STARTED",
-            "Financial history\nNOT STARTED",
-            "Licence history\nNOT STARTED",
-            "Convictions and penalties\nNOT STARTED",
-            "Review and declarations\nCAN'T START YET"};
+            "Type of licence\nComplete",
+            "Business type\nNot started",
+            "Business details\nCan't start yet",
+            "Addresses\nCan't start yet",
+            "Directors\nCan't start yet",
+            "Operating centres and authorisation\nNot started",
+            "Financial evidence\nCan't start yet",
+            "Transport Managers\nCan't start yet",
+            "Vehicles\nCan't start yet",
+            "Safety and compliance\nNot started",
+            "Financial history\nNot started",
+            "Licence history\nNot started",
+            "Convictions and penalties\nNot started",
+            "Review and declarations\nCan't start yet"};
     public String[] expectedLgvOnlyStatusArray = new String[]{
-            "Type of licence\nCOMPLETE",
-            "Business type\nNOT STARTED",
-            "Business details\nCAN'T START YET",
-            "Addresses\nCAN'T START YET",
-            "Directors\nCAN'T START YET",
-            "Licence authorisation\nNOT STARTED",
-            "Financial evidence\nCAN'T START YET",
-            "Transport Managers\nCAN'T START YET",
-            "Vehicles\nCAN'T START YET",
-            "Safety and compliance\nNOT STARTED",
-            "Financial history\nNOT STARTED",
-            "Licence history\nNOT STARTED",
-            "Convictions and penalties\nNOT STARTED",
-            "Review and declarations\nCAN'T START YET"};
+            "Type of licence\nComplete",
+            "Business type\nNot started",
+            "Business details\nCan't start yet",
+            "Addresses\nCan't start yet",
+            "Directors\nCan't start yet",
+            "Licence authorisation\nNot started",
+            "Financial evidence\nCan't start yet",
+            "Transport Managers\nCan't start yet",
+            "Vehicles\nCan't start yet",
+            "Safety and compliance\nNot started",
+            "Financial history\nNot started",
+            "Licence history\nNot started",
+            "Convictions and penalties\nNot started",
+            "Review and declarations\nCan't start yet"};
 
     public TypeOfLicenceJourney(World world) {
         this.world = world;
