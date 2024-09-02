@@ -68,7 +68,8 @@ public class PaymentProcessing extends BasePage {
         world.internalNavigation.getAdminEditFee(getFeeNumber());
         waitForTextToBePresent("Payments and adjustments");
         refreshPageWithJavascript();
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "PAID");
+        String actualText = getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("Paid"));
     }
 
     @And("i search for transactional fees")
@@ -96,6 +97,6 @@ public class PaymentProcessing extends BasePage {
         assertNotNull(getText("//li[9]/dd", SelectorType.XPATH));
         assertNotNull(getText("//li[10]/dd", SelectorType.XPATH));
         String actualText =  getText("//li[11]/dd", SelectorType.XPATH);
-        assertTrue(actualText.equalsIgnoreCase("COMPLETE"));
+        assertTrue(actualText.equalsIgnoreCase("Complete"));
     }
 }
