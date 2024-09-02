@@ -62,7 +62,8 @@ public class BatchProcess extends BasePage {
             isElementDisplayed = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
             refreshPage();
         } while (!isElementDisplayed && System.currentTimeMillis() < kickOut);
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "EXPIRED");
+        String actualText = getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]");
+        assertTrue(actualText.equalsIgnoreCase("Expired"));
     }
 
 //    @When("i trigger the ebsr process queue")

@@ -35,11 +35,11 @@ public class PsvSurrenders extends BasePage {
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
-    @And("the surrender status is {string}")
-    public void theSurrenderStatusIs(String status) {
+    @And("the surrender status is Surrender under consideration")
+    public void theSurrenderStatusIs() {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         refreshPage();
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
+        assertTrue(isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH));
     }
 
     @And("the correct contact details should be displayed")

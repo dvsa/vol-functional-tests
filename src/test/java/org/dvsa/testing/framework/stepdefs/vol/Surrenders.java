@@ -78,7 +78,8 @@ public class Surrenders extends BasePage {
         }
         waitForTitleToBePresent("Licences");
         refreshPage();
-        assertEquals(getText("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        String actualText = getText("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("Surrender Under Consideration"));
     }
 
     @Given("a caseworker views the surrender details")

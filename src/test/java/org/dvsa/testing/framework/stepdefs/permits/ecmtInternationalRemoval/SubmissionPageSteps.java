@@ -57,7 +57,7 @@ public class SubmissionPageSteps extends BasePermitPage {
         assertEquals("What happens next", expectedHeading);
         assertEquals("We will now post your paper permit within the next 3 working days.", expectedAdvisoryText1);
         assertEquals("Your valid permits will be grouped together under the same licence number that you applied with.", expectedAdvisoryText2);
-        assertEquals("Warning" + "\n" + "Make sure your correspondence address is correct on all your operator licences and your email address is up-to-date on your account.", expectedWarningMessage);
+        assertEquals("Warning Make sure your correspondence address is correct on all your operator licences and your email address is up-to-date on your account.", expectedWarningMessage);
     }
 
     @Then("the view receipt of ECMT International hyperlink opens in a new window")
