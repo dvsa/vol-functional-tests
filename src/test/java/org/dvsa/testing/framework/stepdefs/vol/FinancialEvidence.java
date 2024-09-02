@@ -245,7 +245,8 @@ public class FinancialEvidence extends BasePage {
     @Then("i should be prompted to enter financial evidence information")
     public void iShouldBePromptedToEnterFinancialEvidenceInformation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
-        assertTrue(isElementPresent("//span[contains(text(),'Financial evidence')]/../strong[contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
+        String actualText = getText("//span[contains(text(),'Financial evidence')]/../strong", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("Requires Attention"));
         assertTrue(isLinkPresent("Financial evidence", 10));
     }
 

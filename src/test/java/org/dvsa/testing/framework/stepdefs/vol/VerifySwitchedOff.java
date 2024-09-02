@@ -42,7 +42,7 @@ public class VerifySwitchedOff extends BasePage {
     @And("transport manager status is {string} and {string}")
     public void transportManagerStatusIs(String classString, String Text) {
         assertTrue(isElementPresent(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH));
-        assertTrue(getText(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH).equals(Text.toUpperCase()));
+        assertTrue(getText(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH).equalsIgnoreCase(Text));
     }
 
     @And("submit to operator button is displayed")
