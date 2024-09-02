@@ -19,4 +19,4 @@ jobs:
       cucumber_tags: "@smoke"
       browser_name: "edge"
       browser_version: "latest"
-      aws_region: "eu-west-1"
+      aws_oidc_role: ${{ inputs.aws_oidc_role }}

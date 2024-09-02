@@ -23,23 +23,10 @@ on:
         required: false
 
 
-
   workflow_call:
     inputs:
       platform_env:
         type: string
-        required: true
-      browser_name:
-        type: string
-        default: 'edge'
-        required: true
-      browser_version:
-        type: string
-        default: '125'
-        required: true
-      cucumber_tags:
-        type: string
-        default: '@smoke'
         required: true
       exclude_tags:
         type: string
@@ -49,6 +36,7 @@ on:
         required: false
       aws_region:
         type: string
+        default: "eu-west-1"
         required: true
       aws_oidc_role:
         type: string
