@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.30.0](https://github.com/dvsa/vol-functional-tests/compare/v2.29.0...v2.30.0) (2024-09-02)
+
+
+### Features
+
+* asset asserts ([bf0614c](https://github.com/dvsa/vol-functional-tests/commit/bf0614c9783cab03f055babfb4d4bd4845059c10))
+
 ## [2.29.0](https://github.com/dvsa/vol-functional-tests/compare/v2.28.1...v2.29.0) (2024-09-02)
 
 
