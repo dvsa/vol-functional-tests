@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.32.0](https://github.com/dvsa/vol-functional-tests/compare/v2.31.0...v2.32.0) (2024-09-03)
+
+
+### Features
+
+* sync method ([096d90a](https://github.com/dvsa/vol-functional-tests/commit/096d90a56b3b0cb880d328c21a7376e3f5187474))
+
 ## [2.31.0](https://github.com/dvsa/vol-functional-tests/compare/v2.30.0...v2.31.0) (2024-09-03)
 
 
