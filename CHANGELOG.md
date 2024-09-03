@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.31.0](https://github.com/dvsa/vol-functional-tests/compare/v2.30.0...v2.31.0) (2024-09-03)
+
+
+### Features
+
+* extend duration ([eb06759](https://github.com/dvsa/vol-functional-tests/commit/eb067592c22c539cc46f4b047f92d4300e25a2ab))
+
 ## [2.30.0](https://github.com/dvsa/vol-functional-tests/compare/v2.29.0...v2.30.0) (2024-09-02)
 
 
