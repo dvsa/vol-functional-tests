@@ -26,7 +26,7 @@ public class PublicHolidays extends BasePage {
     public PublicHolidays(World world) {this.world = world;}
 
     @When("I am on the public holidays page")
-    public void iAmOnThePublicHolidaysPage() throws HttpException {
+    public synchronized void iAmOnThePublicHolidaysPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PUBLIC_HOLIDAYS);
     }
