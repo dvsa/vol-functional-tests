@@ -65,7 +65,10 @@ public class InternalApplication extends BasePage{
     @Then("the licence is granted in Internal")
     public void theLicenceIsGrantedInInternal() {
         waitForTextToBePresent("Overview");
-        world.internalUIJourney.checkLicenceStatus("Granted");
+        waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
+        waitForTextToBePresent("Licence status");
+        String actualText = getText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("Granted"));
     }
 
     @When("i generate a letter")
