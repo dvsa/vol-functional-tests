@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.33.0](https://github.com/dvsa/vol-functional-tests/compare/v2.32.4...v2.33.0) (2024-09-04)
+
+
+### Features
+
+* alter teardown ([bb46582](https://github.com/dvsa/vol-functional-tests/commit/bb46582426c141ece130e0d27f16ad08139c4377))
+
 ## [2.32.4](https://github.com/dvsa/vol-functional-tests/compare/v2.32.3...v2.32.4) (2024-09-04)
 
 
