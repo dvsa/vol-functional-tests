@@ -23,7 +23,7 @@ public class TaskAllocationRules extends BasePage {
     }
 
     @Given("I am on the task allocation rules page")
-    public void iAmOnTheTaskAllocationRulesPage() throws HttpException {
+    public synchronized void iAmOnTheTaskAllocationRulesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.TASK_ALLOCATION_RULES);
     }

@@ -19,7 +19,7 @@ public class ManagePrinters extends BasePage  {
     }
 
     @When("I am on the Printers page")
-    public void iAmOnThePrintersPage() throws HttpException {
+    public synchronized void iAmOnThePrintersPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PRINTING);
     }
