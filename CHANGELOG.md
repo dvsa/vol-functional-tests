@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.32.3](https://github.com/dvsa/vol-functional-tests/compare/v2.32.2...v2.32.3) (2024-09-04)
+
+
+### Bug Fixes
+
+* force `en_US` date format to fix `Sep` `Sept` change in Java 11 ([022569a](https://github.com/dvsa/vol-functional-tests/commit/022569a08d0b04553871be1f0f4bd517331f0f9c))
+
 ## [2.32.2](https://github.com/dvsa/vol-functional-tests/compare/v2.32.1...v2.32.2) (2024-09-04)
 
 
