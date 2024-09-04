@@ -24,7 +24,7 @@ public class TestRunConfiguration {
     }
 
     @After
-    public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
+    public void tearDown(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
         for (String tag : tags) {
@@ -34,10 +34,8 @@ public class TestRunConfiguration {
                 }
             }
         }
-    }
-
-    @AfterAll
-    public static void tearDown() throws Exception {
-        Browser.closeBrowser();
+        if (Browser.isBrowserOpen()) {
+            Browser.closeBrowser();
+        }
     }
 }
