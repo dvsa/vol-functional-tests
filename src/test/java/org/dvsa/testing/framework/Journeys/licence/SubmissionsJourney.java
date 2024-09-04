@@ -43,7 +43,7 @@ public class SubmissionsJourney extends BasePage {
         clickByXPath("//*[@id='tcOrOther']");
         clickByXPath("//*[@id='presidingTcUser_chosen']");
         waitAndEnterText("//*[@id='presidingTcUser_chosen']/div/div/input", SelectorType.XPATH, getSelectedValue());
-        waitAndClick("//*[@id='presidingTcUser_chosen']/div/ul/li[2]", SelectorType.XPATH);
+        waitAndClick("#presidingTcUser_chosen > div > ul > li.active-result.group-option.highlighted > em", SelectorType.CSS);
     }
 
     public void checkTCDcDropDown() {
