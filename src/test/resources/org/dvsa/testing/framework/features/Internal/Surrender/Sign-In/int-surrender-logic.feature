@@ -13,7 +13,7 @@ Feature: Logic for Surrender menu item
   Scenario: Surrender Licence
     And my application to surrender is under consideration
     When the caseworker approves the surrender
-    Then the licence status should be "surrendered"
+    Then the licence status should be "Surrendered"
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
 
@@ -61,14 +61,14 @@ Feature: Logic for Surrender menu item
     And the licence status is "<licence_status>"
     And my application to surrender is under consideration
     When the caseworker approves the surrender
-    And the licence status should be "surrendered"
+    And the licence status should be "Surrendered"
     And the case worker undoes the surrender
     Then the licence status should be "<licence>"
 
     Examples:
       | licence_status | licence   |
-      | suspend        | suspended |
-      | curtail        | curtailed |
+      | suspend        | Suspended |
+      | curtail        | Curtailed |
 
 
   Scenario Outline: Surrender suspended, curtailed licence

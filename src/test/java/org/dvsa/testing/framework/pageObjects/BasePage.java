@@ -54,6 +54,16 @@ public abstract class BasePage extends DriverUtils {
         return getText(selector, SelectorType.CSS);
     }
 
+    protected static String getLink(@NotNull String selector, @NotNull SelectorType selectorType) {
+        return findElement(selector, selectorType).getAttribute("href");
+    }
+
+    protected static String getLink(@NotNull String selector) {
+        return getLink(selector, SelectorType.CSS);
+    }
+
+
+
 
     public static String getTextFromNestedElement(WebElement webElement, String selector) {
         return webElement.findElement(By.xpath(selector)).getText();
