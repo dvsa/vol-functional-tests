@@ -238,7 +238,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static String getCurrentDate(String datePattern) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern, Locale.US);
         return LocalDate.now().format(formatter);
     }
 
