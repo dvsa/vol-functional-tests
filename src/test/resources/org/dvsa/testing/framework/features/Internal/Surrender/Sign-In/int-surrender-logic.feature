@@ -28,7 +28,7 @@ Feature: Logic for Surrender menu item
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender
     And the caseworker confirms the withdraw
-    Then the licence status should be "valid"
+    Then the licence status should be "Valid"
     And the surrender menu should be hidden in internal
     And the change history shows the surrender and its withdrawal
     And the user should be able to re apply for a surrender in internal
@@ -100,7 +100,7 @@ Feature: Logic for Surrender menu item
   Scenario: Scan for accessibility violations
     And my application to surrender is under consideration
     When the caseworker approves the surrender
-    Then the licence status should be "surrendered"
+    Then the licence status should be "Surrendered"
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
     Then no issues should be present on the page
