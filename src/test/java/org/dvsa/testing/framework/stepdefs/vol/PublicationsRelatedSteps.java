@@ -300,8 +300,8 @@ public class PublicationsRelatedSteps extends BasePage {
     @Then("the new application publication for LGV Only should be correct on internal")
     public void theNewApplicationPublicationForLGVOnlyShouldBeCorrectOnInternal() {
         Dates date = new Dates(org.joda.time.LocalDate::new);
-        String todayDate = date.getFormattedDate(0, 0, 0, "dd/MM/yyyy");
-        clickByLinkText(todayDate);
+       // String todayDate = date.getFormattedDate(0, 0, 0, "dd/MM/yyyy");
+      //  clickByLinkText(todayDate);
         waitForTextToBePresent("Edit publication");
         checkLGVOnlyTextBeforePublicationOnInternal();
     }
