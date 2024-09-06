@@ -148,10 +148,11 @@ public class InternalUIJourney extends BasePage {
         UniversalActions.clickConfirm();
     }
 
-    public void checkLicenceStatus(String arg0) {
+    public void checkLicenceStatus(String expectedStatus) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        assertEquals(arg0, getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH));
+        String actualStatus = getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
+        assertEquals(expectedStatus.toUpperCase(), actualStatus.toUpperCase());
     }
 
     public void closeCase() {

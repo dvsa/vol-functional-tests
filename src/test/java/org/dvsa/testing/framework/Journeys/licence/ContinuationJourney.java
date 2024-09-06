@@ -62,6 +62,7 @@ public class ContinuationJourney extends BasePage {
     public void clickContinueLicenceOnSelfServe()  {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
+        waitForElementToBeClickable("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
         waitAndClick("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
 
