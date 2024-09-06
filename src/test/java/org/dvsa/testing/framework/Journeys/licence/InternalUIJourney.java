@@ -39,6 +39,7 @@ public class InternalUIJourney extends BasePage {
         waitAndClick("address[searchPostcode][search]", SelectorType.ID);
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
         waitForPageLoad();
+        waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.XPATH);
         waitAndSelectByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
     }
 
