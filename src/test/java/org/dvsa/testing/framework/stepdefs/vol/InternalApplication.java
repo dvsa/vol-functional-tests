@@ -79,6 +79,7 @@ public class InternalApplication extends BasePage{
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
+        waitForElementToBePresent("//*[@id='letter-link']");
         String docStoreLink = getLink("//*[@id='letter-link']",SelectorType.XPATH);
         assertNotNull(docStoreLink);
         String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
