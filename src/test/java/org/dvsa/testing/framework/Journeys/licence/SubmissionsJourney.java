@@ -20,8 +20,9 @@ public class SubmissionsJourney extends BasePage {
     public void addPresidingTC() {
         waitAndClick("add", SelectorType.ID);
         waitAndClick("user", SelectorType.ID);
+        selectValueFromDropDown("user", SelectorType.ID, "ALAN GOODMAN");
         selectRandomValueFromDropDown("user", SelectorType.ID);
-        String operatorForename = world.DataGenerator.getOperatorForeName();
+        String operatorForename = "ALAN GOODMAN";
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
         UniversalActions.clickSubmit();
     }
