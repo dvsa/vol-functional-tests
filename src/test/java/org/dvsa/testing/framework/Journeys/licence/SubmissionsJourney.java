@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -22,7 +23,7 @@ public class SubmissionsJourney extends BasePage {
         waitAndClick("user", SelectorType.ID);
         selectValueFromDropDown("user", SelectorType.ID, "ALAN GOODMAN");
         selectRandomValueFromDropDown("user", SelectorType.ID);
-        String operatorForename = "ALAN GOODMAN";
+        String operatorForename = SecretsManager.getSecretValue("presidingTC");
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
         UniversalActions.clickSubmit();
     }
