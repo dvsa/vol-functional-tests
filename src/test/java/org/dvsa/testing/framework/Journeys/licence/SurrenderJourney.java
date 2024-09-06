@@ -77,10 +77,10 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void startSurrender() throws IllegalBrowserException, IOException {
-        // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out library needs fixing axeScanner.scan(true);
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
     }
 
 
@@ -88,7 +88,7 @@ public class SurrenderJourney extends BasePage {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         UniversalActions.clickSubmit();
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
         }
 
 
@@ -119,14 +119,14 @@ public class SurrenderJourney extends BasePage {
         checkSignInConfirmation();
         refreshPageWithJavascript();
         assertTrue(getElementValueByText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH).equalsIgnoreCase("SURRENDER UNDER CONSIDERATION"));
-        // temp comment out  // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out  // temp comment out library needs fixing axeScanner.scan(true);
         }
 
     public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, IOException {
         submitSurrenderUntilReviewPage();
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
         acknowledgeDestroyPage();
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
         }
 
 
@@ -177,7 +177,7 @@ public class SurrenderJourney extends BasePage {
 
     public void acknowledgeDestroyPage() throws IllegalBrowserException, IOException {
         UniversalActions.clickSubmit();
-        // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out library needs fixing axeScanner.scan(true);
         waitForTextToBePresent("Securely destroy");
         UniversalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
@@ -194,9 +194,9 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
-        // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out library needs fixing axeScanner.scan(true);
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
-        // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out library needs fixing axeScanner.scan(true);
         }
 
     public void removeDisc() throws IllegalBrowserException, IOException {

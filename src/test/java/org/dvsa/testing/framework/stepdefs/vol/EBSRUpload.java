@@ -72,12 +72,12 @@ public class EBSRUpload extends BasePage {
             licenceNumber = existingLicenceNumber;
         }else{
             licenceNumber = world.applicationDetails.getLicenceNumber();
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
-            // temp comment out libary needs fixing axeScanner.scan(true);
+            // temp comment out library needs fixing axeScanner.scan(true);
         }
         long kickOutTime = System.currentTimeMillis() + 30000;
         if(!world.configuration.env.toString().equals("local")) {

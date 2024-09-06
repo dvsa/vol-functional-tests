@@ -26,7 +26,7 @@ public class SubmitSelfServeApplication extends BasePage {
     public void iSubmitAndPayForLicenceApplicationWithAxeScanner(String licenceType) throws IllegalBrowserException, IOException {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
         world.submitApplicationJourney.submitAndPayForApplication();
-        // temp comment out libary needs fixing axeScanner.scan(true);
+        // temp comment out library needs fixing axeScanner.scan(true);
     }
 
     @And("i have no existing applications")
