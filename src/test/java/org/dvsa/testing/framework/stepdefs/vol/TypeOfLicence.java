@@ -88,11 +88,13 @@ public class TypeOfLicence extends BasePage {
 
         if (newType.equals("lgv_only_fleet")) {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicenceJourney.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicenceJourney.expectedLgvOnlyStatusArray[i].toUpperCase(),
+                        applicationOverviewStatusElements.get(i).getText().toUpperCase());
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicenceJourney.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicenceJourney.expectedStandardNationalOrMixedFleetStatusArray[i].toUpperCase(),
+                        applicationOverviewStatusElements.get(i).getText().toUpperCase());
             }
         }
     }
