@@ -363,12 +363,14 @@ public class ManageApplications extends BasePage {
 
     @Given("i have an application with a transport manager")
     public synchronized void iHaveAnApplicationWithATransportManager() throws HttpException {
+        lock.writeLock().lock();
         if (world.createApplication.getOperatorType() == null) {
             world.createApplication.setOperatorType("public");
         }
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
         world.APIJourney.submitApplication();
+        lock.writeLock().unlock();
     }
 
     @And("the application status should be {string}")
