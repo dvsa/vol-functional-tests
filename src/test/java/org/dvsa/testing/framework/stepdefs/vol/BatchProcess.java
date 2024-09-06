@@ -62,7 +62,7 @@ public class BatchProcess extends BasePage {
             isElementDisplayed = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
             refreshPage();
         } while (!isElementDisplayed && System.currentTimeMillis() < kickOut);
-        String actualText = getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]");
+        String actualText = getText("//strong[text()='Expired']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("Expired"));
     }
 
