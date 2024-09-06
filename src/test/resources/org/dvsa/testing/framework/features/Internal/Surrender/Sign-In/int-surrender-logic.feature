@@ -13,7 +13,7 @@ Feature: Logic for Surrender menu item
   Scenario: Surrender Licence
     And my application to surrender is under consideration
     When the caseworker approves the surrender
-    Then the licence status should be "SURRENDERED"
+    Then the licence status should be "Surrendered"
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
 
