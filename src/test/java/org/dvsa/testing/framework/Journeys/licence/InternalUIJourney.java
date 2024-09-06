@@ -267,6 +267,16 @@ public class InternalUIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
+    public void payFeeAndPublishLicence() {
+        clickByLinkText("Fees");
+        world.feeAndPaymentJourney.selectFee();
+        world.feeAndPaymentJourney.payFee("257", "cash");
+        waitForTextToBePresent("The payment was made successfully");
+        waitForElementToBeClickable("Publish application", SelectorType.LINKTEXT);
+        waitAndClick("Publish application", SelectorType.LINKTEXT);
+        waitAndClick("//button[text()='Publish']", SelectorType.XPATH);
+    }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");

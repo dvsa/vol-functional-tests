@@ -37,7 +37,7 @@ public class TypeOfLicenceJourney extends BasePage {
             "Convictions and penalties\nNot started",
             "Review and declarations\nCan't start yet"};
     public String[] expectedLgvOnlyStatusArray = new String[]{
-            "Type of licence\nComplete",
+            "Type of licence\nCOMPLETE",
             "Business type\nNot started",
             "Business details\nCan't start yet",
             "Addresses\nCan't start yet",
