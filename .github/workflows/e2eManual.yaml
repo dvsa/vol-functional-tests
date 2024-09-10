@@ -1,0 +1,31 @@
+name: Manual Trigger for End-to-End Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform_env:
+        type: string
+        required: true
+      browser_name:
+        type: string
+        required: true
+      browser_version:
+        type: string
+        required: true
+      cucumber_tags:
+        type: string
+        required: true
+      maven_options:
+        type: string
+        required: false
+
+jobs:
+  call-e2etest:
+    name: Call E2E Test Workflow
+    uses: ./.github/workflows/e2etest.yml
+    with:
+      platform_env: ${{ inputs.platform_env }}
+      aws_oidc_role: ${{ secrets.AWS_OIDC_ROLE }}
+      cucumber_tags: ${{ inputs.cucumber_tags }}
+      browser_name: ${{ inputs.browser_name }}
+      browser_version: ${{ inputs.browser_version }}

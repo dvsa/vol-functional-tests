@@ -1,0 +1,23 @@
+name: E2E Smoke Test
+
+on:
+  workflow_call:
+    inputs:
+      platform_env:
+        type: string
+        required: true
+        aws_oidc_role:
+          type: string
+          required: true
+
+jobs:
+  call-e2etest:
+    name: Call E2E test workflow
+    uses: ./.github/workflows/e2etest.yml
+    with:
+      platform_env: ${{ inputs.platform_env }}
+      aws_oidc_role: ${{ inputs.aws_oidc_role }}
+      cucumber_tags: "@smoke"
+      browser_name: "edge"
+      browser_version: "latest"
+
