@@ -19,6 +19,10 @@ on:
         type: string
         required: false
 
+env:
+ AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
+
+
 jobs:
   call-e2etest:
     name: Call E2E Test Workflow
