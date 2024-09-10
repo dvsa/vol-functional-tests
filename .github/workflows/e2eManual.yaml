@@ -22,7 +22,7 @@ on:
 jobs:
   call-e2etest:
     name: Call E2E Test Workflow
-    uses: ./.github/workflows/e2etest.yml
+    uses: ./.github/workflows/e2etest.yaml
     with:
       platform_env: ${{ inputs.platform_env }}
       aws_oidc_role: ${{ secrets.AWS_OIDC_ROLE }}
