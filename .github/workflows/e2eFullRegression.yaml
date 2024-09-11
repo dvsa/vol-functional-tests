@@ -1,4 +1,4 @@
-name: E2E Smoke Test
+name: E2E Full Regression
 
 on:
   workflow_call:
