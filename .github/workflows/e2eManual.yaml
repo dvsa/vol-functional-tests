@@ -19,8 +19,6 @@ on:
         type: string
         required: false
 
-env:
- AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
 
 
 jobs:
@@ -29,7 +27,6 @@ jobs:
     uses: ./.github/workflows/e2etest.yaml
     with:
       platform_env: ${{ inputs.platform_env }}
-      aws_oidc_role: ${{ env.AWS_OIDC_ROLE  }}
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
