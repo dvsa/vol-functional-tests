@@ -6,6 +6,18 @@ on:
       platform_env:
         type: string
         required: true
+      cucumber_tags:
+        type: string
+        required: true
+      browser_name:
+        type: string
+        required: true
+      browser_version:
+        type: string
+        required: true
+      exclude_tags:
+        type: string
+        required: false
       maven_options:
         type: string
         required: false
@@ -87,6 +99,22 @@ jobs:
                 {
                   "name": "platformEnv",
                   "value": "${{ inputs.platform_env }}"
+                },
+                {
+                  "name": "cucumberTags",
+                  "value": "${{ inputs.cucumber_tags }}"
+                },
+                {
+                  "name": "browserName",
+                  "value": "${{ inputs.browser_name }}"
+                },
+                {
+                  "name": "browserVersion",
+                  "value": "${{ inputs.browser_version }}"
+                },
+                {
+                  "name": "exclude_tags",
+                  "value": "${{ inputs.exclude_tags }}"
                 },
                 {
                   "name": "mavenOptions",
