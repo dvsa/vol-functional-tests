@@ -16,7 +16,6 @@ jobs:
     uses: ./.github/workflows/e2etest.yml
     with:
       platform_env: ${{ inputs.platform_env }}
-      aws_oidc_role: ${{ inputs.aws_oidc_role }}
       cucumber_tags: "@smoke"
       browser_name: "edge"
       browser_version: "latest"
