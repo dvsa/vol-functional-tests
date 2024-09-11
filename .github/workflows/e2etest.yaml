@@ -1,7 +1,7 @@
 name: End to End Test
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       platform_env:
         type: string
