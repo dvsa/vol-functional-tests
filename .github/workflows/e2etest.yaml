@@ -45,7 +45,7 @@ jobs:
         id: set-job-name
         run: |
           buildtime=$(date +"%Y%m%d%H%M%S")
-          echo "job_name=$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
+          echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
   run-batch:
     name: Run Tests on AWS Batch
