@@ -1,7 +1,7 @@
 name: End to End Test
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       platform_env:
         type: string
@@ -9,13 +9,6 @@ on:
       maven_options:
         type: string
         required: false
-      aws_oidc_role:
-        type: string
-        required: true
-      s3_report_bucket_key:
-        type: string
-        required: true
-
 
 permissions:
   contents: write
@@ -26,9 +19,9 @@ env:
   JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_OIDC_ROLE: ${{ inputs.aws_oidc_role }}
   AWS_REGION: "eu-west-1"
   S3_REPORT_BUCKET: "devapp-olcs-test-reports"
+  S3_REPORT_BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
 
 jobs:
   create-job-name:
@@ -55,10 +48,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set AWS OIDC Role
+        run: |
+          if [ -n "${{ vars.TF_OIDC_ROLE }}" ]; then
+            export AWS_OIDC_ROLE=${{ vars.TF_OIDC_ROLE }}
+          else
+            export AWS_OIDC_ROLE=${{ vars.TF_OIDC_READONLY_ROLE }}
+          fi
+          echo "AWS_OIDC_ROLE=$AWS_OIDC_ROLE"
+        env:
+          TF_OIDC_ROLE: ${{ vars.TF_OIDC_ROLE }}
+          TF_OIDC_READONLY_ROLE: ${{ vars.TF_OIDC_READONLY_ROLE }}
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ inputs.aws_oidc_role }}
+          role-to-assume: $AWS_OIDC_ROLE
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 7200
 
@@ -67,11 +72,11 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ env.JOB_QUEUE}} \
-            --job-definition ${{ env.JOB_DEFINITION }}
+            --job-queue ${{ env.JOB_QUEUE }} \
+            --job-definition ${{ env.JOB_DEFINITION }} \
             --timeout '{
-             "attemptDurationSeconds": 8400
-          }' \
+              "attemptDurationSeconds": 8400
+            }' \
             --container-overrides '{
               "command": [
                 "/bin/sh",
@@ -82,26 +87,6 @@ jobs:
                 {
                   "name": "platformEnv",
                   "value": "${{ inputs.platform_env }}"
-                },
-                {
-                  "name": "browserName",
-                  "value": "${{ inputs.browser_name }}"
-                },
-                {
-                  "name": "browserVersion",
-                  "value": "${{ inputs.browser_version }}"
-                },
-                {
-                  "name": "exclude_tags",
-                  "value": "${{ inputs.exclude_tags }}"
-                },
-                {
-                  "name": "cucumberTags",
-                  "value": "${{ inputs.cucumber_tags }}"
-                },
-                {
-                  "name": "buildId",
-                  "value": "${{ env.JOB_NAME }}"
                 },
                 {
                   "name": "mavenOptions",
@@ -151,15 +136,15 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ inputs.aws_oidc_role }}
+          role-to-assume: $AWS_OIDC_ROLE
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Download Allure Report from S3
         env:
           JOB_ID: ${{ needs.run-batch.outputs.job_id }}
           BUCKET_NAME: ${{ env.S3_REPORT_BUCKET }}
-          BUCKET_KEY: ${{ inputs.s3_report_bucket_key }}
-          FOLDER_NAME: ${{env.FOLDER_NAME }}
+          BUCKET_KEY: ${{ env.S3_REPORT_BUCKET_KEY }}
+          FOLDER_NAME: ${{ env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
@@ -177,7 +162,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: ./upload/${{env.FOLDER_NAME }}/allure-results
+          path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
   report:
     name: Display Report
@@ -196,7 +181,7 @@ jobs:
 
       - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ env.S3_REPORT_BUCKET }}/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ inputs.s3_report_bucket  }}/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
@@ -205,8 +190,7 @@ jobs:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: true
           fail-on-test-errors: true
-          report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
-
+          report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ env.S3_REPORT_BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
     name: Job Succeeded
