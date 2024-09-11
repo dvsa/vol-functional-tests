@@ -105,6 +105,10 @@ jobs:
                   "value": "${{ inputs.exclude_tags }}"
                 },
                 {
+                  "name": "buildId",
+                  "value": "${{ env.JOB_NAME }}"
+                },
+                {
                   "name": "mavenOptions",
                   "value": "${{ inputs.maven_options }}"
                 }
