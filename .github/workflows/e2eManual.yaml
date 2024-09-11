@@ -24,7 +24,7 @@ on:
       maven_options:
         type: string
         required: false
-      excluded_tags:
+      exclude_tags:
           type: string
           required: true
           default: 'none'
@@ -39,4 +39,4 @@ jobs:
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
-      excluded_tags: ${{ inputs.excluded_tags }}
+      exclude_tags: ${{ inputs.exclude_tags }}
