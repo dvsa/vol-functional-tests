@@ -19,11 +19,6 @@ on:
         type: string
         required: false
 
-permissions:
-  contents: write
-  id-token: write
-  checks:   write
-
 
 jobs:
   call-e2etest:
