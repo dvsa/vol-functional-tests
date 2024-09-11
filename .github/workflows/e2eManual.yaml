@@ -24,9 +24,9 @@ on:
       maven_options:
         type: string
         required: false
-        excluded_tags:
+      excluded_tags:
           type: string
-          required: false
+          required: true
           default: 'none'
 
 
