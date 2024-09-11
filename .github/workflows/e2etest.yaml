@@ -47,8 +47,8 @@ jobs:
           buildtime=$(date +"%Y%m%d%H%M%S")
           echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
-  run-batch:
-    name: Run Tests on AWS Batch
+  run-sync-batch:
+    name: run sync test on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
@@ -58,7 +58,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
