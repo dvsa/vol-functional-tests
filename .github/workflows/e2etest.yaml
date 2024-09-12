@@ -184,6 +184,10 @@ jobs:
           name: allure-results
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
+      - name: Generate Axe Accessibility Report
+        run: |
+         java -cp target/classes scanner.ReportGenerator createReport
+
   report:
     name: Display Report
     needs: [upload-batch-report, create-job-name]

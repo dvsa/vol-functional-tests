@@ -152,7 +152,7 @@ public class BusRegistrationJourney extends BasePage {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
         AXEScanner axeScanner = AccessibilitySteps.scanner;
-        // temp comment out library needs fixing axeScanner.scan(true);
+        axeScanner.scan(true);
     }
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {

@@ -108,7 +108,7 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
-        // temp comment out library needs fixing axeScanner.scan(true);
+        axeScanner.scan(true);
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
@@ -117,7 +117,7 @@ public class SubmitApplicationJourney extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        // temp comment out library needs fixing axeScanner.scan(true);
+        axeScanner.scan(true);
         clickContinue();
 
         //transport manager details
@@ -126,7 +126,7 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
-        // temp comment out library needs fixing axeScanner.scan(true);
+        axeScanner.scan(true);
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);
