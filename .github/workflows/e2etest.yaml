@@ -184,9 +184,6 @@ jobs:
           name: allure-results
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
-      - name: Generate Axe Accessibility Report
-        run: |
-          mvn exec:java -Dexec.mainClass="scanner.ReportGenerator" -Dexec.args="createReport" -Dexec.classpathScope=compile
 
   report:
     name: Display Report
