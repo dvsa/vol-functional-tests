@@ -87,7 +87,7 @@ public class DirectorJourney extends BasePage {
             completeConvictionsAndPenalties("N");
         }
             AXEScanner axeScanner = AccessibilitySteps.scanner;
-            // temp comment out library needs fixing axeScanner.scan(true);
+            axeScanner.scan(true);
         }
 
 

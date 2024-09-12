@@ -36,7 +36,7 @@ public class BusinessDetailsJourney extends BasePage {
         enterCorrespondenceAddress();
         UniversalActions.clickSaveAndContinue();
             AXEScanner axeScanner = AccessibilitySteps.scanner;
-            // temp comment out libary needs fixing // temp comment out library needs fixing axeScanner.scan(true);
+            axeScanner.scan(true);
         }
 
 
