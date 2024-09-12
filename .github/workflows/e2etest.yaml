@@ -186,7 +186,7 @@ jobs:
 
       - name: Generate Axe Accessibility Report
         run: |
-         java -cp target/classes scanner.ReportGenerator createReport
+          ./mvnw exec:java -Dexec.mainClass="scanner.ReportGenerator" -Dexec.args="createReport" -Dexec.classpathScope=compile
 
   report:
     name: Display Report
