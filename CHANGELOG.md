@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.38.0](https://github.com/dvsa/vol-functional-tests/compare/v2.37.0...v2.38.0) (2024-09-13)
+
+
+### Features
+
+* maven dependency caching" ([338d7b8](https://github.com/dvsa/vol-functional-tests/commit/338d7b852f5e5566802145e68db54f657e418828))
+
 ## [2.37.0](https://github.com/dvsa/vol-functional-tests/compare/v2.36.0...v2.37.0) (2024-09-06)
 
 
