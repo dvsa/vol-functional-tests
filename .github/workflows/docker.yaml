@@ -59,9 +59,8 @@ jobs:
       - name: View settings.xml
         run: cat ./settings.xml
 
-
-      - name: Copy settings.xml for Docker build
-        run: cp ./settings.xml ${GITHUB_WORKSPACE}/${env.WORKING_DIR}
+      - name: Copy settings.xml
+        run: cp ./settings.xml $GITHUB_WORKSPACE/$WORKING_DIR
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
