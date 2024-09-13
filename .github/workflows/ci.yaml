@@ -73,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-jar
-          path: target/*.jar
+          path: target
 
   docker:
     name: Docker
