@@ -21,7 +21,6 @@
 # - noProxyJava
 # - mavenOptions
 
-REBUILD_DEPENDENCIES=${REBUILD_DEPENDENCIES:-false}
 
 # check if all the environment variables are set
 check_environment_variables() {
@@ -54,17 +53,6 @@ check_environment_variables() {
 
 check_environment_variables || exit 1
 
-if [ "$REBUILD_DEPENDENCIES" = "true" ]; then
-  echo "Rebuilding Maven dependencies as requested."
-  mvn --batch-mode clean install -U
-else
-  if [ -d ~/.m2/repository ]; then
-    echo "Using maven cached dependencies"
-  else
-    echo "No cache found, downloading dependencies"
-    mvn --batch-mode dependency:go-offline
-  fi
-fi
 
 # Echo the command to be captured in logs
 echo "Now running [ mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=_hidden_ -Dtag.name=\"(not ${exclude_tags})\" -Dcucumber.filter.tags=${cucumberTags} ] .."
