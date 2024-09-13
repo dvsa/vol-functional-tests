@@ -47,6 +47,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: test-jar
+          path: target/*.jar
 
       - uses: whelk-io/maven-settings-xml-action@v22
         name: Generate settings.xml
