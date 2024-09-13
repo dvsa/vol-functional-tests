@@ -7,7 +7,6 @@ permissions:
   contents: read
   packages: write
 
-
 jobs:
   get-version:
     name: Get latest app versions
@@ -25,24 +24,47 @@ jobs:
       - name: Add to summary
         run: |
           echo "#### App versions:" >> $GITHUB_STEP_SUMMARY
-          echo "**vft**: \`${{ steps.vft-version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "vft: \`${{ steps.vft-version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+
   security:
     name: Security
     uses: ./.github/workflows/security.yaml
     secrets: inherit
 
-  build-maven:      
+  build-maven:
     name: build with Maven
     uses: ./.github/workflows/maven.yaml
     with:
-        maven-goal: package -DskipTests 
-    needs: 
+        maven-goal: package -DskipTests
+    needs:
       - security
       - get-version
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        uses: ./.github/workflows/maven.yaml
+        with:
+          maven-goal: package -DskipTests
+
+      - name: Cache built JAR
+        uses: actions/cache@v3
+        with:
+          path: target/*.jar
+          key: ${{ runner.os }}-artifact-${{ hashFiles('/pom.xml') }}
 
   docker:
     name: Docker
-    needs: build-maven 
+    needs: build-maven
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
