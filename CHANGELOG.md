@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.41.0](https://github.com/dvsa/vol-functional-tests/compare/v2.40.2...v2.41.0) (2024-09-13)
+
+
+### Features
+
+* reverting docker changes ([1681d93](https://github.com/dvsa/vol-functional-tests/commit/1681d930d4b6f839a3dfe6746b29179c45a10256))
+* reverting docker changes ([c42cb5d](https://github.com/dvsa/vol-functional-tests/commit/c42cb5df0d04e46688423be88f6eb7c858afb8d4))
+
 ## [2.40.2](https://github.com/dvsa/vol-functional-tests/compare/v2.41.0...v2.40.2) (2024-09-13)
 
 
