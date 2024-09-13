@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.41.0](https://github.com/dvsa/vol-functional-tests/compare/v2.40.1...v2.41.0) (2024-09-13)
+
+
+### Features
+
+* path ([6e010bc](https://github.com/dvsa/vol-functional-tests/commit/6e010bccef3f20e42a956b5b0de4543424e24b6f))
+
 ## [2.40.1](https://github.com/dvsa/vol-functional-tests/compare/v2.40.0...v2.40.1) (2024-09-13)
 
 
