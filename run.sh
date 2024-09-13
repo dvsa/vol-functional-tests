@@ -59,7 +59,9 @@ if [ "$REBUILD_DEPENDENCIES" = "true" ]; then
   mvn --batch-mode clean install -U
 else
   if [ -d ~/.m2/repository ]; then
+    echo "Using maven cached dependencies"
   else
+    echo "No cache found, downloading dependencies"
     mvn --batch-mode dependency:go-offline
   fi
 fi
