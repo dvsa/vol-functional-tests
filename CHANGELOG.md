@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.39.0](https://github.com/dvsa/vol-functional-tests/compare/v2.38.1...v2.39.0) (2024-09-13)
+
+
+### Features
+
+* resolve empty block ([55a3a52](https://github.com/dvsa/vol-functional-tests/commit/55a3a529f57b48e6bd83f1e0936aa7c019fa994e))
+
 ## [2.38.1](https://github.com/dvsa/vol-functional-tests/compare/v2.38.0...v2.38.1) (2024-09-13)
 
 
