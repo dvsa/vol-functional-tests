@@ -42,14 +42,16 @@ jobs:
 
   docker:
     name: Docker
-    needs: build-maven 
+    needs:
+      - build-maven
+      - get-version
     strategy:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: false
+      push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
       contents: read
       id-token: write
