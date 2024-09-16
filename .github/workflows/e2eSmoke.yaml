@@ -22,4 +22,5 @@ jobs:
       cucumber_tags: "@ec2_smoke"
       browser_name: "edge"
       browser_version: "latest"
+      exclude_tags: 'none'
 

@@ -21,4 +21,5 @@ jobs:
       cucumber_tags: "@FullRegression"
       browser_name: "edge"
       browser_version: "latest"
+      exclude_tags: "none"
 
