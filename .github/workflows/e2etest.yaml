@@ -21,8 +21,7 @@ on:
       maven_options:
         type: string
         required: false
-        test: string
-        default: "sync"
+
 
 permissions:
   contents: write
