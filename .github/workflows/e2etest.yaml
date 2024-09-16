@@ -21,7 +21,7 @@ on:
       maven_options:
         type: string
         required: false
-        test:
+      test:
           type: string
           required: true
 
