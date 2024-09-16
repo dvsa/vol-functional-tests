@@ -4,6 +4,7 @@ on:
   workflow_call:
     inputs:
       test:
+        type: string
         required: true
         default: 'sync'
       platform_env:
