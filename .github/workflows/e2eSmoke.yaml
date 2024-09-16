@@ -5,7 +5,7 @@ on:
     inputs:
       test:
         type: string
-        required: true
+        default: 'sync'
       platform_env:
         type: string
         required: true
