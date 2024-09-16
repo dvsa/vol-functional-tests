@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [2.40.4](https://github.com/dvsa/vol-functional-tests/compare/v2.40.3...v2.40.4) (2024-09-16)
+
+
+### Bug Fixes
+
+* type in parent workflow name ([caa564d](https://github.com/dvsa/vol-functional-tests/commit/caa564dfcc3b4e667a134ce4052db3c05f820192))
+
 ## [2.40.3](https://github.com/dvsa/vol-functional-tests/compare/v2.41.0...v2.40.3) (2024-09-13)
 
 
