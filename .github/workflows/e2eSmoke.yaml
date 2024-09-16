@@ -3,9 +3,13 @@ name: E2E Smoke Test
 on:
   workflow_call:
     inputs:
+      test:
+        required: true
+        default: 'sync'
       platform_env:
         type: string
         required: true
+
 
 
 jobs:
@@ -13,6 +17,7 @@ jobs:
     name: Call E2E test workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
+      test: ${{ inputs.test }}
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: "@ec2_smoke"
       browser_name: "edge"
