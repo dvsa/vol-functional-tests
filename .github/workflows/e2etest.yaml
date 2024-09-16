@@ -22,7 +22,7 @@ on:
         type: string
         required: false
         test: string
-        defaults: "sync"
+        default: "sync"
 
 permissions:
   contents: write
