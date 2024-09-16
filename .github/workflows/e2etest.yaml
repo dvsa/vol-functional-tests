@@ -21,6 +21,9 @@ on:
       maven_options:
         type: string
         required: false
+        test:
+          type: string
+          required: true
 
 
 permissions:
