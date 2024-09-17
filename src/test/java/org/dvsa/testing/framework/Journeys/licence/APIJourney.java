@@ -115,10 +115,12 @@ public class APIJourney {
     }
 
     public synchronized void grantLicenceAndPayFees() throws HttpException {
+        lock.lock();
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {
             world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
+        lock.unlock();
     }
 }

@@ -307,8 +307,10 @@ public class ManageApplications extends BasePage {
 
     @Given("i have a valid {string} {string} licence")
     public synchronized void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
+        lock.writeLock().lock();
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicence(operatorType, licenceType);
+        lock.writeLock().unlock();
     }
 
     @Given("i have a {string} application in progress")
