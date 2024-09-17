@@ -1,6 +1,4 @@
-FROM 054614622558.dkr.ecr.eu-west-1.amazonaws.com/dvsa/vol/ci/jdk11:latest
-
-VOLUME /root/.m2/repository
+FROM maven:3.9.6-amazoncorretto-11 as maven
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
@@ -26,8 +24,7 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-COPY run.sh /usr/local/bin/run.sh
-RUN chmod +x /usr/local/bin/run.sh
 
+RUN chmod +x ./run.sh
 
-ENTRYPOINT ["/usr/local/bin/run.sh"]
+CMD ["/bin/sh", "-c", "./run.sh"]
