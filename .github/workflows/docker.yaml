@@ -109,6 +109,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            MAVEN_OPTS= Dmaven.repo.local=/root/.m2/repository 
       
 
       - name: Setup Notation CLI
