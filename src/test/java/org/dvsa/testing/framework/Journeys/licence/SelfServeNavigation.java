@@ -159,6 +159,18 @@ public class SelfServeNavigation extends BasePage {
         }
     }
 
+    public void refreshPageWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
+        do {
+            refreshPage();
+            waitForPageLoad();
+        } while (!isTextPresent(text) && System.currentTimeMillis() < kickOut);
+        if (System.currentTimeMillis() > kickOut) {
+            throw new TimeoutException(exceptionMessage);
+        }
+    }
+
+
     public void navigateThroughApplication()  {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
