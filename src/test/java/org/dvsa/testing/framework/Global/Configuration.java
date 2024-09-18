@@ -26,9 +26,9 @@ public class Configuration {
         return S3.getTempPassword(emailAddress, getBucketName());
     }
 
-    public String getTempPasswordFromMailhog(String emailSubject){
+  /*  public String getTempPasswordFromMailhog(String emailSubject){
         return mailhog.retrieveTempPassword(emailSubject);
-    }
+    }*/
 
     public String getGovCode() throws InterruptedException {
         return String.valueOf(S3.getSignInCode());
