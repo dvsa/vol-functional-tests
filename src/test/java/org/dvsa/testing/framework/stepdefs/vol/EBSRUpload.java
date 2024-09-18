@@ -27,18 +27,21 @@ public class EBSRUpload extends BasePage {
     @Then("A short notice flag should be displayed in selfserve")
     public void aShortNoticeFlagShouldBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
         world.busRegistrationJourney.viewEBSRInExternal();
-        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'short notice')]", SelectorType.XPATH));
+        world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
+        waitForTextToBePresent("Successful");
+        assertTrue(isTextPresent("Successful"));
+        assertTrue(isTextPresent("New"));
+        assertTrue(isTextPresent("Short notice"));
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
     public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
         world.busRegistrationJourney.viewEBSRInExternal();
-        waitForTextToBePresent("successful");
-        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
-        assertFalse(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'short notice')]", SelectorType.XPATH));
+        world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
+        waitForTextToBePresent("Successful");
+        assertTrue(isTextPresent("Successful"));
+        assertTrue(isTextPresent("New"));
+        assertTrue(isTextPresent("Short notice"));
     }
 
     @And("i add a new bus registration")
