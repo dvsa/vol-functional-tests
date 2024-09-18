@@ -29,6 +29,7 @@ public class EBSRUpload extends BasePage {
         world.busRegistrationJourney.viewEBSRInExternal();
         world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
         waitForTextToBePresent("Successful");
+        refreshPage();
         assertTrue(isTextPresent("Successful"));
         assertTrue(isTextPresent("New"));
         assertTrue(isTextPresent("Short notice"));
@@ -39,9 +40,10 @@ public class EBSRUpload extends BasePage {
         world.busRegistrationJourney.viewEBSRInExternal();
         world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
         waitForTextToBePresent("Successful");
+        refreshPage();
         assertTrue(isTextPresent("Successful"));
         assertTrue(isTextPresent("New"));
-        assertTrue(isTextPresent("Short notice"));
+        assertFalse(isTextPresent("Short notice"));
     }
 
     @And("i add a new bus registration")
