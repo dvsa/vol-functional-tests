@@ -21,7 +21,7 @@ public class SubmissionsJourney extends BasePage {
     public void addPresidingTC() {
         waitAndClick("add", SelectorType.ID);
         waitAndClick("user", SelectorType.ID);
-        selectValueFromDropDown("user", SelectorType.ID, "ALAN GOODMAN");
+        selectValueFromDropDown("user", SelectorType.ID, SecretsManager.getSecretValue("presidingTC"));
         selectRandomValueFromDropDown("user", SelectorType.ID);
         String operatorForename = SecretsManager.getSecretValue("presidingTC");
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
