@@ -27,7 +27,7 @@ public class Configuration {
     }
 
     public String getTempPasswordFromMailhog(String emailSubject){
-        return mailhog.retrievePassword(emailSubject);
+        return mailhog.retrieveTempPassword(emailSubject);
     }
 
     public String getGovCode() throws InterruptedException {
