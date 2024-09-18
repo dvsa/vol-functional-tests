@@ -93,6 +93,7 @@ public class OperatingCentreJourney extends BasePage {
         if ((hasHGVAuthorityOnOCIncreased(newHGVTotalAuthority) || hasTrailerAuthorityOnOCIncreased(newTrailerTotalAuthority)) && world.licenceCreation.isGoodsLicence()) {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
+            clickByXPath("//input[@value='adPlacedLater']");
         }
         UniversalActions.clickSubmit();
     }
