@@ -191,9 +191,11 @@ public class InternalUIJourney extends BasePage {
                 world.internalNavigation.getVariationApplication();
                 break;
         }
-        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--orange')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
+        String actualText = getText("#pg\\:lva-application\\:index > div.page-header > div > strong");
+        assertTrue(actualText.equalsIgnoreCase("UNDER CONSIDERATION"));
+        if(isTextPresent(actualText)) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
-        } else if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("VALID")) {
+        } else if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equalsIgnoreCase("VALID")) {
             waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
         }
         click("//*[@id='add']", SelectorType.XPATH);
