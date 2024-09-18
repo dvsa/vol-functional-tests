@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [2.40.6](https://github.com/dvsa/vol-functional-tests/compare/v2.40.5...v2.40.6) (2024-09-18)
+
+
+### Bug Fixes
+
+* ebsr ([ffc6ce9](https://github.com/dvsa/vol-functional-tests/commit/ffc6ce931e562510e1652deca1107951240b8adc))
+* Operating centre advert radio select ([a9d2419](https://github.com/dvsa/vol-functional-tests/commit/a9d2419612afa0df3841ae0e6a410637142b81d1))
+
 ## [2.40.5](https://github.com/dvsa/vol-functional-tests/compare/v2.40.4...v2.40.5) (2024-09-17)
 
 
