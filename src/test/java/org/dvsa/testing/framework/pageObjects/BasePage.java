@@ -77,17 +77,6 @@ public abstract class BasePage extends DriverUtils {
                 .until(driver -> driver.findElement(by("//h1[@class='govuk-heading-xl']", SelectorType.XPATH)).getText().equalsIgnoreCase("Permit fee"));
     }
 
-    protected static boolean isTextPresent(String locator) {
-        boolean itsFound = true;
-        try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).
-                    until(WebDriver ->
-                            visibilityOf(findElement(String.format("//*[contains(text(),'%s')]", locator), SelectorType.XPATH)));
-        } catch (Exception e) {
-            return false;
-        }
-        return itsFound;
-    }
 
     protected static boolean isTextPresentOnPage(String text) {
         try {
