@@ -25,25 +25,23 @@ public class EBSRUpload extends BasePage {
     }
 
     @Then("A short notice flag should be displayed in selfserve")
-    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
+    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() throws IllegalBrowserException, IOException, InterruptedException {
         world.busRegistrationJourney.viewEBSRInExternal();
-        world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
+        world.selfServeNavigation.refreshUntilSuccessfulOrTimeout();
         waitForTextToBePresent("Successful");
-        refreshPage();
-        assertTrue(isTextPresent("Successful"));
-        assertTrue(isTextPresent("New"));
-        assertTrue(isTextPresent("Short notice"));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'Successful')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'Short notice')]", SelectorType.XPATH));
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
     public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
         world.busRegistrationJourney.viewEBSRInExternal();
-        world.selfServeNavigation.refreshPageWhileCheckingTextPresent("Successful", 900, "Kickout reached");
+        world.selfServeNavigation.refreshUntilSuccessfulOrTimeout();
         waitForTextToBePresent("Successful");
-        refreshPage();
-        assertTrue(isTextPresent("Successful"));
-        assertTrue(isTextPresent("New"));
-        assertFalse(isTextPresent("Short notice"));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'Successful')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
+        assertFalse(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'Short notice')]", SelectorType.XPATH));
     }
 
     @And("i add a new bus registration")

@@ -89,6 +89,19 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
+    protected static boolean isTextPresentOnPage(String text) {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(driver -> {
+                String pageSource = getDriver().getPageSource();
+                boolean found = pageSource.contains(text);
+                return found;
+            });
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
     public static boolean isErrorMessagePresent() {
         boolean hasError = false;
 
@@ -502,6 +515,8 @@ public abstract class BasePage extends DriverUtils {
                         selector))));
     }
 
+
+
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
@@ -548,6 +563,25 @@ public abstract class BasePage extends DriverUtils {
                 filter(x -> x.getAttribute("value").equals(value)).
                 filter(isChecked -> !isChecked.isSelected()).
                 forEach(WebElement::click);
+    }
+
+
+    public void refreshUntilSuccessfulOrTimeout() {
+        long startTime = System.currentTimeMillis();
+        long timeout = 2 * 60 * 1000; //
+        while (System.currentTimeMillis() - startTime < timeout) {
+            if (isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'Successful')]", SelectorType.XPATH)) {
+                return;
+            }
+            refreshPage();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException("Thread was interrupted", e);
+            }
+        }
+        throw new RuntimeException("Timeout: 'Successful' tag not found within 2 minutes");
     }
 
     public void selectFirstValueInList(String selector) {
