@@ -89,7 +89,6 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
-
     public static boolean isErrorMessagePresent() {
         boolean hasError = false;
 
