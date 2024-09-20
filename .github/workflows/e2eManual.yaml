@@ -35,7 +35,6 @@ jobs:
     name: Call E2E Test Workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      test: 'sync'
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
