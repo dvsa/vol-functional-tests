@@ -3,12 +3,6 @@ name: Manual Trigger for End-to-End Test
 on:
   workflow_dispatch:
     inputs:
-      test:
-        required: true
-        type: choice
-        options:
-          - sync
-          - async
       platform_env:
         type: string
         required: true
