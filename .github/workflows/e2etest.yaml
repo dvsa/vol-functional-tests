@@ -69,7 +69,7 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-          role-duration-seconds: 7200
+          role-duration-seconds: 8400
 
       - name: Submit AWS Batch Job
         id: submit-job
