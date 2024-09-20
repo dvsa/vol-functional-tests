@@ -21,10 +21,6 @@ on:
       maven_options:
         type: string
         required: false
-      test:
-          type: string
-          required: true
-
 
 permissions:
   contents: write
@@ -36,7 +32,7 @@ env:
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
   AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ ( inputs.test == 'sync' ) && vars.TF_OIDC_ROLE || vars.TF_OIDC_READONLY_ROLE }}
+  AWS_OIDC_ROLE: ${{ vars.TF_OIDC_ROLE }}
 
 jobs:
   create-job-name:
@@ -49,7 +45,7 @@ jobs:
         id: set-job-name
         run: |
           buildtime=$(date +"%Y%m%d%H%M%S")
-          echo "job_name=${{ inputs.test }}-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
+          echo "job_name=e2e-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
   run-batch:
     name: Run Tests on AWS Batch
