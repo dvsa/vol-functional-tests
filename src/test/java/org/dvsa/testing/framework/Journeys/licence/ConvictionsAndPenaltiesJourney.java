@@ -72,6 +72,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         generateConvictionDescription();
         clickByLinkText("Convictions");
         waitAndClick("add", SelectorType.ID);
+        waitForElementToBePresent("//select[@id='defendantType']");
         selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 2);
         enterText("//input[@id='fields[personFirstname]']", SelectorType.XPATH, faker.generateFirstName());
         enterText("//input[@id='fields[personLastname]']", SelectorType.XPATH, faker.generateLastName());
