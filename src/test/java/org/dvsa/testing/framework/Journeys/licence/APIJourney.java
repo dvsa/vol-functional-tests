@@ -108,10 +108,12 @@ public class APIJourney {
     }
 
     public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
+        lock.lock();
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+        lock.unlock();
     }
 
     public synchronized void grantLicenceAndPayFees() throws HttpException {
