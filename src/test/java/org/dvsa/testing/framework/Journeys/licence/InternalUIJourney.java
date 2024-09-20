@@ -191,7 +191,7 @@ public class InternalUIJourney extends BasePage {
                 world.internalNavigation.getVariationApplication();
                 break;
         }
-        String actualText = getText("#pg\\:lva-application\\:index > div.page-header > div > strong");
+        String actualText = getText("//strong[@class='govuk-tag govuk-tag--orange']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("UNDER CONSIDERATION"));
         if(isTextPresent(actualText)) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
