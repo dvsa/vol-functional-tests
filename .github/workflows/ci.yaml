@@ -39,8 +39,6 @@ jobs:
     needs: 
       - security
       - get-version
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Get cache key
         id: get-cache-key
