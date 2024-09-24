@@ -67,7 +67,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
-      maven-cache-key: ${{ steps.get-cache-key.otputs.cache-key }}
+      maven-cache-key: ${{ steps.get-cache-key.outputs.cache-key }}
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
