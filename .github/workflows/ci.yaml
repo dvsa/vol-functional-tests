@@ -39,6 +39,8 @@ jobs:
     needs: 
       - security
       - get-version
+    outputs:
+      maven-cache-key: ${{ steps.get-cache-key.outputs.cache-ey }}
 
   docker:
     name: Docker
@@ -50,7 +52,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
-      maven-cache-key: ${{ env.cache-key }}
+      maven-cache-key: ${{ needs.build-maven.otputs.maven-cache-key }}
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
