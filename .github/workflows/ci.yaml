@@ -39,6 +39,8 @@ jobs:
     needs: 
       - security
       - get-version
+
+
     outputs:
       maven-cache-key: ${{ steps.get-cache-key.outputs.cache-ey }}
 
