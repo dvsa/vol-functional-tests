@@ -54,7 +54,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with maven
-        run: mvn -B -P github package -DskipTests -Dmaven.repo.local=$HOME/.m2/repository
+        run: mvn -B -P github ${{ inputs.maven-goal}} -Dmaven.repo.local=$HOME/.m2/repository
 
       - name: Output for cache key
         run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
