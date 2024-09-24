@@ -33,12 +33,12 @@ jobs:
 
   build-maven:      
     name: build with Maven
-    uses: ./.github/workflows/maven.yaml
-    with:
-        maven-goal: package -DskipTests
+    runs-on : ubuntu-latest
     needs: 
       - security
       - get-version
+    steps:
+      - uses: actions/checkout@v4
 
       - name: Get cache key
         id: get-cache-key
@@ -67,6 +67,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
+      maven-cache-key: ${{ steps.get-cache-key.outputs.cache-key }}
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
