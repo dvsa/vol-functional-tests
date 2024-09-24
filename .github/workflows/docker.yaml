@@ -17,9 +17,6 @@ on:
         type: boolean
         required: false
         default: false
-      maven-cache-key:
-        type: string
-        required: false
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -36,18 +33,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - name: Restore Maven Cache
-        uses: action/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ inputs.maven-cache-key }}
 
       - uses: hadolint/hadolint-action@v3.1.0
         with:
