@@ -24,7 +24,6 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-RUN mvn clean install -DskipTests
 
 RUN chmod +x ./run.sh
 
