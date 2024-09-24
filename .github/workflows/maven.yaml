@@ -41,6 +41,3 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Get cache key
-        id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT

@@ -33,16 +33,29 @@ jobs:
 
   build-maven:      
     name: build with Maven
-    uses: ./.github/workflows/maven.yaml
-    with:
-        maven-goal: package -DskipTests 
+    runs-on : ubuntu-latest
     needs: 
       - security
       - get-version
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Get cache key
+        id: get-cache-key
+        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
 
-    outputs:
-      maven-cache-key: ${{ steps.get-cache-key.outputs.cache-ey }}
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Run Maven build
+        uses: ./.github/workflows/maven.yamal
+        with:
+          maven-goal: package -DskipTests
 
   docker:
     name: Docker
@@ -54,7 +67,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
-      maven-cache-key: ${{ needs.build-maven.otputs.maven-cache-key }}
+      maven-cache-key: ${{ steps.get-cache-key.otputs.cache-key }}
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
