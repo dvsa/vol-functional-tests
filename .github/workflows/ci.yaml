@@ -40,15 +40,6 @@ jobs:
       - security
       - get-version
 
-      - name: Get cache key
-        id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
-
-
-      - name: Output for cache key
-        run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
-        id: cache-key-output
-
   docker:
     name: Docker
     needs:
