@@ -33,23 +33,17 @@ jobs:
 
   build-maven:      
     name: build with Maven
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/maven.yaml
+    with:
+        maven-goal: package -DskipTests
     needs:
       - security
       - get-version
-
 
       - name: Get cache key
         id: get-cache-key
         run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
 
-      - name: Build with maven
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v4
-        uses: ./.github/workflows/maven.yaml
-        with:
-          maven-goal: package -DskipTests
 
       - name: Output for cache key
         run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
