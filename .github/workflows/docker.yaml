@@ -44,10 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download JAR artifact
-        uses: actions/download-artifact@v3
-        with:
-         name: test-artifact
+
 
       - uses: whelk-io/maven-settings-xml-action@v22
         name: generate settings xml

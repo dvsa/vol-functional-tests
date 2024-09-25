@@ -55,6 +55,10 @@ jobs:
           name: test-artifact
           path: target/test-artifact.jar
 
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: test-artifact
 
       - name: Output for cache key
         run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
