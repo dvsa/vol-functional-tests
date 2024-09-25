@@ -24,6 +24,7 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
+RUN mvn dependency:go-offline -B
 
 RUN chmod +x ./run.sh
 
