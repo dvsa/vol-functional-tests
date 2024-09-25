@@ -40,9 +40,7 @@ jobs:
         run: |
           cp target/*.jar build_artifact/test-artifact.jar
         shell: bash
-        env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/11.0.24-8/x64
-          JAVA_HOME_11_X64: /opt/hostedtoolcache/Java_Adopt_jdk/11.0.24-8/x64
+
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
