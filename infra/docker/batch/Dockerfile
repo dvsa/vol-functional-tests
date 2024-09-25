@@ -1,7 +1,8 @@
-FROM maven:3.8.1-amazoncorretto-11 as maven
+FROM maven:3.9.6-amazoncorretto-11 as maven
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
+
 
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
@@ -19,16 +20,11 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-
-COPY ./settings.xml /root/.m2/settings.xml
-COPY pom.xml ./
-
 COPY . .
 
-RUN mvn clean package -P build-local -DskipTests=true
+COPY ./settings.xml /root/.m2/settings.xml
 
 
-COPY run.sh /app/run.sh
 RUN chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]
