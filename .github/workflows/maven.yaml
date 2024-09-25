@@ -40,11 +40,21 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
 
-      - name: Build with Maven - Offline mode
-        run: mvn dependency:go-offline -B -Dmaven.repo.local=$HOME/.m2/repository
-
       - name: Build with Maven
         run: mvn -B -P github ${{ inputs.maven-goal}} -Dmaven.repo.local=$HOME/.m2/repository
+
+      - name: Save test artifact
+        run: |
+          mkdir - p build_artifact
+          cp target/*.jar build_artifact/test-artifact.jar
+        id: build_artifact
+
+      - name: Upload JAR as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: build_artifact/test-artifact.jar
+
 
       - name: Output for cache key
         run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
