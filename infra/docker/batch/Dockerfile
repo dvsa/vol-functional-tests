@@ -1,12 +1,7 @@
 FROM maven:3.8.1-amazoncorretto-8 as maven
-WORKDIR /app
-ADD . /app
-
-RUN ["mvn", "clean", "package", "-P build-local -DskipTests=true"]
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
-
 
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
@@ -32,7 +27,7 @@ RUN mvn dependency:go-offline - B
 
 COPY . .
 
-RUN mvn package -DskipTests
+RUN mvn package -DskipTests && mvn clean package  -DskipTests
 
 COPY run.sh /app/run.sh
 RUN chmod +x ./run.sh
