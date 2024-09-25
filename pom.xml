@@ -189,6 +189,16 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.14</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>5.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-bom</artifactId>
+            <version>7.15.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
