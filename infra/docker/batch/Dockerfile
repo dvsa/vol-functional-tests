@@ -23,11 +23,10 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 COPY ./settings.xml /root/.m2/settings.xml
 COPY pom.xml ./
 
-RUN mvn dependency:go-offline - B
-
 COPY . .
 
-RUN mvn package -DskipTests && mvn clean package  -DskipTests
+RUN mvn package -DskipTests && mvn dependency:go-offline - B
+
 
 COPY run.sh /app/run.sh
 RUN chmod +x ./run.sh
