@@ -24,7 +24,7 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-RUN mvn clean package -B -DskipTests -Dmaven.repo.local=/root/.m2/repository
+COPY test-artifact.jar /app/test-artifact.jar
 
 RUN chmod +x ./run.sh
 
