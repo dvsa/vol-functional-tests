@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir - p build_artifact
           cp target/*.jar build_artifact/test-artifact.jar
-        id: build_artifact
+        id: test_artifact
 
       - name: Upload JAR as artifact
         uses: actions/upload-artifact@v3
