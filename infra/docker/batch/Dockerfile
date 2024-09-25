@@ -25,7 +25,7 @@ COPY pom.xml ./
 
 COPY . .
 
-RUN mvn package -DskipTests && mvn dependency:go-offline - B
+RUN mvn dependency:go-offline && mvn package -DskipTests
 
 
 COPY run.sh /app/run.sh
