@@ -1,10 +1,4 @@
 FROM maven:3.8.1-amazoncorretto-11 as maven
-WORKDIR /app
-ADD . /app
-COPY ./settings.xml /root/.m2/settings.xml
-COPY pom.xml ./
-RUN ["mvn", "clean", "package", "-P build-local -skipTests=true"]
-
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
@@ -31,7 +25,7 @@ COPY pom.xml ./
 
 COPY . .
 
-RUN mvn dependency:go-offline && mvn package -DskipTests
+RUN mvn clean package -P build-local -DskipTests=true
 
 
 COPY run.sh /app/run.sh
