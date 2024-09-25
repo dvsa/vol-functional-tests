@@ -34,7 +34,7 @@ FROM openjdk:11-jre-slim
 
 ARG JAR_VERSION=2.40.8-SNAPSHOT
 
-COPY --from=maven-build /app/target/vol-functional-tests-${JAR_VERSION}.jar /app/test-artifact.jar
+COPY --from=maven-build-stage /app/target/vol-functional-tests-${JAR_VERSION}.jar /app/test-artifact.jar
 
 COPY run.sh /app/run.sh
 RUN chmod +x ./run.sh
