@@ -24,8 +24,7 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-RUN mvn clean package -DskipTests=true && \
-    mvn dependency:go-offline -B
+RUN mvn clean package -DskipTests=true
 
 RUN chmod +x ./run.sh
 
