@@ -2,7 +2,7 @@ FROM maven:3.8.1-amazoncorretto-8 as maven
 WORKDIR /app
 ADD . /app
 
-RUN ["mvn", "clean", "package", "-P build-local -skipTests=true"]
+RUN ["mvn", "clean", "package", "-P build-local -DskipTests=true"]
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
