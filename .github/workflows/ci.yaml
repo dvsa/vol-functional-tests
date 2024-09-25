@@ -33,41 +33,12 @@ jobs:
 
   build-maven:      
     name: build with Maven
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/maven.yaml
+    with:
+        maven-goal: package -DskipTests
     needs: 
       - security
       - get-version
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Get cache key
-        id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-
-      - uses: whelk-io/maven-settings-xml-action@v22
-        with:
-          servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
-
-      - name: Build with maven
-        run: mvn -B -P github package -DskipTests ${{ inputs.maven-goal}} -Dmaven.repo.local=$HOME/.m2/repository
-
-      - name: Output for cache key
-        run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
-        id: cache-key-output
 
   docker:
     name: Docker

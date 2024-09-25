@@ -33,10 +33,16 @@ jobs:
       - name: Build with Maven
         run: mvn -B -P github ${{ inputs.maven-goal}} -Dmaven.repo.local=$HOME/.m2/repository
 
+      - name: Get cache key
+        id: get-cache-key
+        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+
+      - name: Output for cache key
+        run: echo "cache-key=${{ steps.get-cache-key.outputs.cache-key }}" >> $GITHUB_OUTPUT
+        id: cache-key-output
