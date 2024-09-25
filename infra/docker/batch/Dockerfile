@@ -20,11 +20,23 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
+COPY pom.xml ./
 
+RUN mvn dependency:go-offline - B
 
+COPY ./src ./src
+
+RUN mvn package -DskipTests
+
+FROM openjdk:11-jre-slim
+
+ARG JAR_VERSION=2.40.8-SNAPSHOT
+
+COPY --from=maven-build /app/target/vol-functional-tests-${JAR_VERSION}.jar /app/test-artifact.jar
+
+COPY run.sh /app/run.sh
 RUN chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]
