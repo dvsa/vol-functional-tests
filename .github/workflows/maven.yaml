@@ -30,30 +30,27 @@ jobs:
         with:
           servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
 
-      - name: Get cache key
-        id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-
       - name: Build with Maven
         run: mvn -B -P github ${{ inputs.maven-goal}} -Dmaven.repo.local=$HOME/.m2/repository
 
+      - name: Create directory
+        run: mkdir -p build_artifact
+
       - name: Save test artifact
         run: |
-          mkdir - p build_artifact
           cp target/*.jar build_artifact/test-artifact.jar
-        id: test_artifact
+        shell: bash
+        env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/11.0.24-8/x64
+          JAVA_HOME_11_X64: /opt/hostedtoolcache/Java_Adopt_jdk/11.0.24-8/x64
 
-      - name: Upload JAR as artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: test-artifact
-          path: target/test-artifact.jar
+          path: build_artifact/test-artifact.jar
+          if-no-files-found: warn
+          include-hidden-files: false
 
       - name: Download JAR artifact
         uses: actions/download-artifact@v3
