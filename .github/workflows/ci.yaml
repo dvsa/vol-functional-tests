@@ -50,6 +50,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
+      artifact-name: test-artifact
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
