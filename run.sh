@@ -80,8 +80,8 @@ fi
 echo "Now running [ java -jar /app/test-artifact.jar ] .."
 java -jar /app/test-artifact.jar
 if [ $? -ne 0 ]; then
-  echo "Error: The Java application exited with status $?"
+  echo "Error: vol functional tests exited with status $?"
   exit 1
 else
-  echo "Java application executed successfully."
+  echo "vol functional tests executed successfully."
 fi
