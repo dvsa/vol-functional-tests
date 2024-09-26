@@ -1,5 +1,30 @@
 # Revision History for the VOL Functional Tests
 
+## [2.40.7](https://github.com/dvsa/vol-functional-tests/compare/v2.41.0...v2.40.7) (2024-09-26)
+
+
+### Features
+
+* adding in inital maveb step in container ([2c8602e](https://github.com/dvsa/vol-functional-tests/commit/2c8602ec62e92a1667bb1b4a98a45b9c038e1734))
+* change readme ([b9e4579](https://github.com/dvsa/vol-functional-tests/commit/b9e4579e8ba9d52b958a4904bf6bcaf602362f62))
+* reverting docker changes ([1681d93](https://github.com/dvsa/vol-functional-tests/commit/1681d930d4b6f839a3dfe6746b29179c45a10256))
+* reverting docker changes ([c42cb5d](https://github.com/dvsa/vol-functional-tests/commit/c42cb5df0d04e46688423be88f6eb7c858afb8d4))
+
+
+### Bug Fixes
+
+* ebsr ([ffc6ce9](https://github.com/dvsa/vol-functional-tests/commit/ffc6ce931e562510e1652deca1107951240b8adc))
+* Operating centre advert radio select ([a9d2419](https://github.com/dvsa/vol-functional-tests/commit/a9d2419612afa0df3841ae0e6a410637142b81d1))
+* type in parent workflow name ([caa564d](https://github.com/dvsa/vol-functional-tests/commit/caa564dfcc3b4e667a134ce4052db3c05f820192))
+
+
+### Miscellaneous Chores
+
+* bump to 2.40.2 ([abe3de1](https://github.com/dvsa/vol-functional-tests/commit/abe3de1e4b87dbc5adf752c11e1b38989c51c5e2))
+* bump to 2.40.3 ([4534dbe](https://github.com/dvsa/vol-functional-tests/commit/4534dbe72d80c084f4e54b7bca0cb17fbb6efc73))
+* bump to 2.40.5 ([e7a7d5f](https://github.com/dvsa/vol-functional-tests/commit/e7a7d5f90ccf2d02097ad03f04092643961f0d74))
+* bump to 2.40.7 ([f24afcb](https://github.com/dvsa/vol-functional-tests/commit/f24afcb82ebf948c455fffb48e814b2f13d711a1))
+
 ## [2.41.0](https://github.com/dvsa/vol-functional-tests/compare/v2.40.7...v2.41.0) (2024-09-26)
 
 
