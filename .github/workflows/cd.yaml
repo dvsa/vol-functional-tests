@@ -29,7 +29,6 @@ jobs:
     name: Build with Maven
     runs-on: ubuntu-latest
     needs:
-      - release-please
       - security
       - get-version
     uses: ./.github/workflows/maven.yaml
