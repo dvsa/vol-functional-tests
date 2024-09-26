@@ -36,6 +36,9 @@
         <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
         <java.version>11</java.version>
+        <cucumber-junit-platform-engine-version>7.15.0</cucumber-junit-platform-engine-version>
+        <junit-platform-suite-version>1.10.1</junit-platform-suite-version>
+        <cucumber-picocontainer.version>7.15.0</cucumber-picocontainer.version>
 
         <jvmMemory>9250</jvmMemory>
     </properties>
@@ -281,12 +284,6 @@
             <id>github</id>
             <name>GitHub dvsa Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/dvsa/vol-functional-tests</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
         </repository>
     </distributionManagement>
 </project>
