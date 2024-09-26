@@ -25,6 +25,16 @@ jobs:
           release-type: maven
           target-branch: ${{ github.ref_name }}
 
+    build-maven:
+      name: build with Maven
+      uses: ./.github/workflows/maven.yaml
+      with:
+        maven-goal: package -DskipTests
+      needs:
+        - security
+        - get-version
+
+
   docker:
     name: Docker
     if: ${{needs.release-please.outputs.release_created}}
