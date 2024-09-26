@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.1.0](https://github.com/dvsa/vol-functional-tests/compare/v3.0.0...v3.1.0) (2024-09-26)
+
+
+### Features
+
+* revert maven/docker workflow changes ([9fefc6e](https://github.com/dvsa/vol-functional-tests/commit/9fefc6e2ee0133224400ed906b76946fdecac829))
+
 ## [3.0.0](https://github.com/dvsa/vol-functional-tests/compare/v2.40.7...v3.0.0) (2024-09-26)
 
 
