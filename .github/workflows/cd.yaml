@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   release-please:
@@ -26,14 +25,6 @@ jobs:
           release-type: maven
           target-branch: ${{ github.ref_name }}
 
-  build-maven:
-    name: Build with Maven
-    uses: ./.github/workflows/maven.yaml
-    with:
-      maven-goal: package -DskipTests
-    needs:
-      - release-please
-
   docker:
     name: Docker
     if: ${{needs.release-please.outputs.release_created}}
@@ -47,5 +38,4 @@ jobs:
       contents: read
       id-token: write
       packages: write
-    needs:
-      - build-maven
+    needs: release-please
