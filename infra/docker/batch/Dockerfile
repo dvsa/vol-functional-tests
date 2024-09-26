@@ -24,6 +24,7 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
+RUN mvn clean package -B -DskipTests -Dmaven.repo.local=/root/.m2/repository
 
 RUN chmod +x ./run.sh
 
