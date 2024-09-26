@@ -25,15 +25,15 @@ jobs:
           release-type: maven
           target-branch: ${{ github.ref_name }}
 
-    build-maven:
-      name: build with Maven
-      uses: ./.github/workflows/maven.yaml
-      with:
-        maven-goal: package -DskipTests
-      needs:
-        - security
-        - get-version
-
+  build-maven:
+    name: Build with Maven
+    runs-on: ubuntu-latest
+    needs:
+      - security
+      - get-version
+    uses: ./.github/workflows/maven.yaml
+    with:
+      maven-goal: package -DskipTests
 
   docker:
     name: Docker
@@ -48,4 +48,6 @@ jobs:
       contents: read
       id-token: write
       packages: write
-    needs: release-please
+    needs:
+      - build-maven
+      - release-please
