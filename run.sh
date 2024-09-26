@@ -73,7 +73,7 @@ if [ ! -f "/app/test-artifact.jar" ]; then
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
   aws s3 cp ../allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
-  echo "Using existing test-artifact.jar found in /app."
+  echo "Maven command failed!"
 fi
 
 # Run the JAR file
