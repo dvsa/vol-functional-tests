@@ -1,5 +1,17 @@
 # Revision History for the VOL Functional Tests
 
+## [3.0.0](https://github.com/dvsa/vol-functional-tests/compare/v2.40.7...v3.0.0) (2024-09-26)
+
+
+### Features
+
+* adding in inital maveb step in container ([2c8602e](https://github.com/dvsa/vol-functional-tests/commit/2c8602ec62e92a1667bb1b4a98a45b9c038e1734))
+
+
+### Miscellaneous Chores
+
+* bump to 3.0.0 ([89330e3](https://github.com/dvsa/vol-functional-tests/commit/89330e349b806fac7cffbb77dae56d6e76749d22))
+
 ## [2.40.7](https://github.com/dvsa/vol-functional-tests/compare/v2.41.0...v2.40.7) (2024-09-26)
 
 
