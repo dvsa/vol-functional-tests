@@ -27,13 +27,11 @@ jobs:
 
   build-maven:
     name: Build with Maven
-    runs-on: ubuntu-latest
-    needs:
-      - security
-      - get-version
     uses: ./.github/workflows/maven.yaml
     with:
       maven-goal: package -DskipTests
+    needs:
+      - release-please
 
   docker:
     name: Docker
@@ -50,4 +48,3 @@ jobs:
       packages: write
     needs:
       - build-maven
-      - release-please
