@@ -24,7 +24,6 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-COPY ./build_artifact/test-artifact.jar /app/test-artifact.jar
 
 RUN chmod +x ./run.sh
 
