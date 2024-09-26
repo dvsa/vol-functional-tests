@@ -44,12 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download JAR artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: test-artifact
-          path: build_artifact/test-artifact.jar
-
       - uses: whelk-io/maven-settings-xml-action@v22
         name: generate settings xml
         with:
@@ -115,7 +109,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
       
 
       - name: Setup Notation CLI
