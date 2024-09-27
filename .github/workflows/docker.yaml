@@ -17,9 +17,9 @@ on:
         type: boolean
         required: false
         default: false
-        maven-cache-key:
-          type: string
-          required: false
+      maven-cache-key:
+        type: string
+        required: false
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -78,7 +78,7 @@ jobs:
 
       - name: Extract Docker metadata
         id: meta
-        
+
         uses: docker/metadata-action@v5
         with:
           images: |
@@ -128,7 +128,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            MAVEN_CACHE_VOLUME=-Dmaven.repo.local=$HOME/.m2/repository
+            MAVEN_CACHE_VOLUME=${{ inputs.maven-cache-key != '' && format('-v {0}/.m2:/root/.m2', runner.temp) || '' }}
 
 
       - name: Setup Notation CLI
