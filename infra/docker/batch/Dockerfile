@@ -9,6 +9,14 @@ ENV proxyPort=$proxyPort
 
 WORKDIR /app
 
+COPY pom.xml /app/pom.xml
+COPY src ./src
+COPY ./settings.xml /root/.m2/settings.xml
+
+RUN mkdir -p /root/.m2/repository
+
+RUN mvn clean package -B -DskipTests
+
 RUN yum update -y && \
     yum install -y zip-3.* unzip-6.*  && \
     yum clean all && \
@@ -24,6 +32,6 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-RUN chmod +x ./run.sh && ls -la /root/.m2/repository
+RUN chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]

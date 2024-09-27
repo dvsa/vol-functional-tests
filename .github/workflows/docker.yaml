@@ -17,6 +17,9 @@ on:
         type: boolean
         required: false
         default: false
+        maven-cache-key:
+          type: string
+          required: true
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -45,6 +48,8 @@ jobs:
         with:
           path: ~/.m2/repository
           key: ${{ inputs.maven-cache-key }}
+          restore-keys: |
+           ${{ runner.os }}-maven- 
 
       - uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -121,6 +126,8 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            MAVEN_CACHE_VOLUME=-Dmaven.repo.local=$HOME/.m2/repository
 
 
       - name: Setup Notation CLI
