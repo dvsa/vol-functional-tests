@@ -10,12 +10,12 @@ ENV proxyPort=$proxyPort
 WORKDIR /app
 
 COPY pom.xml /app/pom.xml
-COPY src ./src
 COPY ./settings.xml /root/.m2/settings.xml
-
-RUN mkdir -p /root/.m2/repository
-
+COPY src ./src
 RUN mvn clean package -B -DskipTests
+RUN mvn dependency:go-offline -B
+
+COPY src ./src
 
 RUN yum update -y && \
     yum install -y zip-3.* unzip-6.*  && \
@@ -30,7 +30,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 COPY . .
 
-COPY ./settings.xml /root/.m2/settings.xml
 
 RUN chmod +x ./run.sh
 
