@@ -33,7 +33,7 @@ jobs:
         run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}" >> $GITHUB_OUTPUT
 
       - name: Build with Maven
-        run: mvn dependency:go-offline -B -U github ${{ inputs.maven-goal }} -Dmaven.repo.local=$HOME/.m2/repository
+        run: mvn dependency:go-offline -B -U
 
       - name: Cache Maven packages
         uses: actions/cache@v3
