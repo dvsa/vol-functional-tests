@@ -7,6 +7,10 @@ on:
         required: true
         default: 'package'
         type: string
+      outputs:
+        cache-key:
+          description: "maven cache key"
+          value: ${{ jobs.build.outputs.cache-key }}
 
 permissions:
   contents: read
@@ -16,11 +20,17 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.get-cache-key.otputs-cache-key }}
     steps:
       - uses: actions/checkout@v4
       - uses: whelk-io/maven-settings-xml-action@v22
         with:
           servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
+
+      - name: Get cache key
+        id: get-cache-key
+        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
 
       - name: Build with Maven
         run: mvn -B -P github ${{ inputs.maven-goal }} -Dmaven.repo.local=$HOME/.m2/repository
@@ -33,6 +43,3 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Get cache key
-        id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT

@@ -44,6 +44,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Restore Maven Cache
+        if: inputs.maven-cache-key != ''
         uses: action/cache@v3
         with:
           path: ~/.m2/repository
