@@ -38,6 +38,7 @@
         <java.version>11</java.version>
         <cucumber.version>7.15.0</cucumber.version>
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
+        <junit-platform.version>1.10.1</junit-platform.version>
         <jvmMemory>12000</jvmMemory>
     </properties>
 
