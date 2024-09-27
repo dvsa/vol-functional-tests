@@ -24,7 +24,6 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
-
-RUN chmod +x ./run.sh
+RUN chmod +x ./run.sh && ls -la /root/.m2/repository
 
 CMD ["/bin/sh", "-c", "./run.sh"]
