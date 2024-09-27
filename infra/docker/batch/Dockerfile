@@ -12,8 +12,8 @@ WORKDIR /app
 COPY pom.xml /app/pom.xml
 COPY ./settings.xml /root/.m2/settings.xml
 COPY src ./src
-RUN mvn clean package -B -DskipTests
-RUN mvn dependency:go-offline -B
+RUN mvn clean package -B -DskipTests && RUN mvn dependency:go-offline -B
+
 
 COPY src ./src
 
