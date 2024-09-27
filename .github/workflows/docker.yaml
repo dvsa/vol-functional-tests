@@ -19,7 +19,7 @@ on:
         default: false
         maven-cache-key:
           type: string
-          required: true
+          required: false
 
 env:
   WORKING_DIR: infra/docker/batch
