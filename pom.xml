@@ -42,12 +42,7 @@
         <jvmMemory>12000</jvmMemory>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
+
         <repository>
             <id>dvsa-github-packages</id>
             <url>https://maven.pkg.github.com/dvsa/*</url>
@@ -58,7 +53,6 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
