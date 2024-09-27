@@ -7,10 +7,10 @@ on:
         required: true
         default: 'package'
         type: string
-      outputs:
-        cache-key:
-          description: "maven cache key"
-          value: ${{ jobs.build.outputs.cache-key }}
+    outputs:
+      cache-key:
+        description: "maven cache key"
+        value: ${{ jobs.build.outputs.cache-key }}
 
 permissions:
   contents: read
@@ -21,7 +21,7 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.get-cache-key.otputs-cache-key }}
+      cache-key: ${{ steps.get-cache-key.outputs.cache-key }}
     steps:
       - uses: actions/checkout@v4
       - uses: whelk-io/maven-settings-xml-action@v22
@@ -30,7 +30,7 @@ jobs:
 
       - name: Get cache key
         id: get-cache-key
-        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
+        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}" >> $GITHUB_OUTPUT
 
       - name: Build with Maven
         run: mvn -B -P github ${{ inputs.maven-goal }} -Dmaven.repo.local=$HOME/.m2/repository
@@ -39,7 +39,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-
