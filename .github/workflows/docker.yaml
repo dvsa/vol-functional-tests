@@ -144,8 +144,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            MAVEN_CACHE_VOLUME=${{ inputs.maven-cache-key != '' && format('-v {0}/.m2:/root/.m2', runner.temp) || '' }}
-
+            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            CI_PROXY=${{ vars.CI_PROXY }}
+            CI_PROXYPORT=${{ vars.CI_PROXYPORT }}
 
       - name: Setup Notation CLI
         if: ${{ inputs.push }}

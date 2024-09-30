@@ -4,15 +4,20 @@ ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 
-ENV proxyHost=$proxyHost
-ENV proxyPort=$proxyPort
+ARG GITHUB_TOKEN
+ARG CI_PROXY
+ARG CI_PROXYPORT
+
+ENV GITHUB_TOKEN=${GITHUB_TOKEN}
+ENV http_proxy=http://${CI_PROXY}:${CI_PROXYPORT}
+ENV https_proxy=http://${CI_PROXY}:${CI_PROXYPORT}
 
 WORKDIR /app
 
 COPY pom.xml /app/pom.xml
 COPY .m2/settings.xml /root/.m2/settings.xml
 COPY src ./src
-RUN mvn dependency:go-offline -B -U -X && mvn clean package -B -DskipTests -o -X
+RUN mvn dependency:go-offline -B -U -X - && mvn clean package -B -DskipTests -o -X
 
 
 COPY src ./src
