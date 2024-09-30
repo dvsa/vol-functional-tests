@@ -123,7 +123,13 @@ jobs:
       - name: Prepare settings file
         run: |
           mkdir -p .m2
-          cp  ./settings.xml .m2/settings.xml 
+          cp ./settings.xml .m2/settings.xml
+          echo "contents of current dir:"
+          ls -la
+          echo "Contents of .m2 dir:"
+          ls -la .m2
+          echo "Contents of settings file:"
+          cat .m2/settings.xml
 
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
