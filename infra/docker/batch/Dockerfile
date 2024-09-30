@@ -4,13 +4,8 @@ ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 
-ARG GITHUB_TOKEN
-ARG CI_PROXY
-ARG CI_PROXYPORT
-
-ENV GITHUB_TOKEN=${GITHUB_TOKEN}
-ENV http_proxy=http://${CI_PROXY}:${CI_PROXYPORT}
-ENV https_proxy=http://${CI_PROXY}:${CI_PROXYPORT}
+ENV proxyHost=$proxyHost
+ENV proxyPort=$proxyPort
 
 WORKDIR /app
 

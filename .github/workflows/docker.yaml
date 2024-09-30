@@ -166,10 +166,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-            CI_PROXY=${{ vars.CI_PROXY }}
-            CI_PROXYPORT=${{ vars.CI_PROXYPORT }}
+
 
       - name: Setup Notation CLI
         if: ${{ inputs.push }}
