@@ -24,8 +24,9 @@ COPY run.sh .
 RUN chmod +x ./run.sh
 
 
-RUN yum update -y && \
-    yum install -y zip-3.* unzip-6.*  && \
+RUN amazon-linux-extras install epel -y && \
+    yum update -y && \
+    yum install -y zip unzip curl && \
     yum clean all && \
     rm -rf /var/cache/yum
 
