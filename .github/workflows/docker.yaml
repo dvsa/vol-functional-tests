@@ -62,11 +62,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-#      - name: Download settings.xml
-#        uses: actions/download-artifact@v3
-#        with:
-#          name: maven-settings
-#          path: /home/runner/.m2/settings.xml
+      - name: Download settings.xml
+        uses: actions/download-artifact@v3
+        with:
+          name: maven-settings
+          path: /home/runner/.m2/settings.xml
 
 
       - name: Set up Docker Buildx
@@ -143,16 +143,16 @@ jobs:
           proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${{vars.CI_PROXY}}", "port": "${{vars.CI_PROXYPORT}}", "nonProxyHosts": "repo.maven.apache.org|maven.pkg.github.com" }]'
           output_file: ./settings.xml
 
-#      - name: Prepare settings file
-#        run: |
-#          mkdir -p .m2
-#          cp ./settings.xml .m2/settings.xml
-#          echo "contents of current dir:"
-#          ls -la
-#          echo "Contents of .m2 dir:"
-#          ls -la .m2
-#          echo "Contents of settings file:"
-#          cat .m2/settings.xml
+      - name: Prepare settings file
+        run: |
+          mkdir -p .m2
+          cp ./settings.xml .m2/settings.xml
+          echo "contents of current dir:"
+          ls -la
+          echo "Contents of .m2 dir:"
+          ls -la .m2
+          echo "Contents of settings file:"
+          cat .m2/settings.xml
 
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
