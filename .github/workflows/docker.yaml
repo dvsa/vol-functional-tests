@@ -111,6 +111,11 @@ jobs:
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
 
+      - name: Prepare settings file
+        run: |
+          mkdir -p .m2
+          cp. /settings.xml .m2/settings.xml 
+
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
