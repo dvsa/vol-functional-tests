@@ -24,12 +24,10 @@ COPY run.sh .
 RUN chmod +x ./run.sh
 
 
-RUN yum update -y && \
-    yum install -y zip-3.* unzip-6.*  && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+RUN apk update && \
+    apk add --no-cache zip unzip curl
 
-# Install latest version of the aws cli 
+# Install latest version of the aws cli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
