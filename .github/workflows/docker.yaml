@@ -115,11 +115,12 @@ jobs:
         run: |
           mkdir -p .m2
           if [ -f ~/.m2/settings.xml ]; then
-          cp -/.m2/settings.xml .m2/
-          elif [ -f ~/.m2/settings.xml ]; then
-          cp ~/.m2/settings.xml .m2/
+            cp ~/.m2/settings.xml .m2/settings.xml
+          elif [ -f /home/runner/.m2/settings.xml ]; then
+            cp /home/runner/.m2/settings.xml .m2/settings.xml
           else
-          exit 1
+            echo "settings.xml not found in expected locations"
+            exit 1
           fi
 
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
