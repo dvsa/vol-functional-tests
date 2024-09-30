@@ -113,8 +113,14 @@ jobs:
 
       - name: Create maven dir
         run: |
-          mkdir - p .m2
-          cp ~/.m2/settings.xml .m2/settings.xml 
+          mkdir -p .m2
+          if [ -d ~/.m2/settings.xml ]; then
+          cp -r ~/.m2/settings.xml .m2/
+          elif [ -f ~/.m2/settings.xml ]; then
+          cp ~/.m2/settings.xml .m2/
+          else
+          exit 1
+          fi
 
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
