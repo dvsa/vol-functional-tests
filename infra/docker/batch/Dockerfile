@@ -13,10 +13,16 @@ COPY pom.xml /app/pom.xml
 COPY .m2/settings.xml /root/.m2/settings.xml
 COPY src ./src
 
-RUN mvn dependency:go-offline && mvn clean package -DskipTests
+RUN mvn dependency:go-offline && \
+    mvn clean package -DskipTests
 
 
-COPY src ./src
+FROM amazoncorretto:11-alpine
+WORKDIR /app
+COPY --from=builder /app/target/*.jar test-artifact.jar
+COPY run.sh .
+RUN chmod +x ./run.sh
+
 
 RUN yum update -y && \
     yum install -y zip-3.* unzip-6.*  && \
@@ -29,9 +35,5 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-COPY . .
-
-
-RUN chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]
