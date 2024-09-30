@@ -47,4 +47,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: maven-settings
-          path: settings.xml
+          path: /home/runner/.m2/settings.xml
