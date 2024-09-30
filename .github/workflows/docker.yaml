@@ -111,6 +111,15 @@ jobs:
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
 
+      - name: locate settings.xml
+        run: |
+          echo "m2 folder contents"
+          ls -la ~/.m2 || echo "m2 doesn't exist"
+          echo "runner/.m2 contents"
+          -ls -la /home/runner./m2 || echo "runner folder does not exist"
+          echo " looking for settings xml"
+          find / -name settings.xml 2>dev/null "" 
+
       - name: Create maven dir
         run: |
           mkdir -p .m2
