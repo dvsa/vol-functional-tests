@@ -111,27 +111,6 @@ jobs:
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
 
-      - name: locate settings.xml
-        run: |
-          echo "m2 folder contents"
-          ls -la ~/.m2 || echo "m2 doesn't exist"
-          echo "runner/.m2 contents"
-          -ls -la /home/runner./m2 || echo "runner folder does not exist"
-          echo " looking for settings xml"
-          find / -name settings.xml 2>dev/null "" 
-
-      - name: Create maven dir
-        run: |
-          mkdir -p .m2
-          if [ -f ~/.m2/settings.xml ]; then
-            cp ~/.m2/settings.xml .m2/settings.xml
-          elif [ -f /home/runner/.m2/settings.xml ]; then
-            cp /home/runner/.m2/settings.xml .m2/settings.xml
-          else
-            echo "settings.xml not found in expected locations"
-            exit 1
-          fi
-
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
