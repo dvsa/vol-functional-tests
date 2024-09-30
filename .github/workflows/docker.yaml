@@ -52,6 +52,12 @@ jobs:
           restore-keys: |
            ${{ runner.os }}-maven- 
 
+      - name: Downlaod settings.xml
+        uses: actions/download-artifact@v3
+        with:
+          name: maven-settings
+          path: ${{ env.WORKING_DIR }}
+
       - uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ env.WORKING_DIR }}/Dockerfile

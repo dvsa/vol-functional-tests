@@ -42,3 +42,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Upload settings.xml
+        uses: actions/upload-artifact@v3
+        with:
+          name: maven-settings
+          path: settings.xml
