@@ -1,4 +1,4 @@
-FROM maven:3.9.6-amazoncorretto-11 as maven
+FROM maven:3.9.6-amazoncorretto-11 as maven_builder
 
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
@@ -19,7 +19,7 @@ RUN mvn dependency:go-offline && \
 
 FROM amazoncorretto:11-alpine
 WORKDIR /app
-COPY --from=builder /app/target/*.jar test-artifact.jar
+COPY --from=maven_builder /app/target/*.jar app.jar
 COPY run.sh .
 RUN chmod +x ./run.sh
 
