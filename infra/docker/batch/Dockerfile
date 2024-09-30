@@ -17,14 +17,14 @@ RUN mvn dependency:go-offline && \
     mvn clean package -DskipTests
 
 
-FROM amazoncorretto:11-alpine
+FROM amazonlinux:2
 WORKDIR /app
 COPY --from=maven_builder /app/target/*.jar app.jar
 COPY run.sh .
 RUN chmod +x ./run.sh
 
 
-RUN amazon-linux-extras install epel -y && \
+RUN amazon-linux-extras install java-11-amazon-correcto-y && \
     yum update -y && \
     yum install -y zip unzip curl && \
     yum clean all && \
