@@ -25,7 +25,11 @@ RUN chmod +x ./run.sh
 
 
 RUN apk update && \
-    apk add --no-cache zip unzip curl
+    apk add --no-cache \
+    zip=3.0-r10 | \
+    unzip=6.0-r9 \
+    curl=8.5.0-r0
+
 
 # Install latest version of the aws cli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
