@@ -23,13 +23,11 @@ COPY --from=maven_builder /app/target/*.jar app.jar
 COPY run.sh .
 RUN chmod +x ./run.sh
 
-SHELL ["bin/ash", "-eo", "pipefail", "-c"]
 
-# hadolint ignore=SC2034
-RUN apk add --no-cache \
-    zip=3.0-r10 | \
-    unzip=6.0-r9 \
-    curl=8.5.0-r0
+RUN yum update -y && \
+    yum install -y zip-3.* unzip-6.*  && \
+    yum clean all && \
+    rm -rf /var/cache/yum
 
 
 # Install latest version of the aws cli
@@ -39,4 +37,4 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     rm -f awscliv2.zip
 
 
-CMD ["/bin/ash", "-c", "./run.sh"]
+CMD ["/bin/bash", "-c", "./run.sh"]
