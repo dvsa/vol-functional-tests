@@ -10,7 +10,7 @@ ENV proxyPort=$proxyPort
 WORKDIR /app
 
 COPY pom.xml /app/pom.xml
-COPY /home/runner/.m2/settings.xml /root/.m2/settings.xml
+COPY .m2/settings.xml /root/.m2/settings.xml
 COPY src ./src
 RUN mvn dependency:go-offline -B -U -X && mvn clean package -B -DskipTests -o -X
 
