@@ -32,15 +32,16 @@ RUN amazon-linux-extras enable java-openjdk11 && \
     zip-3.0-11.amzn2.0.2 \
     unzip-6.0-43.amzn2.0.1 \
     curl-7.61.1-25.amzn2.0.3 && \
+    awscli && \
     yum clean all && \
     rm -rf /var/cache/yum
 
 
-# Install latest version of the aws cli
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
-    rm -f awscliv2.zip
+## Install latest version of the aws cli
+#RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+#    unzip awscliv2.zip && \
+#    ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
+#    rm -f awscliv2.zip
 
 
 CMD ["/bin/bash", "-c", "./run.sh"]
