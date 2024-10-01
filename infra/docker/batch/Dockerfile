@@ -24,15 +24,12 @@ COPY run.sh .
 RUN chmod +x ./run.sh
 
 
-RUN amazon-linux-extras enable java-openjdk11 && \
-    yum clean metadata && \
-    yum update -y && \
+RUN yum update -y && \
     yum install -y \
-    java-11-openjdk11-devel-11.0-20-0.8.1-amzn2.0.1 \
-    zip-3.0-11.amzn2.0.2 \
-    unzip-6.0-43.amzn2.0.1 \
-    curl-7.61.1-25.amzn2.0.3 && \
-    awscli && \
+        zip \
+        unzip \
+        curl \
+        awscli && \
     yum clean all && \
     rm -rf /var/cache/yum
 
