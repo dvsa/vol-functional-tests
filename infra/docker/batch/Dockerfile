@@ -23,7 +23,7 @@ COPY --from=maven_builder /app/target/*.jar app.jar
 COPY run.sh .
 RUN chmod +x ./run.sh
 
-
+# hadolint ignore=DL3033
 RUN yum update -y && \
     yum install -y \
         zip \
