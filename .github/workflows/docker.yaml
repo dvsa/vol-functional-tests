@@ -17,6 +17,9 @@ on:
         type: boolean
         required: false
         default: false
+      maven-cache-key:
+        type: string
+        required: false
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -34,6 +37,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Restore Maven Cache
+        if: inputs.maven-cache-key != ''
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ inputs.maven-cache-key }}
+          restore-keys: |
+           ${{ runner.os }}-maven- 
+
       - uses: hadolint/hadolint-action@v3.1.0
         with:
           dockerfile: ${{ env.WORKING_DIR }}/Dockerfile
@@ -44,23 +62,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: whelk-io/maven-settings-xml-action@v22
-        name: generate settings xml
+      - name: Download settings.xml
+        uses: actions/download-artifact@v4
         with:
-          servers: ${{ inputs.push &&  env.BATCH_SETTINGS || env.RUNNER_SETTINGS }}
-          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${{vars.CI_PROXY}}", "port": "${{vars.CI_PROXYPORT}}" }]'
-          repositories: '[ { "id":"dvsa-github-packages", "name":"dvsa-github-packages", "url":"https://maven.pkg.github.com/dvsa/*", "releases": { "enabled": "true" }, "snapshots": { "enabled": "true" } }]'
-          output_file: ./settings.xml
-          
-      - name: view settings.xml
-        run: cat ./settings.xml
+          name: maven-settings
+          path: /home/runner/.m2/settings.xml
+
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Extract Docker metadata
         id: meta
-        
+
         uses: docker/metadata-action@v5
         with:
           images: |
@@ -96,12 +110,55 @@ jobs:
         if: ${{ inputs.push }}
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
-          
+
+      - uses: whelk-io/maven-settings-xml-action@v22
+        name: Generate settings.xml
+        with:
+          servers: ${{ inputs.push &&  env.BATCH_SETTINGS || env.RUNNER_SETTINGS }}
+          repositories: |
+            [
+              {
+                "id": "central",
+                "name": "Maven Central",
+                "url": "https://repo.maven.apache.org/maven2",
+                "releases": {
+                  "enabled": "true"
+                },
+                "snapshots": {
+                  "enabled": "false"
+                }
+              },
+              {
+                "id": "dvsa-github-packages",
+                "name": "dvsa-github-packages",
+                "url": "https://maven.pkg.github.com/dvsa/*",
+                "releases": {
+                  "enabled": "true"
+                },
+                "snapshots": {
+                  "enabled": "true"
+                }
+              }
+            ]
+          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${{vars.CI_PROXY}}", "port": "${{vars.CI_PROXYPORT}}", "nonProxyHosts": "repo.maven.apache.org|maven.pkg.github.com" }]'
+          output_file: ./settings.xml
+
+      - name: Prepare settings file
+        run: |
+          mkdir -p .m2
+          cp ./settings.xml .m2/settings.xml
+          echo "contents of current dir:"
+          ls -la
+          echo "Contents of .m2 dir:"
+          ls -la .m2
+          echo "Contents of settings file:"
+          cat .m2/settings.xml
+
       - name: Build ${{ inputs.push && 'and push ' || '' }}Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: . 
+          context: .
           file: infra/docker/batch/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ inputs.push }}
@@ -109,7 +166,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      
+
 
       - name: Setup Notation CLI
         if: ${{ inputs.push }}
