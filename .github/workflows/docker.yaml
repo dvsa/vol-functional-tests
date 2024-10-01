@@ -45,7 +45,7 @@ jobs:
 
       - name: Restore Maven Cache
         if: inputs.maven-cache-key != ''
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2/repository
           key: ${{ inputs.maven-cache-key }}
@@ -63,7 +63,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Download settings.xml
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: maven-settings
           path: /home/runner/.m2/settings.xml
