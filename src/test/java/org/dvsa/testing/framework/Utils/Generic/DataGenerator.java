@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.dataFaker.DataFakerUtils;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
@@ -91,7 +92,7 @@ public class DataGenerator extends BasePage {
     }
 
     public DataGenerator(World world) {
-        FakerUtils faker = new FakerUtils();
+        DataFakerUtils faker = new DataFakerUtils();
         Lorem lorem = LoremIpsum.getInstance();
         setOperatorForeName(faker.generateFirstName());
         setOperatorFamilyName(faker.generateLastName());
