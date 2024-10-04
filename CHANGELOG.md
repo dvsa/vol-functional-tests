@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.3.0](https://github.com/dvsa/vol-functional-tests/compare/v3.2.2...v3.3.0) (2024-10-04)
+
+
+### Features
+
+* thread safety ([55e29ff](https://github.com/dvsa/vol-functional-tests/commit/55e29ff9de94cee254165a7d8afd0bb86311b5fe))
+
 ## [3.2.2](https://github.com/dvsa/vol-functional-tests/compare/v3.2.1...v3.2.2) (2024-10-03)
 
 
