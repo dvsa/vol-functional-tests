@@ -1,13 +1,11 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.SecretsManager;
+import activesupport.dates.Dates;
+import apiCalls.enums.*;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.MissingRequiredArgument;
-import activesupport.dates.Dates;
-import activesupport.system.Properties;
-import apiCalls.enums.*;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 
 import java.util.concurrent.locks.Lock;
@@ -30,13 +28,22 @@ public class APIJourney {
     }
 
     public synchronized void nIAddressBuilder() {
+        lock.lock();
+        try {
         world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
         world.createApplication.setTrafficArea(TrafficArea.NORTHERN_IRELAND);
         world.createApplication.setCountryCode("NI");
         world.createApplication.setNiFlag("Y");
+        }  finally {
+            {
+                lock.unlock();
+            }
+        }
     }
 
     public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws HttpException {
+        lock.lock();
+        try {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
@@ -46,9 +53,16 @@ public class APIJourney {
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         world.updateLicence.getLicenceTrafficArea();
+        }  finally {
+            {
+                lock.unlock();
+            }
+        }
     }
 
     public synchronized void createApplication() throws HttpException {
+        lock.lock();
+        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -71,7 +85,12 @@ public class APIJourney {
         world.createApplication.addConvictionsDetails();
         world.createApplication.addLicenceHistory();
         world.createApplication.applicationReviewAndDeclare();
-    }
+        }  finally {
+            {
+                lock.unlock();
+            }
+        }
+}
 
     public synchronized void submitApplication() throws HttpException {
         lock.lock();
@@ -83,12 +102,17 @@ public class APIJourney {
         }
     }
     public synchronized void createSpecialRestrictedApplication() throws HttpException {
+        lock.lock();
+        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
         world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
+        } finally {
+            lock.unlock();
+        }
     }
 
     public synchronized void createSpecialRestrictedLicence() throws HttpException {
@@ -97,6 +121,8 @@ public class APIJourney {
     }
 
     public synchronized void createPartialApplication() throws HttpException {
+        lock.lock();
+        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -105,6 +131,11 @@ public class APIJourney {
         world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();
+    }  finally {
+        {
+            lock.unlock();
+        }
+    }
     }
 
     public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
