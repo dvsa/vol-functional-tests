@@ -228,7 +228,7 @@ jobs:
 
       - name: Get Summary
         id: get-summary
-        uses: ./.github/actions/surefire-report-summary
+        uses: dvsa/.github/.github/actions/surefire-report-summary@main
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: true
