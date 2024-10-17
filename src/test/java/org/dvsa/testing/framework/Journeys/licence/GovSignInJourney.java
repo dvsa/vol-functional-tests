@@ -136,6 +136,8 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='select-device-choice']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         goThroughVerificationSteps();
+
+
     }
 
     public void goThroughVerificationSteps() {
@@ -216,6 +218,8 @@ public class GovSignInJourney extends BasePage {
                 answerBankingQuestion();
             } else if (isTitlePresent("When did you take out a loan?", 2)) {
                 answerPersonalLoanStart();
+            } else if (isTitlePresent("What are the first 2 letters of the first name of the other person on your mortgage? – Prove your identity – GOV.UK",2)) {
+                answerInitalsQuestion();
             } else if (isTitlePresent("How much of your loan do you have left to pay back?",2)) {
                 answerPersonalLoanOutstanding();
             }
@@ -225,6 +229,15 @@ public class GovSignInJourney extends BasePage {
         }
     }
 
+    public void answerInitalsQuestion()
+    {
+        clickById("Q00019");
+        clickById("continue");
+    }
+
+    public void answerMortgageProvider(){
+
+    }
 
     public void answerPersonalLoan() {
         if (isTextPresent("UP TO £ 6750")) {

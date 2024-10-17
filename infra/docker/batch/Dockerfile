@@ -1,44 +1,34 @@
-FROM maven:3.9.6-amazoncorretto-11 as maven_builder
-
-ENV platform="LINUX"
-ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
-
+FROM maven:3.9.6-amazoncorretto-11 as builder
+WORKDIR /build
+COPY pom.xml .
+COPY settings.xml /root/.m2/settings.xml
+COPY src ./src
+RUN mvn clean package -DskipTests
 
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
 
 WORKDIR /app
+COPY --from=builder /build/target/vol-functional-tests-3.3.1-SNAPSHOT.jar ./app.jar
+COPY --from=builder /usr/share/maven /usr/share/maven
+COPY --from=builder /root/.m2 /root/.m2
+COPY --from=builder /build/pom.xml ./pom.xml
+COPY --from=builder /build/src ./src
 
-COPY pom.xml /app/pom.xml
-COPY .m2/settings.xml /root/.m2/settings.xml
-COPY src ./src
-
-RUN mvn dependency:go-offline && \
-    mvn clean package -DskipTests
-
-
-FROM amazonlinux:2
-WORKDIR /app
-COPY --from=maven_builder /app/target/*.jar app.jar
-COPY run.sh .
-RUN chmod +x ./run.sh
-
-# hadolint ignore=DL3033
 RUN yum update -y && \
-    yum install -y \
-        zip \
-        unzip \
-        curl \
-        awscli && \
+    yum install -y java-11-amazon-corretto-headless zip unzip curl python3 python3-pip && \
     yum clean all && \
     rm -rf /var/cache/yum
 
+# Install AWS CLI using pip (architecture-agnostic)
+RUN pip3 install --no-cache-dir awscli
 
-## Install latest version of the aws cli
-#RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-#    unzip awscliv2.zip && \
-#    ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
-#    rm -f awscliv2.zip
+# Set up environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+ENV MAVEN_HOME=/usr/share/maven
+ENV PATH=${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}
 
 
-CMD ["/bin/bash", "-c", "./run.sh"]
+RUN java -version && mvn -version && aws --version
+
+CMD ["java", "-cp", "app.jar", "org.dvsa.testing.framework.parallel.AppJarRunner"]
