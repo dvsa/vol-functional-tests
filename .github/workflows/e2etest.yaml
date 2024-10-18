@@ -35,7 +35,7 @@ env:
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
   AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ env.TEST_OIDC_ROLE }}
+  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
 
 jobs:
   create-job-name:
@@ -67,7 +67,7 @@ jobs:
         #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -161,7 +161,7 @@ jobs:
         #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
