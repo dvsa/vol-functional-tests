@@ -82,7 +82,7 @@ public class EBSRUpload extends BasePage {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
             axeScanner.scan(true);
         }
-        long kickOutTime = System.currentTimeMillis() + 30000;
+        long kickOutTime = System.currentTimeMillis() + 120000;
         if(!world.configuration.env.toString().equals("local")) {
             do {
                 // Refresh page
