@@ -40,7 +40,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>14400</jvmMemory>
+        <jvmMemory>4000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -91,6 +91,16 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -259,15 +269,6 @@
                     </reportingOutputDirectory>
                     <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-test-report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
