@@ -264,7 +264,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.dvsa.testing.framework.parallel.AppJarRunner</mainClass>
+                                    <mainClass>AppJarRunner</mainClass>
                                 </transformer>
                             </transformers>
                             <filters>
@@ -289,7 +289,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.dvsa.testing.framework.parallel.AppJarRunner</mainClass>
+                            <mainClass>AppJarRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

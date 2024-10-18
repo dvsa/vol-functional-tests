@@ -7,6 +7,8 @@ RUN mvn clean package -DskipTests
 
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
+ENV platform="LINUX"
+ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 WORKDIR /app
 COPY --from=builder /build/target/vol-functional-tests-3.3.1-SNAPSHOT.jar ./app.jar
@@ -20,7 +22,6 @@ RUN yum update -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-# Install AWS CLI using pip (architecture-agnostic)
 RUN pip3 install --no-cache-dir awscli
 
 # Set up environment variables
@@ -31,4 +32,4 @@ ENV PATH=${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}
 
 RUN java -version && mvn -version && aws --version
 
-CMD ["java", "-cp", "app.jar", "org.dvsa.testing.framework.parallel.AppJarRunner"]
+CMD ["java", "-cp", "app.jar", "AppJarRunner"]
