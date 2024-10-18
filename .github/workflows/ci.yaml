@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - id: vft-version
-        uses: dvsa/.github/.github/actions/get-vol-app-version@main
+        uses: ./.github/actions/get-app-version
 
       - name: Add to summary
         run: |
@@ -50,6 +50,7 @@ jobs:
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
     with:
+      maven-cache-key: ${{ needs.build-maven.outputs.cache-key }}
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:

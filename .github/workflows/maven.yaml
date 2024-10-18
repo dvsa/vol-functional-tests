@@ -7,19 +7,44 @@ on:
         required: true
         default: 'package'
         type: string
+    outputs:
+      cache-key:
+        description: "maven cache key"
+        value: ${{ jobs.build.outputs.cache-key }}
 
 permissions:
   contents: read
   packages: write
 
 jobs:
-    build:
-      name: build
-      runs-on: ubuntu-latest
-      steps:
-       - uses: actions/checkout@v4
-       - uses: whelk-io/maven-settings-xml-action@v22
-         with:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.get-cache-key.outputs.cache-key }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: whelk-io/maven-settings-xml-action@v22
+        with:
           servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
 
-       - run: mvn -B -P github ${{ inputs.maven-goal}}
+      - name: Get cache key
+        id: get-cache-key
+        run: echo "cache-key=${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}" >> $GITHUB_OUTPUT
+
+      - name: Build with Maven
+        run: mvn -B -P github ${{ inputs.maven-goal }} -Dmaven.repo.local=$HOME/.m2/repository
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Upload settings.xml
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-settings
+          path: /home/runner/.m2/settings.xml

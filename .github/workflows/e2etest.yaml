@@ -3,9 +3,6 @@ name: End to End Test
 on:
   workflow_call:
     inputs:
-      #test_oidc_role: TODO: add in OIDC linked role as an input
-        #type: string
-        #required: false
       platform_env:
         type: string
         required: true
@@ -35,7 +32,7 @@ env:
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
   AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
+  AWS_OIDC_ROLE: ${{ vars.TF_OIDC_ROLE }}
 
 jobs:
   create-job-name:
@@ -63,8 +60,7 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
@@ -157,13 +153,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
-          role-duration-seconds: 8400
 
       - name: Download Allure Report from S3
         env:
@@ -212,7 +206,7 @@ jobs:
 
       - name: Get Summary
         id: get-summary
-        uses: dvsa/.github/.github/actions/surefire-report-summary@main
+        uses: ./.github/actions/surefire-report-summary
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: true
