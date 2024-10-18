@@ -35,7 +35,7 @@ env:
   JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
   AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
+  AWS_OIDC_ROLE: ${{ env.TEST_OIDC_ROLE }}
 
 jobs:
   create-job-name:
