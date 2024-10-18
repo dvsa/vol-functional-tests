@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - id: vft-version
-        uses: ./.github/actions/get-app-version
+        uses: dvsa/.github/.github/actions/get-vol-app-version@main
 
       - name: Add to summary
         run: |
