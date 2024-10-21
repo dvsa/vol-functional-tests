@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.3.1](https://github.com/dvsa/vol-functional-tests/compare/v3.3.0...v3.3.1) (2024-10-18)
+
+
+### Bug Fixes
+
+* extend EBSR Docs waiting time ([9226712](https://github.com/dvsa/vol-functional-tests/commit/9226712a4738ea84dc8fcf1adb5f033d63645081))
+
 ## [3.3.0](https://github.com/dvsa/vol-functional-tests/compare/v3.2.2...v3.3.0) (2024-10-04)
 
 
