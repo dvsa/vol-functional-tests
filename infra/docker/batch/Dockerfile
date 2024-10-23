@@ -1,30 +1,46 @@
-FROM maven:3.9.6-amazoncorretto-11 as maven
+FROM maven:3.9.6-amazoncorretto-11 as builder
+WORKDIR /build
+COPY pom.xml .
+COPY settings.xml /root/.m2/settings.xml
+COPY src ./src
 
-ENV platform="LINUX"
-ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
+RUN mvn clean package -DskipTests && \
+    ls -la target/*.jar && \
+    find target -name "*.jar" -type f \
 
+FROM amazoncorretto:11
 
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
+ENV platform="LINUX"
+ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 WORKDIR /app
 
+COPY --from=builder /build/target/*jar ./app.jar
+COPY --from=builder /usr/share/maven /usr/share/maven
+COPY --from=builder /root/.m2 /root/.m2
+
+
 RUN yum update -y && \
-    yum install -y zip-3.* unzip-6.*  && \
+    yum install -y zip unzip curl python3 python3-pip && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-# Install latest version of the aws cli 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
-    rm -f awscliv2.zip
+RUN pip3 install --no-cache-dir awscli
 
-COPY . .
+# Set up environment variables
+ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
+ENV MAVEN_HOME=/usr/share/maven
+ENV PATH=${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}
 
-COPY ./settings.xml /root/.m2/settings.xml
+RUN java -version && \
+    mvn -version && \
+    aws --version && \
+    echo "Verifying JAR file:" && \
+    ls -la app.ja
 
 
-RUN chmod +x ./run.sh
+RUN java -version && mvn -version && aws --version
 
-CMD ["/bin/sh", "-c", "./run.sh"]
+CMD ["java", "-cp", "app.jar", "AppJarRunner"]
