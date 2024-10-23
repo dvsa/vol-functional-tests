@@ -122,6 +122,7 @@ jobs:
           echo "job_id=$jobId" >> $GITHUB_OUTPUT
 
       - name: Wait for Job Completion
+        if: ${{ !cancelled() }}
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
@@ -129,15 +130,21 @@ jobs:
           JOB_ID=${{ env.JOB_ID }}
           count=0
           while true; do
+            if [ ! -e "$RUNNER_TRACKING_ID" ]; then
+              echo "Workflow was cancelled, terminating AWS Batch job"
+              aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"
+              exit 1
+            fi
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
               echo "Final job status: $JOB_STATUS"
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((TIME_OUT++))
+            ((count++))
             if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
+              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
+              aws batch terminate-job --job-id $JOB_ID --reason "Job timeout"
               exit 1
             fi
             sleep 60
@@ -215,8 +222,8 @@ jobs:
         uses: dvsa/.github/.github/actions/surefire-report-summary@main
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
-          fail-on-test-failures: false
-          fail-on-test-errors: false #temp measure until grid is fixed
+          fail-on-test-failures: true
+          fail-on-test-errors: false
           report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ env.S3_REPORT_BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
