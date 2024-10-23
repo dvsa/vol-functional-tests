@@ -1,9 +1,11 @@
 @ss_regression @FullRegression @checker_page
 Feature: User should be able to view the checker page before registering as a Self Service user
 
-  Scenario: SS user can view checker page while logged in
+  Background:
     Given i have a valid "public" "standard_national" licence
-    When I am on the checker page
+
+  Scenario: SS user can view checker page while logged in
+    Given I am on the checker page
     And I click Continue on the checker page
     Then I should be on the dashboard
 
