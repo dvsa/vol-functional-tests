@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.3.2](https://github.com/dvsa/vol-functional-tests/compare/v3.3.1...v3.3.2) (2024-10-23)
+
+
+### Bug Fixes
+
+* new app finance doc option ([33d6b4a](https://github.com/dvsa/vol-functional-tests/commit/33d6b4a8b8703c78ea5956089d7ebd02f38e9871))
+
 ## [3.3.1](https://github.com/dvsa/vol-functional-tests/compare/v3.3.0...v3.3.1) (2024-10-18)
 
 
