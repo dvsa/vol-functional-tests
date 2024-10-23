@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.3.3](https://github.com/dvsa/vol-functional-tests/compare/v3.3.2...v3.3.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* interim app finance option ([d849a5f](https://github.com/dvsa/vol-functional-tests/commit/d849a5f4c3852eb7ca78b3bdd1795776f95d7cd2))
+
 ## [3.3.2](https://github.com/dvsa/vol-functional-tests/compare/v3.3.1...v3.3.2) (2024-10-23)
 
 
