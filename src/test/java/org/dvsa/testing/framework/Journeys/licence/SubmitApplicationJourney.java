@@ -111,7 +111,7 @@ public class SubmitApplicationJourney extends BasePage {
         axeScanner.scan(true);
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
 
         //transport manager
