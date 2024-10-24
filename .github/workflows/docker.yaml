@@ -17,6 +17,12 @@ on:
         type: boolean
         required: false
         default: false
+      image-tag:
+        type: string
+        required: false
+        description: "custom tag to push/test, will default to latest"
+        default: 'latest'
+
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -69,7 +75,7 @@ jobs:
           tags: |
             type=sha,prefix=,format=short
             type=semver,enable=${{ inputs.is-release }},pattern={{version}},value=${{ inputs.version }}
-            type=raw,value=latest
+            type=raw,value=${{ inputs.image-tag }} 
 
       - name: Configure AWS credentials
         if: ${{ inputs.push }}
