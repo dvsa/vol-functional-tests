@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.Global;
 
 import activesupport.aws.s3.SecretsManager;
 import activesupport.mailPit.MailPit;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 public class Configuration {
