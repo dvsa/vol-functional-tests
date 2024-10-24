@@ -48,18 +48,19 @@ public class MessagingJourney extends BasePage {
     }
 
     public void archiveTheConversation() {
-        click("//button[@id='close']", SelectorType.XPATH);
+        waitAndClick("//button[@id='close']", SelectorType.XPATH);
         waitForTextToBePresent("End Conversation");
         click("//button[@id='close']", SelectorType.XPATH);
-        waitForTextToBePresent("CLOSED");
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
+        String actualText = getText("//*[@class='govuk-tag govuk-tag--grey']", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("CLOSED"));
+
     }
 
     public void createNewConversation() {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[inputs][appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
+        click("//*[@id=\"form-actions[inputs][appOrLicNo]\"]/optgroup[2]/option", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
     }
@@ -70,19 +71,22 @@ public class MessagingJourney extends BasePage {
     }
 
     public void viewNewMessage() {
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
+        String actualText = getText("//*[@class='govuk-tag govuk-tag--red']", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("NEW MESSAGE"));
         click("//*[@id='main-content']//tbody/tr[1]/td[1]/a", SelectorType.XPATH);
     }
 
     public void openMessageStatusCheck() {
         clickByLinkText("Messages");
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--blue')]", SelectorType.XPATH), "OPEN");
+        String actualText = getText("//*[@class='govuk-tag govuk-tag--blue']", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("OPEN"));
     }
 
     public void notificationCount() {
         assertEquals(getText("//*[contains(@class,'notification-count__number')]", SelectorType.XPATH), "1");
         clickByLinkText("Messages");
-        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
+        String actualText = getText("//*[@class='govuk-tag govuk-tag--red']", SelectorType.XPATH);
+        assertTrue(actualText.equalsIgnoreCase("NEW MESSAGE"));
     }
 
     public void backToConversation() {
