@@ -65,7 +65,7 @@ public class GlobalMethods extends BasePage {
         if (!world.configuration.env.toString().equals("local")) {
             password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
         } else {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPasswordFromMailhog(emailAddress));
+            password = quotedPrintableCodec.decode(world.configuration.getTempPasswordFromEmail(emailAddress));
         }
         try {
             signIn(username, password);
