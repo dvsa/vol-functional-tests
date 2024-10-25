@@ -122,7 +122,6 @@ jobs:
           echo "job_id=$jobId" >> $GITHUB_OUTPUT
 
       - name: Wait for Job Completion
-        if: ${{ !cancelled() }}
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
@@ -130,11 +129,6 @@ jobs:
           JOB_ID=${{ env.JOB_ID }}
           count=0
           while true; do
-            if [ ! -e "$RUNNER_TRACKING_ID" ]; then
-              echo "Workflow was cancelled, terminating AWS Batch job"
-              aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"
-              exit 1
-            fi
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
               echo "Final job status: $JOB_STATUS"
@@ -153,6 +147,14 @@ jobs:
             echo "AWS Batch job failed"
             exit 1
           fi
+
+      - name: Cancel AWS Batch Job
+        if: cancelled()
+        env:
+          JOB_ID: ${{ steps.submit-job.outputs.job_id }}
+        run: |
+          echo "Workflow was cancelled, terminating AWS Batch job"
+          aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"
 
   upload-batch-report:
     name: Upload Report to GitHub
