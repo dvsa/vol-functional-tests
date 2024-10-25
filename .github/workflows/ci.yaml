@@ -13,6 +13,7 @@ on:
 permissions:
   contents: read
   packages: write
+  id-token: write
 
 
 jobs:
@@ -62,4 +63,5 @@ jobs:
       image-tag: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') && format('pr-{0}', github.event.pull_request.number) || 'latest' }}
     permissions:
       contents: read
+      id-token: write
       packages: write
