@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.3.4](https://github.com/dvsa/vol-functional-tests/compare/v3.3.3...v3.3.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* increase threads ([6401285](https://github.com/dvsa/vol-functional-tests/commit/64012853c455054b024bc4450e596076f2526573))
+
 ## [3.3.3](https://github.com/dvsa/vol-functional-tests/compare/v3.3.2...v3.3.3) (2024-10-23)
 
 
