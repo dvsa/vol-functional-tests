@@ -135,10 +135,9 @@ jobs:
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((count++))
+            ((TIME_OUT++))
             if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
-              aws batch terminate-job --job-id $JOB_ID --reason "Job timeout"
+              echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
               exit 1
             fi
             sleep 60
