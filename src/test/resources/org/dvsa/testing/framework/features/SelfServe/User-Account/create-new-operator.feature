@@ -11,6 +11,7 @@ Feature: Create an Account
   @FullRegression
   @printAndSign
   @localsmoke
+
   @smoke
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
     Given I am on the registration page
