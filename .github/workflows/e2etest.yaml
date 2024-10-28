@@ -128,31 +128,38 @@ jobs:
           TIME_OUT=15
           JOB_ID=${{ env.JOB_ID }}
           count=0
-          cleanup() {
-            echo "Caught exit signal - cleaning up AWS Batch job"
-            aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow interrupted"
-            exit 0
+          terminate_job() {
+          aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"
           }
-          trap cleanup EXIT
+          trap terminate_job INT TERM
           while true; do
-            JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
-            if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
-              echo "Final job status: $JOB_STATUS"
-              trap - EXIT
-              break
-            fi
-            echo "Job status: $JOB_STATUS"
-            ((count++))
-            if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
-              aws batch terminate-job --job-id $JOB_ID --reason "Job timeout"
-              exit 1
-            fi
-            sleep 60
+          JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text) || {
+           echo "Failed to get job status, assuming workflow cancelled"
+           terminate_job
+           exit 1
+          }
+          if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
+           echo "Final job status: $JOB_STATUS"
+           break
+          fi
+          echo "Job status: $JOB_STATUS"
+          ((count++))
+          if [ $count -ge $TIME_OUT ]; then
+           echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
+           terminate_job
+           exit 1
+          fi
+          sleep 60 &
+          wait $!
+          if [ $? -gt 128 ]; then
+           echo "Sleep interrupted, assuming workflow cancelled"
+           terminate_job
+           exit 1
+          fi
           done
           if [ "$JOB_STATUS" == "FAILED" ]; then
-            echo "AWS Batch job failed"
-            exit 1
+          echo "AWS Batch job failed"
+          exit 1
           fi
 
       - name: Cancel AWS Batch Job
