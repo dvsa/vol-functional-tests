@@ -128,16 +128,24 @@ jobs:
           TIME_OUT=15
           JOB_ID=${{ env.JOB_ID }}
           count=0
+          cleanup() {
+            echo "Caught exit signal - cleaning up AWS Batch job"
+            aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow interrupted"
+            exit 0
+          }
+          trap cleanup EXIT
           while true; do
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
               echo "Final job status: $JOB_STATUS"
+              trap - EXIT
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((TIME_OUT++))
+            ((count++))
             if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
+              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
+              aws batch terminate-job --job-id $JOB_ID --reason "Job timeout"
               exit 1
             fi
             sleep 60
