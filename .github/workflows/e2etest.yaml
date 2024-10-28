@@ -224,7 +224,7 @@ jobs:
         uses: dvsa/.github/.github/actions/surefire-report-summary@main
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
-          fail-on-test-failures: false
+          fail-on-test-failures: true
           fail-on-test-errors: false
           report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ env.S3_REPORT_BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
