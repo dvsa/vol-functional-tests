@@ -128,22 +128,17 @@ jobs:
           TIME_OUT=15
           JOB_ID=${{ env.JOB_ID }}
           count=0
-          trap 'echo "Job cancelled"; aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"; exit 1' SIGINT SIGTERM
+          trap 'aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"; exit 1' SIGINT SIGTERM
           while true; do
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
               echo "Final job status: $JOB_STATUS"
               break
-            elif [ "$JOB_STATUS" == "SUBMITTED" ] || [ "$JOB_STATUS" == "PENDING" ] || [ "$JOB_STATUS" == "RUNNABLE" ] || [ "$JOB_STATUS" == "STARTING" ] || [ "$JOB_STATUS" == "RUNNING" ]; then
-              echo "Job status: $JOB_STATUS"
-            else
-              echo "Unexpected job status: $JOB_STATUS"
-              exit 1
             fi
-            ((count++))
+            echo "Job status: $JOB_STATUS"
+            ((TIME_OUT++))
             if [ $count -ge $TIME_OUT ]; then
               echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
-              aws batch terminate-job --job-id $JOB_ID --reason "Job timeout"
               exit 1
             fi
             sleep 60
