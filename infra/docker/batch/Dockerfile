@@ -1,46 +1,38 @@
-FROM maven:3.9.6-amazoncorretto-11 as builder
+FROM maven:3.9.6-amazoncorretto-11 AS builder
 WORKDIR /build
+
 COPY pom.xml .
 COPY settings.xml /root/.m2/settings.xml
 COPY src ./src
 
 RUN mvn clean package -DskipTests && \
-    ls -la target/*.jar && \
-    find target -name "*.jar" -type f \
+    echo "Verifying build artifacts:" && \
+    ls -la target/*.jar
 
 FROM amazoncorretto:11
 
-ENV proxyHost=$proxyHost
-ENV proxyPort=$proxyPort
-ENV platform="LINUX"
-ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
+ENV proxyHost=$proxyHost \
+    proxyPort=$proxyPort \
+    JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
+    PATH=${JAVA_HOME}/bin:${PATH}
 
 WORKDIR /app
 
-COPY --from=builder /build/target/*jar ./app.jar
-COPY --from=builder /usr/share/maven /usr/share/maven
-COPY --from=builder /root/.m2 /root/.m2
-
+COPY --from=builder /build/target/*.jar ./app.jar
 
 RUN yum update -y && \
-    yum install -y zip unzip curl python3 python3-pip && \
+    yum install -y \
+        zip-3.* \
+        unzip-6.* \
+        curl-7.* \
+        python3-3.* && \
     yum clean all && \
-    rm -rf /var/cache/yum
-
-RUN pip3 install --no-cache-dir awscli
-
-# Set up environment variables
-ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
-ENV MAVEN_HOME=/usr/share/maven
-ENV PATH=${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${PATH}
+    rm -rf /var/cache/yum && \
+    python3 -m pip install --no-cache-dir awscli==1.27.165
 
 RUN java -version && \
-    mvn -version && \
     aws --version && \
     echo "Verifying JAR file:" && \
-    ls -la app.ja
+    ls -la app.jar
 
-
-RUN java -version && mvn -version && aws --version
-
-CMD ["java", "-cp", "app.jar", "AppJarRunner"]
+CMD ["java", "-jar", "app.jar"]
