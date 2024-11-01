@@ -9,12 +9,10 @@ on:
       - labeled
       - unlabeled
 
-
 permissions:
   contents: read
   packages: write
-  id-token: write
-
+  id-token: write  # Kept for main branch AWS operations
 
 jobs:
   get-version:
@@ -26,25 +24,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-
       - id: vft-version
         uses: dvsa/.github/.github/actions/get-vol-app-version@main
-
       - name: Add to summary
         run: |
           echo "#### App versions:" >> $GITHUB_STEP_SUMMARY
           echo "**vft**: \`${{ steps.vft-version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+
   security:
     name: Security
     uses: ./.github/workflows/security.yaml
     secrets: inherit
 
-  build-maven:      
+  build-maven:
     name: build with Maven
     uses: ./.github/workflows/maven.yaml
     with:
-        maven-goal: package -DskipTests
-    needs: 
+      maven-goal: package -DskipTests
+    needs:
       - security
       - get-version
 
@@ -57,11 +54,23 @@ jobs:
       fail-fast: false
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
-    with:
-      version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
-      image-tag: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') && format('pr-{0}', github.event.pull_request.number) || 'latest' }}
     permissions:
       contents: read
       id-token: write
       packages: write
+    with:
+      version: ${{ needs.get-version.outputs.vft }}
+      push: >-
+        ${{
+          startsWith(github.head_ref, 'features/') ||
+          startsWith(github.head_ref, 'fix/') ||
+          startsWith(github.head_ref, 'chore/') ||
+          github.head_ref == 'main'
+        }}
+      image-tag: >-
+        ${{
+          startsWith(github.head_ref, 'features/') && format('feature-{0}', github.event.pull_request.number) ||
+          startsWith(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) ||
+          startsWith(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) ||
+          'latest'
+        }}
