@@ -4,7 +4,7 @@ Feature: External user search by Address, Business name, Licence Number and Pers
 
   Background:
     Given i have a self serve account
-
+@PP-SMOKE
   Scenario Outline: Licence number external search for lorry and bus operators
     When I am on the external search page
     And I search for a lorry and bus operator by "<searchType>" with licence number "<licenceNumber>", business name "<businessName>", person "<person>" and address "<address>"
