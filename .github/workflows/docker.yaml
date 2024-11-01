@@ -65,13 +65,19 @@ jobs:
 
         uses: docker/metadata-action@v5
         with:
-          images: |
-            ${{ (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false && format('{0}/vol-qa/vft', env.REGISTRY) || '' }}
-            ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
-          tags: |-
-            type=raw,value=${{ inputs.image-tag }}
-            type=sha,prefix=,format=short
-            ${{ inputs.is-release && format('type=semver,pattern={{version}},value={0}', inputs.version) || '' }}
+         images: |
+          ${{ github.event_name == 'pull_request' && env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
+         flavor: |
+          latest=false
+         tags: |
+          type=raw,value=pr-${{ github.event.pull_request.number }}
+          type=sha,prefix=,format=short
+
+      - name: Debug Info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"
+          echo "Generated tags: ${{ steps.meta.outputs.tags }}"
 
       - name: Configure AWS credentials
         if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
