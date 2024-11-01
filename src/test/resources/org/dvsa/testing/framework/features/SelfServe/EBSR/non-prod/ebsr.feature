@@ -41,7 +41,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | north_east | 41   | curtail       |
       | wales      | 55   | suspend       |
 
-  @ec2_smoke
+  @ec2_smoke @smoke
   Scenario: Short notice import EBSR in self-serve smoke test (Resource-B)
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
 #    When i trigger the ebsr process queue

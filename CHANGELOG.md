@@ -1,5 +1,33 @@
 # Revision History for the VOL Functional Tests
 
+## [3.5.7](https://github.com/dvsa/vol-functional-tests/compare/v3.5.6...v3.5.7) (2024-11-01)
+
+
+### Bug Fixes
+
+* oidc input var ([90c7ca5](https://github.com/dvsa/vol-functional-tests/commit/90c7ca57055a66afd0612ffab22e1f47dffabe62))
+
+## [3.5.6](https://github.com/dvsa/vol-functional-tests/compare/v3.5.5...v3.5.6) (2024-10-29)
+
+
+### Miscellaneous Chores
+
+* bump to 3.5.6 ([fd813b6](https://github.com/dvsa/vol-functional-tests/commit/fd813b6483a875fad2c082148b4191f8812a4868))
+
+## [3.5.5](https://github.com/dvsa/vol-functional-tests/compare/v3.3.4...v3.5.5) (2024-10-25)
+
+
+### Miscellaneous Chores
+
+* bump to 3.5.5 ([04738e6](https://github.com/dvsa/vol-functional-tests/commit/04738e6c49d5b859a964f9b894f1e6158746fd4e))
+
+## [3.3.4](https://github.com/dvsa/vol-functional-tests/compare/v3.3.3...v3.3.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* increase threads ([6401285](https://github.com/dvsa/vol-functional-tests/commit/64012853c455054b024bc4450e596076f2526573))
+
 ## [3.3.3](https://github.com/dvsa/vol-functional-tests/compare/v3.3.2...v3.3.3) (2024-10-23)
 
 

@@ -85,16 +85,19 @@ public class TypeOfLicence extends BasePage {
     public void changeLicenceTypeOverviewSectionsStatus(String newType) {
         assertTrue(isTextPresent("Apply for a new licence"));
         List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
-
         if (newType.equals("lgv_only_fleet")) {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicenceJourney.expectedLgvOnlyStatusArray[i].toUpperCase(),
-                        applicationOverviewStatusElements.get(i).getText().toUpperCase());
+                assertEquals(
+                        world.typeOfLicenceJourney.expectedLgvOnlyStatusArray[i].toUpperCase().replaceAll("[\\s\\n\\r]+", " ").trim(),
+                        applicationOverviewStatusElements.get(i).getText().toUpperCase().replaceAll("[\\s\\n\\r]+", " ").trim()
+                );
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicenceJourney.expectedStandardNationalOrMixedFleetStatusArray[i].toUpperCase(),
-                        applicationOverviewStatusElements.get(i).getText().toUpperCase());
+                assertEquals(
+                        world.typeOfLicenceJourney.expectedStandardNationalOrMixedFleetStatusArray[i].toUpperCase().replaceAll("[\\s\\n\\r]+", " ").trim(),
+                        applicationOverviewStatusElements.get(i).getText().toUpperCase().replaceAll("[\\s\\n\\r]+", " ").trim()
+                );
             }
         }
     }
