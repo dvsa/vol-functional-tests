@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.5.7](https://github.com/dvsa/vol-functional-tests/compare/v3.5.6...v3.5.7) (2024-11-01)
+
+
+### Bug Fixes
+
+* oidc input var ([90c7ca5](https://github.com/dvsa/vol-functional-tests/commit/90c7ca57055a66afd0612ffab22e1f47dffabe62))
+
 ## [3.5.6](https://github.com/dvsa/vol-functional-tests/compare/v3.5.5...v3.5.6) (2024-10-29)
 
 
