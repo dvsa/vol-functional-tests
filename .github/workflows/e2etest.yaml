@@ -24,6 +24,11 @@ on:
       maven_options:
         type: string
         required: false
+      environment_type:
+        type: string
+        required: false
+        default: 'nonprod'
+        description: 'Environment type (nonprod or prod)'
 
 permissions:
   contents: write
@@ -31,11 +36,13 @@ permissions:
   checks: write
 
 env:
-  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
-  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
+  JOB_QUEUE: ${{ inputs.environment_type == 'prod' && vars.PROD_BATCH_JOB_QUEUE || vars.NONPROD_BATCH_JOB_QUEUE }}
+  JOB_DEFINITION: ${{ inputs.environment_type == 'prod' && vars.PROD_BATCH_JOB_DEFINITION || vars.NONPROD_BATCH_JOB_DEFINITION }}
   REPORT_NAME: "allure.zip"
-  AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-west-1' }}
+  AWS_OIDC_ROLE: ${{ inputs.environment_type == 'prod' && vars.TEST_PROD_OIDC_ROLE || vars.TEST_NONPROD_OIDC_ROLE }}
+  S3_REPORT_BUCKET: ${{ inputs.environment_type == 'prod' && vars.PROD_S3_REPORT_BUCKET || vars.NONPROD_S3_REPORT_BUCKET }}
+  S3_REPORT_BUCKET_KEY: ${{ inputs.environment_type == 'prod' && vars.PROD_S3_REPORT_BUCKET_KEY || vars.NONPROD_S3_REPORT_BUCKET_KEY }}
 
 jobs:
   create-job-name:
@@ -217,7 +224,7 @@ jobs:
 
       - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ inputs.s3_report_bucket  }}/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ env.S3_REPORT_BUCKET }}/${{ env.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
