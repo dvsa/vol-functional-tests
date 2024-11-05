@@ -61,7 +61,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.TEST_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Submit AWS Batch Job
@@ -164,7 +164,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.TEST_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Download Allure Report from S3

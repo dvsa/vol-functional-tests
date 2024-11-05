@@ -76,7 +76,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
 
       - name: Login to ECR
         if: ${{ inputs.push }}
