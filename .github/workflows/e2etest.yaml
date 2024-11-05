@@ -3,9 +3,6 @@ name: End to End Test
 on:
   workflow_call:
     inputs:
-      #test_oidc_role: TODO: add in OIDC linked role as an input
-        #type: string
-        #required: false
       platform_env:
         type: string
         required: true
@@ -31,11 +28,7 @@ permissions:
   checks: write
 
 env:
-  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
-  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
 
 jobs:
   create-job-name:
@@ -54,6 +47,7 @@ jobs:
     name: Run Tests on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     env:
@@ -64,10 +58,9 @@ jobs:
 
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -76,8 +69,8 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ env.JOB_QUEUE }} \
-            --job-definition ${{ env.JOB_DEFINITION }} \
+            --job-queue ${{ env.BATCH_JOB_QUEUE }} \
+            --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
@@ -160,6 +153,7 @@ jobs:
     name: Upload Report to GitHub
     needs: [run-batch, create-job-name]
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
@@ -167,10 +161,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -217,7 +210,7 @@ jobs:
 
       - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ inputs.s3_report_bucket  }}/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ env.S3_REPORT_BUCKET }}/${{ env.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
