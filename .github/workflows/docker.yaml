@@ -74,7 +74,7 @@ jobs:
           type=sha,prefix=,format=short
 
       - name: Configure AWS credentials
-        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
+        if: ${{ inputs.push }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.TEST_OIDC_ROLE }}
