@@ -21,4 +21,3 @@ jobs:
       browser_name: "edge"
       browser_version: "latest"
       exclude_tags: 'none'
-      environment_type: ${{ inputs.platform_env == 'prep' || inputs.platform_env == 'prod' && 'prod' || 'nonprod' }}
