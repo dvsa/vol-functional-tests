@@ -28,7 +28,7 @@ permissions:
   checks: write
 
 env:
-  environment: dev
+  REPORT_NAME: "allure.zip"
 
 jobs:
   create-job-name:
@@ -47,7 +47,7 @@ jobs:
     name: Run Tests on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
-    environment: ${{ inputs.platform_env }}
+    environment: dev
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     env:
@@ -60,7 +60,7 @@ jobs:
       - name: Configure AWS with provided credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: $TEST_OIDC_ROLE
+          role-to-assume: ${{ vars.TEST_OIDC_ROLE }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -68,9 +68,9 @@ jobs:
         id: submit-job
         run: |
           JOB_ID=$(aws batch submit-job \
-            --job-name $JOB_NAME \
-            --job-queue $BATCH_JOB_QUEUE \
-            --job-definition $BATCH_JOB_DEFINITION \
+            --job-name ${{ vars.JOB_NAME }} \
+            --job-queue ${{ vars.BATCH_JOB_QUEUE }} \
+            --job-definition ${{ vars.BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
@@ -103,7 +103,7 @@ jobs:
                 },
                 {
                   "name": "buildId",
-                  "value": "$JOB_NAME"
+                  "value": "${{ vars.JOB_NAME }}"
                 },
                 {
                   "name": "mavenOptions",
@@ -119,7 +119,7 @@ jobs:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
         run: |
           TIME_OUT=15
-          JOB_ID=${{ env.JOB_ID }}
+          JOB_ID=${{ vars.JOB_ID }}
           count=0
           trap 'aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"; exit 1' SIGINT SIGTERM
           while true; do
@@ -131,7 +131,7 @@ jobs:
             echo "Job status: $JOB_STATUS"
             ((TIME_OUT++))
             if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
+              echo "Batch JOB with id=${{ vars.JOB_ID }} timeout. Exiting."
               exit 1
             fi
             sleep 60
@@ -163,7 +163,7 @@ jobs:
       - name: Configure AWS with provided credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
+          role-to-assume: ${{ vars.TEST_OIDC_ROLE }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -177,7 +177,7 @@ jobs:
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
             --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
+            --key "${{ vars.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
             "./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
@@ -210,7 +210,7 @@ jobs:
 
       - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ env.S3_REPORT_BUCKET }}/${{ env.S3_REPORT_BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ vars.S3_REPORT_BUCKET }}/${{ vars.S3_REPORT_BUCKET_KEY }}/${{vars.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
@@ -219,7 +219,7 @@ jobs:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: false
           fail-on-test-errors: false
-          report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ env.S3_REPORT_BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
+          report-path: "https://${{ vars.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ vars.S3_REPORT_BUCKET_KEY }}/${{ vars.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
     name: Job Succeeded
