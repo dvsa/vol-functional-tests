@@ -3,9 +3,6 @@ name: End to End Test
 on:
   workflow_call:
     inputs:
-      #test_oidc_role: TODO: add in OIDC linked role as an input
-        #type: string
-        #required: false
       platform_env:
         type: string
         required: true
@@ -24,11 +21,6 @@ on:
       maven_options:
         type: string
         required: false
-      environment_type:
-        type: string
-        required: false
-        default: 'nonprod'
-        description: 'Environment type (nonprod or prod)'
 
 permissions:
   contents: write
@@ -36,13 +28,7 @@ permissions:
   checks: write
 
 env:
-  JOB_QUEUE: ${{ inputs.environment_type == 'prod' && vars.PROD_BATCH_JOB_QUEUE || vars.NONPROD_BATCH_JOB_QUEUE }}
-  JOB_DEFINITION: ${{ inputs.environment_type == 'prod' && vars.PROD_BATCH_JOB_DEFINITION || vars.NONPROD_BATCH_JOB_DEFINITION }}
   REPORT_NAME: "allure.zip"
-  AWS_REGION: ${{ vars.AWS_REGION || 'eu-west-1' }}
-  AWS_OIDC_ROLE: ${{ inputs.environment_type == 'prod' && vars.TEST_PROD_OIDC_ROLE || vars.TEST_NONPROD_OIDC_ROLE }}
-  S3_REPORT_BUCKET: ${{ inputs.environment_type == 'prod' && vars.PROD_S3_REPORT_BUCKET || vars.NONPROD_S3_REPORT_BUCKET }}
-  S3_REPORT_BUCKET_KEY: ${{ inputs.environment_type == 'prod' && vars.PROD_S3_REPORT_BUCKET_KEY || vars.NONPROD_S3_REPORT_BUCKET_KEY }}
 
 jobs:
   create-job-name:
@@ -61,6 +47,7 @@ jobs:
     name: Run Tests on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     env:
@@ -71,10 +58,9 @@ jobs:
 
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
@@ -83,8 +69,8 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ env.JOB_QUEUE }} \
-            --job-definition ${{ env.JOB_DEFINITION }} \
+            --job-queue ${{ env.BATCH_JOB_QUEUE }} \
+            --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
@@ -167,6 +153,7 @@ jobs:
     name: Upload Report to GitHub
     needs: [run-batch, create-job-name]
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
@@ -174,10 +161,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
+          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 8400
 
