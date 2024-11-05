@@ -95,7 +95,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Untag existing latest image in ECR
-        if: ${{ inputs.push }}
+        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
 
