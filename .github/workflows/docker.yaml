@@ -77,7 +77,7 @@ jobs:
         if: ${{ inputs.push }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.TEST_OIDC_ROLE }}
+          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to ECR
