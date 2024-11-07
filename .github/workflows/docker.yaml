@@ -66,11 +66,12 @@ jobs:
         uses: docker/metadata-action@v5
         with:
          images: |
-          ${{ github.event_name == 'pull_request' && env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
+           ${{ env.REGISTRY }}/vol-qa/vft
+           ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
          flavor: |
-          latest=false
+          latest=auto
          tags: |
-          type=raw,value=pr-${{ github.event.pull_request.number }}
+          type=raw,value=pr-${{ inputs.image-tag }}
           type=sha,prefix=,format=short
 
       - name: Configure AWS credentials
