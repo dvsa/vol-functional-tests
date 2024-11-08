@@ -30,6 +30,7 @@ public class SelfServeUIJourney extends BasePage {
         this.world = world;
     }
 
+
     public void addNewOperator(String applicationID, boolean existingApplication) {
         if (isTextPresent("Create an Account")) {
             enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
@@ -52,6 +53,11 @@ public class SelfServeUIJourney extends BasePage {
         }
     }
 
+    public void existingAppOrLicence() {
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+    }
+
     public void operatorCreatesAccount() {
         findSelectAllRadioButtonsByValue("N");
         UniversalActions.clickSubmit();
@@ -59,6 +65,20 @@ public class SelfServeUIJourney extends BasePage {
         findSelectAllRadioButtonsByValue("N");
         UniversalActions.clickSubmit();
         completeOperatorAccountDetails();
+    }
+
+    public void consultantCreatesAccounts() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+        completeConsultantAccountDetails();
+    }
+
+    public void completeConsultantAccountDetails() {
+
     }
 
     public void completeOperatorAccountDetails() {

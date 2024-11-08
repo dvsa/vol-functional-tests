@@ -36,7 +36,7 @@ public class CreateNewOperatorLicense extends BasePage {
         assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 
-    @And("I am on the registration page")
+    @Given("I am on the registration page")
     public void iAmOnTheRegistrationPage() {
         world.selfServeNavigation.navigateToLoginPage();
         world.selfServeNavigation.navigateToCreateAnAccount();
@@ -56,5 +56,20 @@ public class CreateNewOperatorLicense extends BasePage {
         {
             world.globalMethods.signIn(user, password);
         }
+    }
+
+    @And("a Consultant creating accounts on behalf of the operator")
+    public void aConsultantCreatingAccountsOnBehalfOfTheOperator() {
+        world.selfServeUIJourney.consultantCreatesAccounts();
+    }
+
+    @And("I have an existing application or licence")
+    public void iHaveAnExistingApplicationOrLicence() {
+        world.selfServeUIJourney.existingAppOrLicence();
+    }
+
+    @Then("I should be advised that I cannot create a new account")
+    public void iShouldBeAdvisedThatICannotCreateANewAccount() {
+        assertTrue(isTextPresent("Sorry, you cannot create a new account if you have an existing licence or application"));
     }
 }
