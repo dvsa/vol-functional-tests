@@ -3,7 +3,7 @@ name: E2E Full Regression
 on:
   workflow_call:
     inputs:
-      platform_env:
+      environment:
         type: string
         required: true
 
@@ -13,7 +13,7 @@ jobs:
     name: Call E2E test workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      platform_env: ${{ inputs.platform_env }}
+      platform_env: ${{ inputs.environment }}
       cucumber_tags: "@FullRegression"
       browser_name: "edge"
       browser_version: "latest"
