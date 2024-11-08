@@ -3,25 +3,31 @@ name: Manual Trigger for End-to-End Test
 on:
   workflow_dispatch:
     inputs:
-      platform_env:
+      environment:
         type: string
         required: true
+        description: "Environment to test"
       browser_name:
         type: string
         required: true
+        description: "Browser Name"
       browser_version:
         type: string
         required: true
+        description: "Browser Version"
       cucumber_tags:
         type: string
         required: true
+        description: "Cucumber Tags"
       maven_options:
         type: string
         required: false
+        description: "Maven Options"
       exclude_tags:
           type: string
           required: true
           default: 'none'
+          description: "Tages to exclude"
 
 
 jobs:
@@ -29,7 +35,7 @@ jobs:
     name: Call E2E Test Workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      platform_env: ${{ inputs.platform_env }}
+      environment: ${{ inputs.environment }}
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
