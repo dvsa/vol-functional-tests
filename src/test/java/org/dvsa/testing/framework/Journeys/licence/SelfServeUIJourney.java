@@ -31,19 +31,44 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
+        if (isTextPresent("Create an Account")) {
+            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            enterText("forename", SelectorType.ID, faker.generateFirstName());
+            enterText("familyName", SelectorType.ID, faker.generateLastName());
+            enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            if (existingApplication) {
+                findSelectAllRadioButtonsByValue("Y");
+                enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
+            } else {
+                findSelectAllRadioButtonsByValue("N");
+                enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+                waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
+            }
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        } else {
+            operatorCreatesAccount();
+        }
+    }
+
+    public void operatorCreatesAccount() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+    }
+
+    public void completeOperatorAccountDetails() {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText("forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        if (existingApplication) {
-            findSelectAllRadioButtonsByValue("Y");
-            enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
-        } else {
-            findSelectAllRadioButtonsByValue("N");
-            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
-            waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
-        }
+        enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+        waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         click("termsAgreed", SelectorType.ID);
         UniversalActions.clickSubmit();
     }
