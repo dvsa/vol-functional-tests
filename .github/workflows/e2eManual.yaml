@@ -35,7 +35,7 @@ jobs:
     name: Call E2E Test Workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      platform_env: ${{ inputs.environment }}
+      environment: ${{ inputs.environment }}
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
