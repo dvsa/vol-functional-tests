@@ -1,19 +1,18 @@
+@create_account
 Feature: Create an Account
 
-  @WIP
-  Scenario: User who has a VOL or application in progress wishes to Create an Account
-    Given i have a valid "goods" "standard_national" licence
-    And I am on the registration page
-    Then I should be able to Create account with my existing licence
+  Background:
+    Given I am on the registration page
 
-  @create_account
+  Scenario: User who has a VOL or application in progress wishes to Create an Account
+    And I have an existing application or licence
+    Then I should be advised that I cannot create a new account
+
   @ss_regression
   @FullRegression
-  @printAndSign
   @localsmoke
 
   @smoke
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
-    Given I am on the registration page
     And an Operator with no licence
     Then I should be able to register an account
