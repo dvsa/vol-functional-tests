@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.6.0](https://github.com/dvsa/vol-functional-tests/compare/v3.5.7...v3.6.0) (2024-11-11)
+
+
+### Features
+
+* create account works with consultant toggle on or off ([044407f](https://github.com/dvsa/vol-functional-tests/commit/044407f8d1689064fa86818db453fe629776b675))
+
 ## [3.5.7](https://github.com/dvsa/vol-functional-tests/compare/v3.5.6...v3.5.7) (2024-11-01)
 
 
