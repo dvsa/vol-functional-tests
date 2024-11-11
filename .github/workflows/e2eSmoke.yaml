@@ -2,7 +2,7 @@ name: E2E Smoke Test
 on:
   workflow_call:
     inputs:
-      environment:
+      platform_env:
         description: "Environment to deploy"
         type: string
         required: true
@@ -12,7 +12,7 @@ jobs:
     name: Call E2E test workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      environment: ${{ inputs.environment }}
+      platform_env: ${{ inputs.platform_env }}
       cucumber_tags: >-
         ${{
           inputs.environment == 'dev' && '@ec2_smoke' ||
