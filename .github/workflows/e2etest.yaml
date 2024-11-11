@@ -61,8 +61,8 @@ jobs:
       - name: Configure AWS with provided credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
-          aws-region: ${{ vars.DVSA_AWS_REGION }}
+          role-to-assume: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+          aws-region: ${{ vars.TF_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Submit AWS Batch Job
@@ -70,8 +70,8 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ env.BATCH_JOB_QUEUE }} \
-            --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
+            --job-queue ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }} \
+            --job-definition ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
@@ -172,7 +172,7 @@ jobs:
         env:
           JOB_ID: ${{ needs.run-batch.outputs.job_id }}
           BUCKET_NAME: ${{ env.S3_REPORT_BUCKET }}
-          BUCKET_KEY: ${{ env.S3_REPORT_BUCKET_KEY }}
+          BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
           FOLDER_NAME: ${{ env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
