@@ -3,7 +3,7 @@ name: Manual Trigger for End-to-End Test
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      platform_env:
         type: string
         required: true
         description: "Environment to test"
@@ -35,7 +35,7 @@ jobs:
     name: Call E2E Test Workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      environment: ${{ inputs.environment }}
+      platform_env: ${{ inputs.platform_env }}
       cucumber_tags: ${{ inputs.cucumber_tags }}
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
