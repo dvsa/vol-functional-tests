@@ -62,7 +62,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
-          aws-region: ${{ vars.TF_AWS_REGION }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Submit AWS Batch Job
@@ -130,7 +130,7 @@ jobs:
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((TIME_OUT++))
+            ((count++))
             if [ $count -ge $TIME_OUT ]; then
               echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
               exit 1
@@ -173,7 +173,6 @@ jobs:
           JOB_ID: ${{ needs.run-batch.outputs.job_id }}
           BUCKET_NAME: ${{ vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
           BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
-          FOLDER_NAME: ${{ env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
