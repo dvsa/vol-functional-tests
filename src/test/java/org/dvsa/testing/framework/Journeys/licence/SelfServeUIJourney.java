@@ -31,21 +31,16 @@ public class SelfServeUIJourney extends BasePage {
     }
 
 
-    public void addNewOperator(String applicationID, boolean existingApplication) {
-        if (isTextPresent("Create an Account")) {
+    public void addNewOperator() {
+        if (isElementPresent("//h1[text()='Create an account                ']", SelectorType.XPATH)) {
             enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
             enterText("forename", SelectorType.ID, faker.generateFirstName());
             enterText("familyName", SelectorType.ID, faker.generateLastName());
             enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
             enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-            if (existingApplication) {
-                findSelectAllRadioButtonsByValue("Y");
-                enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
-            } else {
-                findSelectAllRadioButtonsByValue("N");
-                enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
-                waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
-            }
+            findSelectAllRadioButtonsByValue("N");
+            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+            waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
             click("termsAgreed", SelectorType.ID);
             UniversalActions.clickSubmit();
         } else {

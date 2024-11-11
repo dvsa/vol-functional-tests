@@ -23,12 +23,12 @@ public class CreateNewOperatorLicense extends BasePage {
 
     @Given("an Operator with no licence")
     public void anOperatorWithNoLicence() {
-        world.selfServeUIJourney.addNewOperator(null, false);
+        world.selfServeUIJourney.addNewOperator();
     }
 
     @Then("I should be able to Create account with my existing licence")
     public void iShouldBeAbleToCreateAccountWithMyExistingLicence() {
-        world.selfServeUIJourney.addNewOperator(null, false);
+        world.selfServeUIJourney.addNewOperator();
     }
 
     @Then("I should be able to register an account")
