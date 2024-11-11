@@ -177,7 +177,7 @@ jobs:
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
-            --bucket ${{ env.BUCKET_NAME }} \
+            --bucket ${{ vars.BUCKET_NAME }} \
             --key "${{ env.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
             "./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
 
