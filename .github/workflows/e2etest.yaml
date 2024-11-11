@@ -166,7 +166,7 @@ jobs:
         with:
           role-to-assume: ${{ env.TEST_OIDC_ROLE }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
-          role-duration-seconds: 8400
+          role-duration-seconds: 10800
 
       - name: Download Allure Report from S3
         env:
