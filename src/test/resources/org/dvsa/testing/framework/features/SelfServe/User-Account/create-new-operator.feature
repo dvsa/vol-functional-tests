@@ -8,6 +8,9 @@ Feature: Create an Account
     And I have an existing application or licence
     Then I should be advised that I cannot create a new account
 
+  Scenario: Consultant creates new VOL accounts for them and the operator
+    And a Consultant creating accounts on behalf of the operator
+
   @ss_regression
   @FullRegression
   @localsmoke
