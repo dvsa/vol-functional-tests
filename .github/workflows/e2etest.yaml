@@ -164,7 +164,7 @@ jobs:
       - name: Configure AWS with provided credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.TEST_OIDC_ROLE }}
+          role-to-assume: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 10800
 
