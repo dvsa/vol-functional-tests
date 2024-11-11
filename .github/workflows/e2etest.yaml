@@ -3,7 +3,7 @@ name: End to End Test
 on:
   workflow_call:
     inputs:
-      environment:
+      platform_env:
         type: string
         required: true
       cucumber_tags:
@@ -84,7 +84,7 @@ jobs:
               "environment": [
                 {
                   "name": "platformEnv",
-                  "value": "${{ inputs.environment }}"
+                  "value": "${{ inputs.platform_env }}"
                 },
                 {
                   "name": "cucumberTags",
