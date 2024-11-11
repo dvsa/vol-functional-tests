@@ -24,7 +24,7 @@ env:
   WORKING_DIR: infra/docker/batch
   REGISTRY: 054614622558.dkr.ecr.eu-west-1.amazonaws.com
   REGISTRY_MIRROR: ghcr.io
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
+  AWS_OIDC_ROLE: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
   AWS_REGION: ${{ vars.TF_AWS_REGION }}
   BATCH_SETTINGS: '[{ "id": "dvsa-github-packages","username": "${{secrets.SERVICE_USER}}","password": "${{secrets.SERVICE_USER_TOKEN}}"}]'
   RUNNER_SETTINGS: '[{ "id": "dvsa-github-packages","configuration": {"httpHeaders": {"property": {"name": "Authorization","value": "Bearer ${{ secrets.GITHUB_TOKEN }}"}}} }]'
@@ -78,8 +78,8 @@ jobs:
         if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ vars.DVSA_AWS_REGION }}
+          role-to-assume: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+          aws-region: ${{ vars.TF_AWS_REGION}}
 
       - name: Login to ECR
         if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}

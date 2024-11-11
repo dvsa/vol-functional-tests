@@ -6,22 +6,28 @@ on:
       platform_env:
         type: string
         required: true
+        description: "Environment to test"
       browser_name:
         type: string
         required: true
+        description: "Browser Name"
       browser_version:
         type: string
         required: true
+        description: "Browser Version"
       cucumber_tags:
         type: string
         required: true
+        description: "Cucumber Tags"
       maven_options:
         type: string
         required: false
+        description: "Maven Options"
       exclude_tags:
           type: string
           required: true
           default: 'none'
+          description: "Tages to exclude"
 
 
 jobs:

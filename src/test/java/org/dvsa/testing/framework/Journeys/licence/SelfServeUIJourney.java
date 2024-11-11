@@ -30,20 +30,60 @@ public class SelfServeUIJourney extends BasePage {
         this.world = world;
     }
 
-    public void addNewOperator(String applicationID, boolean existingApplication) {
+
+    public void addNewOperator() {
+        if (isElementPresent("//h1[text()='Create an account                ']", SelectorType.XPATH)) {
+            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            enterText("forename", SelectorType.ID, faker.generateFirstName());
+            enterText("familyName", SelectorType.ID, faker.generateLastName());
+            enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            findSelectAllRadioButtonsByValue("N");
+            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+            waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        } else {
+            operatorCreatesAccount();
+        }
+    }
+
+    public void existingAppOrLicence() {
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+    }
+
+    public void operatorCreatesAccount() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+    }
+
+    public void consultantCreatesAccounts() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+        completeConsultantAccountDetails();
+    }
+
+    public void completeConsultantAccountDetails() {
+
+    }
+
+    public void completeOperatorAccountDetails() {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText("forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        if (existingApplication) {
-            findSelectAllRadioButtonsByValue("Y");
-            enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
-        } else {
-            findSelectAllRadioButtonsByValue("N");
-            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
-            waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
-        }
+        enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+        waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         click("termsAgreed", SelectorType.ID);
         UniversalActions.clickSubmit();
     }
