@@ -178,20 +178,20 @@ jobs:
           mkdir -p ./upload/${{vars.FOLDER_NAME }}
           aws s3api get-object \
             --bucket ${{ vars.BUCKET_NAME }} \
-            --key "${{ vars.BUCKET_KEY }}/${{vars.FOLDER_NAME }}/${{ vars.REPORT_NAME }}" \
-            "./upload/${{vars.FOLDER_NAME }}/${{ vars.REPORT_NAME }}"
+            --key "${{ vars.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
-          mkdir -p ./upload/${{vars.FOLDER_NAME }}/allure-results
-          unzip ./upload/${{vars.FOLDER_NAME }}/${{ vars.REPORT_NAME }} -d ./upload/${{varsFOLDER_NAME }}/allure-results
-          ls -R ./upload/${{vars.FOLDER_NAME }}/allure-results
+          mkdir -p ./upload/${{env.FOLDER_NAME }}/allure-results
+          unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
+          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: ./upload/${{ vars.FOLDER_NAME }}/allure-results
+          path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
 
   report:
