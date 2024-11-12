@@ -72,4 +72,10 @@ public class CreateNewOperatorLicense extends BasePage {
     public void iShouldBeAdvisedThatICannotCreateANewAccount() {
         assertTrue(isTextPresent("Sorry, you cannot create a new account if you have an existing licence or application"));
     }
+
+    @Then("accounts should be registered for both Operator and Consultant")
+    public void accountsShouldBeRegisteredForBothOperatorAndConsultant() {
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
+        assertTrue(isTextPresent(world.DataGenerator.getConsultantUserEmail()));
+    }
 }

@@ -10,6 +10,7 @@ Feature: Create an Account
 
   Scenario: Consultant creates new VOL accounts for them and the operator
     And a Consultant creating accounts on behalf of the operator
+    Then accounts should be registered for both Operator and Consultant
 
   @ss_regression
   @FullRegression
