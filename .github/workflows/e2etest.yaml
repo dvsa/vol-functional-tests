@@ -129,7 +129,7 @@ jobs:
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((count++))
+            count=$((count + 1))
             if [ $count -ge $TIME_OUT ]; then
               echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
               exit 1
