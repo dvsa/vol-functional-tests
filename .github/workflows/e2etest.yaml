@@ -48,7 +48,6 @@ jobs:
     name: Run Tests on AWS Batch
     needs: create-job-name
     runs-on: ubuntu-latest
-    environment: ${{ inputs.platform_env }}
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
     env:
