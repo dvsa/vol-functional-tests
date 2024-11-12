@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.7.0](https://github.com/dvsa/vol-functional-tests/compare/v3.6.0...v3.7.0) (2024-11-12)
+
+
+### Features
+
+* consultant user creates accounts ([d600948](https://github.com/dvsa/vol-functional-tests/commit/d600948fe4a8360532b40b9ef5f0e977d37033ee))
+
 ## [3.6.0](https://github.com/dvsa/vol-functional-tests/compare/v3.5.7...v3.6.0) (2024-11-11)
 
 
