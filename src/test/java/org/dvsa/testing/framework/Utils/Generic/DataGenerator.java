@@ -145,7 +145,7 @@ public class DataGenerator extends BasePage {
                         getConsultantFamilyName(), Int.random(1000, 9999))
         );
         setConsultantUserEmail(
-                getConsultantUser().concat("@dvsaUser.com")
+                getConsultantUser().concat("@consultantUser.com")
         );
         setRandomWord(lorem.getWords(10, 20));
         this.world = world;
