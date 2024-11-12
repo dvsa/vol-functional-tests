@@ -159,7 +159,6 @@ jobs:
     name: Upload Report to GitHub
     needs: [run-batch, create-job-name]
     runs-on: ubuntu-latest
-    environment: ${{ inputs.platform_env }}
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
