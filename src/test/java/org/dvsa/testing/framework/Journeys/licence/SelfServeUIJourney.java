@@ -73,18 +73,26 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeConsultantAccountDetails() {
-
+        enterText("username", SelectorType.ID, world.DataGenerator.getConsultantUser());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getConsultantForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
+        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
+        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
+        click("termsAgreed", SelectorType.ID);
+        UniversalActions.clickSubmit();
     }
 
     public void completeOperatorAccountDetails() {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText("forename", SelectorType.ID, faker.generateFirstName());
-        enterText("familyName", SelectorType.ID, faker.generateLastName());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
         waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
-        click("termsAgreed", SelectorType.ID);
+        if (isElementPresent("termsAgreed", SelectorType.ID)){
+            click("termsAgreed", SelectorType.ID);
+        }
         UniversalActions.clickSubmit();
     }
 
