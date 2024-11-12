@@ -21,6 +21,11 @@ on:
       maven_options:
         type: string
         required: false
+      batch_timeout_minutes:
+        type: number
+        required: false
+        description: "Timeout in minutes for the AWS Batch job"
+        default: 180
 
 permissions:
   contents: write
@@ -117,8 +122,9 @@ jobs:
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
+          TIME_OUT: ${{ inputs.batch_timeout_minutes }}
         run: |
-          TIME_OUT=15
+          TIME_OUT=${{ env.TIME_OUT }}
           JOB_ID=${{ env.JOB_ID }}
           count=0
           trap 'aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"; exit 1' SIGINT SIGTERM
