@@ -1,4 +1,5 @@
 name: E2E Smoke Test
+
 on:
   workflow_call:
     inputs:
@@ -6,6 +7,18 @@ on:
         description: "Environment to deploy"
         type: string
         required: true
+      aws_role:
+        description: 'AWS IAM Role ARN to assume'
+        required: false
+        type: string
+      bucket_name:
+        description: 'Bucket for test report'
+        required: false
+        type: string
+      bucket_key:
+        description: 'Bucket key for report'
+        required: false
+        type: string
 
 jobs:
   call-e2etest:
@@ -15,10 +28,13 @@ jobs:
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: >-
         ${{
-          inputs.environment == 'dev' && '@ec2_smoke' ||
-          inputs.environment == 'prep' && '@PP-SMOKE' ||
+          inputs.platform_env == 'dev' && '@ec2_smoke' ||
+          inputs.platform_env == 'prep' && '@PP-SMOKE' ||
           '@smoke'
         }}
       browser_name: "edge"
       browser_version: "latest"
       exclude_tags: 'none'
+      aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
