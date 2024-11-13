@@ -1,4 +1,3 @@
-# hadolint ignore=DL3044
 FROM maven:3.9.6-amazoncorretto-11 AS builder
 WORKDIR /build
 
@@ -9,6 +8,7 @@ RUN mvn clean package -DskipTests
 
 FROM amazoncorretto:11
 
+# hadolint ignore=DL3044
 ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
     MAVEN_HOME=/usr/share/maven \
     PATH=${JAVA_HOME}/bin:/usr/share/maven/bin:${PATH}
