@@ -32,11 +32,19 @@ on:
         type: string
       bucket_name:
         description: 'Bucket for test report'
-        required: false
+        required: true
         type: string
       bucket_key:
         description: 'Bucket key for report'
-        required: false
+        required: true
+        type: string
+      batch_job_queue:
+        description: 'AWS Batch Job Queue'
+        required: true
+        type: string
+      batch_job_definition:
+        description: 'AWS Batch Job Definition'
+        required: true
         type: string
 
 permissions:
@@ -49,6 +57,8 @@ env:
   ROLE_ARN: ${{ inputs.aws_role }}
   BUCKET_NAME: ${{ inputs.bucket_name }}
   BUCKET_KEY: ${{ inputs.bucket_key }}
+  BATCH_JOB_QUEUE: ${{ inputs.batch_job_queue }}
+  BATCH_JOB_DEFINITION: ${{ inputs.batch_job_definition }}
 
 jobs:
   create-job-name:
@@ -89,8 +99,8 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }} \
-            --job-definition ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }} \
+            --job-queue ${{ env.BATCH_JOB_QUEUE }} \
+            --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
