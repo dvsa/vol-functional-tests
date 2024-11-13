@@ -1,3 +1,4 @@
+# hadolint ignore=DL3044
 FROM maven:3.9.6-amazoncorretto-11 AS builder
 WORKDIR /build
 
