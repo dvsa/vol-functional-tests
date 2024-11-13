@@ -83,9 +83,9 @@ jobs:
             }' \
             --container-overrides '{
               "command": [
-                "/bin/sh",
-                "-c",
-                "./run.sh"
+                "java",
+                "-jar,
+                "app.jar"
               ],
               "environment": [
                 {
