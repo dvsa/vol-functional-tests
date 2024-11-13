@@ -28,6 +28,18 @@ on:
           required: true
           default: 'none'
           description: "Tages to exclude"
+      aws_role:
+        description: 'AWS IAM Role ARN to assume'
+        required: false
+        type: string
+      bucket_name:
+        description: 'Bucket for test report'
+        required: false
+        type: string
+      bucket_key:
+        description: 'Bucket key for report'
+        required: false
+        type: string
 
 
 jobs:
@@ -40,3 +52,6 @@ jobs:
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
       exclude_tags: ${{ inputs.exclude_tags }}
+      aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}

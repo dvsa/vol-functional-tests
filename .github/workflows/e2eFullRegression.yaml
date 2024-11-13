@@ -3,19 +3,33 @@ name: E2E Full Regression
 on:
   workflow_call:
     inputs:
-      environment:
+      platform_env:
+        description: "Environment to deploy"
         type: string
         required: true
-
+      aws_role:
+        description: 'AWS IAM Role ARN to assume'
+        required: false
+        type: string
+      bucket_name:
+        description: 'Bucket for test report'
+        required: false
+        type: string
+      bucket_key:
+        description: 'Bucket key for report'
+        required: false
+        type: string
 
 jobs:
   call-e2etest:
     name: Call E2E test workflow
     uses: ./.github/workflows/e2etest.yaml
     with:
-      platform_env: ${{ inputs.environment }}
+      platform_env: ${{ inputs.platform_env }}
       cucumber_tags: "@FullRegression"
       browser_name: "edge"
       browser_version: "latest"
       exclude_tags: "none"
-
+      aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
