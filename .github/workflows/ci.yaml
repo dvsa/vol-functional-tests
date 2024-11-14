@@ -64,15 +64,15 @@ jobs:
       version: ${{ needs.get-version.outputs.vft }}
       push: >-
         ${{
-          startsWith(github.head_ref, 'features/') ||
-          startsWith(github.head_ref, 'fix/') ||
-          startsWith(github.head_ref, 'chore/') ||
+          startsWith(github.head_ref, 'features/') 
+          startsWith(github.head_ref, 'fix/') 
+          startsWith(github.head_ref, 'chore/') 
           github.head_ref == 'main'
         }}
       image-tag: >-
         ${{
-          startsWith(github.head_ref, 'features/') && format('feature-{0}', github.event.pull_request.number) ||
-          startsWith(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) ||
-          startsWith(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) ||
+          startsWith(github.head_ref, 'features/') && format('features-{0}', github.event.pull_request.number) 
+          startsWith(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) 
+          startsWith(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) 
           'latest'
         }}
