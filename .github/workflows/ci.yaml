@@ -62,7 +62,7 @@ jobs:
       packages: write
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ github.ref == 'refs/heads/main'  contains(github.ref, 'features/')  contains(github.ref, 'fix/')  contains(github.ref, 'chore/') }}
+      push: ${{ github.ref == 'refs/heads/main'  startsWith(github.ref, 'features/')  startsWith(github.ref, 'fix/')  startsWith(github.ref, 'chore/') }}
       image-tag: ${{
         github.ref == 'refs/heads/main' && 'latest'
         startsWith(github.ref, 'features/') && format('features-{0}', github.event.pull_request.number)
