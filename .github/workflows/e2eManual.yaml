@@ -27,27 +27,7 @@ on:
           type: string
           required: true
           default: 'none'
-          description: "Tages to exclude"
-      aws_role:
-        description: 'AWS IAM Role ARN to assume'
-        required: false
-        type: string
-      bucket_name:
-        description: 'Bucket for test report'
-        required: false
-        type: string
-      bucket_key:
-        description: 'Bucket key for report'
-        required: false
-        type: string
-      batch_job_queue:
-        description: 'AWS Batch Job Queue'
-        required: false
-        type: string
-      batch_job_definition:
-        description: 'AWS Batch Job Definition'
-        required: false
-        type: string
+          description: "Tags to exclude"
 
 jobs:
   call-e2etest:
@@ -59,8 +39,8 @@ jobs:
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
       exclude_tags: ${{ inputs.exclude_tags }}
-      aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
-      bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
-      bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
-      batch_job_queue: ${{ inputs.batch_job_queue || vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }}
-      batch_job_definition: ${{ inputs.batch_job_definition || vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }}
+      aws_role: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ vars.S3_REPORT_BUCKET_KEY }}
+      batch_job_queue: ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }}
+      batch_job_definition: ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }}
