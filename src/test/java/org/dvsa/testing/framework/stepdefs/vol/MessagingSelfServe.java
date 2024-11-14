@@ -84,7 +84,6 @@ public class MessagingSelfServe extends BasePage {
         assertTrue(isTextPresent(TextFieldErrorMessage));
     }
 
-
     @Then("i send a reply without entering a message in the text field, and an error message will appear.")
     public void iSendAReplyWithoutEnteringAMessageInTheTextFieldAndAnErrorMessageWillAppear() {
         world.messagingInternal.iClickTheMessagesHeading();
