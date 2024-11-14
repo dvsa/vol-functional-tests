@@ -1,5 +1,14 @@
 # Revision History for the VOL Functional Tests
 
+## [3.7.1](https://github.com/dvsa/vol-functional-tests/compare/v3.7.0...v3.7.1) (2024-11-14)
+
+
+### Bug Fixes
+
+* bump up dependencies ([5589d4b](https://github.com/dvsa/vol-functional-tests/commit/5589d4ba97c8ba1e89ebdfa9f2d9e1a8105895e2))
+* cucumber7-nvm ([8ac59e6](https://github.com/dvsa/vol-functional-tests/commit/8ac59e69fed657bb86b8bc32acb92928649d24f2))
+* mvn compiler ([68961e3](https://github.com/dvsa/vol-functional-tests/commit/68961e34a14287060fd48975bf26a8af1c5006b8))
+
 ## [3.7.0](https://github.com/dvsa/vol-functional-tests/compare/v3.6.0...v3.7.0) (2024-11-12)
 
 
