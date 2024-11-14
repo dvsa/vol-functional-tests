@@ -42,7 +42,7 @@ jobs:
     name: build with Maven
     uses: ./.github/workflows/maven.yaml
     with:
-        maven-goal: package -DskipTests
+      maven-goal: package -DskipTests
     needs:
       - security
       - get-version
@@ -63,16 +63,16 @@ jobs:
     with:
       version: ${{ needs.get-version.outputs.vft }}
       push: >-
-        ${{
-          contains(github.head_ref, 'features/') 
-          contains(github.head_ref, 'fix/') 
-          contains(github.head_ref, 'chore/') 
-          github.head_ref == 'main'
+        ${{ 
+          startsWith(github.head_ref, 'features/') || 
+          startsWith(github.head_ref, 'fix/') || 
+          startsWith(github.head_ref, 'chore/') || 
+          github.head_ref == 'main' 
         }}
       image-tag: >-
-        ${{
-          contains(github.head_ref, 'features/') && format('features-{0}', github.event.pull_request.number) 
-          contains(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) 
-          contains(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) 
-          'latest'
+        ${{ 
+          startsWith(github.head_ref, 'features/') && format('features-{0}', github.event.pull_request.number) || 
+          startsWith(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) || 
+          startsWith(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) || 
+          'latest' 
         }}
