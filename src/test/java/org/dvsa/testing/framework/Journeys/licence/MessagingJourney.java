@@ -59,8 +59,17 @@ public class MessagingJourney extends BasePage {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[inputs][appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
-        waitAndClick("//*[@id=\"form-actions[inputs][appOrLicNo]\"]/optgroup[2]/option", SelectorType.XPATH);
+        click("//*[@id=\"form-actions[inputs][appOrLicNo]\"]/optgroup[2]/option", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
+        clickById("send");
+    }
+
+    public void createNewConversationAndSelectTheLicenceNumber() {
+        clickByLinkText("Start a new conversation");
+        selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
+        selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
     }
 

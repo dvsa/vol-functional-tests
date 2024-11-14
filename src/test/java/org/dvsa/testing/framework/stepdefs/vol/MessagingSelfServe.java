@@ -28,6 +28,11 @@ public class MessagingSelfServe extends BasePage {
         world.messagingJourney.createNewConversation();
     }
 
+    @Then("i click on start a new conversation link and select the licence number")
+    public void iClickOnStartANewConversationLinkAndSelectALicenceNumber() {
+        world.messagingJourney.createNewConversationAndSelectTheLicenceNumber();
+    }
+
     @And("i redirect to the message tab to respond to the case worker's message")
     public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
         world.messagingInternal.iClickTheMessagesHeading();
@@ -78,7 +83,6 @@ public class MessagingSelfServe extends BasePage {
         assertTrue(isTextPresent(LicenceOrApplicationErrorMessage));
         assertTrue(isTextPresent(TextFieldErrorMessage));
     }
-
 
     @Then("i send a reply without entering a message in the text field, and an error message will appear.")
     public void iSendAReplyWithoutEnteringAMessageInTheTextFieldAndAnErrorMessageWillAppear() {
