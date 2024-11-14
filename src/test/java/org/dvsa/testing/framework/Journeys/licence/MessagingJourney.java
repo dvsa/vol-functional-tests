@@ -64,7 +64,7 @@ public class MessagingJourney extends BasePage {
         clickById("send");
     }
 
-    public void createNewConversationAndSelectLicenceNumber() {
+    public void createNewConversationAndSelectTheLicenceNumber() {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);

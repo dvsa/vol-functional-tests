@@ -18,7 +18,7 @@ Feature: Check for error validation on message page of an internal application.
     And i create an admin and url search for my licence
     * i have logged in to self serve
     * i click the messages heading
-    * i click on start a new conversation link and select proper licence number
+    * i click on start a new conversation link and select the licence number
     * i have logged in to internal as "admin"
     When i search for and click on my licence
     Then i validate the new message count appears on the messaging tab

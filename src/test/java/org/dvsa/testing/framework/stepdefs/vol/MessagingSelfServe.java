@@ -28,9 +28,9 @@ public class MessagingSelfServe extends BasePage {
         world.messagingJourney.createNewConversation();
     }
 
-    @Then("i click on start a new conversation link and select proper licence number")
-    public void iClickOnStartANewConversationLinkAndSelectProperLicenceNumber() {
-        world.messagingJourney.createNewConversationAndSelectLicenceNumber();
+    @Then("i click on start a new conversation link and select the licence number")
+    public void iClickOnStartANewConversationLinkAndSelectALicenceNumber() {
+        world.messagingJourney.createNewConversationAndSelectTheLicenceNumber();
     }
 
     @And("i redirect to the message tab to respond to the case worker's message")
