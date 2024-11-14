@@ -65,6 +65,15 @@ public class MessagingJourney extends BasePage {
         clickById("send");
     }
 
+    public void createNewConversationAndSelectLicenceNumber() {
+        clickByLinkText("Start a new conversation");
+        selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
+        selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
+        clickById("send");
+    }
+
     public void checkForNewTask() {
         clickByLinkText("Processing");
         assertTrue(isElementPresent("New message", SelectorType.LINKTEXT));
