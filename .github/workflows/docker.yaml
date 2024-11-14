@@ -65,19 +65,12 @@ jobs:
 
         uses: docker/metadata-action@v5
         with:
-          images: |
-            ${{ env.REGISTRY }}/vol-qa/vft
-            ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
-          flavor: |
-            latest=auto
-          tags: |
-            type=raw,value=${{
-              startsWith(github.head_ref, 'features/') && format('features-{0}', github.event.pull_request.number) 
-              startsWith(github.head_ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) 
-              startsWith(github.head_ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) ||
-              'latest'
-            }}
-            type=sha,prefix=,format=short
+         images: |
+           ${{ env.REGISTRY }}/vol-qa/vft
+           ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
+         tags: |
+          type=raw,value=pr-${{ inputs.image-tag }}
+          type=sha,prefix=,format=short
 
       - name: Configure AWS credentials
         if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}

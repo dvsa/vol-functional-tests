@@ -62,5 +62,10 @@ jobs:
       packages: write
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ github.ref == 'refs/heads/features' || github.ref == 'refs/heads/fix' || github.ref == 'refs/heads/chore' || github.ref == 'refs/heads/main' }}
-      image-tag: ${{ github.ref == 'refs/heads/features' && format('features-{0}', github.event.pull_request.number) || github.ref == 'refs/heads/fix' && format('fix-{0}', github.event.pull_request.number) || github.ref == 'refs/heads/chore' && format('chore-{0}', github.event.pull_request.number) || 'latest' }}
+      push: ${{ github.ref == 'refs/heads/main'  contains(github.ref, 'features/')  contains(github.ref, 'fix/')  contains(github.ref, 'chore/') }}
+      image-tag: ${{
+        github.ref == 'refs/heads/main' && 'latest'
+        contains(github.ref, 'features/') && format('features-{0}', github.event.pull_request.number)
+        contains(github.ref, 'fix/') && format('fix-{0}', github.event.pull_request.number)
+        contains(github.ref, 'chore/') && format('chore-{0}', github.event.pull_request.number)
+  } }
