@@ -18,7 +18,7 @@
         <axe-scanner-version>2.11.0</axe-scanner-version>
 
 
-        <allure-cucumber7-jvm.version>2.25.2</allure-cucumber7-jvm.version>
+        <allure-cucumber7-jvm.version>2.20.1</allure-cucumber7-jvm.version>
         <allure-report.version>2.25.0</allure-report.version>
 
         <slf4j.version>2.22.0</slf4j.version>
