@@ -17,6 +17,11 @@ on:
         type: boolean
         required: false
         default: false
+      image-tag:
+        type: string
+        required: false
+        description: 'Custom image tag to push/test (defaults to latest if not provided)'
+        default: 'latest'
 
 env:
   WORKING_DIR: infra/docker/batch
@@ -63,13 +68,12 @@ jobs:
         
         uses: docker/metadata-action@v5
         with:
-          images: |
-            ${{ env.REGISTRY }}/vol-qa/vft
-            ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
-          tags: |
-            type=sha,prefix=,format=short
-            type=semver,enable=${{ inputs.is-release }},pattern={{version}},value=${{ inputs.version }}
-            type=raw,value=latest
+         images: |
+           ${{ env.REGISTRY }}/vol-qa/vft
+           ${{ env.REGISTRY_MIRROR }}/dvsa/vol-qa/vft
+         tags: |
+          type=raw,value=pr-${{ inputs.image-tag }}
+          type=sha,prefix=,format=short
 
       - name: Configure AWS credentials
         if: ${{ inputs.push }}

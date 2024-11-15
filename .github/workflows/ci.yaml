@@ -1,14 +1,40 @@
 name: CI
 
 on:
+  push:
+    branches:
+      - 'features/'
+      - 'fix/'
+      - 'chore/'
   pull_request:
+    types:
+      - labeled
+      - unlabeled
+      - opened
+      - synchronize
+      - reopened
 
 permissions:
   contents: read
   packages: write
-
+  id-token: write
 
 jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    outputs:
+      should_push: ${{ github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'test-branch') }}
+    steps:
+      - name: Check if should push
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "Push event detected"
+          elif [[ "${{ contains(github.event.pull_request.labels.*.name, 'test-branch') }}" == "true" ]]; then
+            echo "test-branch label detected"
+          else
+            echo "No push conditions met"
+          fi
+
   get-version:
     name: Get latest app versions
     runs-on: ubuntu-latest
@@ -17,26 +43,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.ref }}
       - id: vft-version
         uses: dvsa/.github/.github/actions/get-vol-app-version@main
-
       - name: Add to summary
         run: |
           echo "#### App versions:" >> $GITHUB_STEP_SUMMARY
-          echo "**vft**: \`${{ steps.vft-version.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**vft: ${{ steps.vft-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+
   security:
     name: Security
     uses: ./.github/workflows/security.yaml
     secrets: inherit
 
-  build-maven:      
+  build-maven:
     name: build with Maven
     uses: ./.github/workflows/maven.yaml
     with:
         maven-goal: package -DskipTests
-    needs: 
+    needs:
       - security
       - get-version
 
@@ -45,13 +70,14 @@ jobs:
     needs:
       - build-maven
       - get-version
-    strategy:
-      fail-fast: false
+      - check-label
     uses: ./.github/workflows/docker.yaml
     secrets: inherit
-    with:
-      version: ${{ needs.get-version.outputs.vft }}
-      push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
       contents: read
       id-token: write
+      packages: write
+    with:
+      version: ${{ needs.get-version.outputs.vft }}
+      push: ${{ needs.check-label.outputs.should_push && github.event_name == 'push' }}
+      image-tag: ${{ github.ref_name }}
