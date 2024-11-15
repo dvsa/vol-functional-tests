@@ -61,4 +61,4 @@ jobs:
     with:
       version: ${{ needs.get-version.outputs.vft }}
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') }}
-      image-tag: features-${{github.event.pull_request.number) }}
+      image-tag: features-${{ github.event.pull_request.number }}
