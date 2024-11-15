@@ -60,18 +60,5 @@ jobs:
       packages: write
     with:
       version: ${{ needs.get-version.outputs.vft }}
-      push: >-
-        ${{ 
-          contains(github.event.pull_request.labels.*.name, 'test-branch') 
-          github.event.pull_request.head.ref == 'main'  
-          startsWith(github.event.pull_request.head.ref, 'features/')  
-          startsWith(github.event.pull_request.head.ref, 'fix/')  
-          startsWith(github.event.pull_request.head.ref, 'chore/')
-        }}
-      image-tag: >-
-        ${{
-          github.event.pull_request.head.ref == 'main' && 'latest' 
-          (startsWith(github.event.pull_request.head.ref, 'features/') && format('features-{0}', github.event.pull_request.number)) 
-          (startsWith(github.event.pull_request.head.ref, 'fix/') && format('fix-{0}', github.event.pull_request.number)) ||
-          (startsWith(github.event.pull_request.head.ref, 'chore/') && format('chore-{0}', github.event.pull_request.number))
-        }}
+      push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch')  github.event.pull_request.head.ref == 'main'  startsWith(github.event.pull_request.head.ref, 'features/')  startsWith(github.event.pull_request.head.ref, 'fix/')  startsWith(github.event.pull_request.head.ref, 'chore/') }}
+      image-tag: ${{ github.event.pull_request.head.ref == 'main' && 'latest'  startsWith(github.event.pull_request.head.ref, 'features/') && format('features-{0}', github.event.pull_request.number)  startsWith(github.event.pull_request.head.ref, 'fix/') && format('fix-{0}', github.event.pull_request.number) || startsWith(github.event.pull_request.head.ref, 'chore/') && format('chore-{0}', github.event.pull_request.number) }}
