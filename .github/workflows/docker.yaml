@@ -80,7 +80,7 @@ jobs:
           aws-region: ${{ vars.TF_AWS_REGION}}
 
       - name: Login to ECR
-        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
+        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'features-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -94,7 +94,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Untag existing latest image in ECR
-        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
+        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'features-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         run: |
           aws ecr batch-delete-image --repository-name vol-qa/vft --image-ids imageTag=latest
 
@@ -112,13 +112,13 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Setup Notation CLI
-        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
+        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'features-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         uses: notaryproject/notation-action/setup@v1
         with:
           version: "1.1.0"
 
       - name: Sign artefact
-        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'feature-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
+        if: ${{ inputs.push && (startsWith(inputs.image-tag, 'features-') || startsWith(inputs.image-tag, 'fix-') || startsWith(inputs.image-tag, 'chore-')) == false }}
         uses: notaryproject/notation-action/sign@v1
         with:
           plugin_name: com.amazonaws.signer.notation.plugin
