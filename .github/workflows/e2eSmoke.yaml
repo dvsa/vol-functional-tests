@@ -41,7 +41,7 @@ jobs:
           '@ec2_smoke'
         }}
       browser_name: "edge"
-      browser_version: "latest"
+      browser_version: "115"
       exclude_tags: 'none'
       aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
       bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
