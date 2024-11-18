@@ -3,9 +3,6 @@ name: End to End Test
 on:
   workflow_call:
     inputs:
-      #test_oidc_role: TODO: add in OIDC linked role as an input
-        #type: string
-        #required: false
       platform_env:
         type: string
         required: true
@@ -24,6 +21,31 @@ on:
       maven_options:
         type: string
         required: false
+      batch_timeout_minutes:
+        type: number
+        required: false
+        description: "Timeout in minutes for the AWS Batch job"
+        default: 180
+      aws_role:
+        description: 'AWS IAM Role ARN to assume'
+        required: false
+        type: string
+      bucket_name:
+        description: 'Bucket for test report'
+        required: true
+        type: string
+      bucket_key:
+        description: 'Bucket key for report'
+        required: true
+        type: string
+      batch_job_queue:
+        description: 'AWS Batch Job Queue'
+        required: true
+        type: string
+      batch_job_definition:
+        description: 'AWS Batch Job Definition'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -31,16 +53,18 @@ permissions:
   checks: write
 
 env:
-  JOB_QUEUE: "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-dev-job-queue"
-  JOB_DEFINITION: "OLCS-DEVAPPCI-DEVCI-batchtestrunner-ftrunner-FTRUNNER"
   REPORT_NAME: "allure.zip"
-  AWS_REGION: "eu-west-1"
-  AWS_OIDC_ROLE: ${{ vars.TEST_OIDC_ROLE }}
+  ROLE_ARN: ${{ inputs.aws_role }}
+  BUCKET_NAME: ${{ inputs.bucket_name }}
+  BUCKET_KEY: ${{ inputs.bucket_key }}
+  BATCH_JOB_QUEUE: ${{ inputs.batch_job_queue }}
+  BATCH_JOB_DEFINITION: ${{ inputs.batch_job_definition }}
 
 jobs:
   create-job-name:
     name: Create Job Name
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     outputs:
       job_name: ${{ steps.set-job-name.outputs.job_name }}
     steps:
@@ -64,11 +88,10 @@ jobs:
 
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Submit AWS Batch Job
@@ -76,8 +99,8 @@ jobs:
         run: |
           JOB_ID=$(aws batch submit-job \
             --job-name ${{ env.JOB_NAME }} \
-            --job-queue ${{ env.JOB_QUEUE }} \
-            --job-definition ${{ env.JOB_DEFINITION }} \
+            --job-queue ${{ env.BATCH_JOB_QUEUE }} \
+            --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
             --timeout '{
               "attemptDurationSeconds": 8400
             }' \
@@ -124,10 +147,12 @@ jobs:
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
+          TIME_OUT: ${{ inputs.batch_timeout_minutes }}
         run: |
-          TIME_OUT=15
+          TIME_OUT=${{ env.TIME_OUT }}
           JOB_ID=${{ env.JOB_ID }}
           count=0
+          trap 'aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"; exit 1' SIGINT SIGTERM
           while true; do
             JOB_STATUS=$(aws batch describe-jobs --jobs $JOB_ID --query 'jobs[0].status' --output text)
             if [ "$JOB_STATUS" == "SUCCEEDED" ] || [ "$JOB_STATUS" == "FAILED" ]; then
@@ -135,9 +160,9 @@ jobs:
               break
             fi
             echo "Job status: $JOB_STATUS"
-            ((TIME_OUT++))
+            count=$((count + 1))
             if [ $count -ge $TIME_OUT ]; then
-              echo "Batch JOB with id=${{ env.JOB_ID }} timout. Exiting."
+              echo "Batch JOB with id=${{ env.JOB_ID }} timeout. Exiting."
               exit 1
             fi
             sleep 60
@@ -146,6 +171,14 @@ jobs:
             echo "AWS Batch job failed"
             exit 1
           fi
+
+      - name: Cancel AWS Batch Job
+        if: cancelled()
+        env:
+          JOB_ID: ${{ steps.submit-job.outputs.job_id }}
+        run: |
+          echo "Workflow was cancelled, terminating AWS Batch job"
+          aws batch terminate-job --job-id $JOB_ID --reason "GitHub workflow cancelled"
 
   upload-batch-report:
     name: Upload Report to GitHub
@@ -158,19 +191,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure AWS with provided credentials
-        #if: "${{ github.event.inputs.test_oidc_role }} =! ''" TODO:add in if logic to check if empty
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-          role-duration-seconds: 8400
+          role-to-assume: ${{ env.ROLE_ARN }}
+          aws-region: ${{ vars.DVSA_AWS_REGION }}
+          role-duration-seconds: 10800
 
       - name: Download Allure Report from S3
         env:
           JOB_ID: ${{ needs.run-batch.outputs.job_id }}
-          BUCKET_NAME: ${{ vars.S3_REPORT_BUCKET }}
-          BUCKET_KEY: ${{ vars.S3_REPORT_BUCKET_KEY }}
-          FOLDER_NAME: ${{ env.FOLDER_NAME }}
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}
           aws s3api get-object \
@@ -196,7 +225,9 @@ jobs:
     needs: [upload-batch-report, create-job-name]
     env:
       REPORT_KEY: ${{ needs.create-job-name.outputs.job_name }}
+
     runs-on: ubuntu-latest
+    environment: ${{ inputs.platform_env }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -208,7 +239,7 @@ jobs:
 
       - name: Console Output Report
         run: |
-          echo "Allure report is available at s3://${{ inputs.s3_report_bucket  }}/${{ inputs.s3_report_bucket_key }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+          echo "Allure report is available at s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Get Summary
         id: get-summary
@@ -216,8 +247,8 @@ jobs:
         with:
           file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
           fail-on-test-failures: false
-          fail-on-test-errors: false #temp measure until grid is fixed
-          report-path: "https://${{ env.S3_REPORT_BUCKET }}.s3.amazonaws.com/${{ env.S3_REPORT_BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
+          fail-on-test-errors: false
+          report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
     name: Job Succeeded

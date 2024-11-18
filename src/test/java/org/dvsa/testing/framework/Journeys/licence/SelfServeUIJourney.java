@@ -30,21 +30,69 @@ public class SelfServeUIJourney extends BasePage {
         this.world = world;
     }
 
-    public void addNewOperator(String applicationID, boolean existingApplication) {
-        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText("forename", SelectorType.ID, faker.generateFirstName());
-        enterText("familyName", SelectorType.ID, faker.generateLastName());
-        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        if (existingApplication) {
-            findSelectAllRadioButtonsByValue("Y");
-            enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
-        } else {
+
+    public void addNewOperator() {
+        if (isElementPresent("//h1[text()='Create an account                ']", SelectorType.XPATH)) {
+            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            enterText("forename", SelectorType.ID, faker.generateFirstName());
+            enterText("familyName", SelectorType.ID, faker.generateLastName());
+            enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
             findSelectAllRadioButtonsByValue("N");
             enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        } else {
+            operatorCreatesAccount();
         }
+    }
+
+    public void existingAppOrLicence() {
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+    }
+
+    public void operatorCreatesAccount() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+    }
+
+    public void consultantCreatesAccounts() {
+        findSelectAllRadioButtonsByValue("N");
+        UniversalActions.clickSubmit();
+        waitForTextToBePresent("Are you acting on behalf of an operator?");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSubmit();
+        completeOperatorAccountDetails();
+        completeConsultantAccountDetails();
+    }
+
+    public void completeConsultantAccountDetails() {
+        enterText("username", SelectorType.ID, world.DataGenerator.getConsultantUser());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getConsultantForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
+        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
+        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
         click("termsAgreed", SelectorType.ID);
+        UniversalActions.clickSubmit();
+    }
+
+    public void completeOperatorAccountDetails() {
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+        waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
+        if (isElementPresent("termsAgreed", SelectorType.ID)){
+            click("termsAgreed", SelectorType.ID);
+        }
         UniversalActions.clickSubmit();
     }
 

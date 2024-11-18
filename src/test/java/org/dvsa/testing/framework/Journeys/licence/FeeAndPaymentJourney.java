@@ -159,6 +159,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
         UniversalActions.clickPay();
+        waitForTextToBePresent("The payment was made successfully");
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }

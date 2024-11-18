@@ -1,5 +1,65 @@
 # Revision History for the VOL Functional Tests
 
+## [3.7.2](https://github.com/dvsa/vol-functional-tests/compare/v3.7.1...v3.7.2) (2024-11-14)
+
+
+### Bug Fixes
+
+* message test fix ([d043025](https://github.com/dvsa/vol-functional-tests/commit/d043025b91b1b81e7f97881371cca5772696c68a))
+* message test fix ([cdae671](https://github.com/dvsa/vol-functional-tests/commit/cdae67166bc53dde561cf4e316a50a3290548308))
+* message test fix ([7b4e92c](https://github.com/dvsa/vol-functional-tests/commit/7b4e92c8b498a32b0eb7ad2ccda1ba98177d5334))
+
+## [3.7.1](https://github.com/dvsa/vol-functional-tests/compare/v3.7.0...v3.7.1) (2024-11-14)
+
+
+### Bug Fixes
+
+* bump up dependencies ([5589d4b](https://github.com/dvsa/vol-functional-tests/commit/5589d4ba97c8ba1e89ebdfa9f2d9e1a8105895e2))
+* cucumber7-nvm ([8ac59e6](https://github.com/dvsa/vol-functional-tests/commit/8ac59e69fed657bb86b8bc32acb92928649d24f2))
+* mvn compiler ([68961e3](https://github.com/dvsa/vol-functional-tests/commit/68961e34a14287060fd48975bf26a8af1c5006b8))
+
+## [3.7.0](https://github.com/dvsa/vol-functional-tests/compare/v3.6.0...v3.7.0) (2024-11-12)
+
+
+### Features
+
+* consultant user creates accounts ([d600948](https://github.com/dvsa/vol-functional-tests/commit/d600948fe4a8360532b40b9ef5f0e977d37033ee))
+
+## [3.6.0](https://github.com/dvsa/vol-functional-tests/compare/v3.5.7...v3.6.0) (2024-11-11)
+
+
+### Features
+
+* create account works with consultant toggle on or off ([044407f](https://github.com/dvsa/vol-functional-tests/commit/044407f8d1689064fa86818db453fe629776b675))
+
+## [3.5.7](https://github.com/dvsa/vol-functional-tests/compare/v3.5.6...v3.5.7) (2024-11-01)
+
+
+### Bug Fixes
+
+* oidc input var ([90c7ca5](https://github.com/dvsa/vol-functional-tests/commit/90c7ca57055a66afd0612ffab22e1f47dffabe62))
+
+## [3.5.6](https://github.com/dvsa/vol-functional-tests/compare/v3.5.5...v3.5.6) (2024-10-29)
+
+
+### Miscellaneous Chores
+
+* bump to 3.5.6 ([fd813b6](https://github.com/dvsa/vol-functional-tests/commit/fd813b6483a875fad2c082148b4191f8812a4868))
+
+## [3.5.5](https://github.com/dvsa/vol-functional-tests/compare/v3.3.4...v3.5.5) (2024-10-25)
+
+
+### Miscellaneous Chores
+
+* bump to 3.5.5 ([04738e6](https://github.com/dvsa/vol-functional-tests/commit/04738e6c49d5b859a964f9b894f1e6158746fd4e))
+
+## [3.3.4](https://github.com/dvsa/vol-functional-tests/compare/v3.3.3...v3.3.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* increase threads ([6401285](https://github.com/dvsa/vol-functional-tests/commit/64012853c455054b024bc4450e596076f2526573))
+
 ## [3.3.3](https://github.com/dvsa/vol-functional-tests/compare/v3.3.2...v3.3.3) (2024-10-23)
 
 

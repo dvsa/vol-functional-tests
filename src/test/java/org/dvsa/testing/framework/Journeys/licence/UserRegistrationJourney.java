@@ -18,7 +18,7 @@ public class UserRegistrationJourney extends BasePage {
     public void registerUserWithNoLicence() {
         world.selfServeNavigation.navigateToLoginPage();
         world.selfServeNavigation.navigateToCreateAnAccount();
-        world.selfServeUIJourney.addNewOperator(null, false);
+        world.selfServeUIJourney.addNewOperator();
         assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 

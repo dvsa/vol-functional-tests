@@ -6,23 +6,28 @@ on:
       platform_env:
         type: string
         required: true
+        description: "Environment to test"
       browser_name:
         type: string
         required: true
+        description: "Browser Name"
       browser_version:
         type: string
         required: true
+        description: "Browser Version"
       cucumber_tags:
         type: string
         required: true
+        description: "Cucumber Tags"
       maven_options:
         type: string
         required: false
+        description: "Maven Options"
       exclude_tags:
           type: string
           required: true
           default: 'none'
-
+          description: "Tags to exclude"
 
 jobs:
   call-e2etest:
@@ -34,3 +39,8 @@ jobs:
       browser_name: ${{ inputs.browser_name }}
       browser_version: ${{ inputs.browser_version }}
       exclude_tags: ${{ inputs.exclude_tags }}
+      aws_role: ${{ vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ vars.S3_REPORT_BUCKET_KEY }}
+      batch_job_queue: ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }}
+      batch_job_definition: ${{ vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }}
