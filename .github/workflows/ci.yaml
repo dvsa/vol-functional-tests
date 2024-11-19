@@ -54,4 +54,5 @@ jobs:
       push: ${{ contains(github.event.pull_request.labels.*.name, 'test-branch') || false}}
     permissions:
       contents: read
+      packages: write
       id-token: write
