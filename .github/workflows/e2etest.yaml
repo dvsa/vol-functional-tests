@@ -101,9 +101,7 @@ jobs:
             --job-name ${{ env.JOB_NAME }} \
             --job-queue ${{ env.BATCH_JOB_QUEUE }} \
             --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
-            --timeout '{
-              "attemptDurationSeconds": $(( ${{ inputs.batch_timeout_minutes }} * 60 ))
-            }' \
+            --timeout "attemptDurationSeconds=$(( ${{ inputs.batch_timeout_minutes }} * 60 ))" \
             --container-overrides '{
               "command": [
                 "/bin/sh",
