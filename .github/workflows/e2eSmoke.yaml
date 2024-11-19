@@ -41,7 +41,7 @@ jobs:
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: >-
         ${{
-          inputs.platform_env == 'dev' && '@smoke' ||
+          inputs.platform_env == 'dev' && '@checker_page' ||
           inputs.platform_env == 'prep' && '@PP-SMOKE' ||
           '@ec2_smoke'
         }}
