@@ -22,4 +22,3 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     And i navigate to partner vehicle search
     And i search for a vehicle
     Then the expected licence results should be shown
-
