@@ -14,3 +14,4 @@ Feature: User should be able to view the checker page before registering as a Se
     And I am on the checker page
     When I click Continue on the checker page
     Then I should be on the Self Serve login page
+

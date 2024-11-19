@@ -44,4 +44,9 @@ public class PageChecks extends BasePage {
         }
         assertTrue(checkForPartialMatch(documentType));
     }
+
+    @Then("the page should load")
+    public void thePageShouldLoad() {
+        assertTrue(isTextPresent("Sign in to your Vehicle Operator Licensing account"));
+    }
 }

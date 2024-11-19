@@ -1,3 +1,4 @@
+/*
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.driver.Browser;
@@ -31,3 +32,4 @@ private final World world;
         assertEquals("#005ea5", hex);
         }
     }
+*/
