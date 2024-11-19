@@ -102,7 +102,7 @@ jobs:
             --job-queue ${{ env.BATCH_JOB_QUEUE }} \
             --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
             --timeout '{
-              "attemptDurationSeconds": 8400
+              "attemptDurationSeconds": $(( ${{ inputs.batch_timeout_minutes }} * 60 ))
             }' \
             --container-overrides '{
               "command": [
