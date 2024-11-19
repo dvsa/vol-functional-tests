@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -77,4 +78,6 @@ public class CreateApplications extends BasePage {
     public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
         world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
     }
+
+
 }

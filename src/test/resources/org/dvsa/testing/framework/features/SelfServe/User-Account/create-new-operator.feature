@@ -20,3 +20,6 @@ Feature: Create an Account
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
     And an Operator with no licence
     Then I should be able to register an account
+
+    Scenario: API - Create Consultant
+      Given I register a Consultant and Operator

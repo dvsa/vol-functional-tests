@@ -401,4 +401,14 @@ public class ManageApplications extends BasePage {
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Under Consideration"));
     }
+
+    @Given("I register a Consultant and Operator")
+    public synchronized void iRegisterAConsultantAndOperator() throws HttpException {
+        lock.writeLock().lock();
+        try {
+            world.APIJourney.registerConsultantAndGetUserDetails(UserType.EXTERNAL.asString());
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
 }
