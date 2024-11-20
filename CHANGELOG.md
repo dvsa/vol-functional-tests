@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.8.1](https://github.com/dvsa/vol-functional-tests/compare/v3.8.0...v3.8.1) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* map "int" to "qa" before nonprod environments are renamed as planned ([6c49906](https://github.com/dvsa/vol-functional-tests/commit/6c499069a6782f17778a73f4d68d706379d14120))
+
 ## [3.8.0](https://github.com/dvsa/vol-functional-tests/compare/v3.7.3...v3.8.0) (2024-11-19)
 
 
