@@ -214,7 +214,7 @@ jobs:
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
+          name: allure-results-${{ inputs.platform_env }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
 
@@ -233,7 +233,7 @@ jobs:
       - name: Download Allure Report
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
+          name: allure-results-${{ inputs.platform_env }}
 
       - name: Console Output Report
         run: |
