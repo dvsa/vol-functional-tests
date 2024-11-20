@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.8.2](https://github.com/dvsa/vol-functional-tests/compare/v3.8.1...v3.8.2) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* namespace allure results with env name to avoid dupe artefact errors ([5b2718e](https://github.com/dvsa/vol-functional-tests/commit/5b2718e701c869b0e7e45981eb50effa009aa5ef))
+
 ## [3.8.1](https://github.com/dvsa/vol-functional-tests/compare/v3.8.0...v3.8.1) (2024-11-20)
 
 
