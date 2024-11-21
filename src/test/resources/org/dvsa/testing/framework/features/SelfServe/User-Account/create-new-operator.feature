@@ -13,7 +13,7 @@ Feature: Create an Account
     Then accounts should be registered for both Operator and Consultant
 
   @ss_regression
-  @FullRegression
+  @FullRegressionx
   @localsmoke
 
   @smoke
@@ -21,5 +21,9 @@ Feature: Create an Account
     And an Operator with no licence
     Then I should be able to register an account
 
-    Scenario: API - Create Consultant
-      Given I register a Consultant and Operator
+  Scenario Outline: Create licence as different user types
+    Given as a "<user_type>" I have a valid "<operator_type>" "<licence_type>" licence
+    Examples:
+      | user_type  | operator_type | licence_type           |
+      | consultant | goods         | standard_international |
+      | admin      | goods         | standard_international |

@@ -140,24 +140,38 @@ public class APIJourney {
 
     public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
         lock.lock();
-        world.registerUser.registerUser();
-        //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
-        lock.unlock();
-    }
-
-    public synchronized void registerConsultantAndGetUserDetails(String userType) throws HttpException {
-        lock.lock();
         try {
-            world.registerConsultantAndOperator.register();
-            // For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
-            world.selfServeNavigation.navigateToLogin(world.registerConsultantAndOperator.getUserName(), world.registerConsultantAndOperator.getEmailAddress());
-            world.userDetails.getUserDetails(userType, world.registerConsultantAndOperator.getUserId(), world.registerConsultantAndOperator.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            if (userType.equalsIgnoreCase("consultant")) {
+                world.registerConsultantAndOperator.register();
+
+                world.selfServeNavigation.navigateToLogin(
+                        world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                        world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
+                );
+                world.userDetails.getUserDetails(
+                        UserType.EXTERNAL.asString(),
+                        world.registerConsultantAndOperator.getConsultantDetails().getUserId(),
+                        world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword")
+                );
+            } else {
+                world.registerUser.registerUser();
+                world.selfServeNavigation.navigateToLogin(
+                        world.registerUser.getUserName(),
+                        world.registerUser.getEmailAddress()
+                );
+                world.userDetails.getUserDetails(
+                        UserType.EXTERNAL.asString(),
+                        world.registerUser.getUserId(),
+                        world.registerUser.getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword")
+                );
+            }
         } finally {
             lock.unlock();
         }
     }
+
 
     public synchronized void grantLicenceAndPayFees() throws HttpException {
         lock.lock();
