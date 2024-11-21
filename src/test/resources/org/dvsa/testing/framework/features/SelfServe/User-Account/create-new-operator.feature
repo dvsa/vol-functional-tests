@@ -13,7 +13,7 @@ Feature: Create an Account
     Then accounts should be registered for both Operator and Consultant
 
   @ss_regression
-  @FullRegressionx
+  @FullRegression
   @localsmoke
 
   @smoke
