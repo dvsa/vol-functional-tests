@@ -404,13 +404,12 @@ public class ManageApplications extends BasePage {
 
 
 
-
     @Given("as a {string} I have a valid {string} {string} licence")
     public synchronized void iHaveALicenceAs(String userType, String operatorType, String licenceType) throws HttpException {
         lock.writeLock().lock();
         try {
             world.APIJourney.registerAndGetUserDetails(userType);
-            world.licenceCreation.createApplication(operatorType, licenceType);
+            world.licenceCreation.createLicence(operatorType, licenceType);
         } finally {
             lock.writeLock().unlock();
         }
