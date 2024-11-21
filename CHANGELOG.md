@@ -1,5 +1,26 @@
 # Revision History for the VOL Functional Tests
 
+## [3.8.2](https://github.com/dvsa/vol-functional-tests/compare/v3.8.1...v3.8.2) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* namespace allure results with env name to avoid dupe artefact errors ([5b2718e](https://github.com/dvsa/vol-functional-tests/commit/5b2718e701c869b0e7e45981eb50effa009aa5ef))
+
+## [3.8.1](https://github.com/dvsa/vol-functional-tests/compare/v3.8.0...v3.8.1) (2024-11-20)
+
+
+### Miscellaneous Chores
+
+* map "int" to "qa" before nonprod environments are renamed as planned ([6c49906](https://github.com/dvsa/vol-functional-tests/commit/6c499069a6782f17778a73f4d68d706379d14120))
+
+## [3.8.0](https://github.com/dvsa/vol-functional-tests/compare/v3.7.3...v3.8.0) (2024-11-19)
+
+
+### Features
+
+* bump up uri ([f3be3c3](https://github.com/dvsa/vol-functional-tests/commit/f3be3c397d3c29232f01f2c5e2a140cc035c7b05))
+
 ## [3.7.3](https://github.com/dvsa/vol-functional-tests/compare/v3.7.2...v3.7.3) (2024-11-19)
 
 
