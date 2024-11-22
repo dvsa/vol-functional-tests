@@ -6,16 +6,19 @@ Feature: Continuations journey through internal and self serve
 
   @int_regression @FullRegression @continuations_smoke
   Scenario Outline: Continue a licence that has expired
-    Given i have a valid "<operatorType>" "<licenceType>" licence
+    Given as a "<user_type>" I have a valid "<operator_type>" "<licence_type>" licence
     When i change my continuation and review date on Internal
     And i generate a continuation
     And fill in my continuation details on self serve
     Then the continuation should be approved and a snapshot generated on Internal
     Examples:
-      | operatorType | licenceType            |
-      | goods        | restricted             |
-      | public       | standard_national      |
-      | public       | special_restricted     |
+      | user_type   | operator_type | licence_type            |
+      | consultant  | goods         | restricted              |
+      | consultant  | public        | standard_national       |
+      | consultant  | public        | special_restricted      |
+      | admin       | goods         | restricted              |
+      | admin       | goods         | standard_national       |
+      | admin       | public        | special_restricted      |
 
   @int_regression @FullRegression @continuations_internal @continuations_smoke
   Scenario Outline: Caseworker continues a licence that has expired
@@ -32,7 +35,7 @@ Feature: Continuations journey through internal and self serve
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
     And i generate a continuation
-    And i have logged in to self serve
+    And i have logged in to self serve as "<user_type>"
     Then the users of ss should display on the continuation review details page and on the snapshot
     Examples:
       | operatorType | licenceType            |
