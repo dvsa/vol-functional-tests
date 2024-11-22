@@ -41,13 +41,13 @@ public class APIJourney {
         }
     }
 
-    public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws HttpException {
+    public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea, String userType) throws HttpException {
         lock.lock();
         try {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.registerAndGetUserDetails(userType);
         world.APIJourney.createApplication();
         world.APIJourney.submitApplication();
         world.grantApplication.grantLicence();

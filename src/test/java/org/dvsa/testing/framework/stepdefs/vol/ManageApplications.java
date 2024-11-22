@@ -204,14 +204,14 @@ public class ManageApplications extends BasePage {
         }
     }
 
-    @Given("as a {string} I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
-    public synchronized void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String userType, String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
+    @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
+    public synchronized void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
         lock.writeLock().lock();
         try {
             if (Integer.parseInt(noOfLicences) > 9) {
                 throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
             }
-            world.APIJourney.registerAndGetUserDetails(userType);
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
             world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
             world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
@@ -341,10 +341,11 @@ public class ManageApplications extends BasePage {
         world.updateLicence.updateLicenceStatus(arg0);
     }
 
-    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
-        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+    @Given("as a {string} I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String trafficArea, String enforcementArea, String userType) throws HttpException {
+        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea, userType);
     }
+
 
     @Given("i have an interim {string} {string} application")
     public synchronized void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
@@ -414,4 +415,6 @@ public class ManageApplications extends BasePage {
             lock.writeLock().unlock();
         }
     }
+
+
 }
