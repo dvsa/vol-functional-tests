@@ -402,16 +402,7 @@ public class ManageApplications extends BasePage {
         assertTrue(isTextPresent("Under Consideration"));
     }
 
-    @Given("as a {string} I have a valid {string} {string} application")
-    public synchronized void iHaveAnApplicationAs(String userType, String operatorType, String licenceType) throws HttpException {
-        lock.writeLock().lock();
-        try {
-            world.APIJourney.registerAndGetUserDetails(userType);
-            world.licenceCreation.createApplication(operatorType, licenceType);
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
+
 
     @Given("as a {string} I have a valid {string} {string} licence")
     public synchronized void iHaveALicenceAs(String userType, String operatorType, String licenceType) throws HttpException {
