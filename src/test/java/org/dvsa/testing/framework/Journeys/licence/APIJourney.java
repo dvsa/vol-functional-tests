@@ -44,19 +44,28 @@ public class APIJourney {
     public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea, String userType) throws HttpException {
         lock.lock();
         try {
-        world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
-        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
-        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-        world.APIJourney.registerAndGetUserDetails(userType);
-        world.APIJourney.createApplication();
-        world.APIJourney.submitApplication();
-        world.grantApplication.grantLicence();
-        world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
-        world.updateLicence.getLicenceTrafficArea();
-        }  finally {
-            {
-                lock.unlock();
+            // Validate trafficArea
+            try {
+                world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid traffic area: " + trafficArea, e);
             }
+            // Validate enforcementArea
+            try {
+                world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid enforcement area: " + enforcementArea, e);
+            }
+
+            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+            world.APIJourney.registerAndGetUserDetails(userType);
+            world.APIJourney.createApplication();
+            world.APIJourney.submitApplication();
+            world.grantApplication.grantLicence();
+            world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
+            world.updateLicence.getLicenceTrafficArea();
+        } finally {
+            lock.unlock();
         }
     }
 
