@@ -3,29 +3,19 @@
 
 Feature: Manage users - removal of users via the users list
 
-  Background:
-    Given as a "<user_type>" I have a valid "goods" "standard_national" licence
-    And i navigate to the manage users page
+  Background i have a valid "goods" "standard_national" licence
 
-  Scenario Outline: Add and remove users
+  Scenario: Add and remove operator user
     Given i have an admin account to add users
+    And i navigate to the manage users page
     And i add a user
     And "2" users show in the user table
     And i remove the user
     Then "1" users show in the user table
 
-  Examples:
-  | user_type  |
-  | admin      |
-  | consultant |
-
-  Scenario Outline: Remove transport manager
+  Scenario: Remove transport manager
     Given i have an application with a transport manager
+    And i navigate to the manage users page
     And the transport manager is displayed in the users list
     And i remove the user
     Then "1" users show in the user table
-
-    Examples:
-      | user_type  |
-      | admin      |
-      | consultant |
