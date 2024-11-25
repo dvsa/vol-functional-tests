@@ -143,7 +143,7 @@ public class APIJourney {
         try {
             if (userType.equalsIgnoreCase("consultant")) {
                 world.registerConsultantAndOperator.register();
-
+                //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
                 world.selfServeNavigation.navigateToLogin(
                         world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
                         world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
