@@ -82,8 +82,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority, String newTrailerTotalAuthority) {
-        String operatingCentreEditLink = String.format("//*[contains(text(),'%s')]", world.createApplication.getOperatingCentreAddressLine1());
-        waitForElementToBePresent("//*[@id='add']");
+        String operatingCentreEditLink = String.format("//*[contains(text(),'%s')]", world.createApplication.getOperatingCentrePostCode());
         waitAndClick(operatingCentreEditLink, SelectorType.XPATH);
         waitForElementToBePresent(operatingCentreVehicleField);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
