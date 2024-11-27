@@ -429,6 +429,17 @@ public class ManageApplications extends BasePage {
         }
     }
 
+    @Given("as a {string} I have a {string} {string} application")
+    public synchronized void iHaveAnApplicationAs(String userType, String operatorType, String licenceType) throws HttpException {
+        lock.writeLock().lock();
+        try {
+            world.APIJourney.registerAndGetUserDetails(userType);
+            world.licenceCreation.createApplication(operatorType, licenceType);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
 
     @Given("as a {string} I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
     public synchronized void asAIHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String userType, String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
