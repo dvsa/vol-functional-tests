@@ -1,4 +1,4 @@
-@messaging @ssMessageDisplay
+@messaging @ssMessageDisplay @consultant
 
 Feature: External users can view the messaging tab, as well as create new messages, replies, message status, message notification count, and back button.
 

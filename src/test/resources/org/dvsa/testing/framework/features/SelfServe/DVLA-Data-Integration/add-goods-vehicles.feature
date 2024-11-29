@@ -1,4 +1,4 @@
-@DVLA @VOL-147 @ss_regression @FullRegression @printAndSign
+@DVLA @VOL-147 @ss_regression @FullRegression @printAndSign @consultant
 Feature: Search and add a vehicle
 
   @ec2_smoke @dvla-add-vehicle @localsmoke @smoke
