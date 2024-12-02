@@ -1,50 +1,39 @@
 package org.dvsa.testing.framework.Global;
 
 import activesupport.aws.s3.SecretsManager;
-import activesupport.mailhog.Mailhog;
-import org.dvsa.testing.framework.Injectors.World;
-import activesupport.aws.s3.S3;
+import activesupport.mailPit.MailPit;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 public class Configuration {
     public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
-    public Mailhog mailhog = new Mailhog();
+    public MailPit mailPit = new MailPit();
     private final World world;
 
     public Configuration(World world) {
         this.world = world;
     }
 
-    public String getBucketName() {
-        return SecretsManager.getSecretValue("bucketName");
-    }
-
     public String getTempPassword(String emailAddress) {
-        return S3.getTempPassword(emailAddress, getBucketName());
-    }
-
-    public String getTempPasswordFromMailhog(String emailSubject){
-        return mailhog.retrievePassword(emailSubject);
+        return mailPit.retrieveTempPassword(emailAddress);
     }
 
     public String getGovCode() throws InterruptedException {
-        return String.valueOf(S3.getSignInCode());
+        return mailPit.retrieveSignInCode(world.registerUser.getEmailAddress());
     }
 
-
-    public String getPasswordResetLink() {
-        return String.valueOf(S3.getPasswordResetLink(world.registerUser.getEmailAddress()));
+    public String getPasswordResetLink() throws activesupport.MissingRequiredArgument {
+        return mailPit.retrievePasswordResetLink(world.registerUser.getEmailAddress());
     }
 
-    public String getTmAppLink() {
-        return S3.getTmAppLink(world.registerUser.getEmailAddress());
+    public String getTmAppLink() throws activesupport.MissingRequiredArgument {
+        return mailPit.retrieveTmAppLink(world.registerUser.getEmailAddress());
     }
 
-    public String getUsernameResetLink() {
-        return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
+    public String getUsernameResetLink() throws activesupport.MissingRequiredArgument {
+        return mailPit.retrieveUsernameInfo(world.registerUser.getEmailAddress());
     }
-
 }
