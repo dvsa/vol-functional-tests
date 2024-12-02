@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.Global;
 
-import activesupport.aws.s3.SecretsManager;
 import activesupport.mailPit.MailPit;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
