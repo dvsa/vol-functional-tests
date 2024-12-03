@@ -1,30 +1,45 @@
-FROM maven:3.9.6-amazoncorretto-11 as maven
+FROM maven:3.9.6-amazoncorretto-11 AS builder
+WORKDIR /build
 
-ENV platform="LINUX"
-ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
+COPY pom.xml .
+COPY settings.xml /root/.m2/settings.xml
+COPY src ./src
+RUN mvn clean package -DskipTests
 
+FROM amazoncorretto:11
 
-ENV proxyHost=$proxyHost
-ENV proxyPort=$proxyPort
+# hadolint ignore=DL3044
+ENV JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto \
+    MAVEN_HOME=/usr/share/maven \
+    PATH=${JAVA_HOME}/bin:/usr/share/maven/bin:${PATH}
 
 WORKDIR /app
 
 RUN yum update -y && \
-    yum install -y zip-3.* unzip-6.*  && \
+    yum install -y \
+        zip-3.* \
+        unzip-6.* \
+        curl-7.* \
+        python3-3.* && \
     yum clean all && \
-    rm -rf /var/cache/yum
+    rm -rf /var/cache/yum && \
+    python3 -m pip install --no-cache-dir awscli==1.27.165
 
-# Install latest version of the aws cli 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
-    rm -f awscliv2.zip
+COPY --from=builder /usr/share/maven /usr/share/maven
 
-COPY . .
+RUN mkdir -p /root/.m2
+COPY settings.xml /root/.m2/settings.xml
+COPY --from=builder /root/.m2/repository /root/.m2/repository
 
-COPY ./settings.xml /root/.m2/settings.xml
+RUN ls -la /usr/share/maven/bin/mvn && \
+    chmod +x /usr/share/maven/bin/mvn
 
+COPY pom.xml ./pom.xml
+COPY src ./src
 
-RUN chmod +x ./run.sh
+COPY --from=builder /build/target/*.jar ./app.jar
 
-CMD ["/bin/sh", "-c", "./run.sh"]
+# Remove settings.xml after use
+RUN rm -f /root/.m2/settings.xml
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

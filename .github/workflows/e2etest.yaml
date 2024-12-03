@@ -104,9 +104,10 @@ jobs:
             --timeout "attemptDurationSeconds=$(( ${{ inputs.batch_timeout_minutes }} * 60 ))" \
             --container-overrides '{
               "command": [
-                "/bin/sh",
-                "-c",
-                "./run.sh"
+                "java",
+                "-cp",
+                "app.jar"
+                "AppJarRunner"
               ],
               "environment": [
                 {
