@@ -7,6 +7,7 @@ import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -55,6 +56,9 @@ public class GlobalMethods extends BasePage {
         } catch (DecoderException e) {
             e.printStackTrace();
         }
+        if (isTextPresent("Welcome to your account")){
+            click("termsAgreed",SelectorType.ID);
+            UniversalActions.clickSubmit();}
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
