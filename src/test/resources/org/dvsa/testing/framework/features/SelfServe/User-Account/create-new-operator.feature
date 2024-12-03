@@ -4,10 +4,12 @@ Feature: Create an Account
   Background:
     Given I am on the registration page
 
+    @consultant
   Scenario: User who has a VOL or application in progress wishes to Create an Account
     And I have an existing application or licence
     Then I should be advised that I cannot create a new account
 
+      @consultant
   Scenario: Consultant creates new VOL accounts for them and the operator
     And a Consultant creating accounts on behalf of the operator
     Then accounts should be registered for both Operator and Consultant
@@ -20,3 +22,10 @@ Feature: Create an Account
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
     And an Operator with no licence
     Then I should be able to register an account
+
+  Scenario Outline: Create licence as different user types
+    Given as a "<user_type>" I have a valid "<operator_type>" "<licence_type>" licence
+    Examples:
+      | user_type  | operator_type | licence_type           |
+      | consultant | goods         | standard_international |
+      | admin      | goods         | standard_international |

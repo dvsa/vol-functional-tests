@@ -102,4 +102,5 @@ public class World {
     public MessagingSelfServe messagingSelfServe;
 
     public DocumentsJourney documentsJourney;
+    public RegisterConsultantAndOperator registerConsultantAndOperator;
 }
