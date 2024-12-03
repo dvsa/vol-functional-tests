@@ -15,7 +15,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | east       | 41   |
       | west       | 41   |
 
-  @ss_regression @FullRegression @printAndSign @consultant
+  @ss_regression @FullRegression @printAndSign
   Scenario Outline: import EBSR in self-serve (Resource-B)
     Given as a "<user_type>" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
