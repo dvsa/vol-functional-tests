@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.8.5](https://github.com/dvsa/vol-functional-tests/compare/v3.8.4...v3.8.5) (2024-12-04)
+
+
+### Bug Fixes
+
+* more robust assertion ([4589686](https://github.com/dvsa/vol-functional-tests/commit/4589686dba857515400f3015560bcbd888ed11e8))
+
 ## [3.8.4](https://github.com/dvsa/vol-functional-tests/compare/v3.8.3...v3.8.4) (2024-12-03)
 
 
