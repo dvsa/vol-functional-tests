@@ -87,16 +87,15 @@ public class ExternalSearch extends BasePage {
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
     }
 
-    @And("I am able to view the applicants licence number")
-    public void iAmAbleToViewTheApplicantsLicenceNumber() {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
-    }
 
     @And("I am able to view the licence number")
     public void iAmAbleToViewTheLicenceNumber() {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+        String licenceNumber = world.applicationDetails.getLicenceNumber();
+        String orgName = world.createApplication.getOrganisationName();
+
+        waitForElementToBePresent(String.format("//tr[td[contains(text(), '%s')]]", orgName));
+        String rowText = getText(String.format("//tr[td[contains(text(), '%s')]]", orgName), SelectorType.XPATH);
+        assertTrue(rowText.contains(licenceNumber));
     }
 
 
