@@ -18,7 +18,7 @@
         <axe-scanner-version>2.11.0</axe-scanner-version>
 
 
-        <allure-cucumber7-jvm.version>2.20.1</allure-cucumber7-jvm.version>
+        <allure-cucumber7-jvm.version>2.29.1</allure-cucumber7-jvm.version>
         <allure-report.version>2.25.0</allure-report.version>
 
         <slf4j.version>2.22.0</slf4j.version>
@@ -28,9 +28,10 @@
         <hamcrest-version>1.3</hamcrest-version>
 
         <aspectj.version>1.9.21</aspectj.version>
-        <build.helper.plugin.version>3.2.0</build.helper.plugin.version>
+        <build.helper.plugin.version>3.9.9</build.helper.plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
+        <maven-shade-plugin.version>3.6.0</maven-shade-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
@@ -40,24 +41,24 @@
         <jvmMemory>14400</jvmMemory>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.10.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.cucumber</groupId>
-                <artifactId>cucumber-bom</artifactId>
-                <version>7.15.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            <dependency>-->
+<!--                <groupId>org.junit</groupId>-->
+<!--                <artifactId>junit-bom</artifactId>-->
+<!--                <version>5.10.1</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.cucumber</groupId>-->
+<!--                <artifactId>cucumber-bom</artifactId>-->
+<!--                <version>7.15.0</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
 
     <repositories>
         <repository>
@@ -81,16 +82,20 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
+            <version>7.20.1</version>
             <scope>test</scope>
+
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.20.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
+            <version>1.11.3</version>
             <scope>test</scope>
         </dependency>
 
@@ -151,7 +156,14 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.20.1</version>
             <scope>test</scope>
+
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>4.0.0-beta-1</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -254,21 +266,61 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.12.0</version>
-                <configuration>
-                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report
-                    </reportingOutputDirectory>
-                    <reportVersion>${allure-report.version}</reportVersion>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
                 <executions>
                     <execution>
-                        <id>generate-test-report</id>
-                        <phase>verify</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>report</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>AppJarRunner</mainClass>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>AppJarRunner</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
