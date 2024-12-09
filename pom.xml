@@ -4,7 +4,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>3.8.7-SNAPSHOT</version>
+    <version>3.8.8-SNAPSHOT</version>
 
 
     <properties>
@@ -244,12 +244,13 @@
                     <argLine>-Xmx${jvmMemory}m</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>4</forkCount>
+                    <forkCount>3</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>classes</parallel>
                     <threadCount>1</threadCount>
+
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
