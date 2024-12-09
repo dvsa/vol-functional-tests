@@ -5,7 +5,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -41,13 +40,9 @@ public class ExternalSearch extends BasePage {
         waitForTextToBePresent("Password");
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             world.globalMethods.signIn(intUser, intPassword);
-        } else {
-            world.globalMethods.signIn(user, password);
-        }
-        if (isTextPresent("Welcome to your account")){
-            click("termsAgreed",SelectorType.ID);
-            UniversalActions.clickSubmit();}
-        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
+        } else
+        {world.globalMethods.signIn(user, password);
+        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);}
     }
 
     @And("I am on the external search page")
