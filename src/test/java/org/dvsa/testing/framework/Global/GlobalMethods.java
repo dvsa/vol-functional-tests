@@ -71,8 +71,8 @@ public class GlobalMethods extends BasePage {
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
         //if (!world.configuration.env.toString().equals("local")) {
-       //     password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        LOGGER.info("PASSWORD");
+            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+        LOGGER.info("PASSWORD" + password);
 
 /*        } else {
             throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
