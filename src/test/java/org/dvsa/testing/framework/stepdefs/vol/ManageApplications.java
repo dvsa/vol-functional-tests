@@ -356,7 +356,6 @@ public class ManageApplications extends BasePage {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid enforcement area: " + enforcementArea, e);
         }
-
         world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea, userType);
     }
 

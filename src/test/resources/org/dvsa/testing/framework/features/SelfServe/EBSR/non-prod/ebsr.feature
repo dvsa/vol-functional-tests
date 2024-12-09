@@ -1,25 +1,11 @@
 @EBSR
 Feature: import EBSR for English, Welsh and Scottish Areas
 
-  @ss_regression @FullRegression @printAndSign
+  @ss_regression @FullRegression @printAndSign @consultant
   Scenario Outline: Short notice import EBSR in self-serve (Resource-A)
-    Given as a "admin" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
-    When I upload an ebsr file with "<Days>" days notice
-    Then A short notice flag should be displayed in selfserve
-    And Documents are generated
-    Examples:
-      | Area       | Days |
-      | north_east | 41   |
-      | scotland   | 41   |
-      | wales      | 55   |
-      | east       | 41   |
-      | west       | 41   |
-
-  @ss_regression @FullRegression @printAndSign
-  Scenario Outline: import EBSR in self-serve (Resource-B)
     Given as a "<user_type>" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
-    Then A short notice flag should not be displayed in selfserve
+    Then A short notice flag should be displayed in selfserve
     And Documents are generated
     Examples:
       | user_type  | Area       | Days |
@@ -28,6 +14,20 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | admin      | wales      | 55   |
       | consultant | east       | 41   |
       | admin      | west       | 41   |
+
+  @ss_regression @FullRegression @printAndSign
+  Scenario Outline: import EBSR in self-serve (Resource-B)
+    Given as a "admin" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
+    When I upload an ebsr file with "<Days>" days notice
+    Then A short notice flag should not be displayed in selfserve
+    And Documents are generated
+    Examples:
+      | Area       | Days |
+      | north_east | 42   |
+      | scotland   | 42   |
+      | wales      | 56   |
+      | east       | 42   |
+      | west       | 42   |
 
   @ss_regression @FullRegression @printAndSign @consultant
   Scenario Outline: import EBSR for curtailed and suspended licence in self-serve (Resource-A)

@@ -43,9 +43,9 @@ public class Continuations extends BasePage {
         world.continuationJourney.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
     }
 
-    @And("fill in my continuation details on self serve")
-    public void fillInMyContinuationDetailsOnSelfServe() {
-        world.continuationJourney.continueLicenceWithVerifyAndPay();
+    @And("fill in my continuation details on self serve as {string}")
+    public void fillInMyContinuationDetailsOnSelfServeAsUserType(String userType) {
+        world.continuationJourney.continueLicenceWithVerifyAndPay(userType);
     }
 
     @Then("the continuation should be approved and a snapshot generated on Internal")
@@ -142,8 +142,8 @@ public class Continuations extends BasePage {
         closeTabAndFocusTab(0);
     }
 
-    @And("a caseworkers continues my licence")
-    public void aCaseworkersContinuesMyLicence() {
+    @And("a caseworker continues my licence")
+    public void aCaseworkerContinuesMyLicence() {
         world.internalNavigation.getLicence();
         waitForTitleToBePresent(world.applicationDetails.getLicenceNumber());
         refreshPage();
