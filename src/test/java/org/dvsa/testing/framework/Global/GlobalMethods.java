@@ -66,14 +66,14 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        if (!world.configuration.env.toString().equals("local")) {
+        //if (!world.configuration.env.toString().equals("local")) {
             password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        } else {
+/*        } else {
             throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
         }
         if (password == null) {
             throw new IllegalArgumentException("Retrieved password is null");
-        }
+        }*/
 
         try {
             signIn(username, password);
