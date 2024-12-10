@@ -33,11 +33,9 @@ public class GlobalMethods extends BasePage {
     private final String confirmPasswordField = nameAttribute("input", "confirmPassword");
     private final String submitButton = "//*[@id='auth.login.button']";
 
-
     public GlobalMethods(World world) {
         this.world = world;
     }
-
 
     public String getLoginPassword() {
         return loginPassword;
@@ -52,11 +50,15 @@ public class GlobalMethods extends BasePage {
         String domainURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         LOGGER.info("Navigating to URL: " + domainURL);
         if (Browser.isBrowserOpen()) {
+            LOGGER.info("Browser is open");
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        } else {
+            LOGGER.info("Browser NOT OPEN");
         }
         DriverUtils.get(domainURL);
         try {
+            LOGGER.info("Entering Credentials");
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
             LOGGER.error("DecoderException occurred while entering credentials", e);
@@ -72,7 +74,6 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        //if (!world.configuration.env.toString().equals("local")) {
         password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
         LOGGER.info("Decoded password: " + password);
 
@@ -102,6 +103,7 @@ public class GlobalMethods extends BasePage {
         click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
     }
+
     public void submit() {
         click(submitButton, SelectorType.CSS);
     }
