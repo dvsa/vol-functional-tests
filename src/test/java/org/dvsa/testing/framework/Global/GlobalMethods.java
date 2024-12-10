@@ -50,6 +50,7 @@ public class GlobalMethods extends BasePage {
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = SecretsManager.getSecretValue("internalNewPassword");
         String domainURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
+        LOGGER.info("Navigating to URL: " + domainURL);
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
@@ -58,11 +59,12 @@ public class GlobalMethods extends BasePage {
         try {
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
-            e.printStackTrace();
+            LOGGER.error("DecoderException occurred while entering credentials", e);
         }
-        if (isTextPresent("Welcome to your account")){
-            click("termsAgreed",SelectorType.ID);
-            UniversalActions.clickSubmit();}
+        if (isTextPresent("Welcome to your account")) {
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        }
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
@@ -71,34 +73,28 @@ public class GlobalMethods extends BasePage {
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
         //if (!world.configuration.env.toString().equals("local")) {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-            LOGGER.info("PASSWORD" + password);
+        password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+        LOGGER.info("Decoded password: " + password);
 
-/*        } else {
-            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
+        LOGGER.info("Entering credentials for username: " + username);
+        signIn(username, password);
+        if (isTextPresent("Please check your username and password")) {
+            LOGGER.warn("Initial sign-in failed, retrying with login password");
+            signIn(username, getLoginPassword());
         }
-        if (password == null) {
-            throw new IllegalArgumentException("Retrieved password is null");
-        }*/
-
-//        try {
-//            signIn(username, password);
-//            if (isTextPresent("Please check your username and password")) {
-//                signIn(username, getLoginPassword());
-//            }
-//        } finally {
-//            if (isTextPresent("Your password must:")) {
-//                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
-//                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
-//                click(nameAttribute("input", "submit"), SelectorType.CSS);
-//                setLoginPassword(newPassword);
-//                untilNotInDOM(submitButton, 1);
-//            }
-//        }
+        if (isTextPresent("Your password must:")) {
+            LOGGER.info("Password reset required, entering new password");
+            waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
+            waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
+            click(nameAttribute("input", "submit"), SelectorType.CSS);
+            setLoginPassword(newPassword);
+            untilNotInDOM(submitButton, 1);
+        }
     }
+
     public void signIn(String userName, String password) {
-        if (isElementPresent("declarationRead", SelectorType.ID)
-                && (!isElementSelected("declarationRead", SelectorType.ID))) {
+        LOGGER.info("Signing in with username: " + userName);
+        if (isElementPresent("declarationRead", SelectorType.ID) && (!isElementSelected("declarationRead", SelectorType.ID))) {
             waitAndClick("declarationRead", SelectorType.ID);
         }
         replaceText(emailField, SelectorType.CSS, userName);
