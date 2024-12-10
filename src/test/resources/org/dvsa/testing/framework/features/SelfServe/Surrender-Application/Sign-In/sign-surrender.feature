@@ -13,4 +13,4 @@ Feature: Sign surrender
     When I can navigate to gov sign in
     And I sign in to gov sign in to complete the process
     Then the post gov sign in page is displayed
-    And the surrender status is "Surrender under consideration"
+    And the surrender status is Surrender under consideration

@@ -17,9 +17,19 @@ public class CheckCorrespondence extends BasePage {
         this.world = world;
     }
 
-    @And("i have logged in to self serve")
-    public void iHaveLoggedInToSelfServe() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    @And("i have logged in to self serve as {string}")
+    public void iHaveLoggedInToSelfServe(String userType) {
+        if (userType.equalsIgnoreCase("consultant")) {
+            world.selfServeNavigation.navigateToLogin(
+                    world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                    world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
+            );
+        } else {
+            world.selfServeNavigation.navigateToLogin(
+                    world.registerUser.getUserName(),
+                    world.registerUser.getEmailAddress()
+            );
+        }
     }
 
     @When("i open the documents tab")
@@ -32,4 +42,5 @@ public class CheckCorrespondence extends BasePage {
         waitForElementToBePresent("//table");
         assertTrue(findElement("//table",SelectorType.XPATH,300).getText().contains(world.applicationDetails.getLicenceNumber()));
     }
+
 }

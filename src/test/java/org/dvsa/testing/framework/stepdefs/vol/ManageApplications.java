@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.OperatorType;
 import io.cucumber.java.en.And;
 import org.apache.hc.core5.http.HttpException;
@@ -341,9 +342,21 @@ public class ManageApplications extends BasePage {
         world.updateLicence.updateLicenceStatus(arg0);
     }
 
-    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
-        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+    @Given("as a {string} I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String userType, String trafficArea, String enforcementArea) throws HttpException {
+        // Validate trafficArea
+        try {
+            TrafficArea.valueOf(trafficArea.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid traffic area: " + trafficArea, e);
+        }
+        // Validate enforcementArea
+        try {
+            EnforcementArea.valueOf(enforcementArea.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid enforcement area: " + enforcementArea, e);
+        }
+        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea, userType);
     }
 
     @Given("i have an interim {string} {string} application")
@@ -400,5 +413,49 @@ public class ManageApplications extends BasePage {
     public void theApplicationShouldBeUnderConsideration() {
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Under Consideration"));
+    }
+
+
+
+    @Given("as a {string} I have a valid {string} {string} licence")
+    public synchronized void iHaveALicenceAs(String userType, String operatorType, String licenceType) throws HttpException {
+        lock.writeLock().lock();
+        try {
+            world.APIJourney.registerAndGetUserDetails(userType);
+            world.licenceCreation.createLicence(operatorType, licenceType);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    @Given("as a {string} I have a {string} {string} application")
+    public synchronized void iHaveAnApplicationAs(String userType, String operatorType, String licenceType) throws HttpException {
+        lock.writeLock().lock();
+        try {
+            world.APIJourney.registerAndGetUserDetails(userType);
+            world.licenceCreation.createApplication(operatorType, licenceType);
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+
+    @Given("as a {string} I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
+    public synchronized void asAIHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String userType, String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
+        lock.writeLock().lock();
+        try {
+            if (Integer.parseInt(noOfLicences) > 9) {
+                throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+            }
+            world.APIJourney.registerAndGetUserDetails(userType);
+            world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
+            world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
+            world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
+            for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
+                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, trafficAreaList()[i]);
+            }
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 }

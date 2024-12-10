@@ -48,8 +48,13 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
-    public void continueLicenceWithVerifyAndPay()  {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+    public void continueLicenceWithVerifyAndPay(String userType)  {
+        if (userType.equalsIgnoreCase("consultant")){
+           world.selfServeNavigation.navigateToLogin(world.registerConsultantAndOperator.getConsultantDetails().getUserName(),world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress());
+        }
+        else {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        }
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
