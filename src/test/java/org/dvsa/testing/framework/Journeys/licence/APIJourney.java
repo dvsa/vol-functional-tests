@@ -10,6 +10,7 @@ import org.joda.time.LocalDate;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Logger;
 
 public class APIJourney {
 
@@ -18,6 +19,9 @@ public class APIJourney {
     Dates date = new Dates(LocalDate::new);
 
     private static final Lock lock = new ReentrantLock();
+
+    private static final Logger logger = Logger.getLogger(APIJourney.class.getName());
+
 
     public APIJourney(World world) throws MissingRequiredArgument {
         this.world = world;
@@ -140,11 +144,26 @@ public class APIJourney {
 
     public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
         lock.lock();
-        world.registerUser.registerUser();
-        //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
-        lock.unlock();
+        try {
+            world.registerUser.registerUser();
+            // For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+
+            // Log after navigateToLogin step
+            logger.info("navigateToLogin completed");
+            logger.info("username: " + world.registerUser.getUserName());
+            logger.info("emailAddress: " + world.registerUser.getEmailAddress());
+
+            world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+
+            // Log after getUserDetails step
+            logger.info("getUserDetails completed");
+            logger.info("userType: " + userType);
+            logger.info("userId: " + world.registerUser.getUserId());
+            logger.info("userName: " + world.registerUser.getUserName());
+        } finally {
+            lock.unlock();
+        }
     }
 
     public synchronized void grantLicenceAndPayFees() throws HttpException {

@@ -19,6 +19,7 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
+import java.util.logging.Logger;
 
 
 import static activesupport.driver.Browser.navigate;
@@ -29,11 +30,28 @@ public class SelfServeNavigation extends BasePage {
     private final World world;
     private final String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
+    private static final Logger logger = Logger.getLogger(SelfServeNavigation.class.getName());
+
     public SelfServeNavigation(World world) {
         this.world = world;
     }
 
     public void navigateToLogin(String username, String emailAddress) {
+        // Log the input parameters
+        logger.info("navigateToLogin called with:");
+        logger.info("username: " + username);
+        logger.info("emailAddress: " + emailAddress);
+
+        // Log the world object state if necessary
+        logger.info("world object state: " + world.toString());
+
+        // Log the ApplicationType
+        logger.info("ApplicationType: " + ApplicationType.EXTERNAL);
+
+        // Log the process step
+        logger.info("Calling world.globalMethods.navigateToLoginWithoutCookies");
+
+        // Call the original method
         world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
