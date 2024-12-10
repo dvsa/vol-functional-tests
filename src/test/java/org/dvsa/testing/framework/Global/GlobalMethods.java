@@ -7,6 +7,7 @@ import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -55,6 +56,9 @@ public class GlobalMethods extends BasePage {
         } catch (DecoderException e) {
             e.printStackTrace();
         }
+        if (isTextPresent("Welcome to your account")){
+            click("termsAgreed",SelectorType.ID);
+            UniversalActions.clickSubmit();}
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
@@ -65,8 +69,12 @@ public class GlobalMethods extends BasePage {
         if (!world.configuration.env.toString().equals("local")) {
             password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
         } else {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPasswordFromMailhog(emailAddress));
+            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
         }
+        if (password == null) {
+            throw new IllegalArgumentException("Retrieved password is null");
+        }
+
         try {
             signIn(username, password);
             if (isTextPresent("Please check your username and password")) {

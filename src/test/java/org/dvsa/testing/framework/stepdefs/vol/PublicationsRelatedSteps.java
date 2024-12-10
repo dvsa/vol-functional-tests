@@ -276,8 +276,6 @@ public class PublicationsRelatedSteps extends BasePage {
     @And("i navigate to the application publications page")
     public void iNavigateToTheApplicationPublicationsPage() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
-        world.internalUIJourney.payFeeAndPublishLicence();
-        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Processing");
         waitForTextToBePresent("Processing");
         clickByLinkText("Publications");

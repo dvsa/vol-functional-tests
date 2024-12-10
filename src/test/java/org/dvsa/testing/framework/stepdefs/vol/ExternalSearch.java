@@ -5,6 +5,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -40,9 +41,13 @@ public class ExternalSearch extends BasePage {
         waitForTextToBePresent("Password");
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             world.globalMethods.signIn(intUser, intPassword);
-        } else
-        {world.globalMethods.signIn(user, password);
-        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);}
+        } else {
+            world.globalMethods.signIn(user, password);
+        }
+        if (isTextPresent("Welcome to your account")){
+            click("termsAgreed",SelectorType.ID);
+            UniversalActions.clickSubmit();}
+        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
     }
 
     @And("I am on the external search page")
@@ -82,16 +87,15 @@ public class ExternalSearch extends BasePage {
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
     }
 
-    @And("I am able to view the applicants licence number")
-    public void iAmAbleToViewTheApplicantsLicenceNumber() {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
-    }
 
     @And("I am able to view the licence number")
     public void iAmAbleToViewTheLicenceNumber() {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+        String licenceNumber = world.applicationDetails.getLicenceNumber();
+        String orgName = world.createApplication.getOrganisationName();
+
+        waitForElementToBePresent(String.format("//tr[td[contains(text(), '%s')]]", orgName));
+        String rowText = getText(String.format("//tr[td[contains(text(), '%s')]]", orgName), SelectorType.XPATH);
+        assertTrue(rowText.contains(licenceNumber));
     }
 
 

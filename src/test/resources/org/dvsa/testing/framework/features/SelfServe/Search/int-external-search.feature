@@ -1,5 +1,6 @@
 @INT-EXTERNAL-SEARCH
 @INT-SMOKE
+@PP-SMOKE
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
   Background:
