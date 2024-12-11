@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Global;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.mailPit.MailPit;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
@@ -14,6 +15,10 @@ public class Configuration {
 
     public Configuration(World world) {
         this.world = world;
+    }
+
+    public String getBucketName() {
+        return SecretsManager.getSecretValue("bucketName");
     }
 
     public String getTempPassword(String emailAddress) {
