@@ -1,6 +1,9 @@
 package org.dvsa.testing.framework.Global;
 
 import activesupport.aws.s3.SecretsManager;
+import org.apache.commons.logging.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
@@ -20,6 +23,7 @@ import static activesupport.driver.Browser.navigate;
 
 public class GlobalMethods extends BasePage {
 
+    private static final Logger LOGGER = LogManager.getLogger(GlobalMethods.class);
     private World world;
     private String loginPassword;
     public Dates date = new Dates(new LocalDateCalendar());
@@ -51,45 +55,19 @@ public class GlobalMethods extends BasePage {
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
         DriverUtils.get(domainURL);
-        try {
-            enterCredentialsAndLogin(username, emailAddress, newPassword);
-        } catch (DecoderException e) {
-            e.printStackTrace();
-        }
+        enterCredentialsAndLogin(username, emailAddress, newPassword);
         if (isTextPresent("Welcome to your account")){
             click("termsAgreed",SelectorType.ID);
             UniversalActions.clickSubmit();}
     }
 
-    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
-        // TODO: Setup way to store new passwords after they are set and once they are set default to them?
-        // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-        String password;
-        QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        if (!world.configuration.env.toString().equals("local")) {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        } else {
-            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
-        }
-        if (password == null) {
-            throw new IllegalArgumentException("Retrieved password is null");
-        }
-
-        try {
-            signIn(username, password);
-            if (isTextPresent("Please check your username and password")) {
-                signIn(username, getLoginPassword());
-            }
-        } finally {
-            if (isTextPresent("Your password must:")) {
-                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
-                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
-                click(nameAttribute("input", "submit"), SelectorType.CSS);
-                setLoginPassword(newPassword);
-                untilNotInDOM(submitButton, 1);
-            }
-        }
+    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
+        LOGGER.info("Entering username: " + username);
+        replaceText(emailField, SelectorType.CSS, username);
+        click(submitButton, SelectorType.XPATH);
+        untilNotInDOM(submitButton, 5);
     }
+
     public void signIn(String userName, String password) {
         if (isElementPresent("declarationRead", SelectorType.ID)
                 && (!isElementSelected("declarationRead", SelectorType.ID))) {
