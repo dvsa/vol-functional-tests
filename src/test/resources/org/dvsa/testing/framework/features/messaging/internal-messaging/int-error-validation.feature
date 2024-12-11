@@ -16,7 +16,7 @@ Feature: Check for error validation on message page of an internal application.
   @int-reply-error-message
   Scenario: Error message while caseworker will reply to operator with empty text
     And i create an admin and url search for my licence
-    * i have logged in to self serve
+    * i have logged in to self serve as "admin"
     * i click the messages heading
     * i click on start a new conversation link and select the licence number
     * i have logged in to internal as "admin"
