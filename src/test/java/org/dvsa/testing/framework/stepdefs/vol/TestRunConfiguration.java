@@ -24,18 +24,20 @@ public class TestRunConfiguration {
     }
 
     @After
-    public void tearDown(Scenario scenario) throws Exception {
+    public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
         for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")){
+            if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
                 if (isLinkPresent("Sign out", 10)) {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }
         }
-        if (Browser.isBrowserOpen()) {
-            Browser.closeBrowser();
-        }
+    }
+
+    @AfterAll
+    public static void tearDown() throws Exception {
+        Browser.closeBrowser();
     }
 }
