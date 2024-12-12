@@ -74,8 +74,7 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-       password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-
+       password = world.configuration.getTempPassword(emailAddress);
         LOGGER.info("Decoded password: " + password);
 
         LOGGER.info("Entering credentials for username: " + username);
