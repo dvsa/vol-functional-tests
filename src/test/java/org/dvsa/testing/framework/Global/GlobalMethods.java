@@ -66,17 +66,17 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        if (!world.configuration.env.toString().equals("local")) {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        } else {
-            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
-        }
-        if (password == null) {
-            throw new IllegalArgumentException("Retrieved password is null");
-        }
+//        if (!world.configuration.env.toString().equals("local")) {
+//            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+//        } else {
+//            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
+//        }
+//        if (password == null) {
+//            throw new IllegalArgumentException("Retrieved password is null");
+//        }
 
         try {
-            signIn(username, password);
+            signIn(username, "password");
             if (isTextPresent("Please check your username and password")) {
                 signIn(username, getLoginPassword());
             }
@@ -96,8 +96,8 @@ public class GlobalMethods extends BasePage {
             waitAndClick("declarationRead", SelectorType.ID);
         }
         replaceText(emailField, SelectorType.CSS, userName);
-        replaceText(passwordField, SelectorType.CSS, password);
-        click(submitButton, SelectorType.XPATH);
+        replaceText(passwordField, SelectorType.CSS, "test test");
+    //    click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
     }
     public void submit() {
