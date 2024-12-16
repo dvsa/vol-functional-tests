@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.9.0](https://github.com/dvsa/vol-functional-tests/compare/v3.8.9...v3.9.0) (2024-12-16)
+
+
+### Features
+
+* consume new as ([7283392](https://github.com/dvsa/vol-functional-tests/commit/7283392f1ece76c0c001356db377cfb75ae931e1))
+
 ## [3.8.9](https://github.com/dvsa/vol-functional-tests/compare/v3.8.8...v3.8.9) (2024-12-13)
 
 
