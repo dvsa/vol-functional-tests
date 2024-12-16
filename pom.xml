@@ -243,13 +243,13 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <forkCount>5</forkCount>
+                    <forkCount>3</forkCount>
                     <argLine>-Xmx${jvmMemory}m</argLine>                    <includes>
                     <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
-                    <threadCount>5</threadCount>
-                    <reuseForks>false</reuseForks>
+                    <threadCount>4</threadCount>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
