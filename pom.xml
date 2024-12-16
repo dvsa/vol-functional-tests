@@ -37,7 +37,7 @@
         <zt-zip.version>1.15</zt-zip.version>
         <java.version>11</java.version>
 
-        <jvmMemory>14400</jvmMemory>
+        <jvmMemory>2048</jvmMemory>
     </properties>
 
     <dependencyManagement>
