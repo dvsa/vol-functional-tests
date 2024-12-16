@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.10.1](https://github.com/dvsa/vol-functional-tests/compare/v3.10.0...v3.10.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* smoke test fixes ([2f9bd0d](https://github.com/dvsa/vol-functional-tests/commit/2f9bd0dadd7ad7ee47950996b2e9b528aff1c69d))
+
 ## [3.10.0](https://github.com/dvsa/vol-functional-tests/compare/v3.9.0...v3.10.0) (2024-12-16)
 
 
