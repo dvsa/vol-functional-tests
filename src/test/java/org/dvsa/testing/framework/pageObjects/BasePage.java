@@ -674,9 +674,12 @@ public abstract class BasePage extends DriverUtils {
         return option.getFirstSelectedOption().getText();
     }
 
-    public static void scrollToBottom() {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+    public void scrollToBottom() {
+        WebElement footer = getDriver().findElement(By.tagName("govuk-footer"));
+        int deltaY = footer.getRect().y;
+        new Actions(getDriver())
+                .scrollByAmount(0, deltaY)
+                .perform();
     }
 
     public boolean pageContains(String text) {
