@@ -244,11 +244,10 @@
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
                     <forkCount>5</forkCount>
-                    <argLine>${jvmMemory}m</argLine>
-                    <includes>
-                        <include>**/**.java</include>
+                    <argLine>-Xmx${jvmMemory}m</argLine>                    <includes>
+                    <include>**/**.java</include>
                     </includes>
-                    <parallel>classes</parallel>
+                    <parallel>methods</parallel>
                     <threadCount>5</threadCount>
                     <reuseForks>false</reuseForks>
                 </configuration>
