@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.10.0](https://github.com/dvsa/vol-functional-tests/compare/v3.9.0...v3.10.0) (2024-12-16)
+
+
+### Features
+
+* reduce jvm mem ([f7dd31c](https://github.com/dvsa/vol-functional-tests/commit/f7dd31c21eb81c6a7ee2b101ce21b12ea9092230))
+
 ## [3.9.0](https://github.com/dvsa/vol-functional-tests/compare/v3.8.9...v3.9.0) (2024-12-16)
 
 
