@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -86,7 +87,9 @@ public class SubmissionPageSteps extends BasePermitPage {
 
     @And("I'm on the ECMT international submitted page for my active application")
     public void iMOnTheECMTInternationalSubmittedPageForMyActiveApplication() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLoginPage();
+        String newPassword = SecretsManager.getSecretValue("internalNewPassword");
+        world.globalMethods.signIn(world.registerUser.getUserName(), newPassword);
         HomePageJourney.selectPermitTab();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
