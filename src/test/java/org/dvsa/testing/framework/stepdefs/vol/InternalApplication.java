@@ -81,9 +81,8 @@ public class InternalApplication extends BasePage{
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
-     //   waitForElementToBePresent("//*[@id='letter-link']");
         if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
-            waitAndClick("GV - Blank letter to operator", SelectorType.LINKTEXT);
+            clickByLinkText("GV - Blank letter to operator");
             ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
             switchToWindow(tabs.get(0));
         }
