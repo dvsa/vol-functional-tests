@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
-        <active-support.version>2.5.6</active-support.version>
+        <active-support.version>2.5.7</active-support.version>
         <api-calls.version>2.7.1</api-calls.version>
         <uri-constructor.version>2.0.6</uri-constructor.version>
 
@@ -243,13 +243,12 @@
                 <configuration>
                     <skip>true</skip>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <forkCount>3</forkCount>
-                    <argLine>-Xmx${jvmMemory}m</argLine>                    <includes>
+                    <argLine>-Xmx${jvmMemory}m</argLine>
+                    <includes>
                     <include>**/**.java</include>
                     </includes>
-                    <parallel>methods</parallel>
-                    <threadCount>4</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <parallel>suites</parallel>
+                    <threadCount>5</threadCount>
                 </configuration>
             </plugin>
             <plugin>
