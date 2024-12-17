@@ -37,5 +37,6 @@ public class TestRunConfiguration {
         if (Browser.isBrowserOpen()) {
             Browser.closeBrowser();
         }
+        Browser.removeLocalDriverThread();
     }
 }
