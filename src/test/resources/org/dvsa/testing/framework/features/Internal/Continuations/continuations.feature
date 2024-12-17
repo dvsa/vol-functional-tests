@@ -1,7 +1,6 @@
 @INT
 @continuations
 @gov-sign-in
-@consultant
 
 Feature: Continuations journey through internal and self serve
 
