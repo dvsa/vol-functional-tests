@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.10.2](https://github.com/dvsa/vol-functional-tests/compare/v3.10.1...v3.10.2) (2024-12-17)
+
+
+### Bug Fixes
+
+* test opt ([442d90b](https://github.com/dvsa/vol-functional-tests/commit/442d90b80a66a83f3000de72ef6fa047567e31d6))
+
 ## [3.10.1](https://github.com/dvsa/vol-functional-tests/compare/v3.10.0...v3.10.1) (2024-12-16)
 
 
