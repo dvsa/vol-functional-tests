@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
@@ -14,6 +15,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
@@ -79,8 +81,13 @@ public class InternalApplication extends BasePage{
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
-        waitForElementToBePresent("//*[@id='letter-link']");
-        String docStoreLink = getLink("//*[@id='letter-link']",SelectorType.XPATH);
+     //   waitForElementToBePresent("//*[@id='letter-link']");
+        if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
+            waitAndClick("GV - Blank letter to operator", SelectorType.LINKTEXT);
+            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+            switchToWindow(tabs.get(0));
+        }
+                String docStoreLink = getLink("//*[@id='letter-link']",SelectorType.XPATH);
         assertNotNull(docStoreLink);
         String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
         assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s",webDAVUrl)));

@@ -1,5 +1,40 @@
 # Revision History for the VOL Functional Tests
 
+## [3.10.1](https://github.com/dvsa/vol-functional-tests/compare/v3.10.0...v3.10.1) (2024-12-16)
+
+
+### Bug Fixes
+
+* smoke test fixes ([2f9bd0d](https://github.com/dvsa/vol-functional-tests/commit/2f9bd0dadd7ad7ee47950996b2e9b528aff1c69d))
+
+## [3.10.0](https://github.com/dvsa/vol-functional-tests/compare/v3.9.0...v3.10.0) (2024-12-16)
+
+
+### Features
+
+* reduce jvm mem ([f7dd31c](https://github.com/dvsa/vol-functional-tests/commit/f7dd31c21eb81c6a7ee2b101ce21b12ea9092230))
+
+## [3.9.0](https://github.com/dvsa/vol-functional-tests/compare/v3.8.9...v3.9.0) (2024-12-16)
+
+
+### Features
+
+* consume new as ([7283392](https://github.com/dvsa/vol-functional-tests/commit/7283392f1ece76c0c001356db377cfb75ae931e1))
+
+## [3.8.9](https://github.com/dvsa/vol-functional-tests/compare/v3.8.8...v3.8.9) (2024-12-13)
+
+
+### Bug Fixes
+
+* latest active support ([d2ad57a](https://github.com/dvsa/vol-functional-tests/commit/d2ad57a5e65d3439284920b723b65915c47877aa))
+
+## [3.8.8](https://github.com/dvsa/vol-functional-tests/compare/v3.8.7...v3.8.8) (2024-12-09)
+
+
+### Miscellaneous Chores
+
+* bump to 3.8.8 ([cd84176](https://github.com/dvsa/vol-functional-tests/commit/cd84176351dd3e1984a204f1437e982aacb97d31))
+
 ## [3.8.7](https://github.com/dvsa/vol-functional-tests/compare/v3.8.6...v3.8.7) (2024-12-06)
 
 
