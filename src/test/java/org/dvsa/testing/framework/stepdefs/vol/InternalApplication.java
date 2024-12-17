@@ -82,8 +82,7 @@ public class InternalApplication extends BasePage{
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
         if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
-            clickByLinkText("GV - Blank letter to operator");
-            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+            waitAndClick("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
             switchToWindow(tabs.get(0));
         }
                 String docStoreLink = getLink("//*[@id='letter-link']",SelectorType.XPATH);
