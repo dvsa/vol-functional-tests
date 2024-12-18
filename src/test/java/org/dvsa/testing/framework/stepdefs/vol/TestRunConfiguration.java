@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.driver.Browser;
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.dvsa.testing.framework.Report.Config.Environments;
@@ -10,9 +9,9 @@ import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.Collection;
-import java.util.List;
 
-import static org.dvsa.testing.framework.pageObjects.BasePage.*;
+import static org.dvsa.testing.framework.pageObjects.BasePage.isLinkPresent;
+import static org.dvsa.testing.framework.pageObjects.BasePage.waitAndClick;
 
 public class TestRunConfiguration {
     @Before
@@ -27,6 +26,7 @@ public class TestRunConfiguration {
     public void tearDown(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
+        Browser.removeLocalDriverThread();
         for (String tag : tags) {
             if (Browser.isBrowserOpen() && tag.contains("readOnly")){
                 if (isLinkPresent("Sign out", 10)) {
@@ -37,6 +37,5 @@ public class TestRunConfiguration {
         if (Browser.isBrowserOpen()) {
             Browser.closeBrowser();
         }
-        Browser.removeLocalDriverThread();
     }
 }
