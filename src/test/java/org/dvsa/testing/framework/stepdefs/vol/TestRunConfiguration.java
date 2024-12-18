@@ -26,7 +26,6 @@ public class TestRunConfiguration {
     public void tearDown(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
-        Browser.removeLocalDriverThread();
         for (String tag : tags) {
             if (Browser.isBrowserOpen() && tag.contains("readOnly")){
                 if (isLinkPresent("Sign out", 10)) {
@@ -35,7 +34,8 @@ public class TestRunConfiguration {
             }
         }
         if (Browser.isBrowserOpen()) {
-            Browser.closeBrowser();
+         Browser.getDriver().quit();
         }
+        Browser.removeLocalDriverThread();
     }
 }
