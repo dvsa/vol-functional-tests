@@ -90,6 +90,7 @@ public class EBSRUpload extends BasePage {
 
             } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() < 2 && System.currentTimeMillis() < kickOutTime);
             try {
+                scrollToBottom();
                 assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
                         webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
             } catch (Exception e) {
