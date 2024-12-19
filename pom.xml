@@ -221,7 +221,7 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>2</forkCount>
-                    <parallel>suites</parallel>
+                    <parallel>methodsAndClasses</parallel>
                     <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
                     <properties>
