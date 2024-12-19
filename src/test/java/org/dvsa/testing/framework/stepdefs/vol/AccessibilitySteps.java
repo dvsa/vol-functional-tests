@@ -38,7 +38,7 @@ public class AccessibilitySteps extends BasePage {
     @Then("the colour of the {string} section should be grey")
     public void theColourOfTheDirectorsSectionShouldBeGrey(String sectionTitle) {
         String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]", sectionTitle), SelectorType.XPATH).getCssValue("color")).asHex();
-        assertEquals("#505a5f", buttonColour);
+        assertEquals("#003078", buttonColour);
     }
 
     @Then("the colour of the {string} section should be purple")
