@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
@@ -254,7 +255,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("the licence should not displayed in selfserve")
     public void theLicenceShouldNotDisplayedInSelfserve() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));;
         assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 3));
     }
 

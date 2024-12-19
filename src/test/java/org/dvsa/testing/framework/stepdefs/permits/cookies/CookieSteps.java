@@ -27,9 +27,9 @@ public class CookieSteps extends BasePage {
     }
     @And("I am on the permit type page before accepting cookies")
     public void iAmOnThePermitTypePageBeforeAcceptingCookies() {
-        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         HomePageJourney.beginPermitApplication();
     }
+
     @And("I should see the cookies list")
     public void iShouldSeeTheCookiesList() {
         Set<Cookie> cookies = getDriver().manage().getCookies();
