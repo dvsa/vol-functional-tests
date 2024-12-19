@@ -222,7 +222,7 @@
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>2</forkCount>
                     <parallel>suites</parallel>
-                    <threadCount>3</threadCount>
+                    <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
