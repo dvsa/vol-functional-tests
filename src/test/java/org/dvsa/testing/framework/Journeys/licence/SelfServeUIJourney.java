@@ -50,6 +50,7 @@ public class SelfServeUIJourney extends BasePage {
 
     public void existingAppOrLicence() {
         findSelectAllRadioButtonsByValue("Y");
+        enterText("fields[licenceContent][licenceNumber]", SelectorType.ID, "ob1057273");
         UniversalActions.clickSubmit();
     }
 

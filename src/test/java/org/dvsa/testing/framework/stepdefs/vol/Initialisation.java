@@ -22,9 +22,10 @@ public class Initialisation extends BasePage {
      * I.e. variable initialisations that requires other values from other classes.
      */
 
-    public Initialisation (World world) {
+    public Initialisation (World world)  {
         this.world = world;
         world.registerUser = new RegisterUser();
+        world.registerConsultantAndOperator = new RegisterConsultantAndOperator();
         world.userDetails = new UserDetails();
         world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
         world.applicationDetails = new GetApplicationDetails(world.createApplication);
