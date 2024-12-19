@@ -221,9 +221,9 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>2</forkCount>
-                    <parallel>methodsAndClasses</parallel>
+                    <parallel>suites</parallel>
                     <threadCount>5</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
