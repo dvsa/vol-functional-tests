@@ -224,7 +224,6 @@
                     <parallel>methods</parallel>
                     <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
-                    <skipTests>true</skipTests>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
