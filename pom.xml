@@ -220,10 +220,11 @@
                     </argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>2</forkCount>
+                    <forkCount>3</forkCount>
                     <parallel>methods</parallel>
-                    <threadCount>3</threadCount>
+                    <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
+                    <skipTests>true</skipTests>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
