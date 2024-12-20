@@ -4,6 +4,7 @@ import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -24,9 +25,9 @@ public class CookieSteps extends BasePage {
 
     @And("I logged into Self Serve site before accepting cookies")
     public void iLoggedIntoSelfServeSiteBeforeAcceptingCookies() {
-        world.selfServeNavigation.navigateToLoginPage();
-        String newPassword = SecretsManager.getSecretValue("internalNewPassword");
-        world.globalMethods.signIn(world.registerUser.getUserName(), newPassword);
+        if(!isTextPresent(SelfServeNavBar.SIGN_OUT.toString())){
+            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
+        }
     }
     @And("I am on the permit type page before accepting cookies")
     public void iAmOnThePermitTypePageBeforeAcceptingCookies() {

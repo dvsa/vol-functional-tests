@@ -7,7 +7,7 @@ Feature: Publications display the right LGV related information on LGV only lice
     And i navigate to the application publications page
     Then the new application publication for LGV Only should be correct on internal
 
-  @ss_regression @FullRegression
+  @ss_regression @FullRegression @lgv-pub
   Scenario: A submitted LGV Only application displays the correct information upon publishing
     Given I have a submitted "GB" lgv only application
     When the corresponding publication is generated and published
