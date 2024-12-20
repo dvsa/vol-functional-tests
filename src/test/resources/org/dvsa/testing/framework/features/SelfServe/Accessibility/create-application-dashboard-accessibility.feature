@@ -10,6 +10,7 @@ Feature: Create application page should comply to the WCAG 2.1 AA accessibility 
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence
     Then the colour of the 'Business type' section should be blue
 
+    @directors-section
   Scenario: Check 'Can't start yet' section colour
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence
     Then the colour of the 'Directors' section should be grey
