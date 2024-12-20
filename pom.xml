@@ -220,7 +220,7 @@
                     </argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>2</forkCount>
+                    <forkCount>3</forkCount>
                     <parallel>methods</parallel>
                     <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
