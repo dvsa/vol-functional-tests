@@ -224,6 +224,8 @@
                     <parallel>methods</parallel>
                     <threadCount>5</threadCount>
                     <reuseForks>true</reuseForks>
+                    <useSystemClassLoader>false</useSystemClassLoader>
+                    <perCoreThreadCount>false</perCoreThreadCount>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
