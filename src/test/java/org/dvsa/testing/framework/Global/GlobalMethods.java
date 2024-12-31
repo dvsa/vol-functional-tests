@@ -20,7 +20,7 @@ import static activesupport.driver.Browser.navigate;
 
 public class GlobalMethods extends BasePage {
 
-    private World world;
+    private final World world;
     private String loginPassword;
     public Dates date = new Dates(new LocalDateCalendar());
     private final String emailField = nameAttribute("input", "username");
