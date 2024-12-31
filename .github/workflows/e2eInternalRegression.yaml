@@ -1,4 +1,4 @@
-name: E2E Full Regression
+name: E2E Internal Regression
 
 on:
   workflow_call:
