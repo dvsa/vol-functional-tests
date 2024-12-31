@@ -37,6 +37,7 @@ jobs:
   call-e2etest:
     name: Call E2E test workflow
     uses: ./.github/workflows/e2etest.yaml
+    timeout-minutes: ${{ inputs.batch_timeout_minutes }}
     with:
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: "@int_regression"
