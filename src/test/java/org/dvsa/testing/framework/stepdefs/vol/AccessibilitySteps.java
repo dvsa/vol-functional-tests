@@ -69,5 +69,4 @@ public class AccessibilitySteps extends BasePage {
         reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
         reportGenerator.createReport(scanner);
     }
-
 }
