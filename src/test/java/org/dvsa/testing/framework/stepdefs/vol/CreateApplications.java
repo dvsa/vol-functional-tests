@@ -52,7 +52,6 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
-        waitForTitleToBePresent("Application overview");
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");
         getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
@@ -60,7 +59,9 @@ public class CreateApplications extends BasePage {
                 .distinct()
                 .filter(x -> x.getText().contains(app))
                 .findAny().ifPresent(WebElement::click);
-        waitForTextToBePresent("Review and declarations");
+
+
+        waitForElementToBePresent("//*[contains(text(),'Review and declarations')]");
         waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
@@ -77,4 +78,6 @@ public class CreateApplications extends BasePage {
     public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
         world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
     }
+
+
 }
