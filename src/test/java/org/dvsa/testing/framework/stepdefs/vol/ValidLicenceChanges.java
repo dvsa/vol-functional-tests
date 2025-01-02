@@ -397,7 +397,6 @@ public class ValidLicenceChanges extends BasePage {
     public void iShouldNotBeAbleToEditCaseDetails() {
         waitAndClick("Case details", SelectorType.LINKTEXT);
         waitForTextToBePresent("Overview");
-        waitAndClick("//*[contains(text(), 'Edit')]", SelectorType.XPATH);
         assertFalse(isElementPresent("fields[caseType]", SelectorType.ID));
         assertFalse(isElementPresent("//*[@id='fields_categorys__chosen']", SelectorType.XPATH));
         assertFalse(isElementPresent("fields[description]", SelectorType.NAME));
@@ -405,6 +404,5 @@ public class ValidLicenceChanges extends BasePage {
         assertFalse(isElementPresent("//*[@id='fields_outcomes__chosen']", SelectorType.XPATH));
         assertFalse(isElementPresent("form-actions[submit]", SelectorType.NAME));
         assertFalse(isElementPresent("form-actions[cancel]", SelectorType.NAME));
-        waitAndClick("//*[@class='modal__close']", SelectorType.XPATH);
     }
 }

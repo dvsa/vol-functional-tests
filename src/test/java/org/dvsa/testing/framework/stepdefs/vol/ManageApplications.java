@@ -342,7 +342,7 @@ public class ManageApplications extends BasePage {
         world.updateLicence.updateLicenceStatus(arg0);
     }
 
-    @Given("as a {string} I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
     public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String userType, String trafficArea, String enforcementArea) throws HttpException {
         // Validate trafficArea
         try {

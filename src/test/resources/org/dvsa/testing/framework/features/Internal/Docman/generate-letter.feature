@@ -17,7 +17,6 @@ Feature: Generate letter pop up should contain letter details
 
     Examples:
       |  | sendOption   |
-   #  |  | email        |
       |  | printAndPost |
 
 
