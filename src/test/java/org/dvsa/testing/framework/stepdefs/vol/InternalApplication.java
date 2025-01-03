@@ -84,10 +84,9 @@ public class InternalApplication extends BasePage {
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() throws InterruptedException {
         waitForTextToBePresent("Amend letter");
-        waitForElementToBePresent("//*[@name='form-actions[submit]']");
-        TimeUnit.SECONDS.sleep(5);
-        if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
+        TimeUnit.SECONDS.sleep(2);
+        if (isTextPresent("Amend letter")) {
+            click("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
             ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
             switchToWindow(tabs.get(0));
         }
