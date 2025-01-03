@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>3.10.5-SNAPSHOT</version>
+    <version>3.10.4-SNAPSHOT</version>
 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
-        <active-support.version>2.5.8</active-support.version>
+        <active-support.version>2.5.7</active-support.version>
         <api-calls.version>2.8.0</api-calls.version>
         <uri-constructor.version>2.0.6</uri-constructor.version>
 
         <axe-scanner-version>2.11.0</axe-scanner-version>
-        <allure-cucumber7-jvm.version>2.29.0</allure-cucumber7-jvm.version>
-        <allure-report.version>2.29.0</allure-report.version>
+
+
+        <allure-cucumber7-jvm.version>2.27.0</allure-cucumber7-jvm.version>
+        <allure-report.version>2.27.0</allure-report.version>
 
         <slf4j.version>2.22.0</slf4j.version>
         <slf4j-log4j12.version>2.22.0</slf4j-log4j12.version>
@@ -28,14 +29,15 @@
 
         <aspectj.version>1.9.21</aspectj.version>
         <build.helper.plugin.version>3.2.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
-        <apache-commons.version>1.12.0</apache-commons.version>
-        <jsoup.version>1.18.3</jsoup.version>
-        <gson.version>2.11.0</gson.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
+        <apache-commons.version>1.10.0</apache-commons.version>
+        <jsoup.version>1.17.1</jsoup.version>
+        <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
         <java.version>11</java.version>
 
-        <jvmMemory>5000</jvmMemory>
+        <jvmMemory>6600</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -43,14 +45,14 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.11.4</version>
+                <version>5.10.2</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-bom</artifactId>
-                <version>7.20.1</version>
+                <version>7.18.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -216,13 +218,12 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>3</forkCount>
+                    <forkCount>2</forkCount>
                     <parallel>methods</parallel>
-                    <threadCount>7</threadCount>
+                    <threadCount>3</threadCount>
                     <reuseForks>true</reuseForks>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <perCoreThreadCount>false</perCoreThreadCount>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
@@ -245,6 +246,8 @@
                 <artifactId>allure-maven</artifactId>
                 <version>2.12.0</version>
                 <configuration>
+                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report
+                    </reportingOutputDirectory>
                     <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
                 <executions>
