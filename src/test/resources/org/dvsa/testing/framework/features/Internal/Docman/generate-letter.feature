@@ -16,8 +16,8 @@ Feature: Generate letter pop up should contain letter details
     Then The letter is sent by "<sendOption>"
 
     Examples:
-      |  | sendOption   |
-      |  | printAndPost |
+      | sendOption   |
+      | printAndPost |
 
 
   Scenario: Check Propose to revoke letter process
