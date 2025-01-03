@@ -30,7 +30,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | west       | 42   |
 
   @ss_regression @FullRegression @printAndSign
-  Scenario Outline: import EBSR for curtailed and suspended licence in self-serve (Resource-A)
+  Scenario Outline: import EBSR for curtailed and suspended licence in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     And the licence status is "<LicenceStatus>"
     When I upload an ebsr file with "<Days>" days notice
@@ -57,7 +57,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     And Documents are generated
 
 
-  Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test (Resource-B)
+  Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And the licence status is "curtail"
     When I upload an ebsr file with "41" days notice
