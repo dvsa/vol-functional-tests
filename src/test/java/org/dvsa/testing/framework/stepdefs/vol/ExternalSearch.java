@@ -90,8 +90,8 @@ public class ExternalSearch extends BasePage {
 
     @And("I am able to view the applicants licence number")
     public void iAmAbleToViewTheApplicantsLicenceNumber() {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+        waitForTextToBePresent(world.createApplication.getOrganisationName());
+        assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
     }
 
     @And("I am able to view the licence number")
