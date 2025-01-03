@@ -1,4 +1,4 @@
-name: E2E Self Serve Regression
+name: E2E Full Regression
 
 on:
   workflow_call:
@@ -31,7 +31,7 @@ on:
         type: number
         required: false
         description: "Timeout in minutes for the AWS Batch job"
-        default: 60
+        default: 190
 
 jobs:
   call-e2etest:
