@@ -17,8 +17,6 @@ public class APIJourney {
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
 
-    private static final Lock lock = new ReentrantLock();
-
     public APIJourney(World world) throws MissingRequiredArgument {
         this.world = world;
     }
@@ -28,22 +26,13 @@ public class APIJourney {
     }
 
     public synchronized void nIAddressBuilder() {
-        lock.lock();
-        try {
         world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
         world.createApplication.setTrafficArea(TrafficArea.NORTHERN_IRELAND);
         world.createApplication.setCountryCode("NI");
         world.createApplication.setNiFlag("Y");
-        }  finally {
-            {
-                lock.unlock();
-            }
-        }
     }
 
     public synchronized void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea, String userType) throws HttpException {
-        lock.lock();
-        try {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
@@ -53,16 +42,9 @@ public class APIJourney {
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         world.updateLicence.getLicenceTrafficArea();
-        }  finally {
-            {
-                lock.unlock();
-            }
-        }
     }
 
     public synchronized void createApplication() throws HttpException {
-        lock.lock();
-        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -85,34 +67,20 @@ public class APIJourney {
         world.createApplication.addConvictionsDetails();
         world.createApplication.addLicenceHistory();
         world.createApplication.applicationReviewAndDeclare();
-        }  finally {
-            {
-                lock.unlock();
-            }
-        }
-}
+    }
 
     public synchronized void submitApplication() throws HttpException {
-        lock.lock();
-        try {
-            world.createApplication.submitApplication();
-            world.applicationDetails.getApplicationLicenceDetails();
-        } finally {
-            lock.unlock();
-        }
+        world.createApplication.submitApplication();
+        world.applicationDetails.getApplicationLicenceDetails();
     }
+
     public synchronized void createSpecialRestrictedApplication() throws HttpException {
-        lock.lock();
-        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
         world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
-        } finally {
-            lock.unlock();
-        }
     }
 
     public synchronized void createSpecialRestrictedLicence() throws HttpException {
@@ -121,8 +89,6 @@ public class APIJourney {
     }
 
     public synchronized void createPartialApplication() throws HttpException {
-        lock.lock();
-        try {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -131,56 +97,42 @@ public class APIJourney {
         world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();
-    }  finally {
-        {
-            lock.unlock();
-        }
-    }
     }
 
     public synchronized void registerAndGetUserDetails(String userType) throws HttpException {
-        lock.lock();
-        try {
-            if (userType.equalsIgnoreCase("consultant")) {
-                world.registerConsultantAndOperator.register();
-                //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
-                world.selfServeNavigation.navigateToLogin(
-                        world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
-                        world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
-                );
-                world.userDetails.getUserDetails(
-                        UserType.EXTERNAL.asString(),
-                        world.registerConsultantAndOperator.getConsultantDetails().getUserId(),
-                        world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
-                        SecretsManager.getSecretValue("internalNewPassword")
-                );
-            } else {
-                world.registerUser.registerUser();
-                world.selfServeNavigation.navigateToLogin(
-                        world.registerUser.getUserName(),
-                        world.registerUser.getEmailAddress()
-                );
-                world.userDetails.getUserDetails(
-                        UserType.EXTERNAL.asString(),
-                        world.registerUser.getUserId(),
-                        world.registerUser.getUserName(),
-                        SecretsManager.getSecretValue("internalNewPassword")
-                );
-            }
-        } finally {
-            lock.unlock();
+        if (userType.equalsIgnoreCase("consultant")) {
+            world.registerConsultantAndOperator.register();
+            //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
+            world.selfServeNavigation.navigateToLogin(
+                    world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                    world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
+            );
+            world.userDetails.getUserDetails(
+                    UserType.EXTERNAL.asString(),
+                    world.registerConsultantAndOperator.getConsultantDetails().getUserId(),
+                    world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                    SecretsManager.getSecretValue("internalNewPassword")
+            );
+        } else {
+            world.registerUser.registerUser();
+            world.selfServeNavigation.navigateToLogin(
+                    world.registerUser.getUserName(),
+                    world.registerUser.getEmailAddress()
+            );
+            world.userDetails.getUserDetails(
+                    UserType.EXTERNAL.asString(),
+                    world.registerUser.getUserId(),
+                    world.registerUser.getUserName(),
+                    SecretsManager.getSecretValue("internalNewPassword")
+            );
         }
     }
 
-
     public synchronized void grantLicenceAndPayFees() throws HttpException {
-        lock.lock();
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {
             world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
-        lock.unlock();
     }
-
 }

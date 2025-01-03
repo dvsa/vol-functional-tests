@@ -16,10 +16,8 @@ Feature: Generate letter pop up should contain letter details
     Then The letter is sent by "<sendOption>"
 
     Examples:
-      |  | sendOption   |
-   #  |  | email        |
-      |  | printAndPost |
-
+      | sendOption   |
+      | printAndPost |
 
   Scenario: Check Propose to revoke letter process
     When i generate a letter of Subcategory In Office Revocation

@@ -13,6 +13,7 @@ import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -255,7 +256,10 @@ public class SurrenderLogic extends BasePage {
 
     @And("the licence should not displayed in selfserve")
     public void theLicenceShouldNotDisplayedInSelfserve() {
-        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));;
+        world.selfServeNavigation.navigateToLoginPage();
+        if(!isTextPresent(SelfServeNavBar.SIGN_OUT.toString())){
+            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
+        }
         assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 3));
     }
 

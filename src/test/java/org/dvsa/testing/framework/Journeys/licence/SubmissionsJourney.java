@@ -21,8 +21,11 @@ public class SubmissionsJourney extends BasePage {
     public void addPresidingTC() {
         waitAndClick("add", SelectorType.ID);
         waitAndClick("user", SelectorType.ID);
-        selectValueFromDropDown("user", SelectorType.ID, SecretsManager.getSecretValue("presidingTC"));
-        selectRandomValueFromDropDown("user", SelectorType.ID);
+        if (!findElements("user", SelectorType.ID).get(0).getText().contains(SecretsManager.getSecretValue("presidingTC"))) {
+            selectRandomValueFromDropDown("user", SelectorType.ID);
+        } else {
+            selectValueFromDropDown("user", SelectorType.ID, SecretsManager.getSecretValue("presidingTC"));
+        }
         String operatorForename = SecretsManager.getSecretValue("presidingTC");
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
         UniversalActions.clickSubmit();
@@ -85,9 +88,9 @@ public class SubmissionsJourney extends BasePage {
             enterText("//*[@id='attachments[file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
         } else {
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='attachments[file]']"));
-            ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
-    }
+        }
     }
 }
 

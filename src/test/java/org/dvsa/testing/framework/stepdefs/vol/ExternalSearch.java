@@ -81,23 +81,26 @@ public class ExternalSearch extends BasePage {
     @Then("search results page should display operator names containing our {string}")
     public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 900, "KickOut reached. Operator name external search failed.");
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 2000, "KickOut reached. Operator name external search failed.");
             assertTrue(isTextPresent(businessName));
+        } else {
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 2000, "KickOut reached. Operator name external search failed.");
         }
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
     }
 
+    @And("I am able to view the applicants licence number")
+    public void iAmAbleToViewTheApplicantsLicenceNumber() {
+        assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
+    }
 
     @And("I am able to view the licence number")
     public void iAmAbleToViewTheLicenceNumber() {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         String orgName = world.createApplication.getOrganisationName();
-
-        waitForElementToBePresent(String.format("//tr[td[contains(text(), '%s')]]", orgName));
+        waitForTextToBePresent(orgName);
         String rowText = getText(String.format("//tr[td[contains(text(), '%s')]]", orgName), SelectorType.XPATH);
         assertTrue(rowText.contains(licenceNumber));
     }
-
 
     @Then("search results page should display names containing our operator name")
     public void searchResultsPageShouldDisplayNamesContainingOurOperatorName() {

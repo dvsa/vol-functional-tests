@@ -241,7 +241,7 @@ public abstract class BasePage extends DriverUtils {
                     .moveToElement(findElement(selector, selectorType))
                     .click()
                     .perform();
-        } catch (StaleElementReferenceException e) {
+        } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
             if (isElementPresent(selector, selectorType)) {
                 new Actions(getDriver())
                         .moveToElement(findElement(selector, selectorType))

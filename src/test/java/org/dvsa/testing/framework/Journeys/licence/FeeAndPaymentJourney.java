@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -124,7 +125,7 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void customerPaymentModule() {
-
+        refreshPageWithJavascript();
         waitForTextToBePresent("Card Number*");
         waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardNumber"));
         waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardExpiryMonth"));

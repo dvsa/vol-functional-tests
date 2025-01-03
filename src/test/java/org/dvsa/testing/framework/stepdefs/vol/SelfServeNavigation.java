@@ -4,6 +4,7 @@ import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
@@ -71,6 +72,9 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i log back in as the operator")
     public void iLogBackInAsTheOperator() {
-        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
+        world.selfServeNavigation.navigateToLoginPage();
+        if(!isTextPresent(SelfServeNavBar.SIGN_OUT.toString())) {
+            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
+        }
     }
 }

@@ -1,5 +1,4 @@
-@OLCS-20956
-@SS-EXTERNAL-SEARCH
+@OLCS-20956 @SS-EXTERNAL-SEARCH @ss_regression
 @FullRegression @printAndSign
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
@@ -12,7 +11,6 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     When I search for a lorry and bus operator by "address","","","",""
     Then search results page addresses should only display address belonging to our post code
 
-  @ec2_smoke @ss_regression
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","","",""
     Then search results page should display operator names containing our "businessName"
@@ -22,7 +20,6 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     When I search for a lorry and bus operator by "licence","","","",""
     Then search results page should only display our "licenceNumber"
     And I am able to view the licence number
-
 
   Scenario: Person's name external search for lorry and bus operators
     When I search for a lorry and bus operator by "person","","","",""
