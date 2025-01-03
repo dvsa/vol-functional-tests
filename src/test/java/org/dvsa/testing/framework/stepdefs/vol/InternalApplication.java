@@ -17,6 +17,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,9 +82,10 @@ public class InternalApplication extends BasePage {
     }
 
     @Then("The pop up should contain letter details")
-    public void thePopUpShouldContainLetterDetails() {
+    public void thePopUpShouldContainLetterDetails() throws InterruptedException {
         waitForTextToBePresent("Amend letter");
         waitForElementToBePresent("//*[@name='form-actions[submit]']");
+        TimeUnit.SECONDS.sleep(5);
         if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
             ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
