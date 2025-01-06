@@ -12,8 +12,11 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,13 +85,14 @@ public class InternalApplication extends BasePage {
     }
 
     @Then("The pop up should contain letter details")
-    public void thePopUpShouldContainLetterDetails() throws InterruptedException {
+    public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
-        TimeUnit.SECONDS.sleep(2);
-        if (isTextPresent("Amend letter")) {
-            click("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
-            ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
-            switchToWindow(tabs.get(0));
+        if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
+            do {
+                click("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
+                ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+                switchToWindow(tabs.get(0));
+            } while (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH));
         }
         String docStoreLink = getLink("//*[@id='letter-link']", SelectorType.XPATH);
         assertNotNull(docStoreLink);
