@@ -53,6 +53,7 @@ public class CreateApplications extends BasePage {
     public void iPayMySecondApplicationWithMySavedCardDetails() {
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");
+        refreshPageWithJavascript();
         getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
                 .stream()
                 .distinct()
