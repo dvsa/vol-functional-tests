@@ -218,7 +218,7 @@
                     <skipAfterFailureCount>1</skipAfterFailureCount>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
-                    <parallel>methods</parallel>
+                    <parallel>suites</parallel>
                     <threadCount>10</threadCount>
                     <reuseForks>true</reuseForks>
                     <properties>
