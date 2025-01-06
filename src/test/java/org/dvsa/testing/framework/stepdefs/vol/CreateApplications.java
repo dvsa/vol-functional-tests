@@ -51,15 +51,15 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
+        refreshPageWithJavascript();
+        waitForTextToBePresent("Licences");
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");
-        refreshPageWithJavascript();
         getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
                 .stream()
                 .distinct()
                 .filter(x -> x.getText().contains(app))
                 .findAny().ifPresent(WebElement::click);
-        waitForTextToBePresent("Review and declarations");
         waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
