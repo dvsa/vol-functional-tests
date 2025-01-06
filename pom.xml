@@ -217,8 +217,8 @@
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
-                    <parallel>suites</parallel>
-                    <threadCount>10</threadCount>
+                    <parallel>methods</parallel>
+                    <threadCount>7</threadCount>
                     <reuseForks>true</reuseForks>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <perCoreThreadCount>false</perCoreThreadCount>
