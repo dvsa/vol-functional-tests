@@ -47,6 +47,7 @@ public class SubmissionsJourney extends BasePage {
         waitForTextToBePresent("Assign to:");
         clickByXPath("//*[@id='tcOrOther']");
         clickByXPath("//*[@id='presidingTcUser_chosen']");
+        setSelectedValue(getText("//*[@id='presidingTcUser_chosen']/div/ul/li[2]", SelectorType.XPATH));
         waitAndEnterText("//*[@id='presidingTcUser_chosen']/div/div/input", SelectorType.XPATH, getSelectedValue());
         waitAndClick("#presidingTcUser_chosen > div > ul > li.active-result.group-option.highlighted > em", SelectorType.CSS);
     }

@@ -194,6 +194,10 @@ public abstract class BasePage extends DriverUtils {
         return selectedValue;
     }
 
+    public static void setSelectedValue(String selectedValue) {
+        BasePage.selectedValue = selectedValue;
+    }
+
     public static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(duration))
