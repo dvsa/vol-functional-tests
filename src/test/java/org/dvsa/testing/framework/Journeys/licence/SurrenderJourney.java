@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import scanner.AXEScanner;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -66,8 +67,7 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void navigateToSurrendersStartPage() {
-        refreshPageWithJavascript();
-        if (!getDriver().getCurrentUrl().contains("ssweb")) {
+        if (!Objects.requireNonNull(getDriver().getCurrentUrl()).contains("ssweb")) {
             if (!isTextPresent("Current licences")) {
                 world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             }

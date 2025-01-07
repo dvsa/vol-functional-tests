@@ -343,7 +343,7 @@ public class ManageApplications extends BasePage {
     }
 
     @Given("as a {string} I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String trafficArea, String enforcementArea, String userType) throws HttpException {
+    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String userType, String trafficArea, String enforcementArea) throws HttpException {
         // Validate trafficArea
         try {
             TrafficArea.valueOf(trafficArea.toUpperCase());
