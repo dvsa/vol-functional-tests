@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.1](https://github.com/dvsa/vol-functional-tests/compare/v3.11.0...v3.11.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* Move timeout minutes into right spot and rename to match e2etest.yaml inputs ([7a530a8](https://github.com/dvsa/vol-functional-tests/commit/7a530a879aa5c8584625297fe1fb6d22356d344e))
+
 ## [3.11.0](https://github.com/dvsa/vol-functional-tests/compare/v3.10.3...v3.11.0) (2025-01-03)
 
 
