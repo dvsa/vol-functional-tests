@@ -12,23 +12,29 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class InternalApplication extends BasePage{
+public class InternalApplication extends BasePage {
     private final World world;
 
     private final String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
     private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
     private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
 
-    public InternalApplication (World world) {this.world = world;}
+    public InternalApplication(World world) {
+        this.world = world;
+    }
 
     @When("the caseworker completes and submits the application")
     public void theCaseworkerCompletesAndSubmitsTheApplication() throws HttpException {
@@ -54,7 +60,7 @@ public class InternalApplication extends BasePage{
         long kickoutTime = System.currentTimeMillis() + 15000;
 
         do {
-            tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
+            tableColumns = returnTableRows("//tbody/tr/*", SelectorType.XPATH);
             refreshPageWithJavascript();
         } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
 
@@ -82,13 +88,16 @@ public class InternalApplication extends BasePage{
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
         if (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-            switchToWindow(tabs.get(0));
+            do {
+                click("//*[contains(text(),'GV - Blank letter to operator')]", SelectorType.XPATH);
+                ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+                switchToWindow(tabs.get(0));
+            } while (isElementNotPresent("//*[@id='letter-link']", SelectorType.XPATH));
         }
-                String docStoreLink = getLink("//*[@id='letter-link']",SelectorType.XPATH);
+        String docStoreLink = getLink("//*[@id='letter-link']", SelectorType.XPATH);
         assertNotNull(docStoreLink);
         String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
-        assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s",webDAVUrl)));
+        assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s", webDAVUrl)));
         assertTrue(docStoreLink.contains(".rtf"));
     }
 
@@ -102,7 +111,7 @@ public class InternalApplication extends BasePage{
         String objDef = String.format("form-actions[%s]", sendOption);
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
-        click(objDef,SelectorType.ID);
+        click(objDef, SelectorType.ID);
         if (sendOption.equals("email")) {
             assertTrue(isTextPresent("The document has been saved and sent by email"));
         } else {
@@ -111,7 +120,7 @@ public class InternalApplication extends BasePage{
         String generatedLetterType = "GV - Blank letter to operator";
         waitForTextToBePresent("Docs & attachments");
         List<WebElement> tableContents = findElements("//*[@class='govuk-table__body']", SelectorType.XPATH);
-        for(WebElement element : tableContents){
+        for (WebElement element : tableContents) {
             assertTrue(isTextPresent(String.valueOf(element.getText().contains(generatedLetterType))));
         }
     }
@@ -134,7 +143,7 @@ public class InternalApplication extends BasePage{
     public void iSaveTheLetter() {
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
-        click("//*[@id='close']",SelectorType.XPATH);
+        click("//*[@id='close']", SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
     }
 
@@ -255,7 +264,7 @@ public class InternalApplication extends BasePage{
         assertEquals(expectedCategory, actualCategory);
 
 
-        String licenceNumber = getText("//h1", SelectorType.XPATH).substring(0,9);
+        String licenceNumber = getText("//h1", SelectorType.XPATH).substring(0, 9);
         String expectedAttachedToLicence = String.format("Licence (%s)", licenceNumber);
         String actualAttachedToLicence = getText("//*[@id='attachedTo']//option[@selected='selected']", SelectorType.XPATH);
         assertEquals(expectedAttachedToLicence, actualAttachedToLicence);
@@ -276,7 +285,7 @@ public class InternalApplication extends BasePage{
     public void iSaveAndEmailTheLetter() {
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Send letter");
-        click("form-actions[email]",SelectorType.ID);
+        click("form-actions[email]", SelectorType.ID);
         waitForTextToBePresent("The document has been saved and sent by email");
     }
 

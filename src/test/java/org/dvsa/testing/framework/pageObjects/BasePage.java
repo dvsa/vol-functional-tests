@@ -194,6 +194,10 @@ public abstract class BasePage extends DriverUtils {
         return selectedValue;
     }
 
+    public static void setSelectedValue(String selectedValue) {
+        BasePage.selectedValue = selectedValue;
+    }
+
     public static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(duration))
@@ -607,7 +611,7 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(java.util.NoSuchElementException.class);
         ExpectedCondition<Boolean> expect = driver -> {
             assert driver != null;
-            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+            return Objects.requireNonNull(((JavascriptExecutor) driver).executeScript("return document.readyState")).toString().equals("complete");
         };
         wait.until(WebDriver -> expect);
         try {

@@ -24,6 +24,7 @@ Feature: Logic for Surrender menu item
     Then a modal box is displayed
 
 
+    @surrender_re_apply
   Scenario: Withdrawn and re apply for a surrender
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender

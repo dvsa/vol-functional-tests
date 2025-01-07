@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
