@@ -31,7 +31,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
 
   @ss_regression @FullRegression @printAndSign
   Scenario Outline: import EBSR for curtailed and suspended licence in self-serve (Resource-A)
-    Given as a "consultant" I have a psv application with traffic area "<Area>" and enforcement area "west" which has been granted
+    Given as a "consultant" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
