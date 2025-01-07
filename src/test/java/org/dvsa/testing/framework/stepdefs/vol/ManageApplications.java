@@ -342,8 +342,8 @@ public class ManageApplications extends BasePage {
         world.updateLicence.updateLicenceStatus(arg0);
     }
 
-    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
+    @Given("as a {string} I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    public synchronized void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaAndUserTypeWhichHasBeenGranted(String trafficArea, String enforcementArea, String userType) throws HttpException {
         // Validate trafficArea
         try {
             TrafficArea.valueOf(trafficArea.toUpperCase());
@@ -356,7 +356,7 @@ public class ManageApplications extends BasePage {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid enforcement area: " + enforcementArea, e);
         }
-        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea, UserType.EXTERNAL.asString());
+        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea, userType);
     }
 
     @Given("i have an interim {string} {string} application")
