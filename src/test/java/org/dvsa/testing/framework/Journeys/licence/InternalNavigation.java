@@ -13,6 +13,8 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 
 public class InternalNavigation extends BasePage {
 
@@ -30,7 +32,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void logInAsAdmin() throws HttpException {
-        if (world.updateLicence.getInternalUserId() == null) {
+        if(Objects.requireNonNull(getDriver().getCurrentUrl()).contains("iuweb")){
             world.APIJourney.createAdminUser();
         }
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
