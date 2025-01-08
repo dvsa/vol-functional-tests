@@ -21,7 +21,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +28,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 60;
+    private static final int TIME_OUT_SECONDS = 120;
     private static final int POLLING_SECONDS = 2;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
@@ -681,6 +680,6 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public boolean pageContains(String text) {
-        return getDriver().getPageSource().contains(text);
+        return Objects.requireNonNull(getDriver().getPageSource()).contains(text);
     }
 }

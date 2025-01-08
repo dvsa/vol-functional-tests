@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
@@ -32,7 +33,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void logInAsAdmin() throws HttpException {
-        if(Objects.requireNonNull(getDriver().getCurrentUrl()).contains("iuweb")){
+        if (world.updateLicence.getInternalUserId() == null) {
             world.APIJourney.createAdminUser();
         }
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -206,11 +207,11 @@ public class InternalNavigation extends BasePage {
         }
     }
 
-    public void navigateToPrintIRHPPermits(){
+    public void navigateToPrintIRHPPermits() {
         clickById("menu-admin-dashboard/admin-printing/irhp-permits");
     }
 
-    public void searchForIRHPPermitsToPrint(){
+    public void searchForIRHPPermitsToPrint() {
         selectValueFromDropDownByIndex("irhpPermitType", SelectorType.ID, 1);
         waitAndClick("irhpPermitStock", SelectorType.ID);
         selectValueFromDropDownByIndex("irhpPermitStock", SelectorType.ID, 1);
