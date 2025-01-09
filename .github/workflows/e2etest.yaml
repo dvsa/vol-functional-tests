@@ -59,7 +59,6 @@ env:
   BUCKET_KEY: ${{ inputs.bucket_key }}
   BATCH_JOB_QUEUE: ${{ inputs.batch_job_queue }}
   BATCH_JOB_DEFINITION: ${{ inputs.batch_job_definition }}
-  TIMEOUT: '50'
 
 jobs:
   create-job-name:
