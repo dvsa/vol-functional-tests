@@ -63,6 +63,7 @@ env:
 jobs:
   create-job-name:
     name: Create Job Name
+
     runs-on: ubuntu-latest
     environment: ${{ inputs.platform_env }}
     outputs:
@@ -76,6 +77,7 @@ jobs:
 
   run-batch:
     name: Run Tests on AWS Batch
+    timeout-minutes: 50
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
