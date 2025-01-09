@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.driver.Browser;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
@@ -26,21 +27,27 @@ public class TestRunConfiguration {
     }
 
     @After
-    public void tearDown(Scenario scenario) {
+    public void takeScreenShotAfterFailure(Scenario scenario) {
         attach(scenario);
         Collection<String> tags = scenario.getSourceTagNames();
         for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")){
+            if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
                 if (isLinkPresent("Sign out", 10)) {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }
         }
+
+    }
+
+    @AfterAll
+    public static void tearDown() {
         if (Browser.isBrowserOpen()) {
-         Browser.getDriver().quit();
+            Browser.getDriver().quit();
         }
         Browser.removeLocalDriverThread();
     }
+
 
     public static void attach(Scenario scenarioStatus) {
         if (scenarioStatus.isFailed()) {
