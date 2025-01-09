@@ -214,7 +214,7 @@ jobs:
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ inputs.platform_env }}
+          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
 
