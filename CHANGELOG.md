@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.3](https://github.com/dvsa/vol-functional-tests/compare/v3.11.2...v3.11.3) (2025-01-09)
+
+
+### Bug Fixes
+
+* ensure allure asset name is unique per suite being run to avoid dupe artefact names ([5c1ff4f](https://github.com/dvsa/vol-functional-tests/commit/5c1ff4f918282f1a5bad9184fb2ab688d273e7b4))
+
 ## [3.11.2](https://github.com/dvsa/vol-functional-tests/compare/v3.11.1...v3.11.2) (2025-01-09)
 
 
