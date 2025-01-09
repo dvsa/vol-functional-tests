@@ -76,7 +76,7 @@ jobs:
 
   run-batch:
     name: Run Tests on AWS Batch
-    timeout-minutes: 50
+    timeout-minutes: 45
     needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
