@@ -113,7 +113,7 @@ jobs:
             --job-name ${{ env.JOB_NAME }} \
             --job-queue ${{ env.BATCH_JOB_QUEUE }} \
             --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
-            --timeout "attemptDurationSeconds=$(( ${{ inputs.batch_timeout_minutes }} * 60 ))" \
+            --timeout "attemptDurationSeconds=$(( ${{ needs.Calculate-Timeout.outputs.timeout }} * 60 ))" \
             --container-overrides '{
               "command": [
                 "/bin/sh",
@@ -157,7 +157,7 @@ jobs:
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
-          TIME_OUT: ${{ inputs.batch_timeout_minutes }}
+          TIME_OUT: ${{ needs.Calculate-Timeout.outputs.timeout }}
         run: |
           TIME_OUT=${{ env.TIME_OUT }}
           JOB_ID=${{ env.JOB_ID }}
