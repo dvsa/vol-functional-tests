@@ -74,9 +74,21 @@ jobs:
           buildtime=$(date +"%Y%m%d%H%M%S")
           echo "job_name=e2e-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
+  Calculate-Timeout:
+    name: Calculate Timeout
+    runs-on: ubuntu-latest
+    outputs:
+      timeout: ${{ steps.set-timeout.outputs.timeout }}
+    steps:
+      - name: Set Timeout
+        id: set-timeout
+        run: |
+          echo "timeout=$(( ${{ inputs.batch_timeout_minutes }} + 5 ))" >> $GITHUB_OUTPUT
+
   run-batch:
     name: Run Tests on AWS Batch
-    needs: create-job-name
+    timeout-minutes: ${{ needs.Calculate-Timeout.outputs.timeout }}
+    needs: [create-job-name, Calculate-Timeout]
     runs-on: ubuntu-latest
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
