@@ -4,7 +4,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -52,6 +51,8 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
+        refreshPageWithJavascript();
+        waitForTextToBePresent("Licences");
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");
         getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
@@ -59,9 +60,6 @@ public class CreateApplications extends BasePage {
                 .distinct()
                 .filter(x -> x.getText().contains(app))
                 .findAny().ifPresent(WebElement::click);
-
-        UniversalActions.refreshPageWithJavascript();
-        waitForElementToBePresent("//*[contains(text(),'Review and declarations')]");
         waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
@@ -78,6 +76,4 @@ public class CreateApplications extends BasePage {
     public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
         world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
     }
-
-
 }

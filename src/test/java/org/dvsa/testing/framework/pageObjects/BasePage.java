@@ -21,7 +21,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +28,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 60;
+    private static final int TIME_OUT_SECONDS = 120;
     private static final int POLLING_SECONDS = 2;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
@@ -194,6 +193,10 @@ public abstract class BasePage extends DriverUtils {
         return selectedValue;
     }
 
+    public static void setSelectedValue(String selectedValue) {
+        BasePage.selectedValue = selectedValue;
+    }
+
     public static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(duration))
@@ -241,7 +244,7 @@ public abstract class BasePage extends DriverUtils {
                     .moveToElement(findElement(selector, selectorType))
                     .click()
                     .perform();
-        } catch (StaleElementReferenceException e) {
+        } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
             if (isElementPresent(selector, selectorType)) {
                 new Actions(getDriver())
                         .moveToElement(findElement(selector, selectorType))
@@ -607,7 +610,7 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(java.util.NoSuchElementException.class);
         ExpectedCondition<Boolean> expect = driver -> {
             assert driver != null;
-            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+            return Objects.requireNonNull(((JavascriptExecutor) driver).executeScript("return document.readyState")).toString().equals("complete");
         };
         wait.until(WebDriver -> expect);
         try {
@@ -680,6 +683,6 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public boolean pageContains(String text) {
-        return getDriver().getPageSource().contains(text);
+        return Objects.requireNonNull(getDriver().getPageSource()).contains(text);
     }
 }

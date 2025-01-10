@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -10,7 +11,6 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -70,7 +70,8 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+        world.selfServeNavigation.navigateToLoginPage();
+        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         Browser.navigate().get(world.genericUtils.getTransportManagerLink());
         UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
@@ -82,11 +83,13 @@ public class TmVerifyDifferentOperator extends BasePage{
             world.govSignInJourney.signInGovAccount();
         }
     }
+
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLoginPage();
+        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         UniversalActions.clickSubmit();
@@ -109,14 +112,14 @@ public class TmVerifyDifferentOperator extends BasePage{
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         clickByLinkText("Sign out");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLoginPage();
+        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
     }
-
     @And("the TM has got the reset link email")
     public void theTMHasGotTheResetLinkEmail() {
         // Needs writing. Since maildev is soon to be implemented, makes no sense to add s3 method yet.

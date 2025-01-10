@@ -18,7 +18,7 @@ Feature: View Surrender Menu and details on Internal
     Then the Surrender button should not be clickable
     And the change history has the surrender under consideration
 
-
+    @surrender-close-case
   Scenario: Surrender after closing cases & bus Reg print & sign
     When the caseworker checks the case and bus reg is visible in surrenders
     When the open case and bus reg is closed
@@ -26,5 +26,4 @@ Feature: View Surrender Menu and details on Internal
     And the tick boxes are checked
     When the Surrender button is clicked
     Then the licence should be surrendered
-
 

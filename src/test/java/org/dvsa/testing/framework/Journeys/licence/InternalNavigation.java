@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
@@ -12,6 +13,8 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 
 public class InternalNavigation extends BasePage {
@@ -204,11 +207,11 @@ public class InternalNavigation extends BasePage {
         }
     }
 
-    public void navigateToPrintIRHPPermits(){
+    public void navigateToPrintIRHPPermits() {
         clickById("menu-admin-dashboard/admin-printing/irhp-permits");
     }
 
-    public void searchForIRHPPermitsToPrint(){
+    public void searchForIRHPPermitsToPrint() {
         selectValueFromDropDownByIndex("irhpPermitType", SelectorType.ID, 1);
         waitAndClick("irhpPermitStock", SelectorType.ID);
         selectValueFromDropDownByIndex("irhpPermitStock", SelectorType.ID, 1);

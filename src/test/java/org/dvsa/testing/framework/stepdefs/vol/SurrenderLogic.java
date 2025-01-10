@@ -13,6 +13,7 @@ import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -20,6 +21,7 @@ import org.openqa.selenium.InvalidArgumentException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -186,7 +188,7 @@ public class SurrenderLogic extends BasePage {
         UniversalActions.clickSubmit();
         waitForTitleToBePresent("Now securely destroy your licence documentation");
         UniversalActions.clickSubmit();
-        assertTrue(Browser.navigate().getCurrentUrl().contains("declaration"));
+        assertTrue(Objects.requireNonNull(Browser.navigate().getCurrentUrl()).contains("declaration"));
     }
 
     @And("my application to surrender is under consideration")
@@ -255,7 +257,10 @@ public class SurrenderLogic extends BasePage {
 
     @And("the licence should not displayed in selfserve")
     public void theLicenceShouldNotDisplayedInSelfserve() {
-        world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));;
+        world.selfServeNavigation.navigateToLoginPage();
+        if (!isTextPresent(SelfServeNavBar.SIGN_OUT.toString())) {
+            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
+        }
         assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 3));
     }
 
@@ -273,6 +278,10 @@ public class SurrenderLogic extends BasePage {
 
     @And("the user should be able to re apply for a surrender in internal")
     public void theUserShouldBeAbleToReApplyForASurrenderInInternal() throws IOException, InterruptedException, IllegalBrowserException {
+        if (!Objects.requireNonNull(getDriver().getCurrentUrl()).contains("ssweb")) {
+            world.selfServeNavigation.navigateToLoginPage();
+            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+        }
         world.surrenderJourney.submitSurrender();
     }
 
