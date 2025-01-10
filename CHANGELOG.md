@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.4](https://github.com/dvsa/vol-functional-tests/compare/v3.11.3...v3.11.4) (2025-01-10)
+
+
+### Bug Fixes
+
+* prevent duplicate report name on subsequent attempts of workflow ([2d28d81](https://github.com/dvsa/vol-functional-tests/commit/2d28d81fff469dac4a82ac617b418308a6d7f724))
+
 ## [3.11.3](https://github.com/dvsa/vol-functional-tests/compare/v3.11.2...v3.11.3) (2025-01-09)
 
 
