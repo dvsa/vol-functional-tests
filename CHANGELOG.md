@@ -1,6 +1,5 @@
 # Revision History for the VOL Functional Tests
 
-<<<<<<< HEAD
 ## [3.11.4](https://github.com/dvsa/vol-functional-tests/compare/v3.11.3...v3.11.4) (2025-01-10)
 
 
@@ -29,8 +28,7 @@
 
 * Move timeout minutes into right spot and rename to match e2etest.yaml inputs ([7a530a8](https://github.com/dvsa/vol-functional-tests/commit/7a530a879aa5c8584625297fe1fb6d22356d344e))
 
-=======
->>>>>>> 8422eff39 (fix:fixed broken EBSR test)
+
 ## [3.11.0](https://github.com/dvsa/vol-functional-tests/compare/v3.10.3...v3.11.0) (2025-01-03)
 
 
