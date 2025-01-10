@@ -5,12 +5,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-<<<<<<< HEAD
     <version>3.11.5-SNAPSHOT</version>
-=======
-    <version>3.11.0</version>
->>>>>>> 8422eff39 (fix:fixed broken EBSR test)
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
