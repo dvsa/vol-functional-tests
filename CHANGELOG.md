@@ -1,5 +1,71 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.2](https://github.com/dvsa/vol-functional-tests/compare/v3.11.2...v3.11.2) (2025-01-10)
+
+
+### Features
+
+* add scroll to bottom on ebsr ([471dccf](https://github.com/dvsa/vol-functional-tests/commit/471dccfa479de772b005ce11fd33b9e483747fb9))
+* make timeout dynamic based on timeout input var ([0512730](https://github.com/dvsa/vol-functional-tests/commit/051273099b2a07501124f8ee80d28bfe955eb61d))
+* make timeout dynamic based on timeout input var ([a0e8a67](https://github.com/dvsa/vol-functional-tests/commit/a0e8a6727e01530b39b92bfa15344f77d04456a8))
+
+
+### Bug Fixes
+
+* add high level timeout values to batch run ([cc3f762](https://github.com/dvsa/vol-functional-tests/commit/cc3f7628e381b6bb34da449009d526ac58bf9701))
+* add high level timeout values to batch run ([8138507](https://github.com/dvsa/vol-functional-tests/commit/81385071d2b8758a87cc651fe51a644e6ec94194))
+* added do while loop for generate letter popup ([bfb1c62](https://github.com/dvsa/vol-functional-tests/commit/bfb1c625bda41c8c004aa9f99f92c5a483dc89ad))
+* added do while loop for generate letter popup ([798c382](https://github.com/dvsa/vol-functional-tests/commit/798c382b3bb4ff79e312be2ce4440aab69963a25))
+* added do while loop for generate letter popup ([155abcc](https://github.com/dvsa/vol-functional-tests/commit/155abcc0d72553bc0027156ffeb462bd7533027c))
+* added do while loop for generate letter popup ([4b7b753](https://github.com/dvsa/vol-functional-tests/commit/4b7b75374c4bacec7f5ce3425dc1a18af70d14e2))
+* added do while loop for generate letter popup ([d582a6a](https://github.com/dvsa/vol-functional-tests/commit/d582a6a22f140cfd733d8616d014e1d3bab955dd))
+* added do while loop for generate letter popup ([aed0b5b](https://github.com/dvsa/vol-functional-tests/commit/aed0b5b49dfb920e0f073fd295685f1d3a431b6d))
+* ensure allure asset name is unique per suite being run to avoid dupe artefact names ([4dc43f4](https://github.com/dvsa/vol-functional-tests/commit/4dc43f4177c623ffb8287abe5136df4f9cfc4667))
+* ensure allure asset name is unique per suite being run to avoid dupe artefact names ([5c1ff4f](https://github.com/dvsa/vol-functional-tests/commit/5c1ff4f918282f1a5bad9184fb2ab688d273e7b4))
+* erroneous dash where param is underscored ([fcff53e](https://github.com/dvsa/vol-functional-tests/commit/fcff53e9bf7b0d37ce8b4a9ff64b83f84ea80fc6))
+* erroneous dash where param is underscored ([55651da](https://github.com/dvsa/vol-functional-tests/commit/55651daa7f58cae285ecd9c38803028567031020))
+* fixed broken EBSR test ([cfc91ea](https://github.com/dvsa/vol-functional-tests/commit/cfc91ea5252b46906b8c9cfd6d2b29ba657ed198))
+* Move timeout minutes into right spot and rename to match e2etest.yaml inputs ([2bf650d](https://github.com/dvsa/vol-functional-tests/commit/2bf650d496df3a09a17994da21188207c00dc582))
+* prevent duplicate report name on subsequent attempts of workflow ([46df162](https://github.com/dvsa/vol-functional-tests/commit/46df16237e6612fbb2760788fecfb783ccdc26e6))
+* prevent duplicate report name on subsequent attempts of workflow ([2d28d81](https://github.com/dvsa/vol-functional-tests/commit/2d28d81fff469dac4a82ac617b418308a6d7f724))
+* pulling in main ([6dc9981](https://github.com/dvsa/vol-functional-tests/commit/6dc9981b8fe22be5c0b2e61fd43c4252eea1151c))
+* pulling in main ([b7b245b](https://github.com/dvsa/vol-functional-tests/commit/b7b245bfb7898399929165d70670f5f85deacb21))
+* pulling in main ([e66e642](https://github.com/dvsa/vol-functional-tests/commit/e66e642492f43a9a07d5c451320228c3e47879e2))
+* pulling in main ([76db0bc](https://github.com/dvsa/vol-functional-tests/commit/76db0bc03ab4b5236f5c03edd45152fc16619078))
+* remove tag ([586523c](https://github.com/dvsa/vol-functional-tests/commit/586523c8cb916e850f825b9fcffd42925ba51351))
+* removing test changes ([1694d16](https://github.com/dvsa/vol-functional-tests/commit/1694d16b0cbeadf418a4ea351d2a33db2c6057c2))
+* removing test changes ([454833f](https://github.com/dvsa/vol-functional-tests/commit/454833fa853e2fc3e0507538761ac7208d6265e9))
+* swapping around to allow parent workflow to complete gracefully on failure ([fd306b4](https://github.com/dvsa/vol-functional-tests/commit/fd306b425c060730fb2cbeab34ab68d85832b7bc))
+* swapping around to allow parent workflow to complete gracefully on failure ([96c1ec3](https://github.com/dvsa/vol-functional-tests/commit/96c1ec3ad4590679ced98f0d413a375a461c77f2))
+* typo added linebreak ([41ab803](https://github.com/dvsa/vol-functional-tests/commit/41ab8036c97e4962c11a9b1d79cba07005133024))
+* typo added linebreak ([86ebca4](https://github.com/dvsa/vol-functional-tests/commit/86ebca4d78286fa69830c8d06899534b54d5efd1))
+* updated screenshot method to attach image properly ([0371827](https://github.com/dvsa/vol-functional-tests/commit/0371827ea82ddeacbba45886ee795758f849d0b7))
+* updated screenshot method to attach image properly ([69c60b7](https://github.com/dvsa/vol-functional-tests/commit/69c60b7f4069b72ee2f7a96d356d122161522d67))
+* use input rather than hardcoded values ([95074a2](https://github.com/dvsa/vol-functional-tests/commit/95074a20b6b24950d3b9b70937242bcfc6d10760))
+* use input rather than hardcoded values ([89eea1c](https://github.com/dvsa/vol-functional-tests/commit/89eea1cd3607294ad071e55867fd31774f7465e0))
+
+
+### Miscellaneous Chores
+
+* bump to 3.11.2 ([dec6ece](https://github.com/dvsa/vol-functional-tests/commit/dec6ece0cc621e6745df75b03b76b1f6d8e72502))
+* bump to 3.11.2 ([ccb2795](https://github.com/dvsa/vol-functional-tests/commit/ccb2795dcdb599d6be3340ea82c4c794a06e98e9))
+* bump to 3.11.2 ([8e8ed99](https://github.com/dvsa/vol-functional-tests/commit/8e8ed99f9c75a18b920cd838043b7844d702d72e))
+* bump to 3.11.2 ([863f9e7](https://github.com/dvsa/vol-functional-tests/commit/863f9e7f4895d7f09c64b1c9384dbfda808d2289))
+* bump to 3.11.2 ([29bca99](https://github.com/dvsa/vol-functional-tests/commit/29bca9912d1a87021f8ebf909bc74ede0a7de3cc))
+* bump to 3.11.2 ([ddf75c5](https://github.com/dvsa/vol-functional-tests/commit/ddf75c530b0283e7cd7cd9c6ebc59fe92d5e65dc))
+* bump to 3.11.2 ([8ae8d1f](https://github.com/dvsa/vol-functional-tests/commit/8ae8d1f3b9e6d8e4e51e88604405a04bd46829c4))
+* bump to 3.11.2 ([7f9435d](https://github.com/dvsa/vol-functional-tests/commit/7f9435d8a76d7683249d645bb6879012e61bef9e))
+* bump to 3.11.2 ([4a1708d](https://github.com/dvsa/vol-functional-tests/commit/4a1708de95ec5f2ee78f45918a797b9eaa72e9bd))
+* bump to 3.11.2 ([fef7fb4](https://github.com/dvsa/vol-functional-tests/commit/fef7fb4abda695376ec31b29a93f0b78dcaca6f9))
+* bump to 3.11.2 ([3ec9570](https://github.com/dvsa/vol-functional-tests/commit/3ec95701cf90e374c960cc3f9f088961d7189663))
+* bump to 3.11.2 ([ab58366](https://github.com/dvsa/vol-functional-tests/commit/ab583668bea96964e2b9847f524cf845d5a9d8b9))
+* bump to 3.11.2 ([acc487b](https://github.com/dvsa/vol-functional-tests/commit/acc487bc7a427867509a213cf7192030a3de966a))
+* bump to 3.11.2 ([94345de](https://github.com/dvsa/vol-functional-tests/commit/94345de5b510d4fad4fbe34e31a0b54f30a99989))
+* bump to 3.11.2 ([744b834](https://github.com/dvsa/vol-functional-tests/commit/744b8341f7da23a811cab0bbf0bb0c115ae49a83))
+* bump to 3.11.2 ([82df922](https://github.com/dvsa/vol-functional-tests/commit/82df922d09ac2bf7c2b42b92bd79be8c27201059))
+* bump to 3.11.2 ([d609331](https://github.com/dvsa/vol-functional-tests/commit/d6093319875484289c2dc173b9aedccf4c7a317e))
+* bump to 3.11.2 ([9d25f8e](https://github.com/dvsa/vol-functional-tests/commit/9d25f8efb73d0dc3c769dffac75de89b0bcd1b6e))
+
 ## [3.11.2](https://github.com/dvsa/vol-functional-tests/compare/v3.11.4...v3.11.2) (2025-01-10)
 
 
