@@ -36,18 +36,17 @@ public class TestRunConfiguration {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }
+            if (Browser.isBrowserOpen()) {
+                Browser.getDriver().quit();
+            }
         }
 
     }
 
     @AfterAll
     public static void tearDown() {
-        if (Browser.isBrowserOpen()) {
-            Browser.getDriver().quit();
-        }
         Browser.removeLocalDriverThread();
     }
-
 
     public static void attach(Scenario scenarioStatus) {
         if (scenarioStatus.isFailed()) {
