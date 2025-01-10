@@ -60,6 +60,7 @@ public class CreateApplications extends BasePage {
                 .distinct()
                 .filter(x -> x.getText().contains(app))
                 .findAny().ifPresent(WebElement::click);
+        waitForTextToBePresent("Review and declarations");
         waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
