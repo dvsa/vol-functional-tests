@@ -7,6 +7,7 @@
     <artifactId>vol-functional-tests</artifactId>
     <version>3.11.5-SNAPSHOT</version>
 
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
