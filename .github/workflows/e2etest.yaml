@@ -87,7 +87,7 @@ jobs:
 
   run-batch:
     name: Run Tests on AWS Batch
-    timeout-minutes: ${{ needs.Calculate-Timeout.outputs.timeout }}
+    timeout-minutes: ${{ inputs.Calculate-Timeout.outputs.timeout }}
     needs: [create-job-name, Calculate-Timeout]
     runs-on: ubuntu-latest
     outputs:
@@ -157,7 +157,7 @@ jobs:
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
-          TIME_OUT: ${{ needs.Calculate-Timeout.outputs.timeout }}
+          TIME_OUT: ${{ inputs.Calculate-Timeout.outputs.timeout }}
         run: |
           TIME_OUT=${{ env.TIME_OUT }}
           JOB_ID=${{ env.JOB_ID }}
