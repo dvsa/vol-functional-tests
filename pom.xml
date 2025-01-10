@@ -215,11 +215,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
-<<<<<<< HEAD
-                    <testFailureIgnore>true</testFailureIgnore>
                     <skipAfterFailureCount>1</skipAfterFailureCount>
-=======
->>>>>>> c7548dc45 (refactor:rebasing from main)
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
                     <parallel>methods</parallel>
