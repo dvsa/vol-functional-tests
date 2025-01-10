@@ -53,7 +53,7 @@ permissions:
   checks: write
 
 env:
-  REPORT_NAME: "allure.zip"
+  REPORT_NAME: "allure_attempt_${{ github.run_number }}.zip"
   ROLE_ARN: ${{ inputs.aws_role }}
   BUCKET_NAME: ${{ inputs.bucket_name }}
   BUCKET_KEY: ${{ inputs.bucket_key }}
