@@ -52,4 +52,3 @@ Feature: TM signs through gov-sign-in
     When the operator rejects the transport managers details
     And the TM has got the reset link email
     And the TM should see the incomplete label and provide details link
-
