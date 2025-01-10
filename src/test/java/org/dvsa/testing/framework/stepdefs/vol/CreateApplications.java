@@ -51,11 +51,8 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
-<<<<<<< HEAD
         refreshPageWithJavascript();
         waitForTextToBePresent("Licences");
-=======
->>>>>>> 7c229b3db (fix:added do while loop for generate letter popup)
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");
         getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
