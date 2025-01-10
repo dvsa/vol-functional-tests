@@ -1,5 +1,47 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.2](https://github.com/dvsa/vol-functional-tests/compare/v3.11.4...v3.11.2) (2025-01-10)
+
+
+### Features
+
+* add scroll to bottom on ebsr ([471dccf](https://github.com/dvsa/vol-functional-tests/commit/471dccfa479de772b005ce11fd33b9e483747fb9))
+* make timeout dynamic based on timeout input var ([0512730](https://github.com/dvsa/vol-functional-tests/commit/051273099b2a07501124f8ee80d28bfe955eb61d))
+
+
+### Bug Fixes
+
+* add high level timeout values to batch run ([cc3f762](https://github.com/dvsa/vol-functional-tests/commit/cc3f7628e381b6bb34da449009d526ac58bf9701))
+* added do while loop for generate letter popup ([bfb1c62](https://github.com/dvsa/vol-functional-tests/commit/bfb1c625bda41c8c004aa9f99f92c5a483dc89ad))
+* added do while loop for generate letter popup ([798c382](https://github.com/dvsa/vol-functional-tests/commit/798c382b3bb4ff79e312be2ce4440aab69963a25))
+* added do while loop for generate letter popup ([155abcc](https://github.com/dvsa/vol-functional-tests/commit/155abcc0d72553bc0027156ffeb462bd7533027c))
+* added do while loop for generate letter popup ([4b7b753](https://github.com/dvsa/vol-functional-tests/commit/4b7b75374c4bacec7f5ce3425dc1a18af70d14e2))
+* erroneous dash where param is underscored ([fcff53e](https://github.com/dvsa/vol-functional-tests/commit/fcff53e9bf7b0d37ce8b4a9ff64b83f84ea80fc6))
+* prevent duplicate report name on subsequent attempts of workflow ([46df162](https://github.com/dvsa/vol-functional-tests/commit/46df16237e6612fbb2760788fecfb783ccdc26e6))
+* removing test changes ([1694d16](https://github.com/dvsa/vol-functional-tests/commit/1694d16b0cbeadf418a4ea351d2a33db2c6057c2))
+* swapping around to allow parent workflow to complete gracefully on failure ([fd306b4](https://github.com/dvsa/vol-functional-tests/commit/fd306b425c060730fb2cbeab34ab68d85832b7bc))
+* typo added linebreak ([41ab803](https://github.com/dvsa/vol-functional-tests/commit/41ab8036c97e4962c11a9b1d79cba07005133024))
+* use input rather than hardcoded values ([95074a2](https://github.com/dvsa/vol-functional-tests/commit/95074a20b6b24950d3b9b70937242bcfc6d10760))
+
+
+### Miscellaneous Chores
+
+* bump to 3.11.2 ([dec6ece](https://github.com/dvsa/vol-functional-tests/commit/dec6ece0cc621e6745df75b03b76b1f6d8e72502))
+* bump to 3.11.2 ([ccb2795](https://github.com/dvsa/vol-functional-tests/commit/ccb2795dcdb599d6be3340ea82c4c794a06e98e9))
+* bump to 3.11.2 ([8e8ed99](https://github.com/dvsa/vol-functional-tests/commit/8e8ed99f9c75a18b920cd838043b7844d702d72e))
+* bump to 3.11.2 ([863f9e7](https://github.com/dvsa/vol-functional-tests/commit/863f9e7f4895d7f09c64b1c9384dbfda808d2289))
+* bump to 3.11.2 ([29bca99](https://github.com/dvsa/vol-functional-tests/commit/29bca9912d1a87021f8ebf909bc74ede0a7de3cc))
+* bump to 3.11.2 ([ddf75c5](https://github.com/dvsa/vol-functional-tests/commit/ddf75c530b0283e7cd7cd9c6ebc59fe92d5e65dc))
+* bump to 3.11.2 ([8ae8d1f](https://github.com/dvsa/vol-functional-tests/commit/8ae8d1f3b9e6d8e4e51e88604405a04bd46829c4))
+* bump to 3.11.2 ([7f9435d](https://github.com/dvsa/vol-functional-tests/commit/7f9435d8a76d7683249d645bb6879012e61bef9e))
+* bump to 3.11.2 ([4a1708d](https://github.com/dvsa/vol-functional-tests/commit/4a1708de95ec5f2ee78f45918a797b9eaa72e9bd))
+* bump to 3.11.2 ([fef7fb4](https://github.com/dvsa/vol-functional-tests/commit/fef7fb4abda695376ec31b29a93f0b78dcaca6f9))
+* bump to 3.11.2 ([3ec9570](https://github.com/dvsa/vol-functional-tests/commit/3ec95701cf90e374c960cc3f9f088961d7189663))
+* bump to 3.11.2 ([ab58366](https://github.com/dvsa/vol-functional-tests/commit/ab583668bea96964e2b9847f524cf845d5a9d8b9))
+* bump to 3.11.2 ([acc487b](https://github.com/dvsa/vol-functional-tests/commit/acc487bc7a427867509a213cf7192030a3de966a))
+* bump to 3.11.2 ([94345de](https://github.com/dvsa/vol-functional-tests/commit/94345de5b510d4fad4fbe34e31a0b54f30a99989))
+* bump to 3.11.2 ([744b834](https://github.com/dvsa/vol-functional-tests/commit/744b8341f7da23a811cab0bbf0bb0c115ae49a83))
+
 ## [3.11.4](https://github.com/dvsa/vol-functional-tests/compare/v3.11.3...v3.11.4) (2025-01-10)
 
 
