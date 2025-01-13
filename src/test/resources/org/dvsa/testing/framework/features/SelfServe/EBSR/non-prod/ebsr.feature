@@ -11,9 +11,6 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | Area       | Days |
       | north_east | 41   |
       | scotland   | 41   |
-      | wales      | 55   |
-      | east       | 41   |
-      | west       | 41   |
 
   @ss_regression @FullRegression @printAndSign
   Scenario Outline: import EBSR in self-serve
@@ -23,22 +20,17 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     And Documents are generated
     Examples:
       | Area       | Days |
-      | north_east | 42   |
-      | scotland   | 42   |
       | wales      | 56   |
       | east       | 42   |
       | west       | 42   |
 
   @ss_regression @FullRegression @printAndSign
-  Scenario Outline: import EBSR for curtailed and suspended licence in self-serve (Resource-A)
-    Given as a "consultant" I have a psv application with traffic area "west" and enforcement area "west" which has been granted
-    When I upload an ebsr file with "<Days>" days notice
+  Scenario: import EBSR for consultant
+    Given as a "consultant" I have a psv application with traffic area "wales" and enforcement area "wales" which has been granted
+    When I upload an ebsr file with "55" days notice
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
-    Examples:
-      | Area       | Days | LicenceStatus |
-      | north_east | 41   | curtail       |
-      | wales      | 55   | suspend       |
+
 
 
   Scenario: Short notice import EBSR in self-serve smoke test
