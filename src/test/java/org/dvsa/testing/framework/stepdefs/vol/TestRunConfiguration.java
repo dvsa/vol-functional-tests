@@ -36,11 +36,10 @@ public class TestRunConfiguration {
                     waitAndClick("Sign out", SelectorType.LINKTEXT);
                 }
             }
-            if (Browser.isBrowserOpen()) {
-                Browser.getDriver().quit();
-            }
         }
-
+        if (Browser.isBrowserOpen()) {
+            Browser.getDriver().quit();
+        }
     }
 
     @AfterAll
