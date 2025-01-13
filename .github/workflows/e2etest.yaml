@@ -74,21 +74,9 @@ jobs:
           buildtime=$(date +"%Y%m%d%H%M%S")
           echo "job_name=e2e-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
 
-  Calculate-Timeout:
-    name: Calculate Timeout
-    runs-on: ubuntu-latest
-    outputs:
-      timeout: ${{ steps.set-timeout.outputs.timeout }}
-    steps:
-      - name: Set Timeout
-        id: set-timeout
-        run: |
-          echo "timeout=$(( ${{ inputs.batch_timeout_minutes }} + 5 ))" >> $GITHUB_OUTPUT
-
   run-batch:
     name: Run Tests on AWS Batch
-    timeout-minutes: ${{ inputs.Calculate-Timeout.outputs.timeout }}
-    needs: [create-job-name, Calculate-Timeout]
+    needs: create-job-name
     runs-on: ubuntu-latest
     outputs:
       job_id: ${{ steps.submit-job.outputs.job_id }}
@@ -113,7 +101,7 @@ jobs:
             --job-name ${{ env.JOB_NAME }} \
             --job-queue ${{ env.BATCH_JOB_QUEUE }} \
             --job-definition ${{ env.BATCH_JOB_DEFINITION }} \
-            --timeout "attemptDurationSeconds=$(( ${{ needs.Calculate-Timeout.outputs.timeout }} * 60 ))" \
+            --timeout "attemptDurationSeconds=$(( ${{ inputs.batch_timeout_minutes }} * 60 ))" \
             --container-overrides '{
               "command": [
                 "/bin/sh",
@@ -157,7 +145,7 @@ jobs:
       - name: Wait for Job Completion
         env:
           JOB_ID: ${{ steps.submit-job.outputs.job_id }}
-          TIME_OUT: ${{ inputs.Calculate-Timeout.outputs.timeout }}
+          TIME_OUT: ${{ inputs.batch_timeout_minutes }}
         run: |
           TIME_OUT=${{ env.TIME_OUT }}
           JOB_ID=${{ env.JOB_ID }}
