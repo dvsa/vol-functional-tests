@@ -1,5 +1,14 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.6](https://github.com/dvsa/vol-functional-tests/compare/v3.11.5...v3.11.6) (2025-01-13)
+
+
+### Bug Fixes
+
+* remove erroring param ([7b2f512](https://github.com/dvsa/vol-functional-tests/commit/7b2f5122dac4a61a33bfd15aaf118be6ea43dd82))
+* remove param erroring from vol-app cd.yaml ([124f835](https://github.com/dvsa/vol-functional-tests/commit/124f8358e065c02817d2f994693f0385769a20bd))
+* run batch uses calc timeout ([c7be5b5](https://github.com/dvsa/vol-functional-tests/commit/c7be5b584ab384f9a4b4066ec18c6220cd3e054d))
+
 ## [3.11.2](https://github.com/dvsa/vol-functional-tests/compare/v3.11.2...v3.11.2) (2025-01-10)
 
 
