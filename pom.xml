@@ -214,7 +214,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
-                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>4</forkCount>
                     <parallel>methods</parallel>
                     <threadCount>7</threadCount>
