@@ -180,7 +180,7 @@ jobs:
 
   upload-batch-report:
     name: Upload Report to GitHub
-    needs: [run-batch, create-job-name]
+    needs: [ run-batch, create-job-name ]
     runs-on: ubuntu-latest
     env:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
@@ -199,17 +199,17 @@ jobs:
         env:
           JOB_ID: ${{ needs.run-batch.outputs.job_id }}
         run: |
-          mkdir -p ./upload/${{env.FOLDER_NAME }}
+          mkdir -p ./upload/${{ env.FOLDER_NAME }}
           aws s3api get-object \
             --bucket ${{ env.BUCKET_NAME }} \
-            --key "${{ env.BUCKET_KEY }}/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
-            "./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
+            --key "${{ env.BUCKET_KEY }}/${{ env.FOLDER_NAME }}/${{ env.REPORT_NAME }}" \
+            "./upload/${{ env.FOLDER_NAME }}/${{ env.REPORT_NAME }}"
 
       - name: Unzip Allure Results
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}/allure-results
           unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
-#          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
+          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
@@ -220,7 +220,7 @@ jobs:
 
   report:
     name: Display Report
-    needs: [upload-batch-report, create-job-name]
+    needs: [ upload-batch-report, create-job-name ]
     env:
       REPORT_KEY: ${{ needs.create-job-name.outputs.job_name }}
 
@@ -251,7 +251,7 @@ jobs:
 
   job-succeeded:
     name: Job Succeeded
-    needs: [report]
+    needs: [ report ]
     runs-on: ubuntu-latest
     steps:
       - name: Job Succeeded
