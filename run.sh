@@ -74,7 +74,7 @@ if [ $? -eq 0 ]; then
   mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
   zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
   cd target
-  aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
+  aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${BUCKET_NAME}/${BUCKET_KEY}/${buildId}/
   aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
   echo "Maven command failed!"
