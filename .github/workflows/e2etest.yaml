@@ -209,7 +209,7 @@ jobs:
         run: |
           mkdir -p ./upload/${{env.FOLDER_NAME }}/allure-results
           unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
-          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
+#          ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
