@@ -86,21 +86,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-
       - name: Configure AWS with provided credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
-
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-                      ${{ runner.os }}-maven-
 
       - name: Submit AWS Batch Job
         id: submit-job
