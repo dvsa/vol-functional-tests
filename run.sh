@@ -71,8 +71,8 @@ if [ $? -eq 0 ]; then
 
   mvn allure:report
   # create the report zip file
-  mv allure.zip ./allure_attempt_${buildId}.zip
-  zip -qr ./allure_attempt_${buildId}.zip target
+  mv allure.zip allure_attempt_${buildId}.zip
+  zip -qr allure_attempt_${buildId}.zip target
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
   aws s3 cp ../allure_attempt_${buildId}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
