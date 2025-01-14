@@ -234,7 +234,6 @@ jobs:
         with:
           name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}
 
-
       - name: Console Output Report
         run: |
           echo "Allure report is available at s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"

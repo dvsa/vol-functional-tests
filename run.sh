@@ -72,13 +72,12 @@ if [ $? -eq 0 ]; then
   mvn allure:report
   # create the report zip file
   zip -qr allure.zip target
+  mv allure.zip ./allure_attempt_${github.run_number}.zip
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
-  aws s3 cp ../allure.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
+  aws s3 cp ../allure_attempt_${github.run_number}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
   echo "Maven command failed!"
 fi
-
-
 
 

@@ -19,11 +19,7 @@ jobs:
       steps:
        - uses: actions/checkout@v4
        - uses: whelk-io/maven-settings-xml-action@v22
-       - uses: actions/setup-java@v4
          with:
            servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
-           distribution: 'temurin'
-           java-version: '21'
-           cache: 'maven'
 
-       - run: mvn -B -P github ${{ inputs.maven-goal}} --file pom.xml
+       - run: mvn -B -P github ${{ inputs.maven-goal}}
