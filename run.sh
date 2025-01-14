@@ -77,7 +77,7 @@ mv allure.zip allure_attempt_${buildId}.zip
  zip -qr allure_attempt_${buildId}.zip target
    cd target
    aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
-   aws s3 cp ../allure_attempt_${buildId}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
+   aws s3 cp ../allure_attempt_${buildId}.zip s3://${resultsTargetBucket}/${buildId}/
 else
   echo "Maven command failed!"
 fi
