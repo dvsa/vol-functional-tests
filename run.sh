@@ -72,7 +72,7 @@ if [ $? -eq 0 ]; then
 mvn allure:report
   # create the report zip file
    # rename zip
-  mv allure.zip allure_attempt_${buildId}.zip
+mv allure.zip ./allure_attempt_${buildId}.zip
 
  zip -qr allure_attempt_${buildId}.zip target
    cd target
