@@ -135,6 +135,18 @@ jobs:
                 {
                   "name": "mavenOptions",
                   "value": "${{ inputs.maven_options }}"
+                },
+                {
+                  "name": "resultsTargetBucket",
+                  "value": "${{ env.BUCKET_NAME }}"
+                },
+                {
+                  "name": "resultsTargetBucketPath",
+                  "value": "${{ env.BUCKET_KEY }}"
+                },
+                {
+                  "name": "resultsBuildNumber",
+                  "value": "${{ github.run_number }}"
                 }
               ]
             }')
