@@ -83,7 +83,7 @@ public class ExternalSearch extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 5000, "KickOut reached. Operator name external search failed.");
         } else {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 5000, "KickOut reached. Operator name external search failed.");
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 10000, "KickOut reached. Operator name external search failed.");
         }
     }
 
