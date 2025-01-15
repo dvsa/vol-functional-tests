@@ -1,5 +1,24 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.7](https://github.com/dvsa/vol-functional-tests/compare/v3.11.6...v3.11.7) (2025-01-15)
+
+
+### Bug Fixes
+
+* added renaming of zip file in run.sh ([0e4ff6c](https://github.com/dvsa/vol-functional-tests/commit/0e4ff6cb4b58c94f16c72f4c4dda700cf2967a00))
+* added renaming of zip file in run.sh ([893f923](https://github.com/dvsa/vol-functional-tests/commit/893f923ef68851aed4b1eea2dda8b95e41a9bdf6))
+* added renaming of zip file in run.sh ([f84bb48](https://github.com/dvsa/vol-functional-tests/commit/f84bb482284dc707843ba94a8403c6f7212dff1e))
+* added renaming of zip file in run.sh ([5687e24](https://github.com/dvsa/vol-functional-tests/commit/5687e24d6a3f31b3520b1957967dae77d2290e55))
+* added renaming of zip file in run.sh ([10d564e](https://github.com/dvsa/vol-functional-tests/commit/10d564eb5e2ea7504e3682c13715026ad847baec))
+* added renaming of zip file in run.sh ([c29eef7](https://github.com/dvsa/vol-functional-tests/commit/c29eef72d0220b43b42791513052a1ca274614ae))
+* changed teardown ([e59252e](https://github.com/dvsa/vol-functional-tests/commit/e59252e28afcda361d8dc3cc997b8c7ad4aee670))
+* changed teardown ([65b3ba9](https://github.com/dvsa/vol-functional-tests/commit/65b3ba9e8239b85702f656d86000529d1b270366))
+* changed teardown ([45f4672](https://github.com/dvsa/vol-functional-tests/commit/45f46720596d3caeb9887e88217db69998f496da))
+* changed teardown ([1a4c2b3](https://github.com/dvsa/vol-functional-tests/commit/1a4c2b3967ec1436f0a6b8ae621a7b6e7f200c4c))
+* moved out condition statement out of nested if statement ([ecd242c](https://github.com/dvsa/vol-functional-tests/commit/ecd242c6fc4a2e5b2872bf4df267ec66bd4cef3b))
+* reduced browsers to 3 ([f12336a](https://github.com/dvsa/vol-functional-tests/commit/f12336adec0ce33d76dd4d6bf78a6502151e2ac4))
+* reduced browsers to 4 and reduced jvm ([917e597](https://github.com/dvsa/vol-functional-tests/commit/917e5970e7940024b1b1a6a522cb382bcbc8eaee))
+
 ## [3.11.6](https://github.com/dvsa/vol-functional-tests/compare/v3.11.5...v3.11.6) (2025-01-13)
 
 
