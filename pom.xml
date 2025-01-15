@@ -200,8 +200,10 @@
                 <version>${maven-failsafe-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>Run parallel tests</id>
                         <phase>integration-test</phase>
                         <goals>
+                            <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
                     </execution>
