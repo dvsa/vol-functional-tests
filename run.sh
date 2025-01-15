@@ -35,7 +35,6 @@ check_environment_variables() {
     "cucumberTags"
     "resultsTargetBucket"
     "resultsTargetBucketPath"
-    "resultsBuildNumber"
     "buildId"
     "proxyHost"
     "proxyPort"
