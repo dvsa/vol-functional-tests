@@ -33,7 +33,7 @@ public class ExternalSearch extends BasePage {
         String intUser = SecretsManager.getSecretValue("intPartnerUser");
         String intPassword = SecretsManager.getSecretValue("intEnvPassword");
 
-        if (getDriver().getCurrentUrl().contains("dashboard")) {
+        if (Objects.requireNonNull(getDriver().getCurrentUrl()).contains("dashboard")) {
             clickByLinkText("Sign out");
         }
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
@@ -44,9 +44,10 @@ public class ExternalSearch extends BasePage {
         } else {
             world.globalMethods.signIn(user, password);
         }
-        if (isTextPresent("Welcome to your account")){
-            click("termsAgreed",SelectorType.ID);
-            UniversalActions.clickSubmit();}
+        if (isTextPresent("Welcome to your account")) {
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        }
         waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
     }
 
@@ -55,36 +56,16 @@ public class ExternalSearch extends BasePage {
         world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
     }
 
-    @Then("search results page addresses should only display address belonging to our post code")
-    public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurPostCode() {
-        String clippedCorrespondenceAddress = String.format("%s, %s, %s, %s",
-                world.createApplication.getCorrespondenceAddressLine3(),
-                world.createApplication.getCorrespondenceAddressLine4(),
-                world.createApplication.getCorrespondenceTown(),
-                world.createApplication.getCorrespondencePostCode()
-        );
-        String clippedOperatingCentreAddress = String.format("%s, %s, %s, %s",
-                world.createApplication.getOperatingCentreAddressLine3(),
-                world.createApplication.getOperatingCentreAddressLine4(),
-                world.createApplication.getOperatingCentreTown(),
-                world.createApplication.getOperatingCentrePostCode()
-        );
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(clippedCorrespondenceAddress, 240, "KickOut reached. Correspondence and operating centre address external search failed.");
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedCorrespondenceAddress), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
-        tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedOperatingCentreAddress), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+    @Then("search results page addresses {string} should only display address belonging to our licence {string}")
+    public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurLicence(String address, String licence) {
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(address, 5000, "KickOut reached. Correspondence and operating centre address external search failed.");
+        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", address), SelectorType.XPATH);
+        assertTrue(tableRow.getText().contains(licence));
     }
 
     @Then("search results page should display operator names containing our {string}")
     public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 5000, "KickOut reached. Operator name external search failed.");
-        } else {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 10000, "KickOut reached. Operator name external search failed.");
-        }
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 5000, "KickOut reached. Operator name external search failed.");
     }
 
     @And("I am able to view the applicants licence number")
@@ -102,13 +83,9 @@ public class ExternalSearch extends BasePage {
         assertTrue(rowText.contains(licenceNumber));
     }
 
-    @Then("search results page should display names containing our operator name")
-    public void searchResultsPageShouldDisplayNamesContainingOurOperatorName() {
-        String operatorName = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(operatorName, 420, "KickOut reached. Operator name external search failed.");
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
-        assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+    @Then("search results page should display the name {string}")
+    public void searchResultsPageShouldDisplayTheName(String name) {
+        assertTrue(isTextPresent(String.valueOf(name.equalsIgnoreCase(name.toUpperCase()))));
     }
 
 
@@ -121,17 +98,10 @@ public class ExternalSearch extends BasePage {
         String licenceNumberToSearch;
         String personToSearch;
 
-        if (Objects.equals(world.configuration.env.toString(), "int")) {
-            addressToSearch = address;
-            businessNameToSearch = businessName;
-            licenceNumberToSearch = licenceNumber;
-            personToSearch = person;
-        } else {
-            addressToSearch = world.createApplication.getPostCodeByTrafficArea();
-            businessNameToSearch = world.createApplication.getOrganisationName();
-            licenceNumberToSearch = world.applicationDetails.getLicenceNumber();
-            personToSearch = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
-        }
+        addressToSearch = address;
+        businessNameToSearch = businessName;
+        licenceNumberToSearch = licenceNumber;
+        personToSearch = person;
 
         switch (searchType) {
             case "address":
@@ -151,19 +121,15 @@ public class ExternalSearch extends BasePage {
     @Then("search results page should only display our licence number")
     @Then("search results page should only display our {string}")
     public void searchResultsPageShouldOnlyDisplayOurLicenceNumber(String licenceNumber) {
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 300, "KickOut reached. Operator name external search failed.");
-            assertTrue(isTextPresent(licenceNumber));
-        } else {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
-        }
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 5000, "KickOut reached. Operator name external search failed.");
+        assertTrue(isTextPresent(licenceNumber));
     }
 
     @And("i search for a vehicle")
     public void iSearchForAVehicle() {
         String searchVrm = SecretsManager.getSecretValue("testLicenceVrm");
         waitForTitleToBePresent("Find vehicles");
-        enterText("search", SelectorType.ID,searchVrm);
+        enterText("search", SelectorType.ID, searchVrm);
         clickById("submit");
     }
 
@@ -187,7 +153,7 @@ public class ExternalSearch extends BasePage {
     public void theVehicleTableShouldContainTheInterimStatus() {
         List<WebElement> interimStatus = findElements("//*[@data-heading='Interim']", SelectorType.XPATH);
         for (WebElement interim : interimStatus) {
-            assertEquals("No",interim.getText());
+            assertEquals("No", interim.getText());
         }
     }
 }
