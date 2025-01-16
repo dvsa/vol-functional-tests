@@ -38,7 +38,14 @@ public class TestRunConfiguration {
             }
         }
         if (Browser.isBrowserOpen()) {
-//            Browser.getDriver().quit();
+            Browser.getDriver().close();
+        }
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        if (Browser.isBrowserOpen()) {
+            Browser.getDriver().quit();
             Browser.removeLocalDriverThread();
         }
     }
