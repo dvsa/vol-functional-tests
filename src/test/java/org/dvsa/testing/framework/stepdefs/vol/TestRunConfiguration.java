@@ -37,9 +37,6 @@ public class TestRunConfiguration {
                 }
             }
         }
-        if (Browser.isBrowserOpen()) {
-            Browser.getDriver().close();
-        }
     }
 
     @AfterAll
