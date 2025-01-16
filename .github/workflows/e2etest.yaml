@@ -253,6 +253,7 @@ jobs:
       - name: Get Summary
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@main
+        with:
           file-path: ./target/results-summary/summary.xml
           fail-on-test-failures: true
           fail-on-test-errors: true
