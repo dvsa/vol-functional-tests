@@ -253,8 +253,7 @@ jobs:
       - name: Get Summary
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@main
-        with:
-          file-path: ./target/surefire-reports/TEST-org.dvsa.testing.framework.parallel.RunCucumberTests.xml
+          file-path: ./target/results-summary/summary.xml
           fail-on-test-failures: true
           fail-on-test-errors: true
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
