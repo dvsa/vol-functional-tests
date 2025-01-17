@@ -2,7 +2,8 @@
 Feature: Create, edit and delete financial standing rates on internal
 
   Background:
-    Given i am on the financial standing rates page
+    Given i am on the internal admin login page
+    And i am on the financial standing rates page
 
   Scenario Outline: I can add, edit and delete a financial standing rate
     And i add a "<operatorType>" "<licenceType>" "<vehicleType>" financial standing rate
