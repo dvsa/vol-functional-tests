@@ -16,8 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static activesupport.driver.Browser.navigate;
-
 
 public class InternalNavigation extends BasePage {
 
@@ -38,10 +36,7 @@ public class InternalNavigation extends BasePage {
         if (world.updateLicence.getInternalUserId() == null) {
             world.APIJourney.createAdminUser();
         }
-        navigateToLoginPage();
-        if(!isTextPresent("Filter by:")) {
-            navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        }
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 
     public void logInAndNavigateToApplicationDocsTable(boolean variation) throws HttpException {
@@ -221,10 +216,5 @@ public class InternalNavigation extends BasePage {
         waitAndClick("irhpPermitStock", SelectorType.ID);
         selectValueFromDropDownByIndex("irhpPermitStock", SelectorType.ID, 1);
         clickById("form-actions[search]");
-    }
-
-    public void navigateToLoginPage() {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env,"auth/login/").toString();
-        navigate().get(myURL);
     }
 }

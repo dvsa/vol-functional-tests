@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
-import activesupport.aws.s3.SecretsManager;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
@@ -70,10 +69,7 @@ public class SurrenderJourney extends BasePage {
     public void navigateToSurrendersStartPage() {
         if (!Objects.requireNonNull(getDriver().getCurrentUrl()).contains("ssweb")) {
             if (!isTextPresent("Current licences")) {
-                world.selfServeNavigation.navigateToLoginPage();
-                if (!isTextPresent("Your account")) {
-                    world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
-                }
+                world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             }
         }
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);

@@ -9,7 +9,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRegistrationJourney extends BasePage {
-    private final World world;
+    private World world;
 
     public UserRegistrationJourney(World world) {
         this.world = world;
