@@ -38,7 +38,6 @@ public class InternalApplication extends BasePage {
 
     @When("the caseworker completes and submits the application")
     public void theCaseworkerCompletesAndSubmitsTheApplication() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
