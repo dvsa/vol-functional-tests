@@ -415,8 +415,6 @@ public class ManageApplications extends BasePage {
         assertTrue(isTextPresent("Under Consideration"));
     }
 
-
-
     @Given("as a {string} I have a valid {string} {string} licence")
     public synchronized void iHaveALicenceAs(String userType, String operatorType, String licenceType) throws HttpException {
         lock.writeLock().lock();
@@ -438,7 +436,6 @@ public class ManageApplications extends BasePage {
             lock.writeLock().unlock();
         }
     }
-
 
     @Given("as a {string} I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
     public synchronized void asAIHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String userType, String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
