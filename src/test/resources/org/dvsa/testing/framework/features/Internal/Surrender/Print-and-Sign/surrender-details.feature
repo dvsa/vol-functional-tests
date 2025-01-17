@@ -2,6 +2,7 @@
 @int_regression
 @FullRegression
 @printAndSign
+  @22
 
 Feature: View Surrender Menu and details on Internal
 

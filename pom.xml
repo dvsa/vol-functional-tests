@@ -214,11 +214,11 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
-                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>10</forkCount>
-                    <parallel>suitesAndMethods</parallel>
-                    <threadCount>20</threadCount>
-                    <reuseForks>false</reuseForks>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <forkCount>5</forkCount>
+                    <parallel>methods</parallel>
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
+                    <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
