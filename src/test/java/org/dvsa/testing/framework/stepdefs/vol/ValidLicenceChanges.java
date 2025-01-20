@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -268,7 +269,7 @@ public class ValidLicenceChanges extends BasePage {
         waitForTextToBePresent("Responsible people");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
