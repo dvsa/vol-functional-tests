@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InternalSearchJourney extends BasePage {
 
-    private World world;
+    private final World world;
 
     public InternalSearchJourney(World world) {
         this.world = world;

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
 public class InternalSearch extends BasePage {
-    private final World world;
+    World world;
 
     public InternalSearch(World world) {
         this.world = world;
@@ -26,8 +26,13 @@ public class InternalSearch extends BasePage {
     }
 
     @When("i search for and click on my licence")
-    public void searchForLicence() {
-        world.internalSearchJourney.searchAndViewLicence(world.applicationDetails.getLicenceNumber());
+    public void searchForLicence() throws HttpException {
+        if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
+            world.internalSearchJourney.searchAndViewLicence(world.applicationDetails.getLicenceNumber());
+        } else {
+            world.internalNavigation.logInAsAdmin();
+            world.internalSearchJourney.searchAndViewLicence(world.applicationDetails.getLicenceNumber());
+        }
     }
 
     @When("i search for and click on my application")

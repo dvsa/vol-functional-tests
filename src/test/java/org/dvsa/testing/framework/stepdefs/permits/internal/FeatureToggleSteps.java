@@ -16,7 +16,7 @@ import org.openqa.selenium.TimeoutException;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FeatureToggleSteps {
-    private final World world;
+    World world;
 
     public FeatureToggleSteps(World world) {
         this.world = world;
@@ -51,7 +51,7 @@ public class FeatureToggleSteps {
             hasPermitToggle = false;
         }
 
-        assertFalse(hasPermitToggle,"Expected permit toggle to not be present but was");
+        assertFalse(hasPermitToggle, "Expected permit toggle to not be present but was");
     }
 
     @And("feature toggle for permits has been enabled")
