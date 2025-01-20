@@ -293,4 +293,9 @@ public class InternalApplication extends BasePage {
     public void theDocumentIsListedOnThePage() {
         assertTrue(isTextPresent("GV - Blank letter to operator"));
     }
+
+    @And("the application fee has been paid")
+    public void theApplicationFeeHasBeenPaid() {
+        world.internalUIJourney.payFee();
+    }
 }

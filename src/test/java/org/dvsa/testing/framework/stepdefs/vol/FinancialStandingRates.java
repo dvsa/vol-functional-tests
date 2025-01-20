@@ -85,17 +85,18 @@ public class FinancialStandingRates extends BasePage {
 
     @Then("the table displays the correct financial standing rate information")
     public void theTableDisplaysTheCorrectFinancialStandingRateInformation() {
-        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
+        String mostRecentRow = String.format("//button[contains(@name, 'action[edit][%s]')]/ancestor::tr", getMostRecentRowId());
         FinancialStandingRate rowAfterAdding = new FinancialStandingRate(mostRecentRow);
         assertTrue(rowAfterAdding.equals(rowBeforeAdding));
     }
 
     @When("i edit and save a financial standing rate")
     public void iEditAndSaveAFinancialStandingRate() {
-        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
-        setRowBeforeChange(new FinancialStandingRate(mostRecentRow));
+        int id = getMostRecentRowId();
+        String rowSelector = String.format("//button[@name='action[edit][%d]']/ancestor::tr", id);
+        setRowBeforeChange(new FinancialStandingRate(rowSelector));
 
-        click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
+        click(rowSelector + "//input[@type='checkbox']", SelectorType.XPATH);;
         click(editButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
         click(unselectedOperatorType, SelectorType.XPATH);
@@ -110,14 +111,14 @@ public class FinancialStandingRates extends BasePage {
 
     @Then("the table displays the correct edited financial standing rate information")
     public void theTableDisplaysTheCorrectEditedFinancialStandingRateInformation() {
-        String rowSelector = String.format("//input[@name='action[edit][%s]']/../..", rowBeforeChange.getId());
+        String rowSelector = String.format("//button[@name='action[edit][%s]']/ancestor::tr", rowBeforeChange.getId());
         FinancialStandingRate rowAfterEdit = new FinancialStandingRate(rowSelector);
         assertFalse(rowAfterEdit.equals(rowBeforeChange));
     }
 
     @When("i delete a financial standing rate")
     public void iDeleteAFinancialStandingRate() {
-        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
+        String mostRecentRow = String.format("//button[@name='action[edit][%s]']/ancestor::tr", getMostRecentRowId());
         setRowBeforeChange(new FinancialStandingRate(mostRecentRow));
         click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
@@ -158,7 +159,7 @@ public class FinancialStandingRates extends BasePage {
     public void iShouldReceiveTheCorrectFinancialStandingErrors() {
         List<WebElement> summaryErrors = findElements("//li[@class='validation-summary__item']/a", SelectorType.XPATH);
         String[] inputTypes = {"Operator type", "Licence type", "First vehicle", "Additional vehicle", "Effective date"};
-        for(int i = 0; i < inputTypes.length; i++) {
+        for (int i = 0; i < inputTypes.length; i++) {
             String errorMessage = String.format("%s: value is required", inputTypes[i]);
             assertEquals(errorMessage, summaryErrors.get(i).getText());
         }
@@ -174,10 +175,24 @@ public class FinancialStandingRates extends BasePage {
     }
 
     private int getMostRecentRowId() {
-        List<WebElement> rows = findElements("//tbody//input[@type='submit']", SelectorType.XPATH);
-        List<Integer> rowIds = rows.stream().map(
-                x -> Integer.parseInt(x.getAttribute("name").replaceAll("\\D+",""))
-        ).sorted().collect(Collectors.toList());
-        return Collections.max(rowIds);
+        List<WebElement> buttons = findElements("//button[@data-module='govuk-button']", SelectorType.XPATH);
+        if (buttons.isEmpty()) {
+            throw new RuntimeException("No buttons found in table");
+        }
+
+        return buttons.stream()
+                .map(button -> button.getAttribute("name"))
+                .filter(name -> name != null && name.contains("action[edit]"))
+                .map(name -> {
+                    try {
+                        return name.replaceAll("action\\[edit\\]\\[(\\d+)\\]", "$1");
+                    } catch (Exception e) {
+                        System.out.println("Failed to process name: " + name);
+                        return "0";
+                    }
+                })
+                .mapToInt(Integer::parseInt)
+                .max()
+                .orElseThrow(() -> new RuntimeException("Could not find maximum ID"));
     }
 }
