@@ -1,4 +1,5 @@
 @lgv
+@lgv-financial-rates
 Feature: Create, edit and delete financial standing rates on internal
 
   Background:
