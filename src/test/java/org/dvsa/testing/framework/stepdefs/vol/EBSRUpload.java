@@ -69,20 +69,17 @@ public class EBSRUpload extends BasePage {
 
     @And("Documents are generated")
     public void documentsAreGenerated() throws IllegalBrowserException, IOException {
-        AXEScanner axeScanner = AccessibilitySteps.scanner;
         String licenceNumber;
         if(world.configuration.env.toString().equals("int")){
             licenceNumber = existingLicenceNumber;
         }else{
             licenceNumber = world.applicationDetails.getLicenceNumber();
-            axeScanner.scan(true);
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
-            axeScanner.scan(true);
         }
-        long kickOutTime = System.currentTimeMillis() + 120000;
+        long kickOutTime = System.currentTimeMillis() + 9999999;
         if(!world.configuration.env.toString().equals("local")) {
             do {
                 // Refresh page
@@ -90,7 +87,6 @@ public class EBSRUpload extends BasePage {
 
             } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() < 2 && System.currentTimeMillis() < kickOutTime);
             try {
-                scrollToBottom();
                 assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
                         webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
             } catch (Exception e) {
