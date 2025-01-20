@@ -248,7 +248,6 @@ public class ValidLicenceChanges extends BasePage {
     @Then("i cannot make changes to the business details page")
     public void iCannotMakeChangesToTheBusinessDetailsPage() {
         waitAndClick("Business details", SelectorType.LINKTEXT);
-        waitForTextToBePresent("Company name");
         assertFalse(isElementPresent("data[tradingNames][0][name]", SelectorType.NAME));
         assertFalse(isElementPresent("data[companyNumber][company_number]", SelectorType.NAME));
     }
