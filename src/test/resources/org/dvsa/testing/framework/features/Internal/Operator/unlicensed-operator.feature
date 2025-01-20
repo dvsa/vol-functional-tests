@@ -3,7 +3,6 @@ Feature: Unlicensed operator
 
   Background:
     Given i have an internal admin user
-    And i have logged in to internal as "admin"
 
   @unlicensed_operator_add @ec2_smoke @localsmoke @smoke
   Scenario: Create unlicensed operator

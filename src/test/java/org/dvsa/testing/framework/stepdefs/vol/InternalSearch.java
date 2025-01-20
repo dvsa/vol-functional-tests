@@ -35,7 +35,6 @@ public class InternalSearch extends BasePage {
         if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
             world.internalSearchJourney.searchAndViewApplication();
         } else {
-            world.APIJourney.createAdminUser();
             world.internalNavigation.logInAsAdmin();
             world.internalSearchJourney.searchAndViewApplication();
         }
@@ -43,7 +42,6 @@ public class InternalSearch extends BasePage {
 
     @When("i search for and click on my case")
     public void iSearchForAndClickOnMyCase() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalSearchJourney.searchAndViewCase();
     }
