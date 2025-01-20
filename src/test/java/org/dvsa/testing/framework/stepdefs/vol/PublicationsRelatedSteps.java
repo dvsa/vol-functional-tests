@@ -41,9 +41,6 @@ public class PublicationsRelatedSteps extends BasePage {
         this.world = world;
     }
 
-    public static void publishAndViewPublications() {
-    }
-
     @And("i navigate to the admin publications page")
     public void iNavigateToTheAdminPublicationsPage() {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
