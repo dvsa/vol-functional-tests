@@ -52,6 +52,7 @@ public class EBSRUpload extends BasePage {
     @When("it has been paid and granted")
     public void itHasBeenPaidAndGranted() {
         world.internalUIJourney.payFee();
+        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
     @Then("the bus registration should be granted")

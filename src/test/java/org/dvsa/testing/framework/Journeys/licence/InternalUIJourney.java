@@ -277,8 +277,6 @@ public class InternalUIJourney extends BasePage {
         } else if (amount.equals("60.00")) {
             world.feeAndPaymentJourney.payFee("60", "cash");
         }
-
-        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
     public void addAndPublishHearing() {
