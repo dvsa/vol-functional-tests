@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UpdateInternalUserAccount extends BasePage {
-    private World world;
+    private final World world;
 
     public UpdateInternalUserAccount(World world) {this.world = world;}
 

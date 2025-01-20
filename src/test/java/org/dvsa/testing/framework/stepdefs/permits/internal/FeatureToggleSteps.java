@@ -24,7 +24,6 @@ public class FeatureToggleSteps {
 
     @When("I log in as an internal user with admin privileges")
     public void iLogInAsAnInternalUserWithAdminPrivileges() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
     }
 

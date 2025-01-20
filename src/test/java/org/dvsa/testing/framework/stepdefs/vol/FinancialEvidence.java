@@ -90,7 +90,6 @@ public class FinancialEvidence extends BasePage {
 
     @And("the same financial evidence value is displayed on internal")
     public void theSameFinancialEvidenceValueIsDisplayedOnInternal() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
