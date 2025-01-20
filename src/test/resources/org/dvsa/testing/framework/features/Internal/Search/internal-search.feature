@@ -7,7 +7,7 @@ Feature: Internal Search
   Scenario: Search a Licence on Internal
     Given I have a "goods" "restricted" application
     And I log in as an internal user with admin privileges
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence
     Then the "Licence details" page should display
 
   @ec2_smoke @searchApplication @int_regression

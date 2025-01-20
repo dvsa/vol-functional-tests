@@ -9,7 +9,7 @@ Feature: Users should have functionality based on their system role
   @readonly-business-details
   Scenario Outline: Limited Read only and Read Only users should on be able to view business details
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence "OB1124621"
     Then i cannot make changes to the business details page
     Examples:
       | User                |
@@ -19,7 +19,7 @@ Feature: Users should have functionality based on their system role
   @readonly-addresses
   Scenario Outline: Limited Read only and Read Only users should not be able to view Address details
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence "OB1124621"
     Then i cannot make changes to the addresses page
     Examples:
       | User                |
@@ -29,7 +29,7 @@ Feature: Users should have functionality based on their system role
   @readonly-directors
   Scenario Outline: Limited Read only and Read Only directors name should not be displayed as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence "OB1135621"
     Then directors names should not be displayed as links
     Examples:
       | User                |
@@ -39,7 +39,7 @@ Feature: Users should have functionality based on their system role
   @readonly-oc
   Scenario Outline: Limited Read only and Read Only should not view input fields on operating centres
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence "OB1135621"
     Then operating centre names should not be displayed as links
     Examples:
       | User                |
@@ -49,7 +49,7 @@ Feature: Users should have functionality based on their system role
   @readonly-safety
   Scenario Outline: Limited Read only and Read Only should not be able to view safety inspector names as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1134621"
+    When i search for and click on my licence "OB1135621"
     Then safety inspector names should not be displayed as links
     Examples:
       | User                |
