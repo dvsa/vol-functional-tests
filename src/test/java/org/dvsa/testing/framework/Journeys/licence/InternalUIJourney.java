@@ -267,7 +267,17 @@ public class InternalUIJourney extends BasePage {
     public void payFee() {
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
-        world.feeAndPaymentJourney.payFee("60", "cash");
+
+        String feeAmountXpath = "//td[@data-heading='Fee amount']";
+        String feeAmountText = getDriver().findElement(By.xpath(feeAmountXpath)).getText();
+        String amount = feeAmountText.replace("£", "").trim();
+
+        if (amount.equals("257.00")) {
+            world.feeAndPaymentJourney.payFee("257", "cash");
+        } else if (amount.equals("60.00")) {
+            world.feeAndPaymentJourney.payFee("60", "cash");
+        }
+
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 

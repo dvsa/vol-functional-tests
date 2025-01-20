@@ -5,6 +5,7 @@ Feature: Publications display the right LGV related information on LGV only lice
   Scenario: A submitted LGV Only application generated a publication correctly on internal
     Given I have a submitted "GB" lgv only application
     And i navigate to the application publications page
+    And it has been paid and granted
     Then the new application publication for LGV Only should be correct on internal
 
   @ss_regression @FullRegression @lgv-pub
