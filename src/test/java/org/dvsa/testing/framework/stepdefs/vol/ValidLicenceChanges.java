@@ -238,7 +238,7 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
-        assertEquals(getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH), "6");
+        assertEquals("6", getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH));
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
         assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
         assertEquals(getValue("//*[@id='licence[tachographInsName]']", SelectorType.XPATH), externalAnalysisBureau);
