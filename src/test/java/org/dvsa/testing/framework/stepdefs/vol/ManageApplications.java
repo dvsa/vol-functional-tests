@@ -458,4 +458,9 @@ public class ManageApplications extends BasePage {
             lock.writeLock().unlock();
         }
     }
+
+    @Given("i set to have {int} lgvs on my licence")
+    public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
+        world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
+    }
 }

@@ -72,9 +72,4 @@ public class CreateApplications extends BasePage {
         waitForTitleToBePresent("Application over" +
                 "view");
     }
-
-    @Given("i set to have {int} lgvs on my licence")
-    public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
-        world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
-    }
 }
