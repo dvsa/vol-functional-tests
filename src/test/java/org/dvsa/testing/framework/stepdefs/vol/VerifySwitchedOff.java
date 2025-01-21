@@ -16,21 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VerifySwitchedOff extends BasePage {
     private final World world;
-    Initialisation initialisation;
+
 
     public VerifySwitchedOff(World world) {
         this.world = world;
-        this.initialisation = new Initialisation(world);
-    }
-
-    @And("i have a {string} {string} partial application")
-    public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
-        world.createApplication.setOperatorType(operatorType);
-        if (country.equals("NI")) {
-            world.APIJourney.nIAddressBuilder();
-        }
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourney.createPartialApplication();
     }
 
     @And("transport manager details approved banner appears")

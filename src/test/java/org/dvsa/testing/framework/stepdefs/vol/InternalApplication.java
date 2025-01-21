@@ -250,7 +250,7 @@ public class InternalApplication extends BasePage {
         assertTrue(tableElementText.contains("Undertaking"));
         assertTrue(tableElementText.contains("Application"));
 
-        String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
+        String editUndertakingLink = "//tbody/tr//button[contains(@name,'table[action][edit]')]";
         click(editUndertakingLink, SelectorType.XPATH);
         waitForTextToBePresent("Condition / Undertaking type");
 
@@ -260,13 +260,13 @@ public class InternalApplication extends BasePage {
         assertEquals(expectedLGVOnlyUndertakingText, actualLGVUndertakingText);
 
         String expectedCategory = "Other";
-        String actualCategory = getText("//*[@id='conditionCategory']//option[@selected='selected']", SelectorType.XPATH);
+        String actualCategory = getText("//select[@id='conditionCategory']/option[text()='Other']", SelectorType.XPATH);
         assertEquals(expectedCategory, actualCategory);
 
 
         String licenceNumber = getText("//h1", SelectorType.XPATH).substring(0, 9);
         String expectedAttachedToLicence = String.format("Licence (%s)", licenceNumber);
-        String actualAttachedToLicence = getText("//*[@id='attachedTo']//option[@selected='selected']", SelectorType.XPATH);
+        String actualAttachedToLicence = getText(String.format("//*[@id='attachedTo']//option[text()='%s']", expectedAttachedToLicence), SelectorType.XPATH);
         assertEquals(expectedAttachedToLicence, actualAttachedToLicence);
     }
 
