@@ -33,7 +33,6 @@ Feature: Users should have functionality based on their system role
     Then directors names should not be displayed as links
     Examples:
       | User                |
-#      | limitedReadOnlyUser |
       | readOnlyUser        |
 
   @readonly-oc

@@ -266,7 +266,6 @@ public class ValidLicenceChanges extends BasePage {
     @Then("directors names should not be displayed as links")
     public void directorsNamesShouldNotBeDisplayedAsLinks() {
         waitAndClick("People", SelectorType.LINKTEXT);
-        waitForTextToBePresent("Responsible people");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
             assertFalse(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
