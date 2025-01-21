@@ -4,12 +4,12 @@
 Feature: Users should have functionality based on their system role
 
   Background:
-    Given i am on the internal admin login page
+    Given i have a valid "goods" "standard_national" licence
 
   @readonly-business-details
   Scenario Outline: Limited Read only and Read Only users should on be able to view business details
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1124621"
+    When i search for and click on my licence
     Then i cannot make changes to the business details page
     Examples:
       | User                |
@@ -19,7 +19,7 @@ Feature: Users should have functionality based on their system role
   @readonly-addresses
   Scenario Outline: Limited Read only and Read Only users should not be able to view Address details
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1124621"
+    When i search for and click on my licence
     Then i cannot make changes to the addresses page
     Examples:
       | User                |
@@ -29,7 +29,7 @@ Feature: Users should have functionality based on their system role
   @readonly-directors
   Scenario Outline: Limited Read only and Read Only directors name should not be displayed as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1124621"
+    When i search for and click on my licence
     Then directors names should not be displayed as links
     Examples:
       | User                |
@@ -38,7 +38,7 @@ Feature: Users should have functionality based on their system role
   @readonly-oc
   Scenario Outline: Limited Read only and Read Only should not view input fields on operating centres
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1124621"
+    When i search for and click on my licence
     Then operating centre names should not be displayed as links
     Examples:
       | User                |
@@ -48,7 +48,7 @@ Feature: Users should have functionality based on their system role
   @readonly-safety
   Scenario Outline: Limited Read only and Read Only should not be able to view safety inspector names as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OB1104631"
+    When i search for and click on my licence
     Then safety inspector names should not be displayed as links
     Examples:
       | User                |
@@ -58,7 +58,7 @@ Feature: Users should have functionality based on their system role
   @readonly-irhp-permits
   Scenario Outline: Limited Read only and Read Only should not be able to view permit number as links
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OC1057274"
+    When i search for and click on my licence
     Then permit reference number should not be displayed as links
     Examples:
       | User                |
@@ -79,7 +79,7 @@ Feature: Users should have functionality based on their system role
   @readonly-irfo
   Scenario Outline: Limited Read only and Read Only should not be able to view buttons input fields on IRFO page
     Given i have logged in to internal as "<User>"
-    When i search for and click on my licence "OC1057274"
+    When i search for and click on my licence
     Then irfo page should not displayed any input fields
     Examples:
       | User                |
