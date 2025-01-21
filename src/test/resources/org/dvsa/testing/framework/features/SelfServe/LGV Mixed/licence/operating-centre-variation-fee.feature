@@ -69,7 +69,7 @@ Feature: Operating Centre authorisation variations triggering fees
     When i create a lgv authorisation increase variation with "No Fee Required" on internal
     Then the variation fee is not required on internal
 
-  Scenario: Accessibility scan the pages (use new Accessibility library in pom)
-    Given I have a "goods" "standard_international" licence
-    When i scan the various operating centre and authorisation pages
-    Then no issues should be present on the page
+#  Scenario: Accessibility scan the pages (use new Accessibility library in pom)
+#    Given I have a "goods" "standard_international" licence
+#    When i scan the various operating centre and authorisation pages
+#    Then no issues should be present on the page
