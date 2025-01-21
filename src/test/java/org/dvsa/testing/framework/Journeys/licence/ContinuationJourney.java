@@ -51,10 +51,12 @@ public class ContinuationJourney extends BasePage {
 
     public void continueLicenceWithVerifyAndPay(String userType) {
         world.selfServeNavigation.navigateToLoginPage();
-        if (userType.equalsIgnoreCase("consultant")) {
-            world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
-        } else {
-            world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+        if (!isTextPresent("Current licences")) {
+            if (userType.equalsIgnoreCase("consultant")) {
+                world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            } else {
+                world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            }
         }
 
         clickContinueLicenceOnSelfServe();
