@@ -89,6 +89,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void loginIntoInternal(String userRole) throws HttpException {
+        navigateToLoginPage();
         switch (userRole) {
             case "limitedReadOnlyUser":
                 world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
