@@ -458,4 +458,14 @@ public class ManageApplications extends BasePage {
             lock.writeLock().unlock();
         }
     }
+
+    @And("i have a {string} {string} partial application")
+    public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
+        world.createApplication.setOperatorType(operatorType);
+        if (country.equals("NI")) {
+            world.APIJourney.nIAddressBuilder();
+        }
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createPartialApplication();
+    }
 }

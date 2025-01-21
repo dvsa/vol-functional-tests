@@ -10,20 +10,17 @@ import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
 import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
 import org.dvsa.testing.framework.Journeys.permits.*;
 import org.dvsa.testing.framework.Utils.Generic.*;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 
-public class Initialisation extends BasePage {
- private final World world;
+public class Initialisation {
     /***
      * World variable passed through to all classes regardless for instantiation purposes.
      * I.e. variable initialisations that requires other values from other classes.
      */
 
     public Initialisation (World world)  {
-        this.world = world;
         world.registerUser = new RegisterUser();
         world.registerConsultantAndOperator = new RegisterConsultantAndOperator();
         world.userDetails = new UserDetails();
@@ -96,5 +93,6 @@ public class Initialisation extends BasePage {
         world.messagingInternal = new MessagingInternal(world);
         world.messagingSelfServe = new MessagingSelfServe(world);
         world.documentsJourney = new DocumentsJourney(world);
+        world.submitApplicationJourney = new SubmitApplicationJourney(world);
     }
 }

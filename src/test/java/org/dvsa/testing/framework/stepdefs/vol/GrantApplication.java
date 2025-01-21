@@ -47,7 +47,7 @@ public class GrantApplication extends BasePage {
         String env = world.configuration.env.toString();
         if (!env.equals("int")) {
             world.internalNavigation.logInAsAdmin();
-            world.internalNavigation.getApplication(world.submitApplicationJourney.getApplicationNumber());
+            world.internalNavigation.getApplication(world.createApplication.getApplicationId());
             overrideOppositionAndDates();
         }else{
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");

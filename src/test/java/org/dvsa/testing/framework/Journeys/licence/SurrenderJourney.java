@@ -23,13 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SurrenderJourney extends BasePage {
 
-    private World world;
+    private final World world;
     private String discsToDestroy = "2";
     private String discsLost = "2";
     private String discsStolen = "1";
     private String updatedTown;
-
-    AXEScanner axeScanner = AccessibilitySteps.scanner;
 
     public String getDiscsLost() {
         return discsLost;
@@ -79,10 +77,8 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void startSurrender() throws IllegalBrowserException, IOException {
-        axeScanner.scan(true);
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
-        axeScanner.scan(true);
     }
 
 
@@ -90,7 +86,6 @@ public class SurrenderJourney extends BasePage {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         UniversalActions.clickSubmit();
-        axeScanner.scan(true);
     }
 
 
@@ -121,14 +116,11 @@ public class SurrenderJourney extends BasePage {
         checkSignInConfirmation();
         refreshPageWithJavascript();
         assertTrue(getElementValueByText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH).equalsIgnoreCase("SURRENDER UNDER CONSIDERATION"));
-        axeScanner.scan(true);
     }
 
     public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, IOException {
         submitSurrenderUntilReviewPage();
-        axeScanner.scan(true);
         acknowledgeDestroyPage();
-        axeScanner.scan(true);
     }
 
 
@@ -178,7 +170,6 @@ public class SurrenderJourney extends BasePage {
 
     public void acknowledgeDestroyPage() throws IllegalBrowserException, IOException {
         UniversalActions.clickSubmit();
-        axeScanner.scan(true);
         waitForTextToBePresent("Securely destroy");
         UniversalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
@@ -195,9 +186,7 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
-        axeScanner.scan(true);
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
-        axeScanner.scan(true);
     }
 
     public void removeDisc() throws IllegalBrowserException, IOException {

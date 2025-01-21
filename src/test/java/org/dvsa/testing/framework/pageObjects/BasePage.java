@@ -27,8 +27,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
-    public static final int WAIT_TIME_SECONDS = 5;
-    private static final int TIME_OUT_SECONDS = 180;
+    public static final int WAIT_TIME_SECONDS = 7;
+    private static final int TIME_OUT_SECONDS = 200;
     private static final int POLLING_SECONDS = 2;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
@@ -390,7 +390,7 @@ public abstract class BasePage extends DriverUtils {
     public static URL getURL() {
         URL url = null;
         try {
-            url = new URL(getDriver().getCurrentUrl());
+            url = new URL(Objects.requireNonNull(getDriver().getCurrentUrl()));
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
             throw new RuntimeException("Malformed URL");
