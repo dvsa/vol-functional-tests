@@ -1,5 +1,20 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.10](https://github.com/dvsa/vol-functional-tests/compare/v3.11.9...v3.11.10) (2025-01-22)
+
+
+### Bug Fixes
+
+* added dynamic licence creation for rbac instead of using known licences ([ec68b0c](https://github.com/dvsa/vol-functional-tests/commit/ec68b0c0b7c3c3ac32d12c549bdd8f5c3dc58616))
+* added dynamic licence creation for rbac instead of using known licences ([e784065](https://github.com/dvsa/vol-functional-tests/commit/e7840654382acf5af86d89286c4fac43fe874dd9))
+* broken continiuations ([55642ab](https://github.com/dvsa/vol-functional-tests/commit/55642ab0f912fd6a267a92312c773e57dd5b928d))
+* broken search ([1821752](https://github.com/dvsa/vol-functional-tests/commit/1821752ab331ef0207043cc33c6d982d36a07950))
+* refactored broken search tests ([63fc94d](https://github.com/dvsa/vol-functional-tests/commit/63fc94d1d88f38f380025160ed7282437286c3f7))
+* refactored conditional statement for login as admin ([3c0060c](https://github.com/dvsa/vol-functional-tests/commit/3c0060c36139be283dd52efbb2aa1548c5d995bc))
+* refactored conditional statement for login as admin ([30a819e](https://github.com/dvsa/vol-functional-tests/commit/30a819e2bed307e42cc2496161a637592cd39fa1))
+* refactored conditional statement for login as admin ([0ea6244](https://github.com/dvsa/vol-functional-tests/commit/0ea62441eaa8e30c972281e3e4e30eab308bfc13))
+* role based access test was checking for incorrect heading ([00b8350](https://github.com/dvsa/vol-functional-tests/commit/00b8350938c5809ef05ee5bcc42dba5a6c304cb7))
+
 ## [3.11.9](https://github.com/dvsa/vol-functional-tests/compare/v3.11.8...v3.11.9) (2025-01-17)
 
 

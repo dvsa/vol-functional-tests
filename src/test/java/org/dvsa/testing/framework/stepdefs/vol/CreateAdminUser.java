@@ -20,22 +20,22 @@ public class CreateAdminUser extends BasePage  {
     }
 
     @When("I create a new internal admin user")
-    public void iCreateANewInternalAdminUser() throws HttpException {
+    public synchronized void iCreateANewInternalAdminUser() throws HttpException {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     @When("I create a new system admin user")
-    public void iCreateANewSystemAdminUser() throws HttpException {
+    public synchronized void iCreateANewSystemAdminUser() throws HttpException {
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     @Given("I create a new external user")
-    public void iCreateANewExternalUser() throws HttpException {
+    public synchronized void iCreateANewExternalUser() throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
     @Given("I create a new NI external user")
-    public void iCreateANewNIExternalUser() throws HttpException {
+    public synchronized void iCreateANewNIExternalUser() throws HttpException {
         world.createApplication.setNiFlag("Y");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }

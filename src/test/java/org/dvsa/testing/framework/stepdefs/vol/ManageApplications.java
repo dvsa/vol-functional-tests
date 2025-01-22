@@ -458,4 +458,20 @@ public class ManageApplications extends BasePage {
             lock.writeLock().unlock();
         }
     }
+
+    @Given("i set to have {int} lgvs on my licence")
+    public void iSetToHaveLGVSOnMyLicence(Integer numberOfLGVs) {
+        world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
+    }
+
+
+    @And("i have a {string} {string} partial application")
+    public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
+        world.createApplication.setOperatorType(operatorType);
+        if (country.equals("NI")) {
+            world.APIJourney.nIAddressBuilder();
+        }
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createPartialApplication();
+    }
 }

@@ -5,6 +5,8 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+
 public class PrintingAndScanningJourney extends BasePage {
     private final World world;
     private FakerUtils faker = new FakerUtils();
@@ -55,6 +57,7 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public void editPrinter() {
         generatePostCodeAndUniqueId();
+        waitForTitleToBePresent("Printers");
         selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("edit", SelectorType.ID);
         waitForTextToBePresent("Edit printer");

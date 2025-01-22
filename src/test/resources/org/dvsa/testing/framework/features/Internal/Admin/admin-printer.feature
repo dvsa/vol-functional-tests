@@ -12,6 +12,7 @@ Feature: Admin wishes to add, edit and delete printers
     When I add a printer
     Then that printer should be added
 
+    @edit_printer
   Scenario: Admin wishes to edit a printer
     When I edit a printer
     Then that printer should have been edited

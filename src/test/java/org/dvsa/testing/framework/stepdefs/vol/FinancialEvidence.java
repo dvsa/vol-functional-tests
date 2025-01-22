@@ -90,7 +90,6 @@ public class FinancialEvidence extends BasePage {
 
     @And("the same financial evidence value is displayed on internal")
     public void theSameFinancialEvidenceValueIsDisplayedOnInternal() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
@@ -245,7 +244,9 @@ public class FinancialEvidence extends BasePage {
     @Then("i should be prompted to enter financial evidence information")
     public void iShouldBePromptedToEnterFinancialEvidenceInformation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+        scrollToBottom();
         String actualText = getText("//span[contains(text(),'Financial evidence')]/../strong", SelectorType.XPATH);
+        waitForTextToBePresent(actualText);
         assertTrue(actualText.equalsIgnoreCase("Requires Attention"));
         assertTrue(isLinkPresent("Financial evidence", 10));
     }

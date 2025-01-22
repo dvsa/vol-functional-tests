@@ -12,15 +12,25 @@ public class TaskAllocationRulesJourney extends BasePage {
     public String alphaSplit = "Assign operator tasks starting with these letters";
     private String abbreviation;
 
-    public void generateAbbreviation() {abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
+    public void generateAbbreviation() {
+        abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();
+    }
 
-    public void setOwnerName(String ownerName) {this.ownerName = ownerName;}
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
-    public String getOwnerName() {return ownerName;}
+    public String getOwnerName() {
+        return ownerName;
+    }
 
-    public String getAbbreviation() {return abbreviation;}
+    public String getAbbreviation() {
+        return abbreviation;
+    }
 
-    public TaskAllocationRulesJourney(World world) {this.world = world;}
+    public TaskAllocationRulesJourney(World world) {
+        this.world = world;
+    }
 
     public void addTaskAllocationRule() {
         waitAndClick("add", SelectorType.ID);
@@ -47,8 +57,7 @@ public class TaskAllocationRulesJourney extends BasePage {
         waitAndClick("edit", SelectorType.ID);
         if (isTextPresent(alphaSplit)) {
             generateAbbreviation();
-            selectRandomCheckBoxOrRadioBtn("checkbox");
-            //refreshPageWithJavascript();
+            selectRandomRadioBtn();
             waitAndClick("editAlphasplit", SelectorType.ID);
             waitForTextToBePresent("Edit alpha split");
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);

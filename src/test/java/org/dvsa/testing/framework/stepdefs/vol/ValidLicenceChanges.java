@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -238,7 +239,7 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
         clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
-        assertEquals(getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH), "6");
+        assertEquals("6", getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH));
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
         assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
         assertEquals(getValue("//*[@id='licence[tachographInsName]']", SelectorType.XPATH), externalAnalysisBureau);
@@ -248,7 +249,6 @@ public class ValidLicenceChanges extends BasePage {
     @Then("i cannot make changes to the business details page")
     public void iCannotMakeChangesToTheBusinessDetailsPage() {
         waitAndClick("Business details", SelectorType.LINKTEXT);
-        waitForTextToBePresent("Company name");
         assertFalse(isElementPresent("data[tradingNames][0][name]", SelectorType.NAME));
         assertFalse(isElementPresent("data[companyNumber][company_number]", SelectorType.NAME));
     }
@@ -266,10 +266,9 @@ public class ValidLicenceChanges extends BasePage {
     @Then("directors names should not be displayed as links")
     public void directorsNamesShouldNotBeDisplayedAsLinks() {
         waitAndClick("People", SelectorType.LINKTEXT);
-        waitForTextToBePresent("Responsible people");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
@@ -291,7 +290,7 @@ public class ValidLicenceChanges extends BasePage {
         waitForTextToBePresent("Safety and compliance");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
@@ -303,7 +302,7 @@ public class ValidLicenceChanges extends BasePage {
         waitAndClick("GV Permits", SelectorType.LINKTEXT);
         List<WebElement> names = findElements("//*[@data-heading='Reference number']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertTrue(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
