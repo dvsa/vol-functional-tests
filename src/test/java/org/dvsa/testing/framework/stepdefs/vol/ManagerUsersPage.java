@@ -49,8 +49,7 @@ public class ManagerUsersPage extends BasePage {
 
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
-        //assertEquals("2 Current users", getText("h2", SelectorType.CSS));
-        assertEquals("2 Current users", "2 Current users", "");
+        assertEquals("2 Current users", getText("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH));
     }
 
     @Given("i have an internal admin user")
@@ -58,7 +57,7 @@ public class ManagerUsersPage extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             System.out.println("API NOT CURRENT SUPPORTED ON THIS ENV");
         } else {
-            world.APIJourney.createAdminUser();
+            world.internalNavigation.logInAsAdmin();
         }
     }
 
@@ -82,5 +81,4 @@ public class ManagerUsersPage extends BasePage {
     public void the_transport_manager_is_displayed_in_the_users_list() {
         assertTrue(isTextPresent("Transport Manager"));
     }
-
 }

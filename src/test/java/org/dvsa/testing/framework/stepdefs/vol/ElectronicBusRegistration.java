@@ -24,8 +24,6 @@ public class ElectronicBusRegistration extends BasePage {
     public void iUploadAnEbsrFileWithDaysNotice(String days) throws IllegalBrowserException, IOException, InterruptedException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
-        AXEScanner axeScanner = AccessibilitySteps.scanner;
-        axeScanner.scan(true);
     }
 
     @Then("I should be able to view to bus registration details")

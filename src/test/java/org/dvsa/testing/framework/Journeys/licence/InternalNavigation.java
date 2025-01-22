@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static activesupport.driver.Browser.navigate;
+
 
 public class InternalNavigation extends BasePage {
 
@@ -35,8 +37,13 @@ public class InternalNavigation extends BasePage {
     public void logInAsAdmin() throws HttpException {
         if (world.updateLicence.getInternalUserId() == null) {
             world.APIJourney.createAdminUser();
+            navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        } else {
+            navigateToLoginPage();
+            if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
+                world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            }
         }
-        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 
     public void logInAndNavigateToApplicationDocsTable(boolean variation) throws HttpException {
@@ -82,6 +89,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void loginIntoInternal(String userRole) throws HttpException {
+        navigateToLoginPage();
         switch (userRole) {
             case "limitedReadOnlyUser":
                 world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
@@ -172,10 +180,7 @@ public class InternalNavigation extends BasePage {
 
     public void navigateToPage(String type, SelfServeSection page) throws HttpException {
         if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
-            if (world.updateLicence.getInternalUserId() == null) {
-                world.APIJourney.createAdminUser();
-                world.internalNavigation.logInAsAdmin();
-            }
+            world.internalNavigation.logInAsAdmin();
         }
         switch (type) {
             case "application":
@@ -216,5 +221,10 @@ public class InternalNavigation extends BasePage {
         waitAndClick("irhpPermitStock", SelectorType.ID);
         selectValueFromDropDownByIndex("irhpPermitStock", SelectorType.ID, 1);
         clickById("form-actions[search]");
+    }
+
+    public void navigateToLoginPage() {
+        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
+        navigate().get(myURL);
     }
 }

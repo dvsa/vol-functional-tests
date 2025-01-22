@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.support.ui.Wait;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -32,7 +35,9 @@ public class AddEditReassignTasks extends BasePage {
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
-        String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
+        waitForElementToBePresent("//tbody/tr[1]/td[4]");
+        String actualDate =
+                getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         assertEquals(expectedDate, actualDate);
         String name = world.taskAllocationRulesJourney.getOwnerName();

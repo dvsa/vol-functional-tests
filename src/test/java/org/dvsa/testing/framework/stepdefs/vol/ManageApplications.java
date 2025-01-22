@@ -464,6 +464,7 @@ public class ManageApplications extends BasePage {
         world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
     }
 
+
     @And("i have a {string} {string} partial application")
     public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
         world.createApplication.setOperatorType(operatorType);

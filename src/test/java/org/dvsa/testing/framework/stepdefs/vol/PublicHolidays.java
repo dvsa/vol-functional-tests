@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.dates.Dates;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
@@ -12,7 +11,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicHolidays extends BasePage {
     private final World world;
-
-    Dates date = new Dates(org.joda.time.LocalDate::new);
 
     public PublicHolidays(World world) {this.world = world;}
 
