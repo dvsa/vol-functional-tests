@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
@@ -31,7 +32,7 @@ public class ContinuationJourney extends BasePage {
         this.world = world;
     }
 
-    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
+    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month) {
         refreshPage();
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
@@ -39,7 +40,7 @@ public class ContinuationJourney extends BasePage {
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         waitAndClick("form-actions[generate]", SelectorType.ID);
-        waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
+        waitAndEnterText("filters[licenceNo]", SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("checkall", SelectorType.ID);
@@ -48,13 +49,16 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
-    public void continueLicenceWithVerifyAndPay(String userType)  {
-        if (userType.equalsIgnoreCase("consultant")){
-           world.selfServeNavigation.navigateToLogin(world.registerConsultantAndOperator.getConsultantDetails().getUserName(),world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress());
+    public void continueLicenceWithVerifyAndPay(String userType) {
+        world.selfServeNavigation.navigateToLoginPage();
+        if (!isTextPresent("Current licences")) {
+            if (userType.equalsIgnoreCase("consultant")) {
+                world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            } else {
+                world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+            }
         }
-        else {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        }
+
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
@@ -64,16 +68,16 @@ public class ContinuationJourney extends BasePage {
         completeContinuationPayOrSubmit();
     }
 
-    public void clickContinueLicenceOnSelfServe()  {
+    public void clickContinueLicenceOnSelfServe() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         waitForElementToBeClickable("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
         waitAndClick("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
 
-    public void completeContinuationFinancesPage()  {
+    public void completeContinuationFinancesPage() {
         if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
-            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
+            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]", "");
             enterText("averageBalance", SelectorType.ID, necessaryIncome);
             findSelectAllRadioButtonsByValue("N");
             click("submit", SelectorType.ID);
@@ -88,11 +92,11 @@ public class ContinuationJourney extends BasePage {
         assertTrue(isTextPresent("Digital continuation snapshot"));
         clickByLinkText("Digital continuation snapshot");
         waitForTabsToLoad(2, 60);
-        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+        ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
         switchToWindow(tabs.get(1));
     }
 
-    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates)  {
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates) {
         waitForTextToBePresent("Continuation date");
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
@@ -100,7 +104,7 @@ public class ContinuationJourney extends BasePage {
         UniversalActions.clickSubmit();
     }
 
-    public void completeContinuationPayOrSubmit()  {
+    public void completeContinuationPayOrSubmit() {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             waitAndClick("submitAndPay", SelectorType.ID);
             UniversalActions.clickPay();
@@ -155,7 +159,7 @@ public class ContinuationJourney extends BasePage {
         assertTrue(isTextPresent("Business details"));
         assertTrue(isTextPresent("Addresses"));
         assertTrue(isTextPresent("Directors"));
-        if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())){
+        if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             assertTrue(isTextPresent("Operating centres and authorisation"));
             assertTrue(isTextPresent("Safety and compliance"));
             if (!world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) {

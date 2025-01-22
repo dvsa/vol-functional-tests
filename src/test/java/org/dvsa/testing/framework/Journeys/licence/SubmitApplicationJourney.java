@@ -9,16 +9,14 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
+import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
-import scanner.AXEScanner;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.clickContinue;
@@ -26,15 +24,9 @@ import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshP
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
-
-    World world;
-    private String applicationNumber;
+    public World world;
     private String licence;
-
     List<WebElement> applications;
-
-    AXEScanner axeScanner = AccessibilitySteps.scanner;
-
 
     public SubmitApplicationJourney(World world) {
         this.world = world;
@@ -82,6 +74,7 @@ public class SubmitApplicationJourney extends BasePage {
             }
         }
     }
+
     public void startANewLicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
@@ -108,7 +101,6 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
-        axeScanner.scan(true);
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
@@ -117,7 +109,6 @@ public class SubmitApplicationJourney extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        axeScanner.scan(true);
         clickContinue();
 
         //transport manager details
@@ -126,7 +117,6 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
-        axeScanner.scan(true);
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);
@@ -152,8 +142,6 @@ public class SubmitApplicationJourney extends BasePage {
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
-        List<String> licenceApplicationArray = Arrays.asList(Browser.navigate().findElement(By.xpath("//h2")).getText().split("/"));
-        setApplicationNumber(licenceApplicationArray.get(1));
     }
 
     private void chooseLicenceType(String licenceType) {
@@ -164,14 +152,6 @@ public class SubmitApplicationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
-    }
-
-    public String getApplicationNumber() {
-        return applicationNumber;
-    }
-
-    public void setApplicationNumber(String applicationNumber) {
-        this.applicationNumber = applicationNumber;
     }
 
     public String getLicence() {

@@ -46,9 +46,8 @@ public class GrantApplication extends BasePage {
     public void theApplicationShouldBeGranted() throws HttpException {
         String env = world.configuration.env.toString();
         if (!env.equals("int")) {
-            world.APIJourney.createAdminUser();
             world.internalNavigation.logInAsAdmin();
-            world.internalNavigation.getApplication(world.submitApplicationJourney.getApplicationNumber());
+            world.internalNavigation.getApplication(world.createApplication.getApplicationId());
             overrideOppositionAndDates();
         }else{
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
