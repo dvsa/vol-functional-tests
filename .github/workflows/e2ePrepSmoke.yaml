@@ -1,4 +1,4 @@
-name: E2E Smoke Test
+name: E2E Prep Smoke Test
 
 on:
   workflow_call:
@@ -39,7 +39,7 @@ jobs:
     uses: ./.github/workflows/e2etest.yaml
     with:
       platform_env: ${{ inputs.platform_env }}
-      cucumber_tags: '@smoke'
+      cucumber_tags: '@PP-SMOKE'
       browser_name: "edge"
       browser_version: "latest"
       exclude_tags: 'none'
