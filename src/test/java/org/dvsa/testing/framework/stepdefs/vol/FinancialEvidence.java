@@ -247,6 +247,7 @@ public class FinancialEvidence extends BasePage {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
         scrollToBottom();
         String actualText = getText("//span[contains(text(),'Financial evidence')]/../strong", SelectorType.XPATH);
+        waitForTextToBePresent(actualText);
         assertTrue(actualText.equalsIgnoreCase("Requires Attention"));
         assertTrue(isLinkPresent("Financial evidence", 10));
     }
