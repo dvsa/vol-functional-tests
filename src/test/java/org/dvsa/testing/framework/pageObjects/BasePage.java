@@ -505,8 +505,6 @@ public abstract class BasePage extends DriverUtils {
                         selector))));
     }
 
-
-
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
