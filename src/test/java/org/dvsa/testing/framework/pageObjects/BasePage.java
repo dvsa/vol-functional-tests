@@ -62,8 +62,6 @@ public abstract class BasePage extends DriverUtils {
     }
 
 
-
-
     public static String getTextFromNestedElement(WebElement webElement, String selector) {
         return webElement.findElement(By.xpath(selector)).getText();
     }
@@ -215,11 +213,18 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
+
     public void selectRandomCheckBoxOrRadioBtn(String typeArgument) {
         List<WebElement> checkbox = findElements(String.format("//input[@type='%s']", typeArgument), SelectorType.XPATH);
-        Random random = new Random();
-        int index = random.nextInt(checkbox.size());
+        int index = (int) (Math.random() * checkbox.size());
         checkbox.get(index).click();
+    }
+
+
+    public void selectRandomRadioBtn() {
+            List<WebElement> radioButtons = findElements("//tr//*[@type='radio']", SelectorType.XPATH);
+            Optional<WebElement> result = radioButtons.stream().findAny();
+            result.ifPresent(WebElement::click);
     }
 
     protected static boolean isTitlePresent(String locator, int duration) {

@@ -56,8 +56,8 @@ public class PrintingAndScanningJourney extends BasePage {
     }
 
     public void editPrinter() {
-        refreshPageWithJavascript();
         generatePostCodeAndUniqueId();
+        waitForTitleToBePresent("Printers");
         selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("edit", SelectorType.ID);
         waitForTextToBePresent("Edit printer");
