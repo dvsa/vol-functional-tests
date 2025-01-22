@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class VerifySwitchedOff extends BasePage {
     private final World world;
 
+
     public VerifySwitchedOff(World world) {
         this.world = world;
     }

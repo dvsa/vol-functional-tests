@@ -21,9 +21,13 @@ public class FinancialStandingRate {
 
     public FinancialStandingRate(String selector) {
         List<WebElement> rowElements = findElements(selector.concat("/td"), SelectorType.XPATH);
-        WebElement firstCell = rowElements.get(0).findElement(By.xpath("input"));
-        this.id = firstCell.getAttribute("name").replaceAll("\\D+","");
-        this.operatorType = firstCell.getAttribute("value");
+        if (rowElements.isEmpty()) {
+            throw new RuntimeException("No cells found in row " + selector);
+        }
+        WebElement firstCell = rowElements.get(0);
+        WebElement button = firstCell.findElement(By.cssSelector("button.action-button-link"));
+        this.id = button.getAttribute("name").replaceAll(".*\\[(\\d+)\\]", "$1");
+        this.operatorType = button.getText();
         this.licenceType = rowElements.get(1).getText();
         this.vehicleType = rowElements.get(2).getText();
         this.firstRate = rowElements.get(3).getText();

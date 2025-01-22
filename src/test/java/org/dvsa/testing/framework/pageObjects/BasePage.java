@@ -678,7 +678,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void scrollToBottom() {
-        WebElement footer = getDriver().findElement(By.tagName("govuk-footer"));
+        WebElement footer = getDriver().findElement(By.className("govuk-footer"));
         int deltaY = footer.getRect().y;
         new Actions(getDriver())
                 .scrollByAmount(0, deltaY)
