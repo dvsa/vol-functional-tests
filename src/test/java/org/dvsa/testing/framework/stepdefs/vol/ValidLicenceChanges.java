@@ -290,7 +290,7 @@ public class ValidLicenceChanges extends BasePage {
         waitForTextToBePresent("Safety and compliance");
         List<WebElement> names = findElements("//*[@data-heading='Name']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertFalse(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertFalse(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
@@ -302,7 +302,7 @@ public class ValidLicenceChanges extends BasePage {
         waitAndClick("GV Permits", SelectorType.LINKTEXT);
         List<WebElement> names = findElements("//*[@data-heading='Reference number']", SelectorType.XPATH);
         for (WebElement element : names) {
-            assertTrue(isElementClickable(element.getAccessibleName(), SelectorType.LINKTEXT));
+            assertTrue(isElementClickable(Objects.requireNonNull(element.getAccessibleName()), SelectorType.LINKTEXT));
         }
     }
 
