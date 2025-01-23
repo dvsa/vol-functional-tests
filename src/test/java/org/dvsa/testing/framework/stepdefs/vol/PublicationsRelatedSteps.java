@@ -189,7 +189,6 @@ public class PublicationsRelatedSteps extends BasePage {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
         world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, licenceNumber);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     }
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
