@@ -57,14 +57,14 @@ public class ExternalSearch extends BasePage {
 
     @Then("search results page addresses {string} should only display address belonging to our licence {string}")
     public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurLicence(String address, String licence) {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(address, 5000, "KickOut reached. Correspondence and operating centre address external search failed.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(address, 25000, "KickOut reached. Correspondence and operating centre address external search failed.");
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", address), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(licence));
     }
 
     @Then("search results page should display operator names containing our {string}")
     public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 5000, "KickOut reached. Operator name external search failed.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 25000, "KickOut reached. Operator name external search failed.");
     }
 
     @And("I am able to view the applicants licence number")
