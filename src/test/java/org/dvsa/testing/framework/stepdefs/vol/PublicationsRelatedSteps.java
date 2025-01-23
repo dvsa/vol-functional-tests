@@ -184,12 +184,11 @@ public class PublicationsRelatedSteps extends BasePage {
         waitForTextToBePresent("Update successful");
     }
 
-    @Then("^the publication is visible via self serve search$")
+    @Then("the publication is visible via self serve search")
     public void thePublicationIsVisibleViaSelfServeSearch() {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
-        enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.ID, licenceNumber);
+        world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, licenceNumber);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     }
 
@@ -443,7 +442,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String publicationLinkForVariation = "//td[contains(text(),'New Variation')]/../td/a";
         click(publicationLinkForVariation, SelectorType.XPATH);
         waitForTextToBePresent("Edit publication");
-        untilElementIsPresent("//*[@name='fields[text1]']", SelectorType.XPATH, 10, TimeUnit.SECONDS);
+        untilElementIsPresent("//*[@name='fields[text1]']", SelectorType.XPATH, 5, TimeUnit.SECONDS);
         String publicationTexts = getText("//*[@name='fields[text1]']", SelectorType.XPATH)
                 .concat(getText("//*[@name='fields[text2]']", SelectorType.XPATH))
                 .concat(getText("//*[@name='fields[text3]']", SelectorType.XPATH));
