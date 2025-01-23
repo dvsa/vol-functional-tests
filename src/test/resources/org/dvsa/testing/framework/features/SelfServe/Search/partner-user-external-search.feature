@@ -10,11 +10,11 @@ Feature: Partner user external search by Address, Business name, Licence Number 
 
   @ec2_smoke
   Scenario: Business name partner external search for lorry and bus operators
-    When I search for a lorry and bus operator by "business","","ASTUTE SOFTWARE DEVELOPMENT LIMITED","",""
-    Then search results page should display operator names containing our "ASTUTE SOFTWARE DEVELOPMENT LIMITED"
-    And search results page should only display our "OB1134621"
+    When I search for a lorry and bus operator by "business","","ANNULAR LIMITED (MLH)","",""
+    Then search results page should display operator names containing our "ANNULAR LIMITED (MLH)"
+    And search results page should only display our "OC1057274"
 
   @search-lorry-by-licence @ss_regression
   Scenario: Licence number partner external search for lorry and bus operators
-    When I search for a lorry and bus operator by "licence","OB1134621","","",""
-    Then search results page should only display our "OB1134621"
+    When I search for a lorry and bus operator by "licence","OC1057274","","",""
+    Then search results page should only display our "OC1057274"
