@@ -166,14 +166,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() throws HttpException {
-        if (world.updateLicence.getInternalUserId() == null) {
-            world.APIJourney.createAdminUser();
-        }
-
-        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
-            world.internalNavigation.logInAsAdmin();
-        }
-
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PUBLICATIONS);
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
