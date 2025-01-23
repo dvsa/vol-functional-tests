@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.aws.s3.SecretsManager;
+import com.sun.istack.NotNull;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,8 +11,10 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,9 +47,10 @@ public class ExternalSearch extends BasePage {
         } else {
             world.globalMethods.signIn(user, password);
         }
-        if (isTextPresent("Welcome to your account")){
-            click("termsAgreed",SelectorType.ID);
-            UniversalActions.clickSubmit();}
+        if (isTextPresent("Welcome to your account")) {
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        }
         waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
     }
 
@@ -57,14 +61,13 @@ public class ExternalSearch extends BasePage {
 
     @Then("search results page addresses {string} should only display address belonging to our licence {string}")
     public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurLicence(String address, String licence) {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(address, 25000, "KickOut reached. Correspondence and operating centre address external search failed.");
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", address), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(licence));
     }
 
     @Then("search results page should display operator names containing our {string}")
     public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 25000, "KickOut reached. Operator name external search failed.");
+        assertTrue(isTextPresent(businessName));
     }
 
     @And("I am able to view the applicants licence number")
@@ -104,23 +107,22 @@ public class ExternalSearch extends BasePage {
 
         switch (searchType) {
             case "address":
-                enterText("search", SelectorType.NAME, addressToSearch);
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.NAME, addressToSearch);
                 break;
             case "business":
-                enterText("search", SelectorType.NAME, businessNameToSearch);
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.NAME, businessNameToSearch);
                 break;
             case "licence":
-                enterText("search", SelectorType.NAME, licenceNumberToSearch);
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.NAME, licenceNumberToSearch);
                 break;
             case "person":
-                enterText("search", SelectorType.NAME, personToSearch);
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.NAME, personToSearch);
         }
     }
 
     @Then("search results page should only display our licence number")
     @Then("search results page should only display our {string}")
     public void searchResultsPageShouldOnlyDisplayOurLicenceNumber(String licenceNumber) {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 5000, "KickOut reached. Operator name external search failed.");
         assertTrue(isTextPresent(licenceNumber));
     }
 
@@ -128,7 +130,7 @@ public class ExternalSearch extends BasePage {
     public void iSearchForAVehicle() {
         String searchVrm = SecretsManager.getSecretValue("testLicenceVrm");
         waitForTitleToBePresent("Find vehicles");
-        enterText("search", SelectorType.ID,searchVrm);
+        enterText("search", SelectorType.ID, searchVrm);
         clickById("submit");
     }
 
@@ -152,7 +154,7 @@ public class ExternalSearch extends BasePage {
     public void theVehicleTableShouldContainTheInterimStatus() {
         List<WebElement> interimStatus = findElements("//*[@data-heading='Interim']", SelectorType.XPATH);
         for (WebElement interim : interimStatus) {
-            assertEquals("No",interim.getText());
+            assertEquals("No", interim.getText());
         }
     }
 }

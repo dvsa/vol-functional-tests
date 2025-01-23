@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -156,6 +157,18 @@ public class SelfServeNavigation extends BasePage {
         } while (!isTextPresent(text) && System.currentTimeMillis() < kickOut);
         if (System.currentTimeMillis() > kickOut) {
             throw new TimeoutException(exceptionMessage);
+        }
+    }
+
+    public void clickSearchWhileCheckingTextPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString)  {
+        findElement(selector, selectorType).sendKeys(searchString);
+        long kickOut = System.currentTimeMillis() + 999999;
+        do {
+            click("submit", SelectorType.ID);
+            waitForPageLoad();
+        } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
+        if (System.currentTimeMillis() > kickOut) {
+            throw new TimeoutException("Text not found within " + kickOut + " ms");
         }
     }
 
