@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -188,7 +189,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
         enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 1000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent("search", SelectorType.ID, licenceNumber);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     }
 
@@ -442,7 +443,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String publicationLinkForVariation = "//td[contains(text(),'New Variation')]/../td/a";
         click(publicationLinkForVariation, SelectorType.XPATH);
         waitForTextToBePresent("Edit publication");
-
+        untilElementIsPresent("//*[@name='fields[text1]']", SelectorType.XPATH, 10, TimeUnit.SECONDS);
         String publicationTexts = getText("//*[@name='fields[text1]']", SelectorType.XPATH)
                 .concat(getText("//*[@name='fields[text2]']", SelectorType.XPATH))
                 .concat(getText("//*[@name='fields[text3]']", SelectorType.XPATH));
