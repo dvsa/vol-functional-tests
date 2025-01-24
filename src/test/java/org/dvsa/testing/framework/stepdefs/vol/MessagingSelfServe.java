@@ -84,4 +84,5 @@ public class MessagingSelfServe extends BasePage {
         world.messagingJourney.replyErrorMessage();
         assertTrue(isTextPresent(TextFieldErrorMessage));
     }
+
 }
