@@ -20,5 +20,5 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     And search results page should only display our "OC1057274"
 
   Scenario: Person's name external search for lorry and bus operators
-    When I search for a lorry and bus operator by "person","","","Dale Doe",""
+    When I search for a lorry and bus operator by "person","","","DALE DOE",""
     Then search results page should display the name "Dale Doe"

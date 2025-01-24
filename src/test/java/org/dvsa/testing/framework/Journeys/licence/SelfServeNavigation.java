@@ -23,6 +23,7 @@ import java.time.Duration;
 
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
 public class SelfServeNavigation extends BasePage {
@@ -162,9 +163,10 @@ public class SelfServeNavigation extends BasePage {
 
     public void enterAndSearchUntilTextIsPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString)  {
         findElement(selector, selectorType).sendKeys(searchString);
-        long kickOut = System.currentTimeMillis() + 500000;
+        long kickOut = System.currentTimeMillis() + 120;
         do {
             waitAndClick("submit", SelectorType.ID);
+            refreshPageWithJavascript();
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
         if (System.currentTimeMillis() > kickOut) {
             throw new TimeoutException("Text not found within " + kickOut + " ms");

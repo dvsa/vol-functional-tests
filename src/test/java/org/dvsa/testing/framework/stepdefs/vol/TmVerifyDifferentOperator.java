@@ -145,6 +145,7 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @Then("two TM DOB errors should display")
     public void twoTMDOBErrorsShouldDisplay() {
+        waitForElementToBePresent("//*[@class='validation-summary']");
         assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
     }
