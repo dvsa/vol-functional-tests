@@ -22,12 +22,6 @@ public class MessagingSelfServe extends BasePage {
         this.world = world;
     }
 
-
-    @Then("i click on start a new conversation link")
-    public void iClickOnStartANewConversationLink() {
-        world.messagingJourney.createNewConversation();
-    }
-
     @Then("i click on start a new conversation link and select the licence number")
     public void iClickOnStartANewConversationLinkAndSelectALicenceNumber() {
         world.messagingJourney.createNewConversationAndSelectTheLicenceNumber();
@@ -84,7 +78,7 @@ public class MessagingSelfServe extends BasePage {
         assertTrue(isTextPresent(TextFieldErrorMessage));
     }
 
-    @Then("i send a reply without entering a message in the text field, and an error message will appear.")
+    @Then("i send a reply without entering a message in the text field, and an error message will appear")
     public void iSendAReplyWithoutEnteringAMessageInTheTextFieldAndAnErrorMessageWillAppear() {
         world.messagingInternal.iClickTheMessagesHeading();
         world.messagingJourney.replyErrorMessage();

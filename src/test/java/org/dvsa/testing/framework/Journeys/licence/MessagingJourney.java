@@ -55,15 +55,6 @@ public class MessagingJourney extends BasePage {
         assertTrue(actualText.equalsIgnoreCase("CLOSED"));
     }
 
-    public void createNewConversation() {
-        clickByLinkText("Start a new conversation");
-        selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
-        click("//*[@id=\"form-actions[inputs][appOrLicNo]\"]/optgroup[2]/option", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
-        clickById("send");
-    }
-
     public void createNewConversationAndSelectTheLicenceNumber() {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
@@ -98,9 +89,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void backToConversation() {
-        click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
-        click("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 ')]", SelectorType.XPATH);
-        click("//*[contains(@class,'govuk-back-link')]", SelectorType.XPATH);
+        clickByLinkText("Back to conversations");
     }
 
 
@@ -153,4 +142,3 @@ public class MessagingJourney extends BasePage {
     }
 
 }
-
