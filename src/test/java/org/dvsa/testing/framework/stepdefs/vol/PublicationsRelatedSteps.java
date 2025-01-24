@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -166,14 +167,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() throws HttpException {
-        if (world.updateLicence.getInternalUserId() == null) {
-            world.APIJourney.createAdminUser();
-        }
-
-        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
-            world.internalNavigation.logInAsAdmin();
-        }
-
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PUBLICATIONS);
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
@@ -190,13 +184,11 @@ public class PublicationsRelatedSteps extends BasePage {
         waitForTextToBePresent("Update successful");
     }
 
-    @Then("^the publication is visible via self serve search$")
+    @Then("the publication is visible via self serve search")
     public void thePublicationIsVisibleViaSelfServeSearch() {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
-        enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 1000, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
+        world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, licenceNumber);
     }
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
@@ -449,7 +441,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String publicationLinkForVariation = "//td[contains(text(),'New Variation')]/../td/a";
         click(publicationLinkForVariation, SelectorType.XPATH);
         waitForTextToBePresent("Edit publication");
-
+        untilElementIsPresent("//*[@name='fields[text1]']", SelectorType.XPATH, 5, TimeUnit.SECONDS);
         String publicationTexts = getText("//*[@name='fields[text1]']", SelectorType.XPATH)
                 .concat(getText("//*[@name='fields[text2]']", SelectorType.XPATH))
                 .concat(getText("//*[@name='fields[text3]']", SelectorType.XPATH));

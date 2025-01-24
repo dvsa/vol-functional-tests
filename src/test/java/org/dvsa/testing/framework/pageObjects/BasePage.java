@@ -358,14 +358,12 @@ public abstract class BasePage extends DriverUtils {
         new WebDriverWait(Browser.navigate(), Duration.ofSeconds(15), Duration.ofSeconds(20)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
     }
 
-    public static boolean tryUntilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
+    public static void tryUntilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
         try {
             untilElementIsPresent(selector, selectorType, duration, timeUnit);
         } catch (WebDriverException ex) {
             ex.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     public static void untilElementIsNotPresent(@NotNull String selector, SelectorType selectorType) {

@@ -1,4 +1,4 @@
-@ecmt_removal @ec2_smoke @eupa_regression @localsmoke
+@ecmt_removal @eupa_regression
 Feature: ECMT International Removal Self Service End to End Smoke test
 
   Background:
