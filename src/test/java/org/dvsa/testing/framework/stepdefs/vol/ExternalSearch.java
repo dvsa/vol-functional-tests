@@ -108,13 +108,13 @@ public class ExternalSearch extends BasePage {
 
         switch (searchType) {
             case "address":
-                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.NAME, addressToSearch);
+                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, addressToSearch);
                 break;
             case "business":
-                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.NAME, businessNameToSearch);
+                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, businessNameToSearch);
                 break;
             case "licence":
-                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.NAME, licenceNumberToSearch);
+                world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.ID, licenceNumberToSearch);
                 break;
             case "person":
                 world.selfServeNavigation.enterAndSearchUntilTextIsPresent("search", SelectorType.NAME, personToSearch);

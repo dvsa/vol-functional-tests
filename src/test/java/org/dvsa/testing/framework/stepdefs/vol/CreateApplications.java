@@ -51,6 +51,7 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
+        refreshPageWithJavascript();
         waitForTitleToBePresent("Application overview");
         String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
         clickByLinkText("Home");

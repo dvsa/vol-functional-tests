@@ -310,9 +310,12 @@ public class ManageApplications extends BasePage {
     @Given("i have a valid {string} {string} licence")
     public synchronized void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
         writeLock.lock();
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.licenceCreation.createLicence(operatorType, licenceType);
-        writeLock.unlock();
+        try {
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.licenceCreation.createLicence(operatorType, licenceType);
+        }finally {
+            writeLock.unlock();
+        }
     }
 
     @Given("i have a {string} application in progress")
@@ -362,18 +365,23 @@ public class ManageApplications extends BasePage {
 
     @Given("i have an interim {string} {string} application")
     public synchronized void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
-        if (operatorType.equals("public")) {
-            throw new Exception("PSV licences cannot have interim applications.");
-        }
-        world.createApplication.setOperatorType(operatorType);
-        world.createApplication.setLicenceType(licenceType);
-        world.createApplication.setIsInterim("Y");
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
-            world.APIJourney.createSpecialRestrictedLicence();
-        } else if (world.createApplication.getApplicationId() == null) {
-            world.APIJourney.createApplication();
-            world.APIJourney.submitApplication();
+        writeLock.lock();
+        try {
+            if (operatorType.equals("public")) {
+                throw new Exception("PSV licences cannot have interim applications.");
+            }
+            world.createApplication.setOperatorType(operatorType);
+            world.createApplication.setLicenceType(licenceType);
+            world.createApplication.setIsInterim("Y");
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
+                world.APIJourney.createSpecialRestrictedLicence();
+            } else if (world.createApplication.getApplicationId() == null) {
+                world.APIJourney.createApplication();
+                world.APIJourney.submitApplication();
+            }
+        } finally {
+            writeLock.unlock();
         }
     }
 

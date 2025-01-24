@@ -167,6 +167,7 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @Then("two worked hours errors should display")
     public void twoWorkedHoursErrorsShouldDisplay() {
+        waitForElementToBePresent("//*[@class='validation-summary']");
         assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
     }
