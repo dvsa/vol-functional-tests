@@ -162,7 +162,7 @@ public class SelfServeNavigation extends BasePage {
 
     public void enterAndSearchUntilTextIsPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString)  {
         findElement(selector, selectorType).sendKeys(searchString);
-        long kickOut = System.currentTimeMillis() + 999999;
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             click("submit", SelectorType.ID);
             waitForPageLoad();

@@ -70,7 +70,7 @@ public class InternalSearchJourney extends BasePage {
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
         boolean isLinkPresent;
-        long kickOut = System.currentTimeMillis() + 999999;
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             isLinkPresent = isTextPresent(searchString);
             SearchNavBar.search(searchType, searchString);
