@@ -24,7 +24,7 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDa
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TmVerifyDifferentOperator extends BasePage{
+public class TmVerifyDifferentOperator extends BasePage {
     private final World world;
 
 
@@ -120,6 +120,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
     }
+
     @And("the TM has got the reset link email")
     public void theTMHasGotTheResetLinkEmail() {
         // Needs writing. Since maildev is soon to be implemented, makes no sense to add s3 method yet.
@@ -127,7 +128,11 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("the TM should see the incomplete label and provide details link")
     public void theTMShouldSeeTheIncompleteLabelAndProvideDetailsLink() {
-        world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
+        clickByLinkText("Sign out");
+        world.selfServeNavigation.navigateToLoginPage();
+        if (!isTextPresent("Current licences")) {
+            world.globalMethods.signIn(world.DataGenerator.getOperatorUser(), SecretsManager.getSecretValue("internalNewPassword"));
+        }
         world.TMJourney.assertTMDetailsIncomplete();
     }
 
@@ -146,7 +151,6 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @When("i add an operator as a transport manager with a future DOB")
     public void iAddAnOperatorAsATransportManagerWithAFutureDOB() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
@@ -156,7 +160,6 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @When("i add an operator as a transport manager with a no hours worked")
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         UniversalActions.clickSubmit();
         waitForPageLoad();
@@ -228,7 +231,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     @Then("the user is displayed in the Transport Manager list")
     public void theUserIsDisplayedInTheTransportManagerList() {
         waitForTextToBePresent("List of Transport Managers");
-        assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
+        assertTrue(isTextPresent(world.registerUser.getForeName() + " " + world.registerUser.getFamilyName()));
         assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
     }
 
