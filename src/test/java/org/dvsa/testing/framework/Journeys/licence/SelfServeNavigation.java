@@ -163,10 +163,10 @@ public class SelfServeNavigation extends BasePage {
 
     public void enterAndSearchUntilTextIsPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString)  {
         findElement(selector, selectorType).sendKeys(searchString);
-        long kickOut = System.currentTimeMillis() + 120;
+        long kickOut = System.currentTimeMillis() + 5000;
         do {
             waitAndClick("submit", SelectorType.ID);
-            refreshPageWithJavascript();
+            waitForPageLoad();
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
         if (System.currentTimeMillis() > kickOut) {
             throw new TimeoutException("Text not found within " + kickOut + " ms");
