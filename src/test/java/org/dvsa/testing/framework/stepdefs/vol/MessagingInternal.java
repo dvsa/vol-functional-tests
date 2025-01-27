@@ -26,7 +26,7 @@ public class MessagingInternal extends BasePage {
         world.messagingJourney.messageHeading();
     }
 
-    @And("i click the messages heading")
+    @When("i click the messages heading")
     public void iClickTheMessagesHeading() {
         clickByLinkText("Messages");
     }
