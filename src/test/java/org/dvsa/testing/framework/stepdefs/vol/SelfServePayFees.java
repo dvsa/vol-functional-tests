@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServePayFees extends BasePage {
-    private World world;
+    private final World world;
     Initialisation initialisation;
     public SelfServePayFees(World world) {
         this.world = world;

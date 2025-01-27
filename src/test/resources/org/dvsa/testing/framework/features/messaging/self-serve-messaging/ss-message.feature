@@ -27,7 +27,7 @@ Feature: External users can view the messaging tab, as well as create new messag
       | admin       | goods     | restricted    |
 
   @ss-message-replyMessage
-  Scenario: Operator reply for case worker message
+  Scenario Outline: Operator reply for case worker message
     Given as a "<user_type>" I have a valid "<Operator>" "<licence_type>" licence
     And i create an admin and url search for my licence
     * i click the messages heading
@@ -40,7 +40,7 @@ Feature: External users can view the messaging tab, as well as create new messag
       | admin       | goods     | standard_national |
 
   @ss-message-openStatus-check
-  Scenario: Check open message status
+  Scenario Outline: Check open message status
     Given as a "<user_type>" I have a valid "<Operator>" "<licence_type>" licence
     And i create an admin and url search for my licence
     * i click the messages heading
@@ -54,7 +54,7 @@ Feature: External users can view the messaging tab, as well as create new messag
       | admin       | public     | special_restricted |
 
   @ss-message-count-check
-  Scenario: Check notification count on external application
+  Scenario Outline: Check notification count on external application
     Given as a "<user_type>" I have a valid "<Operator>" "<licence_type>" licence
     And i create an admin and url search for my licence
     * i click the messages heading
@@ -67,7 +67,7 @@ Feature: External users can view the messaging tab, as well as create new messag
       | admin       | public    | restricted   |
 
     @ss-message-back-to-conversation
-    Scenario: Check back button on messaging page
+    Scenario Outline: Check back button on messaging page
       Given as a "<user_type>" I have a "<Operator>" "<licence_type>" application
       And the caseworker completes and submits the application
       * i have logged in to self serve as "<user_type>"
