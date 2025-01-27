@@ -88,7 +88,7 @@ public class ExternalSearch extends BasePage {
     @Then("search results page should display the name {string}")
     public void searchResultsPageShouldDisplayTheName(String name) {
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", name), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(String.valueOf(name.equalsIgnoreCase(name.toUpperCase()))));
+        assertTrue(tableRow.getText().equalsIgnoreCase(name));
     }
 
 
