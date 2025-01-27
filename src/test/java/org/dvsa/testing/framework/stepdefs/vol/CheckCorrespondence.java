@@ -21,13 +21,15 @@ public class CheckCorrespondence extends BasePage {
     @And("i have logged in to self serve as {string}")
     public void iHaveLoggedInToSelfServe(String userType) {
         world.selfServeNavigation.navigateToLoginPage();
-        if (userType.equalsIgnoreCase("consultant")) {
-            world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
-                    SecretsManager.getSecretValue("internalNewPassword"));
-        } else {
-            world.globalMethods.signIn(world.registerUser.getUserName(),
-                    SecretsManager.getSecretValue("internalNewPassword"));
+        if (!isTextPresent("Current licences")) {
+            if (userType.equalsIgnoreCase("consultant")) {
+                world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword"));
+            } else {
+                world.globalMethods.signIn(world.registerUser.getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword"));
 
+            }
         }
     }
 
