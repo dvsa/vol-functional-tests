@@ -1,5 +1,21 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.13](https://github.com/dvsa/vol-functional-tests/compare/v3.11.12...v3.11.13) (2025-01-27)
+
+
+### Bug Fixes
+
+* fix login issue and tweak steps ([37e8ec9](https://github.com/dvsa/vol-functional-tests/commit/37e8ec9ae4aa5f875bb6289a59daf03229df51b4))
+* fix login issue and tweak steps ([a72e41b](https://github.com/dvsa/vol-functional-tests/commit/a72e41be178f0c5dddd3ed1bbda25661874cd569))
+* login fix use new password ([9374008](https://github.com/dvsa/vol-functional-tests/commit/9374008e7be7486b1159338334dea2fd98007cf6))
+* login fix use new password ([defb0e9](https://github.com/dvsa/vol-functional-tests/commit/defb0e99597b27912d6245ae19cf6c219ad56254))
+* login fix use new password ([fbe7148](https://github.com/dvsa/vol-functional-tests/commit/fbe7148863ea40300c39246665ce051023b43110))
+* login fix use new password ([05b87b6](https://github.com/dvsa/vol-functional-tests/commit/05b87b62a780fc8721f93542d81096f5e10c7f0c))
+* tweak message feature file ([4155311](https://github.com/dvsa/vol-functional-tests/commit/41553114657a88b39912b6ab98cf900fc68724f2))
+* tweak message feature file ([27f3617](https://github.com/dvsa/vol-functional-tests/commit/27f3617c73d3aa48147b96a9f23a5578bd954b7e))
+* tweak message feature file ([e2be22a](https://github.com/dvsa/vol-functional-tests/commit/e2be22ac0a789fcad374d278cbf4ec7ad3804ce9))
+* tweak message feature file ([1d20cf8](https://github.com/dvsa/vol-functional-tests/commit/1d20cf8ab0a1d0ac3c6366e854367acbfb2e730b))
+
 ## [3.11.12](https://github.com/dvsa/vol-functional-tests/compare/v3.11.11...v3.11.12) (2025-01-24)
 
 
