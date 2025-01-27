@@ -66,8 +66,8 @@ public class MessagingSelfServe extends BasePage {
         world.messagingJourney.messageTabShown();
     }
 
-    @When("i sent a new message without selecting a category, licence or application number and text")
-    public void iSentANewMessageWithoutSelectingAnyOption() {
+    @Then("i send a new message without selecting a category, licence or application number and text")
+    public void iSendANewMessageWithoutSelectingAnyOption() {
         world.messagingJourney.submitMessageWithoutSelectingAnyOption();
     }
 
