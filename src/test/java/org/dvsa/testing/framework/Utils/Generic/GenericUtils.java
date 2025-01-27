@@ -155,14 +155,12 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public String getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(100000);
+    public void getResetPasswordLink() {
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
                 .replaceAll("=0A", "")
                 .replaceAll("=20", "")
-                .replaceAll("=\n", "")
-                .replaceAll("=\r", "");
+                .replaceAll("=\r\n", "");
         String domainURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/reset-password").toString();
         org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
         Elements links = doc.select("a[href]");
@@ -171,7 +169,7 @@ public class GenericUtils extends BasePage {
             if (resetPasswordLink.contains(domainURL)) {
                 WebDriver driver = Browser.navigate();
                 driver.get(resetPasswordLink);
-                return resetPasswordLink;
+                return;
             }
         }
         throw new RuntimeException("Reset password link not found in HTML content.");
