@@ -53,9 +53,6 @@ public class GlobalMethods extends BasePage {
         DriverUtils.get(domainURL);
         try {
             String updatedPassword = enterCredentialsAndLogin(username, emailAddress, newPassword);
-            if (updatedPassword != null) {
-                newPassword = updatedPassword;
-            }
         } catch (DecoderException e) {
             e.printStackTrace();
         }
