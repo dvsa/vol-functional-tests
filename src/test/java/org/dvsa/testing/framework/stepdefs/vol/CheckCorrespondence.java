@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -19,16 +20,16 @@ public class CheckCorrespondence extends BasePage {
 
     @And("i have logged in to self serve as {string}")
     public void iHaveLoggedInToSelfServe(String userType) {
-        if (userType.equalsIgnoreCase("consultant")) {
-            world.selfServeNavigation.navigateToLogin(
-                    world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
-                    world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
-            );
-        } else {
-            world.selfServeNavigation.navigateToLogin(
-                    world.registerUser.getUserName(),
-                    world.registerUser.getEmailAddress()
-            );
+        world.selfServeNavigation.navigateToLoginPage();
+        if (!isTextPresent("Current licences")) {
+            if (userType.equalsIgnoreCase("consultant")) {
+                world.globalMethods.signIn(world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword"));
+            } else {
+                world.globalMethods.signIn(world.registerUser.getUserName(),
+                        SecretsManager.getSecretValue("internalNewPassword"));
+
+            }
         }
     }
 
