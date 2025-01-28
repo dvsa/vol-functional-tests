@@ -43,5 +43,4 @@ public class CheckCorrespondence extends BasePage {
         waitForElementToBePresent("//table");
         assertTrue(findElement("//table", SelectorType.XPATH, 300).getText().contains(world.applicationDetails.getLicenceNumber()));
     }
-
 }
