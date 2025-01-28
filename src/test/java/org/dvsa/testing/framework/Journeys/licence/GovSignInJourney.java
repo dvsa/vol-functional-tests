@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
@@ -47,13 +48,12 @@ public class GovSignInJourney extends BasePage {
         String signInUsername = SecretsManager.getSecretValue("signInUsername");
         String signInPassword = SecretsManager.getSecretValue("signInPassword");
 
-        if(Browser.navigate().getCurrentUrl().contains("updated")){
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-       //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
-        if (isElementPresent("sign-in-button", SelectorType.ID))
-        {
+        //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
+        if (isElementPresent("sign-in-button", SelectorType.ID)) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -79,18 +79,18 @@ public class GovSignInJourney extends BasePage {
             photoIDQuestion();
         }
 
-        if(isTextPresent("You need to confirm your name and date of birth")){
+        if (isTextPresent("You need to confirm your name and date of birth")) {
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTextPresent("You need to confirm your address")){
+        if (isTextPresent("You need to confirm your address")) {
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTextPresent("We need to check your details")){
+        if (isTextPresent("We need to check your details")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTextPresent("Continue to the service you want to use")){
+        if (isTextPresent("Continue to the service you want to use")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         if (isTextPresent("By continuing you agree to our updated terms of use.")) {
@@ -105,10 +105,16 @@ public class GovSignInJourney extends BasePage {
         }
         if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
+        }
+        if (isTitlePresent("Do you have a smartphone you can use?", 2)) {
             goThroughVerificationSteps();
+        }
+        if (isTitlePresent("Returning you to Vehicle Operator Licence", 2)) {
+            if(isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            }
+        }
     }
-
 
     public void registerGovAccount() throws InterruptedException {
         String signInPassword = SecretsManager.getSecretValue("signInPassword");
@@ -295,9 +301,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void changeProtocolForSignInToWorkOnLocal() throws InterruptedException, MalformedURLException {
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         if(world.configuration.env.toString().equals("local")) {
-            URL url = new URL(Browser.navigate().getCurrentUrl());
+            URL url = new URL(Objects.requireNonNull(navigate().getCurrentUrl()));
             String urlWithUnsecureProtocol = url.getProtocol().replace("s","").concat("://"+ url.getAuthority() + url.getFile());
             Browser.navigate().get(urlWithUnsecureProtocol);
         }
