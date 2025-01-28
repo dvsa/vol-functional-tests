@@ -1,9 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.aws.s3.SecretsManager;
-import org.apache.hc.core5.http.HttpException;
-import org.bouncycastle.oer.Switch;
-import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
