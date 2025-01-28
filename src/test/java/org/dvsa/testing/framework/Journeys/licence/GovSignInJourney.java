@@ -51,7 +51,6 @@ public class GovSignInJourney extends BasePage {
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-
         //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
         if (isElementPresent("sign-in-button", SelectorType.ID)) {
             waitAndClick("sign-in-button", SelectorType.ID);
@@ -63,7 +62,6 @@ public class GovSignInJourney extends BasePage {
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-
         if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
@@ -78,7 +76,6 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-
         if (isTextPresent("You need to confirm your name and date of birth")) {
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -96,22 +93,22 @@ public class GovSignInJourney extends BasePage {
         if (isTextPresent("By continuing you agree to our updated terms of use.")) {
             waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         }
-        if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
+        if (isTitlePresent("Start proving your identity with GOV.UK One Login", 1)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
-        if (isTitlePresent("Are you on a computer or a tablet right now?", 2)) {
+        if (isTitlePresent("Are you on a computer or a tablet right now?", 1)) {
             clickByXPath("//*[@id='select-device-choice']");
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if (isTitlePresent("You have already proved your identity", 2)) {
+        if (isTitlePresent("You have already proved your identity", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if (isTitlePresent("Do you have a smartphone you can use?", 2)) {
+        if (isTitlePresent("Do you have a smartphone you can use?", 1)) {
             goThroughVerificationSteps();
         }
-        if (isTitlePresent("Returning you to Vehicle Operator Licence", 2)) {
+        if (isTitlePresent("Returning you to Vehicle Operator Licence", 1)) {
             if(isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
-                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+                click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             }
         }
     }
