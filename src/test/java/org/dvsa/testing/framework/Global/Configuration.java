@@ -25,7 +25,7 @@ public class Configuration {
     }
 
     public String getPasswordResetLink() throws activesupport.MissingRequiredArgument {
-        return mailPit.retrievePasswordResetLink(world.registerUser.getEmailAddress(), 50);
+        return mailPit.retrievePasswordResetLink(world.registerUser.getEmailAddress(), 120);
     }
 
     public String getTmAppLink() throws activesupport.MissingRequiredArgument {

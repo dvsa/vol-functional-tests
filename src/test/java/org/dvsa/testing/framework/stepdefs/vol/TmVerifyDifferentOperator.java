@@ -156,7 +156,6 @@ public class TmVerifyDifferentOperator extends BasePage {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
         UniversalActions.clickSubmit();
-        waitForPageLoad();
     }
 
     @When("i add an operator as a transport manager with a no hours worked")
