@@ -42,7 +42,7 @@ public class ResettingPassword extends BasePage {
     }
 
     @And("I receive the reset password link via email")
-    public void iReceiveTheResetPasswordLinkViaEmail() {
+    public void iReceiveTheResetPasswordLinkViaEmail() throws InterruptedException {
         world.genericUtils.getResetPasswordLink();
         world.selfServeUIJourney.resetSelfServePassword();
     }

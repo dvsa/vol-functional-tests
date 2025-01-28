@@ -17,7 +17,6 @@ Feature: External user search by Address, Business name, Licence Number and Pers
   Scenario: Licence number external search for lorry and bus operators
     When I search for a lorry and bus operator by "licence","OC1057274","","",""
     Then search results page should only display our "OC1057274"
-    And search results page should only display our "OC1057274"
 
   Scenario: Person's name external search for lorry and bus operators
     When I search for a lorry and bus operator by "person","","","MICHAEL JUPP",""
