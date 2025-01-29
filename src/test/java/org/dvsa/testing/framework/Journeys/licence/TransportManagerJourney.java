@@ -8,9 +8,12 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,6 +22,10 @@ public class TransportManagerJourney extends BasePage {
 
     private World world;
     static int tmCount;
+
+    Random random = new Random();
+    int randomInt = random.nextInt(1000);
+
 
     public TransportManagerJourney(World world){
         this.world = world;
@@ -198,18 +205,39 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addNewPersonAsTransportManager(String licenceType) {
-        world.selfServeNavigation.navigateToPage(licenceType, SelfServeSection.TRANSPORT_MANAGERS);
-        click("add", SelectorType.ID);
-        waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
-        LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
-        enterDateFieldsByPartialId("dob", dob);
-        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+            waitForTextToBePresent("Transport Managers");
+            waitAndClick("//button[@id='add']", SelectorType.XPATH);
+            waitAndClick("addUser", SelectorType.ID);
+            enterText("forename", SelectorType.ID, "prep-forename");
+            enterText("familyName", SelectorType.ID, "prep-familyname");
+            LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
+            enterDateFieldsByPartialId("dob", dob);
+            enterText("username", SelectorType.ID, "prepusername" + randomInt);
+            enterText("emailAddress", SelectorType.ID, "prep-email@example.com");
+            enterText("emailConfirm", SelectorType.ID, "prep-email@example.com");
+        } else {
+            world.selfServeNavigation.navigateToPage(licenceType, SelfServeSection.TRANSPORT_MANAGERS);
+            click("add", SelectorType.ID);
+            waitAndClick("addUser", SelectorType.ID);
+            enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+            enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+            LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
+            enterDateFieldsByPartialId("dob", dob);
+            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        }
         UniversalActions.clickContinue();
         waitForTextToBePresent("user account has been created and a link sent to them");
+    }
+
+    public void addNewTmPrepTest() {
+        waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        clickByLinkText("change your licence");
+        UniversalActions.clickSubmit();
+        addNewPersonAsTransportManager(null);
+
     }
 
     public void assertTMDetailsWithOperator() {

@@ -3,9 +3,15 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.openqa.selenium.WebElement;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PrepTestsStepDefs extends BasePage {
 
@@ -28,5 +34,18 @@ public class PrepTestsStepDefs extends BasePage {
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
                 SecretsManager.getSecretValue("intEnvPassword"));
+    }
+
+    @When("I navigate to an existing licence {string}")
+    public void navigateToExistingLicence(String licenceNumber) {
+        clickByLinkText(licenceNumber);
+    }
+
+    @Then("that new transport manager is showing in the list")
+    public void thatNewTransportManagerIsShowingInTheList() {
+        WebElement transportManagerRow = getDriver().findElement(By.xpath("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]"));
+        assertTrue(transportManagerRow.isDisplayed(), "Transport manager's name is not displayed in the list");
+        WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]"));
+        assertTrue(emailCell.isDisplayed(), "Transport manager's email is not displayed in the list");
     }
 }

@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -174,10 +175,15 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
-        UniversalActions.refreshPageWithJavascript();
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
-        world.selfServeUIJourney.changeLicenceForVariation();
-        world.TMJourney.addNewPersonAsTransportManager("variation");
+        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+            clickByLinkText("Transport Managers");
+            world.transportManagerJourney.addNewTmPrepTest();
+        } else {
+            UniversalActions.refreshPageWithJavascript();
+            world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
+            world.selfServeUIJourney.changeLicenceForVariation();
+            world.TMJourney.addNewPersonAsTransportManager("variation");
+        }
     }
 
     @Then("a transport manager has been created banner is displayed")
