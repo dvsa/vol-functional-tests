@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [3.11.14](https://github.com/dvsa/vol-functional-tests/compare/v3.11.13...v3.11.14) (2025-01-29)
+
+
+### Bug Fixes
+
+* broken search ([34201ed](https://github.com/dvsa/vol-functional-tests/commit/34201ed8ae0c717240041b6bd5026d7515d1e01f))
+* fix for button that i now apearing after signing app on onelogin ([61143b9](https://github.com/dvsa/vol-functional-tests/commit/61143b982de017e18a8bc094f61ae7a8799e6570))
+
 ## [3.11.13](https://github.com/dvsa/vol-functional-tests/compare/v3.11.12...v3.11.13) (2025-01-27)
 
 
