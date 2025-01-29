@@ -1,5 +1,5 @@
 @PP-SMOKE
-@PP-ADD-TM
+@PP-ADD-USER
 
 Feature: Add a transport Manager to a licence
 
