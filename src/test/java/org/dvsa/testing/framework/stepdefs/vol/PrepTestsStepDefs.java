@@ -30,11 +30,19 @@ public class PrepTestsStepDefs extends BasePage {
         world.configuration.env = EnvironmentType.INTEGRATION;
     }
 
-    @Given("I have a prep self serve account")
-    public void iHaveAPrepSelfServeAccount() {
-        world.selfServeNavigation.navigateToLoginPage();
-        world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                SecretsManager.getSecretValue("intEnvPassword"));
+    @Given("I have a prep {string} account")
+    public void iHaveAPrepAccount(String accountType) {
+        if (accountType.equalsIgnoreCase("internal")) {
+            world.internalNavigation.navigateToLoginPage();
+            world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
+                    SecretsManager.getSecretValue("intEnvPassword"));
+        } else if (accountType.equalsIgnoreCase("self serve")) {
+            world.selfServeNavigation.navigateToLoginPage();
+            world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                    SecretsManager.getSecretValue("intEnvPassword"));
+        } else {
+            throw new IllegalArgumentException("Unknown account type: " + accountType);
+        }
     }
 
     @When("I navigate to an existing licence {string}")
@@ -57,10 +65,5 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
     }
 
-    @Given("I have a prep internal account")
-    public void iHaveAPrepInternalAccount() {
-        world.internalNavigation.navigateToLoginPage();
-        world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
-                SecretsManager.getSecretValue("intEnvPassword"));
-    }
+
 }
