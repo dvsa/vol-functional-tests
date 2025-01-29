@@ -1,9 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.aws.s3.SecretsManager;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 public class PrepTestsStepDefs extends BasePage {
 
@@ -16,8 +18,14 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Given("I have logged into Self Serve on PREP")
-    public void iHaveLoggedIntoSelfServeOnPREP() {
+    @Before
+    public void setEnvironmentToInt() {
+        world.configuration.env = EnvironmentType.INTEGRATION;
+    }
+
+    @Given("I have a prep self serve account")
+    public void iHaveAPrepSelfServeAccount() {
+        world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
                 SecretsManager.getSecretValue("intEnvPassword"));
     }
