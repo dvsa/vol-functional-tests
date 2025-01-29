@@ -24,6 +24,7 @@ public class World {
     public GrantLicence grantApplication;
     public InternalDetails internalDetails;
     public UpdateLicence updateLicence;
+    public Token token;
 
     public Configuration configuration;
     public DBUtils DBUtils;

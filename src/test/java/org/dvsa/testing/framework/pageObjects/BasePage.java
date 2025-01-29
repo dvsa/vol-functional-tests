@@ -77,7 +77,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTextPresent(String locator) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(3)).
+            new WebDriverWait(getDriver(), Duration.ofSeconds(5)).
                     until(WebDriver ->
                             visibilityOf(findElement(String.format("//*[contains(text(),'%s')]", locator), SelectorType.XPATH)));
         } catch (Exception e) {

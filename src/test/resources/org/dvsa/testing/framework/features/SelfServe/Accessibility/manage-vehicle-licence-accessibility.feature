@@ -1,5 +1,4 @@
 @ss_regression
-@accessibility
 Feature: Check that manage vehicle journey is accessible
 
   Background:

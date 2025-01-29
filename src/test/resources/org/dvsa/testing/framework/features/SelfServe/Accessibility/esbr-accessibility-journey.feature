@@ -1,4 +1,4 @@
-@accessibility @ss_regression @FullRegression
+@accessibility @FullRegression
 Feature: Check the EBSR journey is accessible
 
   Scenario:Scan for accessibility violations
@@ -7,4 +7,3 @@ Feature: Check the EBSR journey is accessible
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
     Then no issues should be present on the page
-

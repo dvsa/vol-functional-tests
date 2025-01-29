@@ -28,6 +28,7 @@ public class Initialisation {
         world.applicationDetails = new GetApplicationDetails(world.createApplication);
         world.grantApplication = new GrantLicence(world.createApplication);
         world.internalDetails = new InternalDetails();
+        world.token = new Token();
         world.updateLicence = new UpdateLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);

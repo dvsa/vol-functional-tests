@@ -155,27 +155,16 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public String getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(100000);
+    public void getResetPasswordLink() throws InterruptedException {
+        Thread.sleep(3000);
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
                 .replaceAll("=0A", "")
                 .replaceAll("=20", "")
-                .replaceAll("=\n", "")
-                .replaceAll("=\r", "");
-        String domainURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/reset-password").toString();
-        org.jsoup.nodes.Document doc = Jsoup.parse(sanitizedHTML);
-        Elements links = doc.select("a[href]");
-        for (Element link : links) {
-            String resetPasswordLink = link.attr("abs:href");
-            if (resetPasswordLink.contains(domainURL)) {
-                WebDriver driver = Browser.navigate();
-                driver.get(resetPasswordLink);
-                return resetPasswordLink;
-            }
-        }
-        throw new RuntimeException("Reset password link not found in HTML content.");
+                .replaceAll("=\r\n", "");
+        Browser.navigate().get(sanitizedHTML);
     }
+
 
     public static String getDates(String state, int months) {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -372,7 +361,7 @@ public class GenericUtils extends BasePage {
     public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode(env + "&&api&&olcs");
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
-                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node,batchCommand,env);
+                "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node, batchCommand, env);
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
         Thread.sleep(4000);
@@ -394,10 +383,10 @@ public class GenericUtils extends BasePage {
         // Cannot use this yet as the sudo commmand on the process queue requires a password
     }
 
-    public static  String readXML() throws IOException {
+    public static String readXML() throws IOException {
         String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
         String xmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
-        return  xmlContent;// Now xmlContent holds the XML content
+        return xmlContent;// Now xmlContent holds the XML content
     }
 
     public static void writeXmlStringToFile(String xmlString, String filePath) throws IOException {

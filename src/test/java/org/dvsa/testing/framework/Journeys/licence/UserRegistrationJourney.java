@@ -4,12 +4,10 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserRegistrationJourney extends BasePage {
-    private World world;
+    private final World world;
 
     public UserRegistrationJourney(World world) {
         this.world = world;

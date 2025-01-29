@@ -33,7 +33,7 @@ Feature: Transfer a vehicle
 
   @transfer-validation
   Scenario: Error validation
-    Given I have "3" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
+    Given I have "3" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "4"
     And I navigate to manage vehicle page on a licence
     When I clicks submit on "transfer" without checking a checkbox
     Then the standard "Select the vehicles that you want to transfer" errors appear

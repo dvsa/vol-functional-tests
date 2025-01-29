@@ -114,8 +114,6 @@ public class InternalNavigation extends BasePage {
     }
 
     public void loginAndGetApplication(boolean variation) throws HttpException {
-        if (world.updateLicence.getInternalUserId() == null)
-            world.APIJourney.createAdminUser();
         logInAsAdmin();
         if (variation) {
             getVariationApplication();

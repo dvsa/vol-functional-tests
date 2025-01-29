@@ -41,7 +41,6 @@ public class CheckCorrespondence extends BasePage {
     @Then("all correspondence for the application should be displayed")
     public void allCorrespondenceForTheApplicationShouldBeDisplayed() {
         waitForElementToBePresent("//table");
-        assertTrue(findElement("//table",SelectorType.XPATH,300).getText().contains(world.applicationDetails.getLicenceNumber()));
+        assertTrue(findElement("//table", SelectorType.XPATH, 300).getText().contains(world.applicationDetails.getLicenceNumber()));
     }
-
 }
