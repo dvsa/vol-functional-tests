@@ -14,7 +14,6 @@ import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
@@ -408,9 +407,7 @@ public class ManageApplications extends BasePage {
 
     @Given("I have an existing licence {string}")
     public void iHaveAnExistingLicence(String licenceNumber) {
-        if (!world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
-            world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
-        }
+        world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
         existingLicenceNumber = licenceNumber;
         clickByLinkText(existingLicenceNumber);
     }
