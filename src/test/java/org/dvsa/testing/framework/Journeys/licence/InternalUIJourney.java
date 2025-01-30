@@ -207,7 +207,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void addAPrepCase() {
-        click("//*[@id='add']", SelectorType.XPATH);
+        waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitAndClick("//*[@id='fields_categorys__chosen']/ul", SelectorType.XPATH);
         selectValueFromDropDownByIndex("fields[caseType]", SelectorType.ID, 1);
         waitAndClick("//*[@id='fields_categorys__chosen']/ul", SelectorType.XPATH);
