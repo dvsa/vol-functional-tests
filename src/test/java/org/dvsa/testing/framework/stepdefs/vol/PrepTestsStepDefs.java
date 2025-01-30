@@ -1,5 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
+import io.cucumber.java.en.And;
+import activesupport.IllegalBrowserException;
+import activesupport.aws.s3.SecretsManager;
+import io.cucumber.java.en.And;
+import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -10,10 +16,13 @@ import org.apache.hc.core5.http.HttpException;
 import org.openqa.selenium.By;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
 
 public class PrepTestsStepDefs extends BasePage {
 
@@ -26,22 +35,21 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Before
-    public void setEnvironmentToInt() {
-        world.configuration.env = EnvironmentType.INTEGRATION;
-    }
-
     @Given("I have a prep {string} account")
     public void iHaveAPrepAccount(String accountType) throws HttpException {
         if (accountType.equalsIgnoreCase("internal")) {
           world.internalNavigation.loginIntoInternal("intPrepUser");
         } else if (accountType.equalsIgnoreCase("self serve")) {
-            world.selfServeNavigation.navigateToLoginPage();
-            world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                    SecretsManager.getSecretValue("intEnvPassword"));
+            world.selfServeNavigation.loginIntoExternal("prepUser");
         } else {
             throw new IllegalArgumentException("Unknown account type: " + accountType);
         }
+    }
+
+    @And("I submit a {string} licence application")
+    public void iSubmitALicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
+        world.submitApplicationJourney.startANewLicenceApplication(licenceType);
+
     }
 
     @When("I navigate to an existing licence {string}")
@@ -64,7 +72,6 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
     }
 
-
     @And("I add a case")
     public void iAddACase() {
         world.internalUIJourney.addAPrepCase();
@@ -83,6 +90,5 @@ public class PrepTestsStepDefs extends BasePage {
         waitForElementToBePresent("//div[@class='govuk-summary-card__content']/p");
         WebElement messageContentElement = getDriver().findElement(By.xpath("//div[@class='govuk-summary-card__content']/p"));
         assertTrue(messageContentElement.getText().contains(world.messagingJourney.getRandomWord()), "Message content 'GnHDzYfVZx' is not present in the summary card");
-
     }
 }

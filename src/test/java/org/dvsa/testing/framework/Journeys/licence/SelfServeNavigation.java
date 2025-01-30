@@ -1,5 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.aws.s3.SecretsManager;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
@@ -9,7 +11,6 @@ import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -23,7 +24,6 @@ import java.time.Duration;
 
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
 public class SelfServeNavigation extends BasePage {
@@ -40,14 +40,14 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToExternalSearch() {
-       if (Browser.isBrowserOpen()) {
+        if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
         get(url.concat("search/"));
     }
 
-    public void navigateToFindLorryAndBusOperatorsSearch()  {
+    public void navigateToFindLorryAndBusOperatorsSearch() {
         navigateToExternalSearch();
         clickByLinkText("Lorry and bus operators");
     }
@@ -57,18 +57,18 @@ public class SelfServeNavigation extends BasePage {
         clickByLinkText("Vehicle operator decisions and applications");
     }
 
-    public void navigateToCheckerPage()  {
+    public void navigateToCheckerPage() {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
     }
 
     public void navigateToLoginPage() {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
     }
 
     public void navigateToCreateAnAccount() {
-        if(isLinkPresent("Sign out", 3)){
+        if (isLinkPresent("Sign out", 3)) {
             clickByLinkText("Sign out");
         }
         getDriver().manage().deleteAllCookies();
@@ -77,15 +77,15 @@ public class SelfServeNavigation extends BasePage {
         clickByLinkText("create an account");
     }
 
-    public void navigateToPage(String type, SelfServeSection page)  {
+    public void navigateToPage(String type, SelfServeSection page) {
         refreshPage();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
-                if(world.configuration.env.toString().equals("int")){
+                if (world.configuration.env.toString().equals("int")) {
                     clickByLinkText(existingLicenceNumber);
-                }else {
+                } else {
                     clickByLinkText(world.applicationDetails.getLicenceNumber());
                 }
                 waitForTitleToBePresent("View and amend your licence");
@@ -131,7 +131,7 @@ public class SelfServeNavigation extends BasePage {
         }
     }
 
-    public void navigateToNavBarPage(SelfServeNavBar page)  {
+    public void navigateToNavBarPage(SelfServeNavBar page) {
         switch (page.toString()) {
             case "Home":
                 clickByLinkText("Home");
@@ -146,12 +146,14 @@ public class SelfServeNavigation extends BasePage {
                 waitForTitleToBePresent(page.toString());
         }
     }
-/***
-    @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
-    This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
- */
-    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
-        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
+
+    /***
+     @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
+     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
+     */
+    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage) {
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
+        ;
         do {
             click("submit", SelectorType.ID);
             waitForPageLoad();
@@ -161,7 +163,7 @@ public class SelfServeNavigation extends BasePage {
         }
     }
 
-    public void enterAndSearchUntilTextIsPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString)  {
+    public void enterAndSearchUntilTextIsPresent(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String searchString) {
         findElement(selector, selectorType).sendKeys(searchString);
         long kickOut = System.currentTimeMillis() + 5000;
         do {
@@ -172,7 +174,7 @@ public class SelfServeNavigation extends BasePage {
         }
     }
 
-    public void navigateThroughApplication()  {
+    public void navigateThroughApplication() {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
 
@@ -224,5 +226,21 @@ public class SelfServeNavigation extends BasePage {
         String id = urlParts[urlParts.length - 3];
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
         navigate().get(myURL);
+    }
+
+    public void loginIntoExternal(String userName) {
+        navigateToLoginPage();
+        switch (userName) {
+            case "prepUser":
+                world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                        SecretsManager.getSecretValue("intEnvPassword"));
+                break;
+            case "prodUser":
+                world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
+                        SecretsManager.getSecretValue("intEnvPassword"));
+            default:
+                world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
+                break;
+        }
     }
 }

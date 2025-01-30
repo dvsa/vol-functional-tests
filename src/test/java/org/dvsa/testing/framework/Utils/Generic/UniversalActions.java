@@ -13,10 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UniversalActions extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(UniversalActions.class);
-    private static World world;
 
     public UniversalActions(World world) {
-        this.world = world;
     }
 
     public static void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
