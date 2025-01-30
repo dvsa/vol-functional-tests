@@ -1,5 +1,27 @@
 # Revision History for the VOL Functional Tests
 
+## [3.12.0](https://github.com/dvsa/vol-functional-tests/compare/v3.11.14...v3.12.0) (2025-01-30)
+
+
+### Bug Fixes
+
+* pulling in main ([6475da1](https://github.com/dvsa/vol-functional-tests/commit/6475da12d3ec861db03fa2102b306e618cc43c39))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([6d66bf1](https://github.com/dvsa/vol-functional-tests/commit/6d66bf12054a93af29c57aa13e982f2d4b10cd8a))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([fc3aa67](https://github.com/dvsa/vol-functional-tests/commit/fc3aa675ab2278f77e47c3913a423be0ac11f0cf))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([a8b5e9a](https://github.com/dvsa/vol-functional-tests/commit/a8b5e9a8e7d7c403ce94115823c6ecf12e077bb6))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([609cd0c](https://github.com/dvsa/vol-functional-tests/commit/609cd0c3f31fa780d7a465f56f4aab4d6002d981))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([082d325](https://github.com/dvsa/vol-functional-tests/commit/082d325239356c5ee90685a8a7be855756b17ecc))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([78f5f26](https://github.com/dvsa/vol-functional-tests/commit/78f5f263d2dbb67edccd84f666aafb67e50fc6f9))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([154398e](https://github.com/dvsa/vol-functional-tests/commit/154398ed21e57b3027685510ded7713af08de385))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([4d6bf80](https://github.com/dvsa/vol-functional-tests/commit/4d6bf80cd47dd5c735a3ad0e5bb0f5e62b25a114))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([4aa0dd7](https://github.com/dvsa/vol-functional-tests/commit/4aa0dd74ca2865a5cb2c0d4c9603c4e463fd55a8))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([9d2e283](https://github.com/dvsa/vol-functional-tests/commit/9d2e283f200d46194ae124b75581baf45d796bc2))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([6da8410](https://github.com/dvsa/vol-functional-tests/commit/6da84107795b877abd2b827ab16fc331a20039b5))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([97f88c7](https://github.com/dvsa/vol-functional-tests/commit/97f88c767caa6953ad7f1afc462b1ec0c00d4b6a))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([63f3baa](https://github.com/dvsa/vol-functional-tests/commit/63f3baac0a6478265fe9b761d850619571862cc1))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([cb473b9](https://github.com/dvsa/vol-functional-tests/commit/cb473b95883f470fcf31b2052fd7dac416ce3592))
+* updated login to external method to default to the username that someone passes in and password from secrets manager ([5f7e900](https://github.com/dvsa/vol-functional-tests/commit/5f7e900e2cd86ea4523e4a9fc385cffc855f00d6))
+
 ## [3.11.14](https://github.com/dvsa/vol-functional-tests/compare/v3.11.13...v3.11.14) (2025-01-29)
 
 
