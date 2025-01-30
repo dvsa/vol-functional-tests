@@ -4,7 +4,6 @@ import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -28,11 +27,20 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Given("I have a prep self serve account")
-    public void iHaveAPrepSelfServeAccount() {
-        world.selfServeNavigation.navigateToLoginPage();
-        world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                SecretsManager.getSecretValue("intEnvPassword"));
+
+    @Given("I have a prep {string} account")
+    public void iHaveAPrepAccount(String accountType) {
+        if (accountType.equalsIgnoreCase("internal")) {
+            world.internalNavigation.navigateToLoginPage();
+            world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
+                    SecretsManager.getSecretValue("intEnvPassword"));
+        } else if (accountType.equalsIgnoreCase("self serve")) {
+            world.selfServeNavigation.navigateToLoginPage();
+            world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                    SecretsManager.getSecretValue("intEnvPassword"));
+        } else {
+            throw new IllegalArgumentException("Unknown account type: " + accountType);
+        }
     }
 
     @And("I submit a {string} licence application")
@@ -58,12 +66,5 @@ public class PrepTestsStepDefs extends BasePage {
         String expectedEmail = world.DataGenerator.getOperatorUserEmail();
         WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email address' and contains(text(), '" + expectedEmail + "')]"));
         assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
-    }
-
-    @Given("I have a prep internal account")
-    public void iHaveAPrepInternalAccount() {
-        world.internalNavigation.navigateToLoginPage();
-        world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
-                SecretsManager.getSecretValue("intEnvPassword"));
     }
 }
