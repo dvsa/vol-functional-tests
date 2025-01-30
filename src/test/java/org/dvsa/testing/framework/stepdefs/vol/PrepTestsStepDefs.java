@@ -77,4 +77,12 @@ public class PrepTestsStepDefs extends BasePage {
         WebElement descriptionElement = getDriver().findElement(By.xpath("//dt[text()='Description']/following-sibling::dd"));
         assertTrue(descriptionElement.getText().contains("testing"), "Description 'testing' is not present in the case details");
     }
+
+    @Then("that licence number and conversation should be visible")
+    public void thatLicenceNumberAndConversationShouldBeVisible() {
+        assertTrue(isTextPresent("OB1057273"));
+        WebElement messageContentElement = getDriver().findElement(By.xpath("//div[@class='govuk-summary-card__content']/p"));
+        assertTrue(messageContentElement.getText().contains(world.messagingJourney.getRandomWord()), "Message content 'GnHDzYfVZx' is not present in the summary card");
+
+    }
 }
