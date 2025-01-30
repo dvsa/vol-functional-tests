@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +19,15 @@ public class MessagingJourney extends BasePage {
         this.world = world;
     }
 
+    String randomWord = Str.randomWord(10);
+
+    public String getRandomWord() {
+        return randomWord;
+    }
+
+    public void setRandomWord(String randomWord) {
+        this.randomWord = randomWord;
+    }
 
     public void messageHeading() {
         assertTrue(isTextPresent("Messages"));
@@ -59,8 +69,13 @@ public class MessagingJourney extends BasePage {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
-        selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
-        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, Str.randomWord(10));
+
+        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+            selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, "OB1057273");
+        } else {
+            selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+        }
+        waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, randomWord);
         clickById("send");
     }
 
