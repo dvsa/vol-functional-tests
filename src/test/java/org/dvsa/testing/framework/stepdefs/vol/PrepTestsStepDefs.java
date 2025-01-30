@@ -84,6 +84,7 @@ public class PrepTestsStepDefs extends BasePage {
     @Then("that licence number and conversation should be visible")
     public void thatLicenceNumberAndConversationShouldBeVisible() {
         assertTrue(isTextPresent("OB1057273"));
+        waitForElementToBePresent("//div[@class='govuk-summary-card__content']/p");
         WebElement messageContentElement = getDriver().findElement(By.xpath("//div[@class='govuk-summary-card__content']/p"));
         assertTrue(messageContentElement.getText().contains(world.messagingJourney.getRandomWord()), "Message content 'GnHDzYfVZx' is not present in the summary card");
 
