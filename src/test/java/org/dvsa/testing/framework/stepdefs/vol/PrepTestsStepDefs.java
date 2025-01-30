@@ -62,7 +62,6 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
     }
 
-
     @And("I add a case")
     public void iAddACase() {
         world.internalUIJourney.addAPrepCase();
