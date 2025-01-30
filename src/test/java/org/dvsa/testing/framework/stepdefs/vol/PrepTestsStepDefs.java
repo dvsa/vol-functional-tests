@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpException;
 import org.openqa.selenium.By;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -31,11 +32,9 @@ public class PrepTestsStepDefs extends BasePage {
     }
 
     @Given("I have a prep {string} account")
-    public void iHaveAPrepAccount(String accountType) {
+    public void iHaveAPrepAccount(String accountType) throws HttpException {
         if (accountType.equalsIgnoreCase("internal")) {
-            world.internalNavigation.navigateToLoginPage();
-            world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
-                    SecretsManager.getSecretValue("intEnvPassword"));
+          world.internalNavigation.loginIntoInternal("intPrepUser");
         } else if (accountType.equalsIgnoreCase("self serve")) {
             world.selfServeNavigation.navigateToLoginPage();
             world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
