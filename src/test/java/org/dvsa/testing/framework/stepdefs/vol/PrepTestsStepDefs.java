@@ -66,4 +66,15 @@ public class PrepTestsStepDefs extends BasePage {
     }
 
 
+    @And("I add a case")
+    public void iAddACase() {
+        world.internalUIJourney.addAPrepCase();
+    }
+
+    @Then("that case has been created")
+    public void thatCaseHasBeenCreated() {
+        assertTrue(isTextPresent("Created record"));
+        WebElement descriptionElement = getDriver().findElement(By.xpath("//dt[text()='Description']/following-sibling::dd"));
+        assertTrue(descriptionElement.getText().contains("testing"), "Description 'testing' is not present in the case details");
+    }
 }
