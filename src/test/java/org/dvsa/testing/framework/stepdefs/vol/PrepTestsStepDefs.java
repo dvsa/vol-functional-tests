@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -50,5 +52,12 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(transportManagerRow.isDisplayed(), "Transport manager's name is not displayed in the list");
         WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]"));
         assertTrue(emailCell.isDisplayed(), "Transport manager's email is not displayed in the list");
+    }
+
+    @Then("that user should be displayed in the list")
+    public void thatUserShouldBeDisplayedInTheList() {
+        String expectedEmail = world.DataGenerator.getOperatorUserEmail();
+        WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email address' and contains(text(), '" + expectedEmail + "')]"));
+        assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
     }
 }
