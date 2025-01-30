@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
