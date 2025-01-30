@@ -129,7 +129,7 @@ public class InternalNavigation extends BasePage {
     public void getCase() {
         String caseUrl;
         if (world.configuration.env.equals(EnvironmentType.INTEGRATION))    {
-            caseUrl = "https://iuweb.int.olcs.dvsacloud.uk/licence/318365/cases/";
+            caseUrl = this.url.concat("licence/318365/cases/");
         } else {
             caseUrl = this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId()));
         }
