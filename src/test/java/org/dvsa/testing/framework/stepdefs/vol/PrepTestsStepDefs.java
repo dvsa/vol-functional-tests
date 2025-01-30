@@ -1,8 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
-import activesupport.aws.s3.SecretsManager;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -28,15 +26,12 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-
     @Given("I have a prep {string} account")
     public void iHaveAPrepAccount(String accountType) throws HttpException {
         if (accountType.equalsIgnoreCase("internal")) {
           world.internalNavigation.loginIntoInternal("intPrepUser");
         } else if (accountType.equalsIgnoreCase("self serve")) {
-            world.selfServeNavigation.navigateToLoginPage();
-            world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                    SecretsManager.getSecretValue("intEnvPassword"));
+            world.selfServeNavigation.loginIntoExternal("prepUser");
         } else {
             throw new IllegalArgumentException("Unknown account type: " + accountType);
         }

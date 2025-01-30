@@ -11,7 +11,6 @@ import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -25,7 +24,6 @@ import java.time.Duration;
 
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
 public class SelfServeNavigation extends BasePage {
@@ -238,10 +236,10 @@ public class SelfServeNavigation extends BasePage {
                         SecretsManager.getSecretValue("intEnvPassword"));
                 break;
             case "prodUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
                         SecretsManager.getSecretValue("intEnvPassword"));
             default:
-                world.globalMethods.signIn(SecretsManager.getSecretValue(userName), SecretsManager.getSecretValue("internalNewPassword"));
+                world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
                 break;
         }
     }
