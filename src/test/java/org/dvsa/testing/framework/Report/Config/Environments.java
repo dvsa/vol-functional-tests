@@ -43,9 +43,9 @@ public class Environments {
             Element rootElement = doc.createElement("environment");
             doc.appendChild(rootElement);
 
-            Iterator it = envVariables.entrySet().iterator();
+            Iterator<Map.Entry<String, String>> it = envVariables.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry) it.next();
+                Map.Entry<String, String> pair = it.next();
                 // parameter element
                 Element supercar = doc.createElement("parameter");
                 rootElement.appendChild(supercar);

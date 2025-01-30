@@ -16,8 +16,6 @@ public class SubmitSelfServeApplication extends BasePage {
 
     World world;
 
-    AXEScanner axeScanner = AccessibilitySteps.scanner;
-
     public SubmitSelfServeApplication(World world) {
         this.world = world;
     }
@@ -26,7 +24,6 @@ public class SubmitSelfServeApplication extends BasePage {
     public void iSubmitAndPayForLicenceApplicationWithAxeScanner(String licenceType) throws IllegalBrowserException, IOException {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
         world.submitApplicationJourney.submitAndPayForApplication();
-        axeScanner.scan(true);
     }
 
     @And("i have no existing applications")

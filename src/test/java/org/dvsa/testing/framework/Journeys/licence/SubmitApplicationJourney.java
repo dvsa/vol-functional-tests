@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -17,6 +19,8 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.clickContinue;
@@ -28,49 +32,40 @@ public class SubmitApplicationJourney extends BasePage {
     private String licence;
     List<WebElement> applications;
 
+    private static final Logger LOGGER = LogManager.getLogger(SubmitApplicationJourney.class);
+
     public SubmitApplicationJourney(World world) {
         this.world = world;
     }
 
     public void cancelAndWithdrawExistingApplications() {
-        if (isElementPresent("//*/div[5]/table", SelectorType.XPATH)) {
-            applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
-            assert applications != null;
+        if (isElementPresent("//table", SelectorType.XPATH)) {
+            applications = findElements("//table/tbody/tr", SelectorType.XPATH);
             int attempts = 0;
-            while (attempts < 100) {
-                for (WebElement apps : applications) {
-                    applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
-                    try {
-                        if (isTextPresent("Not Yet Submitted")) {
-                            apps.click();
-                            waitAndClick("Cancel application", SelectorType.LINKTEXT);
-                            UniversalActions.clickSubmit();
-                        }
-                        if (isTextPresent("Under Consideration")) {
-                            apps.click();
-                            waitAndClick("Withdraw application", SelectorType.LINKTEXT);
-                            UniversalActions.clickSubmit();
-                        }
-                        if (isTextPresent("Awaiting grant fee")) {
-                            apps.click();
-                            String[] licenceNumber = getText("//*[@class='page-header__subtitle page-header__h3']", SelectorType.XPATH).split("/");
-                            world.internalNavigation.loginIntoInternal("intSystemAdmin");
-                            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0].trim(), licenceNumber[0].trim());
-                            withDrawApplication();
-                            String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-                            DriverUtils.get(myURL);
-                            refreshPageWithJavascript();
-                        }
-                    } catch (StaleElementReferenceException | HttpException e) {
-                        e.fillInStackTrace();
+
+            while (attempts < applications.size()) {
+                try {
+                    //Need to repopulate list after removing values
+                    applications = findElements("//table/tbody/tr", SelectorType.XPATH);
+                    String applicationId = applications.get(applications.size() - 1).getText().split(" ")[0];
+
+                    if (applications.get(applications.size() - 1).getText().contains("Not Yet Submitted")) {
+                        clickByLinkText(applicationId);
+                        waitAndClick("Cancel application", SelectorType.LINKTEXT);
+                        UniversalActions.clickSubmit();
+                    } else if (applications.get(applications.size() - 1).getText().contains("Under Consideration")) {
+                        clickByLinkText(applicationId);
+                        waitAndClick("Withdraw application", SelectorType.LINKTEXT);
+                        UniversalActions.clickSubmit();
                     }
-                    attempts++;
+                } catch (StaleElementReferenceException e) {
+                    LOGGER.error(e.getMessage(), e);
                 }
-                if (applications.size() == 0) {
+                if (applications.isEmpty()) {
                     break;
                 }
                 waitForTitleToBePresent("Licences");
-                refreshPageWithJavascript();
+                attempts++;
             }
         }
     }
@@ -117,6 +112,9 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
+        if(isTitlePresent("Transport Managers", 2)){
+            UniversalActions.clickSaveAndContinue();
+        }
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);
@@ -146,7 +144,10 @@ public class SubmitApplicationJourney extends BasePage {
 
     private void chooseLicenceType(String licenceType) {
         waitForTitleToBePresent("Type of licence");
-        waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
+        String radioBtnDisabled = getAttribute("//*[@id='type-of-licence[operator-location]']", SelectorType.XPATH, "disabled");
+        if (!radioBtnDisabled.equals("true")) {
+            waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
+        }
         waitAndClick("//*[contains(text(),'" + licenceType + "')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);

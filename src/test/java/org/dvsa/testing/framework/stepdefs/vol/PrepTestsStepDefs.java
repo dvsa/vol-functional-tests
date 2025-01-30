@@ -1,17 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
 
 public class PrepTestsStepDefs extends BasePage {
 
@@ -24,16 +27,17 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Before
-    public void setEnvironmentToInt() {
-        world.configuration.env = EnvironmentType.INTEGRATION;
-    }
 
     @Given("I have a prep self serve account")
     public void iHaveAPrepSelfServeAccount() {
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
                 SecretsManager.getSecretValue("intEnvPassword"));
+    }
+
+    @And("I submit a {string} licence application")
+    public void iSubmitALicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
+        world.submitApplicationJourney.startANewLicenceApplication(licenceType);
     }
 
     @When("I navigate to an existing licence {string}")

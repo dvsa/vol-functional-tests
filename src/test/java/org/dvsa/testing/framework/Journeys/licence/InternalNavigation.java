@@ -100,6 +100,8 @@ public class InternalNavigation extends BasePage {
             case "intSystemAdmin":
                 world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
                 break;
+            case "prepAdmin":
+                world.globalMethods.signIn(SecretsManager.getSecretValue("prepAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
             default:
                 world.internalNavigation.logInAsAdmin();
                 break;
