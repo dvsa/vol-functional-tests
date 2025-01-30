@@ -206,6 +206,18 @@ public class InternalUIJourney extends BasePage {
         UniversalActions.clickSubmit();
     }
 
+    public void addAPrepCase() {
+        waitAndClick("//*[@id='add']", SelectorType.XPATH);
+        waitAndClick("//*[@id='fields_categorys__chosen']/ul", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("fields[caseType]", SelectorType.ID, 1);
+        waitAndClick("//*[@id='fields_categorys__chosen']/ul", SelectorType.XPATH);
+        waitAndClick("//li[contains(text(),'Convictions')]", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='fields[description]']", SelectorType.XPATH, "testing");
+        waitAndEnterText("//*[@id='fields[ecmsNo]']", SelectorType.XPATH, "12345");
+        UniversalActions.clickSubmit();
+    }
+
+
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
         UniversalActions.clickSaveAndContinue();

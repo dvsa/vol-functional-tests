@@ -100,6 +100,9 @@ public class InternalNavigation extends BasePage {
             case "intSystemAdmin":
                 world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
                 break;
+            case "intPrepUser":
+                world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
+                break;
             default:
                 world.internalNavigation.logInAsAdmin();
                 break;
@@ -127,7 +130,13 @@ public class InternalNavigation extends BasePage {
     }
 
     public void getCase() {
-        get(this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId())));
+        String caseUrl;
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION))    {
+            caseUrl = this.url.concat("licence/318365/cases/");
+        } else {
+            caseUrl = this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId()));
+        }
+        get(caseUrl);
     }
 
     public void getCase(String caseId) {
