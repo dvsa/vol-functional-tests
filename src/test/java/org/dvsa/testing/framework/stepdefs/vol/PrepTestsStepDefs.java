@@ -28,7 +28,6 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-
     @Given("I have a prep self serve account")
     public void iHaveAPrepSelfServeAccount() {
         world.selfServeNavigation.navigateToLoginPage();
@@ -59,5 +58,12 @@ public class PrepTestsStepDefs extends BasePage {
         String expectedEmail = world.DataGenerator.getOperatorUserEmail();
         WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email address' and contains(text(), '" + expectedEmail + "')]"));
         assertTrue(emailCell.isDisplayed(), "User's email is not displayed in the list");
+    }
+
+    @Given("I have a prep internal account")
+    public void iHaveAPrepInternalAccount() {
+        world.internalNavigation.navigateToLoginPage();
+        world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"),
+                SecretsManager.getSecretValue("intEnvPassword"));
     }
 }
