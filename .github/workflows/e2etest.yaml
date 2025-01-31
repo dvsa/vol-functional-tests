@@ -93,6 +93,14 @@ jobs:
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Submit AWS Batch Job
         id: submit-job
         run: |
