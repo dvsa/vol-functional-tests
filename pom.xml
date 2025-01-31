@@ -217,7 +217,7 @@
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>10</forkCount>
                     <parallel>methods</parallel>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
