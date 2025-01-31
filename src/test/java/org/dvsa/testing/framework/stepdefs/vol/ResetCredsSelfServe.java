@@ -32,7 +32,7 @@ public class ResetCredsSelfServe extends BasePage{
 
     @Then("I will be sent an email with my username")
     public void iWillBeSentAnEmailWithMyUsername() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         assertEquals(world.configuration.getUsernameResetLink(), world.registerUser.getUserName());
     }
 }
