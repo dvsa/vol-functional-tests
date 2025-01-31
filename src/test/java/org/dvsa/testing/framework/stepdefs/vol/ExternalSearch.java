@@ -128,9 +128,8 @@ public class ExternalSearch extends BasePage {
 
     @And("i search for a vehicle")
     public void iSearchForAVehicle() {
-        String searchVrm = SecretsManager.getSecretValue("testLicenceVrm");
-        waitForTitleToBePresent("Find vehicles");
-        enterText("search", SelectorType.ID, searchVrm);
+        String searchVrm = "OC1057274";
+        waitAndEnterText("search", SelectorType.ID, searchVrm);
         clickById("submit");
     }
 
