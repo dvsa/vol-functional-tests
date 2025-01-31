@@ -1,9 +1,10 @@
-@INT-EXTERNAL-SEARCH
-@INT-SMOKE
+@PREP-SMOKE
+@PREP-EXTERNAL-SEARCH
+
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
   Background:
-    Given i have a self serve account
+    Given I have a prep "self serve" account
 
   Scenario Outline: Licence number external search for lorry and bus operators
     When I am on the external search page
