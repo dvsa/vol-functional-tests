@@ -163,6 +163,10 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
 
+    public void getLicence(String licenceId) {
+        get(this.url.concat(String.format("licence/%s", licenceId)));
+    }
+
     public void getVariationApplication() {
         get(this.url.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
