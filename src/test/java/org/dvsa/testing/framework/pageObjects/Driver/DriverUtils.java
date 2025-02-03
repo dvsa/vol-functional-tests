@@ -82,6 +82,11 @@ public class DriverUtils {
         getDriver().switchTo().window(windowHandle);
     }
 
+    public static void switchToIframe(String iframeId) {
+        getDriver().switchTo().frame(iframeId);
+    }
+
+
     public static Set<String> getWindowHandles() {
         return getDriver().getWindowHandles();
     }
