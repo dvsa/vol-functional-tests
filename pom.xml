@@ -215,9 +215,9 @@
                         -Xmx${jvmMemory}m
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>10</forkCount>
+                    <forkCount>6</forkCount>
                     <parallel>methods</parallel>
-                    <threadCountMethods>30</threadCountMethods>
+                    <threadCountMethods>10</threadCountMethods>
                     <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
