@@ -217,6 +217,7 @@
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>15</forkCount>
                     <parallel>methods</parallel>
+                    <threadCountMethods>30</threadCountMethods>
                     <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
