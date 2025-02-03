@@ -54,4 +54,9 @@ public class InternalNavigation extends BasePage {
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "licence/318365/").toString();
         DriverUtils.get(myURL);
     }
+
+    @And("i url search for my licence {string}")
+    public void iUrlSearchForMyLicence(String applicationId) {
+        world.internalNavigation.getLicence(applicationId);
+    }
 }
