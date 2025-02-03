@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.12.1](https://github.com/dvsa/vol-functional-tests/compare/v3.12.0...v3.12.1) (2025-02-03)
+
+
+### Bug Fixes
+
+* added a test to generate a letter ([b278405](https://github.com/dvsa/vol-functional-tests/commit/b27840522fb80cdb7642314503ab9c19c4fdded1))
+
 ## [3.12.0](https://github.com/dvsa/vol-functional-tests/compare/v3.11.14...v3.12.0) (2025-01-30)
 
 
