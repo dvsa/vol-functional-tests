@@ -205,7 +205,7 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addNewPersonAsTransportManager(String licenceType) {
-        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitForTextToBePresent("Transport Managers");
             waitAndClick("//button[@id='add']", SelectorType.XPATH);
             waitAndClick("addUser", SelectorType.ID);
