@@ -1,6 +1,5 @@
 @PP-SMOKE
 @PP-MESSAGING
-
 Feature: Create a Conversation
 
   Scenario: Starting new message conversation with the valid licence
