@@ -7,8 +7,8 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     And I am on the external search page
 
   Scenario: Address external user search for lorry and bus operators
-    When I search for a lorry and bus operator by "address","","","","SOUTHAMPTON, UB2 5BD"
-    Then search results page addresses "SOUTHAMPTON, UB2 5BD" should only display address belonging to our licence "OG2052578"
+    When I search for a lorry and bus operator by "address","OK1145697","","",""
+    Then search results page addresses "HAMPTON, UB2 5BD" should only display address belonging to our licence "OK1145697"
 
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","ANNULAR LIMITED (MLH)","",""
