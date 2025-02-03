@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -51,26 +52,35 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
-        refreshPageWithJavascript();
-        waitForTitleToBePresent("Application overview");
-        String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
-        clickByLinkText("Home");
-        getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
-                .stream()
-                .distinct()
-                .filter(x -> x.getText().contains(app))
-                .findAny().ifPresent(WebElement::click);
+        if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+            refreshPageWithJavascript();
+            waitForTitleToBePresent("Application overview");
+            String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
+            clickByLinkText("Home");
+            getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
+                    .stream()
+                    .distinct()
+                    .filter(x -> x.getText().contains(app))
+                    .findAny().ifPresent(WebElement::click);
+        }
+
         waitForTextToBePresent("Review and declarations");
-        waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
+        if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+            waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
+        }
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+        UniversalActions.ClickPayAndSubmit();
         waitForTextToBePresent("Would you like to use a stored card?");
         selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
         UniversalActions.clickPay();
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);
-        waitForTitleToBePresent("Application over" +
-                "view");
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+            switchToIframe("scp_threeDSecure_iframe");
+            waitAndClick("//*[@id='authenticateSubmit']", SelectorType.XPATH);
+            waitForTitleToBePresent("Application overview");
+        }
+        waitForTitleToBePresent("Application overview");
     }
 }

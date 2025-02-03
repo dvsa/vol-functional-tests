@@ -60,9 +60,9 @@ public class UniversalActions extends BasePage {
         waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
-    public static void clickPay() {
-        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-    }
+    public static void clickPay() {waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);}
+
+    public static void ClickPayAndSubmit() {waitAndClick( "//*[@id='submitAndPay']", SelectorType.XPATH);}
 
     public static void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
