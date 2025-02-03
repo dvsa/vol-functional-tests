@@ -5,10 +5,14 @@
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <version>3.12.2-SNAPSHOT</version>
 =======
     <version>3.12.1</version>
 >>>>>>> 2463075af (chore(main): release 3.12.1)
+=======
+    <version>3.12.2-SNAPSHOT</version>
+>>>>>>> 92dd01e0a (chore(main): release 3.12.2-SNAPSHOT)
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
