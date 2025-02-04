@@ -53,7 +53,6 @@ public class CreateApplications extends BasePage {
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
-            refreshPageWithJavascript();
             waitForTitleToBePresent("Application overview");
             String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
@@ -63,7 +62,6 @@ public class CreateApplications extends BasePage {
                     .filter(x -> x.getText().contains(app))
                     .findAny().ifPresent(WebElement::click);
         }
-
         waitForTextToBePresent("Review and declarations");
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
