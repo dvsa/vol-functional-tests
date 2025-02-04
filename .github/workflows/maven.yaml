@@ -22,6 +22,7 @@ jobs:
        - uses: actions/setup-java@v4
          with:
            distribution: 'temurin'
+           java-version: '21'
            cache: 'maven'
            servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
 
