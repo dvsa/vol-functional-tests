@@ -26,4 +26,4 @@ jobs:
            cache: 'maven'
            servers: '[{ "id":"dvsa-github-packages", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } },{ "id":"github-publish", "configuration": { "httpHeaders": { "property": { "name":"Authorization", "value":"Bearer ${{ secrets.GITHUB_TOKEN }}"} } } } ]'
 
-       - run: mvn -B -P github ${{ inputs.maven-goal}} --file pom.xml
+       - run: mvn -B -P github ${{ inputs.maven-goal}}
