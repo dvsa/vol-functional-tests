@@ -1,10 +1,8 @@
 @PP-SMOKE
-<<<<<<< HEAD
-=======
 @PP-FEE
 
->>>>>>> 2daa626c1 (chore: tags and envs)
 Feature: Operator pays a fee
+
 
   @PP-SS-CARD-FEE
   Scenario: User pays a fee on their licence application
