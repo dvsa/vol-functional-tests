@@ -180,7 +180,19 @@ public class SelfServeUIJourney extends BasePage {
         UniversalActions.refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
+    }
 
+    public void prepVariation() {
+        waitAndClick("OB1057273", SelectorType.LINKTEXT);
+        waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
+        waitAndClick("change your licence", SelectorType.LINKTEXT);
+        UniversalActions.clickSubmit();
+        waitAndClick("//button[text()='QUARRY HOUSE, LEEDS, LS2 7UE']", SelectorType.XPATH);
+        replaceText("noOfVehiclesRequired", SelectorType.ID, "10");
+        UniversalActions.clickSubmit();
+        UniversalActions.clickSubmit();
+        replaceText("totAuthHgvVehicles", SelectorType.ID, "10");
+        UniversalActions.clickSave();
     }
 
     public void removeFirstVehicleOnVehiclePage() {
