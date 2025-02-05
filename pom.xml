@@ -215,7 +215,7 @@
                         -Xmx${jvmMemory}m
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>12</forkCount>
+                    <forkCount>8</forkCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                     <properties>
