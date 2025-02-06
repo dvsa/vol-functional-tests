@@ -1,5 +1,13 @@
 # Revision History for the VOL Functional Tests
 
+## [3.13.0](https://github.com/dvsa/vol-functional-tests/compare/v3.12.1...v3.13.0) (2025-02-06)
+
+
+### Features
+
+* task allocation test ([692f76c](https://github.com/dvsa/vol-functional-tests/commit/692f76c05f93b9d4e98fa0cfb94a3b32c30b8a61))
+* variation test ([d567941](https://github.com/dvsa/vol-functional-tests/commit/d567941d4ab0dbf19f0db8f81e3dc205eb448e33))
+
 ## [3.12.1](https://github.com/dvsa/vol-functional-tests/compare/v3.12.0...v3.12.1) (2025-02-03)
 
 
