@@ -61,8 +61,10 @@ public class PrepTestsStepDefs extends BasePage {
 
     @Then("that new transport manager is showing in the list")
     public void thatNewTransportManagerIsShowingInTheList() {
+        waitForElementToBePresent("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]");
         WebElement transportManagerRow = getDriver().findElement(By.xpath("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]"));
         assertTrue(transportManagerRow.isDisplayed(), "Transport manager's name is not displayed in the list");
+        waitForElementToBePresent("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]");
         WebElement emailCell = getDriver().findElement(By.xpath("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]"));
         assertTrue(emailCell.isDisplayed(), "Transport manager's email is not displayed in the list");
     }
