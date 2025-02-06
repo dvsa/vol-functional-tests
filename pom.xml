@@ -34,7 +34,7 @@
         <zt-zip.version>1.15</zt-zip.version>
         <java.version>11</java.version>
 
-        <jvmMemory>6000</jvmMemory>
+        <jvmMemory>5000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -216,8 +216,9 @@
                         -Xmx${jvmMemory}m
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>6</forkCount>
+                    <forkCount>10</forkCount>
                     <parallel>methods</parallel>
+                    <threadCount>10</threadCount>
                     <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
