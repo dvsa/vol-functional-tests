@@ -1,5 +1,5 @@
 @PP-SMOKE
-@PP-ADD-USER
+@PP-ADD-CASE
 
 Feature: Add a user account
 

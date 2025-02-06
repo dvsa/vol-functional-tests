@@ -1,4 +1,5 @@
 @PP-SMOKE
+@PP-FEE
 
 Feature: Operator pays a fee
 

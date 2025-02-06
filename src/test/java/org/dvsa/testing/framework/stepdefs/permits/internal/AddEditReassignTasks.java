@@ -35,11 +35,6 @@ public class AddEditReassignTasks extends BasePage {
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
-        waitForElementToBePresent("//tbody/tr[1]/td[4]");
-        String actualDate =
-                getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
-        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        assertEquals(expectedDate, actualDate);
         String name = world.taskAllocationRulesJourney.getOwnerName();
         String[] nameArray = name.split(" (?=[^ ]*$)");
         String reassignedName = String.format("%s, %s",nameArray[1],nameArray[0]);

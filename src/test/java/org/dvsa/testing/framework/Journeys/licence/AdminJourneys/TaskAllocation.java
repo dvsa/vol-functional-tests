@@ -5,6 +5,7 @@ import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.util.HashMap;
 
@@ -22,9 +23,19 @@ public class TaskAllocation extends BasePage {
     public String getDescription() {return description;}
 
     public void findLicenceAndNavigate() {
-        enterText("search", SelectorType.NAME,   world.applicationDetails.getLicenceNumber());
+        String licenceNumber;
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+            licenceNumber = "OC1057274";
+        } else {
+            licenceNumber = world.applicationDetails.getLicenceNumber();
+        }
+        enterText("search", SelectorType.NAME, licenceNumber);
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
-        world.internalNavigation.getLicence();
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+            waitAndClick("OC1057274", SelectorType.LINKTEXT);
+        } else {
+            world.internalNavigation.getLicence();
+        }
         waitAndClick("Processing", SelectorType.LINKTEXT);
         waitAndClick("id[]", SelectorType.NAME);
     }
