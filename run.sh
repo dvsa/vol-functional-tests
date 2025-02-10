@@ -53,6 +53,12 @@ check_environment_variables() {
 
 check_environment_variables || exit 1
 
+# Check if platformEnv is "int" and replace with "qa"
+if [ "${platformEnv}" = "int" ]; then
+    echo "Replacing platformEnv 'int' with 'qa'"
+    platformEnv="qa"
+fi
+
 # Echo the command to be captured in logs
 echo "Now running [ mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=_hidden_ -Dtag.name=\"(not ${exclude_tags})\" -Dcucumber.filter.tags=${cucumberTags} ] .."
 
