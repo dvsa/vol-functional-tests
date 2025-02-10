@@ -71,7 +71,7 @@ public class DeclarationPageSteps extends BasePage {
 
     @Then("I am continuing on the on-going ECMT removal application")
     public void iAmContinuingOnTheOngoingECMT() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.loginIntoExternal(world.registerUser.getUserName());
         HomePageJourney.selectPermitTab();
         HomePage.PermitsTab.selectFirstOngoingApplication();
     }
