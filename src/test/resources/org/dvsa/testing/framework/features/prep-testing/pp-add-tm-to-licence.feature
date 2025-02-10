@@ -1,6 +1,5 @@
 @PP-SMOKE
 @PP-ADD-TM
-
 Feature: Add a transport Manager to a licence
 
   Scenario: User adds a transport manager to a licence

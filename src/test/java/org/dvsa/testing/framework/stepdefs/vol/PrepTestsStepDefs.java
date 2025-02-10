@@ -51,7 +51,6 @@ public class PrepTestsStepDefs extends BasePage {
     @And("I submit a {string} licence application")
     public void iSubmitALicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
-
     }
 
     @When("I navigate to an existing licence {string}")

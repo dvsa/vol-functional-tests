@@ -8,4 +8,3 @@ Feature: Add a user account
     When I navigate to a case
     And I add a case
     Then that case has been created
-

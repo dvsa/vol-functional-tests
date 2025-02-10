@@ -27,11 +27,11 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        if(!getCurrentUrl().contains("tm-declaration")) {
+        if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
-        }else {
+        } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
@@ -53,7 +53,6 @@ public class CreateApplications extends BasePage {
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
-            refreshPageWithJavascript();
             waitForTitleToBePresent("Application overview");
             String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
@@ -63,7 +62,6 @@ public class CreateApplications extends BasePage {
                     .filter(x -> x.getText().contains(app))
                     .findAny().ifPresent(WebElement::click);
         }
-
         waitForTextToBePresent("Review and declarations");
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);

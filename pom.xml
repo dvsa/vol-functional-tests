@@ -4,13 +4,14 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
+
     <version>3.13.1-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
-        <active-support.version>2.5.11</active-support.version>
+        <active-support.version>2.5.12</active-support.version>
         <api-calls.version>2.8.0</api-calls.version>
         <uri-constructor.version>2.0.7</uri-constructor.version>
 
@@ -215,9 +216,8 @@
                         -Xmx${jvmMemory}m
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>8</forkCount>
+                    <forkCount>10</forkCount>
                     <parallel>methods</parallel>
-                    <threadCount>10</threadCount>
                     <reuseForks>true</reuseForks>
                     <properties>
                         <!-- Work around. Surefire does not include enough
