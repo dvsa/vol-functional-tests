@@ -1,5 +1,24 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.0](https://github.com/dvsa/vol-functional-tests/compare/v3.13.0...v3.14.0) (2025-02-10)
+
+
+### Features
+
+* task allocation test ([0124aee](https://github.com/dvsa/vol-functional-tests/commit/0124aeef15beb9242dc3dbee9643943855ed3202))
+* variation test ([5cbd516](https://github.com/dvsa/vol-functional-tests/commit/5cbd51622376b6e386775339aab7d5f608bca75f))
+
+
+### Bug Fixes
+
+* broken search ([d25b5e7](https://github.com/dvsa/vol-functional-tests/commit/d25b5e798061d7c7edb2458959f6bad0cb6a9fe2))
+* increase jvms to 6 and reduce jvm ram ([0f00777](https://github.com/dvsa/vol-functional-tests/commit/0f00777ef9f86dd0f6a2318ed5e237a55c33df4d))
+* incresed jvm ram and reduced jvms to 5: ([b78564b](https://github.com/dvsa/vol-functional-tests/commit/b78564b4bff775117d9b720b64c1093efc2f48d6))
+* reduce jvms to 5 and reduce jvm ram ([8de0a4f](https://github.com/dvsa/vol-functional-tests/commit/8de0a4fd9de52377516727fcff8ad6fa19c4b0fe))
+* removed forks ([e18c909](https://github.com/dvsa/vol-functional-tests/commit/e18c909f7a6241f4976f5bd74c931b4cf7c37434))
+* removed unneccessary step for application payment ([f13d5d2](https://github.com/dvsa/vol-functional-tests/commit/f13d5d28430feb4371df76c6296db75dbd62a594))
+* unlicensed operator ([b66dcbb](https://github.com/dvsa/vol-functional-tests/commit/b66dcbb717727c8a2d99e37e3fb169b6b32ee3b4))
+
 ## [3.13.0](https://github.com/dvsa/vol-functional-tests/compare/v3.12.1...v3.13.0) (2025-02-06)
 
 
