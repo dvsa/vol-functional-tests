@@ -232,14 +232,20 @@ public class SelfServeNavigation extends BasePage {
         navigateToLoginPage();
         switch (userName) {
             case "prepUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                        SecretsManager.getSecretValue("intEnvPassword"));
+                if (!isTextPresent("Current licences")) {
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                }
                 break;
             case "prodUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
-                        SecretsManager.getSecretValue("intEnvPassword"));
+                if (!isTextPresent("Current licences")) {
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                }
             default:
-                world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
+                if (!isTextPresent("Current licences")) {
+                    world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
+                }
                 break;
         }
     }
