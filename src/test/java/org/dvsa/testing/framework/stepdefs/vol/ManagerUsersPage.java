@@ -54,16 +54,12 @@ public class ManagerUsersPage extends BasePage {
 
     @Given("i have an internal admin user")
     public void iHaveAnInternalAdminUser() throws HttpException {
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            System.out.println("API NOT CURRENT SUPPORTED ON THIS ENV");
-        } else {
-            world.internalNavigation.logInAsAdmin();
-        }
+        world.internalNavigation.logInAsAdmin();
     }
 
     @Then("{string} users show in the user table")
     public void the_new_user_shows_in_the_user_table(String userCount) {
-        assertTrue(isTextPresent(userCount +" Current users"));
+        assertTrue(isTextPresent(userCount + " Current users"));
     }
 
     @Then("i remove the user")
