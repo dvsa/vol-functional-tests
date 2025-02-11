@@ -21,6 +21,8 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
 import static activesupport.driver.Browser.navigate;
@@ -30,6 +32,12 @@ public class SelfServeNavigation extends BasePage {
 
     private final World world;
     private final String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+
+    private static final AtomicInteger counter = new AtomicInteger(0);
+
+    private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
+
 
     public SelfServeNavigation(World world) {
         this.world = world;
@@ -229,18 +237,32 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void loginIntoExternal(String userName) {
-        navigateToLoginPage();
-        switch (userName) {
-            case "prepUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                        SecretsManager.getSecretValue("intEnvPassword"));
-                break;
-            case "prodUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
-                        SecretsManager.getSecretValue("intEnvPassword"));
-            default:
-                world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
-                break;
+        lock.writeLock().lock();
+        try {
+            navigateToLoginPage();
+            String actualUserName = userName;
+            if ("prepUser".equals(userName)) {
+                actualUserName = counter.getAndIncrement() % 2 == 0 ? "prepUser" : "prepUser2";
+            }
+            switch (actualUserName) {
+                case "prepUser":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
+                case "prepUser2":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser2"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
+                case "prodUser":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
+                default:
+                    world.globalMethods.signIn(actualUserName, SecretsManager.getSecretValue("internalNewPassword"));
+                    break;
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 }

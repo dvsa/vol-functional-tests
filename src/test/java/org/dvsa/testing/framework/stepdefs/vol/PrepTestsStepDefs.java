@@ -18,6 +18,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
@@ -25,10 +26,12 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class PrepTestsStepDefs extends BasePage {
 
     private final World world;
+    private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     Initialisation initialisation;
 
@@ -39,12 +42,17 @@ public class PrepTestsStepDefs extends BasePage {
 
     @Given("I have a prep {string} account")
     public void iHaveAPrepAccount(String accountType) throws HttpException {
-        if (accountType.equalsIgnoreCase("internal")) {
-          world.internalNavigation.loginIntoInternal("intPrepUser");
-        } else if (accountType.equalsIgnoreCase("self serve")) {
-            world.selfServeNavigation.loginIntoExternal("prepUser");
-        } else {
-            throw new IllegalArgumentException("Unknown account type: " + accountType);
+        lock.writeLock().lock();
+        try {
+            if (accountType.equalsIgnoreCase("internal")) {
+                world.internalNavigation.loginIntoInternal("intPrepUser");
+            } else if (accountType.equalsIgnoreCase("self serve")) {
+                world.selfServeNavigation.loginIntoExternal("prepUser");
+            } else {
+                throw new IllegalArgumentException("Unknown account type: " + accountType);
+            }
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 

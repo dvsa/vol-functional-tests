@@ -12,6 +12,6 @@ Feature: Create and submit application
     @submit-variation-prep
     Scenario: User creates a variation on an existing licence
       Given i increase my vehicle authority count on an existing licence
-      When a status of update required should be shown next to financial evidence
+      Then a status of update required should be shown next to Review and declarations
       Then i cancel my variation application
 

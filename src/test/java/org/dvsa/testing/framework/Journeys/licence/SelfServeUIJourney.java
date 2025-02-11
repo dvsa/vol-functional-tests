@@ -183,15 +183,19 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void prepVariation() {
-        waitAndClick("OB1057273", SelectorType.LINKTEXT);
+        waitAndClick("OC1057274", SelectorType.LINKTEXT);
         waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
         waitAndClick("change your licence", SelectorType.LINKTEXT);
         UniversalActions.clickSubmit();
-        waitAndClick("//button[text()='QUARRY HOUSE, LEEDS, LS2 7UE']", SelectorType.XPATH);
+        waitAndClick("//button[text()='test 2, MANCHESTER, M12 6AQ']", SelectorType.XPATH);
         replaceText("noOfVehiclesRequired", SelectorType.ID, "10");
         UniversalActions.clickSubmit();
+        clickByXPath("//*[@id='permission']");
         UniversalActions.clickSubmit();
-        replaceText("totAuthHgvVehicles", SelectorType.ID, "10");
+        replaceText("noOfTrailersRequired", SelectorType.ID, "10");
+        waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
+        UniversalActions.clickSubmit();
+        replaceText("totAuthTrailers", SelectorType.ID, "10");
         UniversalActions.clickSave();
     }
 
