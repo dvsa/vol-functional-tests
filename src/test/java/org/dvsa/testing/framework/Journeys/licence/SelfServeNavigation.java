@@ -240,6 +240,10 @@ public class SelfServeNavigation extends BasePage {
                 case "prepUser2":
                     user = SecretsManager.getSecretValue("prepUser2");
                     break;
+                case "prepUser2":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser2"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
                 case "prodUser":
                     user = SecretsManager.getSecretValue("prodUser");
                     break;
