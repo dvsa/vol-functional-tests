@@ -236,6 +236,10 @@ public class SelfServeNavigation extends BasePage {
                     world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
                             SecretsManager.getSecretValue("intEnvPassword"));
                     break;
+                case "prepUser2":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser2"),
+                            SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
                 case "prodUser":
                     world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
                             SecretsManager.getSecretValue("intEnvPassword"));

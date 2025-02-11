@@ -160,7 +160,7 @@ public class BusRegistrationJourney extends BasePage {
         refreshPageWithJavascript();
         String ebsrFileName;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
             ebsrFileName = existingLicenceNumber.concat("EBSR.zip");
         } else {
             ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
