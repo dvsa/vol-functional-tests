@@ -1,5 +1,4 @@
 @Admin-Payment-Processing
-@int_regression
 @CPMS_tests
 @ec2_smoke
 @printAndSign
