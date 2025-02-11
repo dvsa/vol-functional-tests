@@ -22,6 +22,7 @@ import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -37,12 +38,12 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Given("I have a prep {string} account")
-    public void iHaveAPrepAccount(String accountType) throws HttpException {
+    @Given("I log into prep {string} account with user {string}")
+    public void iLogIntoPrepAccountWithUser(String accountType, String userAccount) throws HttpException {
         if (accountType.equalsIgnoreCase("internal")) {
-          world.internalNavigation.loginIntoInternal("intPrepUser");
+          world.internalNavigation.loginIntoInternal(userAccount);
         } else if (accountType.equalsIgnoreCase("self serve")) {
-            world.selfServeNavigation.loginIntoExternal("prepUser");
+            world.selfServeNavigation.loginIntoExternal(userAccount);
         } else {
             throw new IllegalArgumentException("Unknown account type: " + accountType);
         }
@@ -105,5 +106,11 @@ public class PrepTestsStepDefs extends BasePage {
         waitAndClick("Cancel application", SelectorType.LINKTEXT);
         UniversalActions.clickSubmit();
         assertTrue(isTextPresent("Application cancelled"));
+    }
+
+    @Then("the user should be able to review their application")
+    public void theUserShouldBeAbleToReviewTheirApplication() {
+        refreshPageWithJavascript();
+        assertTrue(isTextPresent("Review and declarations"));
     }
 }

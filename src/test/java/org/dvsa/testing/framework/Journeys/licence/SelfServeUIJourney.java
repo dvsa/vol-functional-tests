@@ -183,7 +183,7 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void prepVariation() {
-        waitAndClick("OB1057273", SelectorType.LINKTEXT);
+        waitAndClick("PC1057277", SelectorType.LINKTEXT);
         waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
         waitAndClick("change your licence", SelectorType.LINKTEXT);
         UniversalActions.clickSubmit();

@@ -4,7 +4,7 @@
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
   Background:
-    Given I have a prep "self serve" account
+    Given I log into prep "self serve" account with user "prepUser"
 
   @PREP-EXTERNAL-SEARCH
   Scenario Outline: Licence number external search for lorry and bus operators

@@ -70,7 +70,7 @@ public class MessagingJourney extends BasePage {
         selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
 
-        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
+        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
             selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, "OB1057273");
         } else {
             selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
