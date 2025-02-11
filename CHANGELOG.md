@@ -1,5 +1,22 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.2](https://github.com/dvsa/vol-functional-tests/compare/v3.14.1...v3.14.2) (2025-02-11)
+
+
+### Bug Fixes
+
+* ammended broken permits test on login ([83a7bb7](https://github.com/dvsa/vol-functional-tests/commit/83a7bb71710f08ee1265b8b1eefd54db441392d0))
+* break ([b926fdc](https://github.com/dvsa/vol-functional-tests/commit/b926fdccb528dde960c667d9bb1d4b06bba15edf))
+* reinstating the force to QA ([c91dad2](https://github.com/dvsa/vol-functional-tests/commit/c91dad2423bcbcf831af6d3796f6057df3f07aeb))
+* reinstating the force to QA ([d23f1ea](https://github.com/dvsa/vol-functional-tests/commit/d23f1ea2bf4be51f2d94333ae5d46008c6cf4cf4))
+* reinstating the force to QA ([aaaee29](https://github.com/dvsa/vol-functional-tests/commit/aaaee29bd6b554ce71a288c880c600118d17a2fb))
+* reinstating the force to QA ([b5d7bad](https://github.com/dvsa/vol-functional-tests/commit/b5d7bad238d0d4f45c3641e9f3f0e2bb894ba7b8))
+* tidying uo ([f39cb3e](https://github.com/dvsa/vol-functional-tests/commit/f39cb3e55b108a6ab4c89da4f1cc10b1cad69b9e))
+* updated login step ([05b3fcc](https://github.com/dvsa/vol-functional-tests/commit/05b3fcc88e42e6851d1259dc8b0b8822acae4044))
+* upgraded active support version ([ae9e316](https://github.com/dvsa/vol-functional-tests/commit/ae9e316833829c3756e4f9d0adb63cd0a879f999))
+* upgraded active support version ([6db43c9](https://github.com/dvsa/vol-functional-tests/commit/6db43c9cdca7661a8dedf1c3ec9c95103d436a9c))
+* upgraded active support version ([22f6c2c](https://github.com/dvsa/vol-functional-tests/commit/22f6c2cb33d69d8cffd486febab0c0903eb41106))
+
 ## [3.14.1](https://github.com/dvsa/vol-functional-tests/compare/v3.14.0...v3.14.1) (2025-02-10)
 
 
