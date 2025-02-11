@@ -52,7 +52,7 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(domainURL);
         try {
-            String updatedPassword = enterCredentialsAndLogin(username, emailAddress, newPassword);
+            enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
             e.printStackTrace();
         }
@@ -62,7 +62,7 @@ public class GlobalMethods extends BasePage {
         }
     }
 
-    public String enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
+    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
@@ -88,10 +88,8 @@ public class GlobalMethods extends BasePage {
                 click(nameAttribute("input", "submit"), SelectorType.CSS);
                 setLoginPassword(newPassword);
                 untilNotInDOM(submitButton, 1);
-                return newPassword;
             }
         }
-        return null;
     }
 
     public void signIn(String userName, String password) {
