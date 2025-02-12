@@ -52,7 +52,7 @@ public class CreateApplications extends BasePage {
 
     @And("i pay my second application with my saved card details")
     public void iPayMySecondApplicationWithMySavedCardDetails() {
-        if (!world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitForTitleToBePresent("Application overview");
             String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
@@ -63,7 +63,7 @@ public class CreateApplications extends BasePage {
                     .findAny().ifPresent(WebElement::click);
         }
         waitForTextToBePresent("Review and declarations");
-        if (!world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         }
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
@@ -74,7 +74,7 @@ public class CreateApplications extends BasePage {
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);
-        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             switchToIframe("scp_threeDSecure_iframe");
             waitAndClick("//*[@id='authenticateSubmit']", SelectorType.XPATH);
             waitForTitleToBePresent("Application overview");

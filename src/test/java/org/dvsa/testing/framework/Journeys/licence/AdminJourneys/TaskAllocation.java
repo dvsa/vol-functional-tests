@@ -24,14 +24,14 @@ public class TaskAllocation extends BasePage {
 
     public void findLicenceAndNavigate() {
         String licenceNumber;
-        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             licenceNumber = "OC1057274";
         } else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
         }
         enterText("search", SelectorType.NAME, licenceNumber);
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
-        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("OC1057274", SelectorType.LINKTEXT);
         } else {
             world.internalNavigation.getLicence();
