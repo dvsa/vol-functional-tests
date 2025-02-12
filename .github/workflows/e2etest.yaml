@@ -72,7 +72,8 @@ jobs:
         id: set-job-name
         run: |
           buildtime=$(date +"%Y%m%d%H%M%S")
-          echo "job_name=e2e-$buildtime-${{ github.run_id }}" >> $GITHUB_OUTPUT
+          cucumber_tags="${{ inputs.cucumber_tags }}"
+          echo "job_name=e2e-$buildtime-${{ github.run_id }}-$cucumber_tags" >> $GITHUB_OUTPUT
 
   run-batch:
     name: Run Tests on AWS Batch
