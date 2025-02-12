@@ -67,7 +67,7 @@ public class MessagingJourney extends BasePage {
 
     public void createNewConversationAndSelectTheLicenceNumber() {
         clickByLinkText("Start a new conversation");
-        selectRandomValueFromDropDown("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH,1);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
 
         if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {

@@ -90,22 +90,24 @@ public class InternalNavigation extends BasePage {
 
     public void loginIntoInternal(String userRole) throws HttpException {
         navigateToLoginPage();
-        switch (userRole) {
-            case "limitedReadOnlyUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
-                break;
-            case "readOnlyUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
-                break;
-            case "intSystemAdmin":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
-                break;
-            case "intPrepUser":
-                world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
-                break;
-            default:
-                world.internalNavigation.logInAsAdmin();
-                break;
+        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
+            switch (userRole) {
+                case "limitedReadOnlyUser":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                    break;
+                case "readOnlyUser":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                    break;
+                case "intSystemAdmin":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
+                case "intPrepUser":
+                    world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
+                    break;
+                default:
+                    world.internalNavigation.logInAsAdmin();
+                    break;
+            }
         }
     }
 
