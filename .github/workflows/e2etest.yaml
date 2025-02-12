@@ -73,7 +73,8 @@ jobs:
         run: |
           buildtime=$(date +"%Y%m%d%H%M%S")
           cucumber_tags="${{ inputs.cucumber_tags }}"
-          echo "job_name=e2e-$buildtime-${{ github.run_id }}-$cucumber_tags" >> $GITHUB_OUTPUT
+          sanitized_tags=$(echo "$cucumber_tags" | tr -cd 'a-zA-Z0-9-_')
+          echo "job_name=e2e-$buildtime-${{ github.run_id }}-$sanitized_tags" >> $GITHUB_OUTPUT
 
   run-batch:
     name: Run Tests on AWS Batch
