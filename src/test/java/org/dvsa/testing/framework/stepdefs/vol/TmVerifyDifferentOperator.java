@@ -175,7 +175,7 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
-        if (world.configuration.env.equals(EnvironmentType.INTEGRATION)) {
+        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             clickByLinkText("Transport Managers");
             world.transportManagerJourney.addNewTmPrepTest();
         } else {
