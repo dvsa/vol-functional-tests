@@ -230,22 +230,29 @@ public class SelfServeNavigation extends BasePage {
 
     public void loginIntoExternal(String userName) {
         navigateToLoginPage();
+        String user;
+        String password;
         if (!isTextPresent("Current licences")) {
             switch (userName) {
                 case "prepUser":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser"),
-                            SecretsManager.getSecretValue("intEnvPassword"));
+                    user = SecretsManager.getSecretValue("prepUser");
                     break;
                 case "prepUser2":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("prepUser2"),
-                            SecretsManager.getSecretValue("intEnvPassword"));
+                    user = SecretsManager.getSecretValue("prepUser2");
                     break;
                 case "prodUser":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("prodUser"),
-                            SecretsManager.getSecretValue("intEnvPassword"));
+                    user = SecretsManager.getSecretValue("prodUser");
+                    break;
                 default:
-                    world.globalMethods.signIn(userName, SecretsManager.getSecretValue("internalNewPassword"));
+                    user = userName;
+                    break;
             }
+            if (user != null && (user.equals(userName))) {
+                password = SecretsManager.getSecretValue("internalNewPassword");
+            } else {
+                password = SecretsManager.getSecretValue("intEnvPassword");
+            }
+            world.globalMethods.signIn(user, password);
         }
     }
 }

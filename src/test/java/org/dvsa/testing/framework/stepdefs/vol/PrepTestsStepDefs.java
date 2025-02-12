@@ -23,6 +23,7 @@ import org.openqa.selenium.WebElement;
 import java.io.IOException;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -61,7 +62,7 @@ public class PrepTestsStepDefs extends BasePage {
 
     @Then("that new transport manager is showing in the list")
     public void thatNewTransportManagerIsShowingInTheList() {
-        waitForElementToBePresent("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]");
+        refreshPageWithJavascript();
         WebElement transportManagerRow = getDriver().findElement(By.xpath("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]"));
         assertTrue(transportManagerRow.isDisplayed(), "Transport manager's name is not displayed in the list");
         waitForElementToBePresent("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]");
@@ -96,8 +97,8 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(messageContentElement.getText().contains(world.messagingJourney.getRandomWord()), "Message content 'GnHDzYfVZx' is not present in the summary card");
     }
 
-    @When("i increase my vehicle authority count on an existing licence")
-    public void iIncreaseMyVehicleAuthorityCountOnAnExistingLicence() {
+    @When("i reduce my vehicle authority count on an existing licence")
+    public void iReduceMyVehicleAuthorityCountOnAnExistingLicence() {
         world.selfServeUIJourney.prepVariation();
     }
 
@@ -112,5 +113,15 @@ public class PrepTestsStepDefs extends BasePage {
     public void theUserShouldBeAbleToReviewTheirApplication() {
         refreshPageWithJavascript();
         assertTrue(isTextPresent("Review and declarations"));
+    }
+
+    @Then("a variation application should be created")
+    public void aVariationApplicationShouldBeCreated() {
+        assertTrue(getCurrentUrl().contains("variation"));
+    }
+
+    @And("the licence authorisation should be {string}")
+    public void theLicenceAuthorisationShouldBe(String status) {
+        assertEquals(status,getText("//*[@id='overview-item__operating_centres']/strong", SelectorType.XPATH));
     }
 }
