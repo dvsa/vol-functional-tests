@@ -150,24 +150,15 @@ public class APIJourney {
                         world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
                         world.registerConsultantAndOperator.getConsultantDetails().getEmailAddress()
                 );
-                world.userDetails.getUserDetails(
-                        UserType.EXTERNAL.asString(),
+                world.userDetails.getUserDetails(UserType.EXTERNAL.asString(),
                         world.registerConsultantAndOperator.getConsultantDetails().getUserId(),
                         world.registerConsultantAndOperator.getConsultantDetails().getUserName(),
                         SecretsManager.getSecretValue("internalNewPassword")
                 );
             } else {
                 world.registerUser.registerUser();
-                world.selfServeNavigation.navigateToLogin(
-                        world.registerUser.getUserName(),
-                        world.registerUser.getEmailAddress()
-                );
-                world.userDetails.getUserDetails(
-                        UserType.EXTERNAL.asString(),
-                        world.registerUser.getUserId(),
-                        world.registerUser.getUserName(),
-                        SecretsManager.getSecretValue("internalNewPassword")
-                );
+                world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+                world.userDetails.getUserDetails(UserType.EXTERNAL.asString(), world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
             }
         } finally {
             writeLock.unlock();

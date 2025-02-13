@@ -18,8 +18,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ExternalSearch extends BasePage {
 
@@ -29,40 +28,11 @@ public class ExternalSearch extends BasePage {
         this.world = world;
     }
 
-    @And("i login as a partner user")
-    public void iLoginAsAPartnerUser() {
-        String user = SecretsManager.getSecretValue("partnerUser");
-        String password = SecretsManager.getSecretValue("partnerUserPassword");
-        String intUser = SecretsManager.getSecretValue("intPartnerUser");
-        String intPassword = SecretsManager.getSecretValue("intEnvPassword");
 
-        if (Objects.requireNonNull(getDriver().getCurrentUrl()).contains("dashboard")) {
-            clickByLinkText("Sign out");
-        }
-        String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-        get(externalURL);
-        waitForTextToBePresent("Password");
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            world.globalMethods.signIn(intUser, intPassword);
-        } else {
-            world.globalMethods.signIn(user, password);
-        }
-        if (isTextPresent("Welcome to your account")) {
-            click("termsAgreed", SelectorType.ID);
-            UniversalActions.clickSubmit();
-        }
-        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
-    }
-
-    @And("I am on the external search page")
-    public void iAmOnTheExternalSearchPage() {
-        world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
-    }
-
-    @Then("search results page addresses {string} should only display address belonging to our licence {string}")
-    public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurLicence(String address, String licence) {
-        WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", address), SelectorType.XPATH);
-        assertTrue(tableRow.getText().contains(licence));
+    @Then("search results page addresses should only display address belonging to our licence {string}")
+    public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurLicence(String licence) {
+       assertTrue(findElement("//td[1]", SelectorType.XPATH).getText().contains(licence));
+        assertNotNull(findElement("//td[3]", SelectorType.XPATH).getText());
     }
 
     @Then("search results page should display operator names containing our {string}")

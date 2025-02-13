@@ -35,7 +35,7 @@ public class GovSignInJourney extends BasePage {
         String userName = SecretsManager.getSecretValue("basicAuthUserName");
         String passWord = SecretsManager.getSecretValue("basicAuthPassword");
         try {
-            URL redirectURL = new URL(Browser.navigate().getCurrentUrl());
+            URL redirectURL = new URL(Objects.requireNonNull(navigate().getCurrentUrl()));
             String urlWithUnsecureProtocol = redirectURL.getProtocol().concat(String.format("://%s:%s@" + redirectURL.getAuthority() + redirectURL.getFile(), userName, passWord));
             Browser.navigate().get(urlWithUnsecureProtocol);
         }catch (Exception e){
