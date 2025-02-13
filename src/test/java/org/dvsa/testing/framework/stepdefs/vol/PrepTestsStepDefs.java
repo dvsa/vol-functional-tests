@@ -22,6 +22,8 @@ import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -37,12 +39,12 @@ public class PrepTestsStepDefs extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Given("I have a prep {string} account")
-    public void iHaveAPrepAccount(String accountType) throws HttpException {
+    @Given("I log into prep {string} account with user {string}")
+    public void iLogIntoPrepAccountWithUser(String accountType, String userAccount) throws HttpException {
         if (accountType.equalsIgnoreCase("internal")) {
-          world.internalNavigation.loginIntoInternal("intPrepUser");
+          world.internalNavigation.loginIntoInternal(userAccount);
         } else if (accountType.equalsIgnoreCase("self serve")) {
-            world.selfServeNavigation.loginIntoExternal("prepUser");
+            world.selfServeNavigation.loginIntoExternal(userAccount);
         } else {
             throw new IllegalArgumentException("Unknown account type: " + accountType);
         }
@@ -60,7 +62,7 @@ public class PrepTestsStepDefs extends BasePage {
 
     @Then("that new transport manager is showing in the list")
     public void thatNewTransportManagerIsShowingInTheList() {
-        waitForElementToBePresent("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]");
+        refreshPageWithJavascript();
         WebElement transportManagerRow = getDriver().findElement(By.xpath("//td[@data-heading='Name']/a[contains(text(), 'prep-forename prep-familyname')]"));
         assertTrue(transportManagerRow.isDisplayed(), "Transport manager's name is not displayed in the list");
         waitForElementToBePresent("//td[@data-heading='Email' and contains(text(), 'prep-email@example.com')]");
@@ -95,8 +97,8 @@ public class PrepTestsStepDefs extends BasePage {
         assertTrue(messageContentElement.getText().contains(world.messagingJourney.getRandomWord()), "Message content 'GnHDzYfVZx' is not present in the summary card");
     }
 
-    @When("i increase my vehicle authority count on an existing licence")
-    public void iIncreaseMyVehicleAuthorityCountOnAnExistingLicence() {
+    @When("i reduce my vehicle authority count on an existing licence")
+    public void iReduceMyVehicleAuthorityCountOnAnExistingLicence() {
         world.selfServeUIJourney.prepVariation();
     }
 
@@ -105,5 +107,21 @@ public class PrepTestsStepDefs extends BasePage {
         waitAndClick("Cancel application", SelectorType.LINKTEXT);
         UniversalActions.clickSubmit();
         assertTrue(isTextPresent("Application cancelled"));
+    }
+
+    @Then("the user should be able to review their application")
+    public void theUserShouldBeAbleToReviewTheirApplication() {
+        refreshPageWithJavascript();
+        assertTrue(isTextPresent("Review and declarations"));
+    }
+
+    @Then("a variation application should be created")
+    public void aVariationApplicationShouldBeCreated() {
+        assertTrue(getCurrentUrl().contains("variation"));
+    }
+
+    @And("the licence authorisation should be {string}")
+    public void theLicenceAuthorisationShouldBe(String status) {
+        assertEquals(status,getText("//*[@id='overview-item__operating_centres']/strong", SelectorType.XPATH));
     }
 }

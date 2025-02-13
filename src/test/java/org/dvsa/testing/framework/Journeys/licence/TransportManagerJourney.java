@@ -213,7 +213,7 @@ public class TransportManagerJourney extends BasePage {
             enterText("familyName", SelectorType.ID, "prep-familyname");
             LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
             enterDateFieldsByPartialId("dob", dob);
-            enterText("username", SelectorType.ID, "prepusername" + randomInt);
+            enterText("username", SelectorType.ID, "prepusername" + System.currentTimeMillis());
             enterText("emailAddress", SelectorType.ID, "prep-email@example.com");
             enterText("emailConfirm", SelectorType.ID, "prep-email@example.com");
         } else {
@@ -237,7 +237,6 @@ public class TransportManagerJourney extends BasePage {
         clickByLinkText("change your licence");
         UniversalActions.clickSubmit();
         addNewPersonAsTransportManager(null);
-
     }
 
     public void assertTMDetailsWithOperator() {

@@ -17,6 +17,7 @@ import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServeUIJourney extends BasePage {
@@ -177,21 +178,17 @@ public class SelfServeUIJourney extends BasePage {
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         UniversalActions.clickSubmit();
-        UniversalActions.refreshPageWithJavascript();
+        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     public void prepVariation() {
-        waitAndClick("OB1057273", SelectorType.LINKTEXT);
-        waitAndClick("Operating centres and authorisation", SelectorType.LINKTEXT);
+        waitAndClick("OF2054541", SelectorType.LINKTEXT);
+        waitAndClick("Licence authorisation", SelectorType.LINKTEXT);
         waitAndClick("change your licence", SelectorType.LINKTEXT);
         UniversalActions.clickSubmit();
-        waitAndClick("//button[text()='QUARRY HOUSE, LEEDS, LS2 7UE']", SelectorType.XPATH);
-        replaceText("noOfVehiclesRequired", SelectorType.ID, "10");
-        UniversalActions.clickSubmit();
-        UniversalActions.clickSubmit();
-        replaceText("totAuthHgvVehicles", SelectorType.ID, "10");
+        waitAndEnterText("totAuthLgvVehicles", SelectorType.ID, "1");
         UniversalActions.clickSave();
     }
 

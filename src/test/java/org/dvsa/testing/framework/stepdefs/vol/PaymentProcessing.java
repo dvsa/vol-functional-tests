@@ -36,7 +36,7 @@ public class PaymentProcessing extends BasePage {
     public void whenIPayForTheFeeBy(String arg0) {
         waitForTextToBePresent("Fee No.");
         refreshPage();
-        String feeAmount = String.valueOf(findElement("//*/tbody/tr[1]/td[5]", SelectorType.XPATH, 10).getText()).substring(1);
+        String feeAmount = findElement("//*/tbody/tr[1]/td[5]", SelectorType.XPATH, 10).getText().substring(1);
         setFeeNumber(world.genericUtils.stripAlphaCharacters(String.valueOf(findElement("//*/tbody/tr[1]/td[1]", SelectorType.XPATH, 10).getText())));
         world.feeAndPaymentJourney.selectFeeById(feeNumber);
         if (arg0.equals("card")) {
