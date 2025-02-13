@@ -70,6 +70,9 @@ public class TmVerifyDifferentOperator extends BasePage {
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
         waitForTextToBePresent("What happens next?");
+        if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
+            click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+        }
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));

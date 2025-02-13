@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.OperatorType;
 import io.cucumber.java.en.And;
@@ -11,12 +12,16 @@ import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -481,5 +486,30 @@ public class ManageApplications extends BasePage {
         }
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createPartialApplication();
+    }
+
+    @And("I am on the external search page")
+    public void iAmOnTheExternalSearchPage() {
+        world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
+    }
+
+    @And("i login as a partner user")
+    public void iLoginAsAPartnerUser() {
+        String user = SecretsManager.getSecretValue("partnerUser");
+        String password = SecretsManager.getSecretValue("partnerUserPassword");
+
+        if (Objects.requireNonNull(getDriver().getCurrentUrl()).contains("dashboard")) {
+            clickByLinkText("Sign out");
+        }
+        String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+        get(externalURL);
+        waitForTextToBePresent("Password");
+
+        world.globalMethods.signIn(user, password);
+        if (isTextPresent("Welcome to your account")) {
+            click("termsAgreed", SelectorType.ID);
+            UniversalActions.clickSubmit();
+        }
+        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
     }
 }
