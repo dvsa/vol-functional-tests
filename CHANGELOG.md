@@ -1,5 +1,14 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.4](https://github.com/dvsa/vol-functional-tests/compare/v3.14.3...v3.14.4) (2025-02-13)
+
+
+### Bug Fixes
+
+* changing env type to pre production ([48c792d](https://github.com/dvsa/vol-functional-tests/commit/48c792dfdc35d5cb77e0aed365c23910fe2681e3))
+* comment out ([92c62a9](https://github.com/dvsa/vol-functional-tests/commit/92c62a928f655aba95e83111b7506967a6aedbf8))
+* updated login and test steps ([d42a7d3](https://github.com/dvsa/vol-functional-tests/commit/d42a7d30ca8dbcd5da7c582b9a89aa99153e9e07))
+
 ## [3.14.3](https://github.com/dvsa/vol-functional-tests/compare/v3.14.2...v3.14.3) (2025-02-12)
 
 
