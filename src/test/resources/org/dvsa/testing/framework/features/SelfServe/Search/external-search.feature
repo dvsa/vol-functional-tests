@@ -3,12 +3,12 @@
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
   Background:
-    Given i have a self serve account
-    And I am on the external search page
+    Given I am on the external search page
 
+  @address_search
   Scenario: Address external user search for lorry and bus operators
     When I search for a lorry and bus operator by "address","","","","OK1145697"
-    Then search results page addresses "HAMPTON, UB2 5BD" should only display address belonging to our licence "OK1145697"
+    Then search results page addresses should only display address belonging to our licence "OK1145697"
 
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","ANNULAR LIMITED (MLH)","",""

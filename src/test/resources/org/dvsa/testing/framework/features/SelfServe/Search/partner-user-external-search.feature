@@ -5,8 +5,7 @@
 Feature: Partner user external search by Address, Business name, Licence Number and Person's name
 
   Background:
-    Given i have a self serve account
-    And i login as a partner user
+    Given i login as a partner user
 
   @ec2_smoke
   Scenario: Business name partner external search for lorry and bus operators
