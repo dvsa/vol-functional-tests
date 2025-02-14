@@ -1,5 +1,17 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.5](https://github.com/dvsa/vol-functional-tests/compare/v3.14.4...v3.14.5) (2025-02-14)
+
+
+### Bug Fixes
+
+* changing env type to pre production ([0ab9c93](https://github.com/dvsa/vol-functional-tests/commit/0ab9c935d58dcca27dd4047fc344f1237febf913))
+* increased memory to 7gb ([f36e34d](https://github.com/dvsa/vol-functional-tests/commit/f36e34dcb1b441d3968c23a028e60d6b6467dd89))
+* reduced threads to 8 ([8c0bf00](https://github.com/dvsa/vol-functional-tests/commit/8c0bf004d88aaaef32c54ada34cf44a4a000dcc2))
+* remove threads ([fbebc14](https://github.com/dvsa/vol-functional-tests/commit/fbebc14793b6a68f40663df0995ec9a2b690e9a7))
+* remove threads ([8a95b20](https://github.com/dvsa/vol-functional-tests/commit/8a95b2012446bc366983891dec5f30487c3f1142))
+* updated failing tests ([830bcef](https://github.com/dvsa/vol-functional-tests/commit/830bcef7a79c239a325d280ea6c05f7296cfdb7d))
+
 ## [3.14.4](https://github.com/dvsa/vol-functional-tests/compare/v3.14.3...v3.14.4) (2025-02-13)
 
 
