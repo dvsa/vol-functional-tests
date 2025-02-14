@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.6](https://github.com/dvsa/vol-functional-tests/compare/v3.14.5...v3.14.6) (2025-02-14)
+
+
+### Bug Fixes
+
+* reduce jvm to 4gb ([28a6418](https://github.com/dvsa/vol-functional-tests/commit/28a6418dc1726fcaa08b500fc0a7aa23b7507aa9))
+
 ## [3.14.5](https://github.com/dvsa/vol-functional-tests/compare/v3.14.4...v3.14.5) (2025-02-14)
 
 
