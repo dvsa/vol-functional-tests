@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
+import apiCalls.eupaActions.OrganisationAPIEupa;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 
@@ -21,7 +21,7 @@ public class LicencePageSteps {
 
     @Then("I should see the type of licence next to each licence")
     public void iShouldSeeTheTypeOfLicence() {
-        List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
+        List<LicenceModel> expectedLicences = OrganisationAPIEupa.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
 
         if (!(SelectALicencePage.numberOfLicences() > 1)) {
             assertTrue(SelectALicencePage.getLicenceNumberWithType().contains("Standard International"));
