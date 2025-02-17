@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import activesupport.aws.s3.SecretsManager;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

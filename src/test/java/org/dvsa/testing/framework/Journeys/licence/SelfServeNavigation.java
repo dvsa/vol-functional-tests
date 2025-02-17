@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.aws.s3.SecretsManager;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.Driver;
 
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;

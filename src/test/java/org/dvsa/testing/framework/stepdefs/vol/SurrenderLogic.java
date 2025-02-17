@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;

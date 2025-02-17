@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

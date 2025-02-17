@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.internal.admin.permits;
 
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

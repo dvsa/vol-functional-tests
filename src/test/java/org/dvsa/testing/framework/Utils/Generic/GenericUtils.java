@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
 import activesupport.MissingRequiredArgument;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import activesupport.number.Int;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;

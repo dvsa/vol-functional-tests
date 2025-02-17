@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.packages.Browser;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.logging.Log;
