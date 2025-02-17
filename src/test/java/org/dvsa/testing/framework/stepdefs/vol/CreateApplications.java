@@ -39,6 +39,7 @@ public class CreateApplications extends BasePage {
 
     @Then("the application should be submitted")
     public void theApplicationShouldBeSubmitted() {
+        refreshPageWithJavascript();
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Your application reference number is"));
     }
