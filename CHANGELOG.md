@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.7](https://github.com/dvsa/vol-functional-tests/compare/v3.14.6...v3.14.7) (2025-02-17)
+
+
+### Bug Fixes
+
+* task allocation index fix ([4d3b46d](https://github.com/dvsa/vol-functional-tests/commit/4d3b46d61852c0c91422139ba06d3b74deac6963))
+
 ## [3.14.6](https://github.com/dvsa/vol-functional-tests/compare/v3.14.5...v3.14.6) (2025-02-14)
 
 
