@@ -89,7 +89,7 @@ public class BasePermitJourney extends BasePermitPage {
     }
 
     public void assertHeadingPresentInSubmissionPanel() {
-        assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
+        assertEquals("Application submitted", BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH));
     }
 
     public void assertReferenceNumberPresentInPanelBody() {
