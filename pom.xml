@@ -32,7 +32,7 @@
         <jsoup.version>1.18.3</jsoup.version>
         <gson.version>2.11.0</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <jvmMemory>4000</jvmMemory>
     </properties>
