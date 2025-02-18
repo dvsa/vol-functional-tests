@@ -27,7 +27,9 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
+        waitForTextToBePresent("Applications for a new licence");
+        String currentUrl = getCurrentUrl();
+        if (!currentUrl.contains("tm-declaration") && (currentUrl.contains("dashboard"))) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
@@ -39,7 +41,6 @@ public class CreateApplications extends BasePage {
 
     @Then("the application should be submitted")
     public void theApplicationShouldBeSubmitted() {
-        refreshPageWithJavascript();
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Your application reference number is"));
     }
