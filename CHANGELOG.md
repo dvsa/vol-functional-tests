@@ -1,5 +1,18 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.8](https://github.com/dvsa/vol-functional-tests/compare/v3.14.7...v3.14.8) (2025-02-18)
+
+
+### Bug Fixes
+
+* ebsr fix ([663e1e9](https://github.com/dvsa/vol-functional-tests/commit/663e1e9a668cff3e4fe0f12879436dfbc425ae68))
+* increased forks and optimised sign in ([c296819](https://github.com/dvsa/vol-functional-tests/commit/c296819ce1c3d3447e72aa08d93e9d523c987e16))
+* optimised pay card method ([88508fa](https://github.com/dvsa/vol-functional-tests/commit/88508fa676dee4820c54137271292d65bd1dbdd8))
+* optimised pay card method ([1493989](https://github.com/dvsa/vol-functional-tests/commit/1493989261646b84f9cc7dcd7c4a51e39d2c3192))
+* put back ebrs file ([d23499d](https://github.com/dvsa/vol-functional-tests/commit/d23499d9129e92acb442e64bd59a7f3721b8e198))
+* reduced permits test in smoke ([538ddeb](https://github.com/dvsa/vol-functional-tests/commit/538ddeb1528da0a19eedff53721e604d60f49fd9))
+* updated saved card ([fba7aef](https://github.com/dvsa/vol-functional-tests/commit/fba7aef74214baa9312eaaf5231b47266e3bc950))
+
 ## [3.14.7](https://github.com/dvsa/vol-functional-tests/compare/v3.14.6...v3.14.7) (2025-02-17)
 
 
