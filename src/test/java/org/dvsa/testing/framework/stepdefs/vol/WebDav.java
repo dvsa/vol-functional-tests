@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import io.cucumber.java.en.And;

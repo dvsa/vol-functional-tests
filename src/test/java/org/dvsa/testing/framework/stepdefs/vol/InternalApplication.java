@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;

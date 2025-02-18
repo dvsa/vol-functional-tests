@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

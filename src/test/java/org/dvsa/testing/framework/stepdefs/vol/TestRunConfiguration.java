@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;

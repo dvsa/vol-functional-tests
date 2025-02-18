@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;

@@ -32,8 +32,7 @@
         <jsoup.version>1.18.3</jsoup.version>
         <gson.version>2.11.0</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <selenium.version>4.28.1</selenium.version>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
 
         <jvmMemory>4000</jvmMemory>
     </properties>
@@ -179,11 +178,6 @@
             <groupId>com.thedeanda</groupId>
             <artifactId>lorem</artifactId>
             <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>${selenium.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

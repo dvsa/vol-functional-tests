@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ReceiptPage;

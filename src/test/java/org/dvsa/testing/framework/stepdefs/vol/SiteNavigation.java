@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;

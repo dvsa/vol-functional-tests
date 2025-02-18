@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.pageObjects;
 
-
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dvsa.testing.framework.packages.Browser;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

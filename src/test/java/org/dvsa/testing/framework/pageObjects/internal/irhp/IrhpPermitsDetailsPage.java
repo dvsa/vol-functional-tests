@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.internal.irhp;
 
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;

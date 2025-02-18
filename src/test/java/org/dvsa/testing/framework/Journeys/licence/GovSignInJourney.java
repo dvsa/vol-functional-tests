@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

@@ -4,7 +4,7 @@ import activesupport.aws.s3.SecretsManager;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.net.QuotedPrintableCodec;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;

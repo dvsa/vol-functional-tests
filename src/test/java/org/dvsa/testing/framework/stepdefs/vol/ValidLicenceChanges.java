@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;

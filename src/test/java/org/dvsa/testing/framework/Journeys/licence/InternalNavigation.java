@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
-import org.dvsa.testing.framework.packages.Browser;
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
