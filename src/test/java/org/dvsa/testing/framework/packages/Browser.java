@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.parallel.FirefoxSetUp;
 import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
+import java.util.Optional;
 
 public class Browser {
 
@@ -21,10 +22,8 @@ public class Browser {
     private static String portNumber;
     private static String platform;
     private static String browserVersion;
-    protected static
-    ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+    protected static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
     private static final Logger LOGGER = LogManager.getLogger(Browser.class);
-
 
     public static Configuration configuration = new Configuration();
 
@@ -69,7 +68,6 @@ public class Browser {
     }
 
     public static WebDriver navigate() {
-        //set driver
         if (getDriver() == null) {
             setGridURL(System.getProperty("gridURL"));
             setPlatform(System.getProperty("platform"));
@@ -83,61 +81,51 @@ public class Browser {
         return getDriver();
     }
 
-    public static WebDriver getDriver(){
+    public static WebDriver getDriver() {
         return threadLocalDriver.get();
     }
 
-    public static String hubURL(){
-        gridURL = gridURL == null ? "http://localhost:4444/wd/hub" : gridURL;
-        return gridURL;
+    public static String hubURL() {
+        return Optional.ofNullable(gridURL).orElse("http://localhost:4444/wd/hub");
     }
 
     private static void whichBrowser(String browserName) throws IllegalBrowserException, MalformedURLException {
-        browserName = browserName.toLowerCase().trim();
-        ChromeSetUp chrome = new ChromeSetUp();
-        FirefoxSetUp firefox = new FirefoxSetUp();
-        EdgeSetUp edge = new EdgeSetUp();
+        var chrome = new ChromeSetUp();
+        var firefox = new FirefoxSetUp();
+        var edge = new EdgeSetUp();
 
-        switch (browserName) {
-            case "chrome":
-                driver = chrome.driver();
-                break;
-            case "edge":
-                driver = edge.driver();
-                break;
-            case "firefox":
-                driver = firefox.driver();
-                break;
-            case "safari":
-                break;
-            case "headless":
+        driver = switch (browserName.toLowerCase().trim()) {
+            case "chrome" -> chrome.driver();
+            case "edge" -> edge.driver();
+            case "firefox" -> firefox.driver();
+            case "safari" -> null;
+            case "headless" -> {
                 chrome.getChromeOptions().addArguments("--headless");
-                driver = chrome.driver();
-                break;
-            case "chrome-proxy":
-                chrome.getChromeOptions().setProxy(ProxyConfig.dvsaProxy().setSslProxy(getIpAddress().concat(":"+getPortNumber())));
-                driver = chrome.driver();
-                break;
-            case "firefox-proxy":
-                firefox.getOptions().setProxy(ProxyConfig.dvsaProxy().setSslProxy(getIpAddress().concat(":"+getPortNumber())));
-                driver = firefox.driver();
-                break;
-            default:
-                throw new IllegalBrowserException();
-        }
+                yield chrome.driver();
+            }
+            case "chrome-proxy" -> {
+                chrome.getChromeOptions().setProxy(ProxyConfig.dvsaProxy().setSslProxy(getIpAddress().concat(":").concat(getPortNumber())));
+                yield chrome.driver();
+            }
+            case "firefox-proxy" -> {
+                firefox.getOptions().setProxy(ProxyConfig.dvsaProxy().setSslProxy(getIpAddress().concat(":").concat(getPortNumber())));
+                yield firefox.driver();
+            }
+            default -> throw new IllegalBrowserException();
+        };
+
         threadLocalDriver.set(driver);
         getDriver();
     }
 
     public static void closeBrowser() throws Exception {
-        if (getDriver() != null)
+        if (getDriver() != null) {
             getDriver().quit();
+        }
     }
 
     public static boolean isBrowserOpen() {
-        boolean isOpen;
-        isOpen = getDriver() != null;
-        return isOpen;
+        return getDriver() != null;
     }
 
     public static void removeLocalDriverThread() {
