@@ -1,10 +1,10 @@
-@ecmt_removal @eupa_regression @ec2_smoke
+@ecmt_removal @eupa_regression
 Feature: ECMT International Removal submission page
 
   Background:
     Given I have a "goods" "standard_international" licence
 
-  @EXTERNAL @OLCS-26739 @olcs-28201
+  @EXTERNAL @OLCS-26739 @olcs-28201 @ec2_smoke
   Scenario: Application submission page details are displayed correctly
     And   I am on the ECMT International removal submission page
     Then the page heading on the submission page is displayed correctly
@@ -31,7 +31,7 @@ Feature: ECMT International Removal submission page
     When I'm on the ECMT international submitted page for my active application
     Then I should not see the view receipt link
 
-  @EXTERNAL @OLCS-26739
+  @EXTERNAL @OLCS-26739 @ec2_smoke
   Scenario: Fees paid through Fees Tab
     And I have partial ECMT international removal application
     And I navigate to permit dashboard page

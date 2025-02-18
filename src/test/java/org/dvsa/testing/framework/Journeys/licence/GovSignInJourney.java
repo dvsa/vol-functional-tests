@@ -17,7 +17,7 @@ import static activesupport.qrReader.QRReader.getTOTPCode;
 
 public class GovSignInJourney extends BasePage {
 
-    private World world;
+    private final World world;
 
     public GovSignInJourney(World world) {
         this.world = world;
@@ -25,10 +25,6 @@ public class GovSignInJourney extends BasePage {
     Random random = new Random();
 
     public void navigateToGovUkSignIn() {
-        if (world.configuration.env.toString().equals("int")) {
-            clickByXPath("//*[@id='declarationsAndUndertakings[signatureOptions]']");
-            clickByXPath("//*[@id='sign']");
-        }
         if (isTextPresent("Declaration information")) {
             clickById("sign");
         }
@@ -51,43 +47,42 @@ public class GovSignInJourney extends BasePage {
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        //if (isTitlePresent("Create your GOV.UK One Login or sign in", 10)) {
+
         if (isElementPresent("sign-in-button", SelectorType.ID)) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndEnterText("password", SelectorType.ID, signInPassword);
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+
             String authCode = getTOTPCode(AUTH_KEY);
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
         if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
-                (isTextPresent("Choose a way to prove your identity"))) {
+                isTextPresent("Choose a way to prove your identity")) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         } else {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
         if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
         if (isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
         if (isTextPresent("You need to confirm your name and date of birth")) {
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         if (isTextPresent("You need to confirm your address")) {
             waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if (isTextPresent("We need to check your details")) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
-        if (isTextPresent("Continue to the service you want to use")) {
+        if (isTextPresent("We need to check your details") ||
+                isTextPresent("Continue to the service you want to use")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         if (isTextPresent("By continuing you agree to our updated terms of use.")) {
@@ -96,20 +91,19 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Start proving your identity with GOV.UK One Login", 1)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
+
         if (isTitlePresent("Are you on a computer or a tablet right now?", 1)) {
             clickByXPath("//*[@id='select-device-choice']");
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if (isTitlePresent("You have already proved your identity", 1)) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
-        if (isTitlePresent("Do you have a smartphone you can use?", 1)) {
+
+        if (isTitlePresent("You have already proved your identity", 1) ||
+                isTitlePresent("Do you have a smartphone you can use?", 1)) {
             goThroughVerificationSteps();
         }
-        if (isTitlePresent("Returning you to Vehicle Operator Licence", 1)) {
-            if(isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
-                click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            }
+
+        if (isTitlePresent("Returning you to Vehicle Operator Licence", 1) &&
+                isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
+            click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
     }
 
@@ -147,9 +141,9 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='journey-2']");
         waitAndClick("submitButton", SelectorType.ID);
         enterPassportDetails();
-        cycletThroughSignInJourney();
+        cycleThroughSignInJourney();
         answerPersonalQuestions();
-        if(isTitlePresent("Continue to the service you want to use",5)){
+        if(isTitlePresent("Continue to the service you want to use",1)){
             waitAndClick("submitButton", SelectorType.ID);
         }
     }
@@ -190,7 +184,7 @@ public class GovSignInJourney extends BasePage {
         enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, expiryYear);
     }
 
-    public void cycletThroughSignInJourney() {
+    public void cycleThroughSignInJourney() {
         String postCode = "BA25AA";
         waitAndClick("submitButton", SelectorType.ID);
         waitAndEnterText("addressSearch", SelectorType.ID,  postCode);

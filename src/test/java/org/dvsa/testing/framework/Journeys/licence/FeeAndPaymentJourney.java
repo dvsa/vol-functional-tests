@@ -125,19 +125,26 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void customerPaymentModule() {
-        refreshPageWithJavascript();
         waitForTextToBePresent("Card Number*");
-        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardNumber"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, SecretsManager.getSecretValue("cardExpiryMonth"));
-        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, SecretsManager.getSecretValue("cardExpiryYear"));
+
+        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH,
+                SecretsManager.getSecretValue("cardNumber"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH,
+                SecretsManager.getSecretValue("cardExpiryMonth"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH,
+                SecretsManager.getSecretValue("cardExpiryYear"));
         waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
+
         if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
         }
+
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
         enterCardHolderDetails();
+
         waitForTextToBePresent("Payment Confirmation Page");
         click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
+
         if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
             waitForTextToBePresent("Online Payments");
             click("//*[@value='Save']", SelectorType.XPATH);

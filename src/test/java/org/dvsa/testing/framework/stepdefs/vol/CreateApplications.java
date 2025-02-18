@@ -27,7 +27,9 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
+        waitForTextToBePresent("Applications for a new licence");
+        String currentUrl = getCurrentUrl();
+        if (!currentUrl.contains("tm-declaration") && (currentUrl.contains("dashboard"))) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
@@ -54,18 +56,24 @@ public class CreateApplications extends BasePage {
     public void iPayMySecondApplicationWithMySavedCardDetails() {
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitForTitleToBePresent("Application overview");
-            String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
+
+            String previousAppId = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
+
             clickByLinkText("Home");
+
             getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
                     .stream()
                     .distinct()
-                    .filter(x -> x.getText().contains(app))
-                    .findAny().ifPresent(WebElement::click);
+                    .filter(element -> element.getText().contains(previousAppId))
+                    .findFirst()
+                    .ifPresent(WebElement::click);
         }
+
         waitForTextToBePresent("Review and declarations");
         if (!world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
         }
+
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         UniversalActions.ClickPayAndSubmit();
         waitForTextToBePresent("Would you like to use a stored card?");
@@ -74,11 +82,12 @@ public class CreateApplications extends BasePage {
         waitAndEnterText("csc", SelectorType.NAME, "265");
         world.feeAndPaymentJourney.enterCardHolderDetails();
         waitAndClick("_eventId_payment", SelectorType.NAME);
+
         if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             switchToIframe("scp_threeDSecure_iframe");
             waitAndClick("//*[@id='authenticateSubmit']", SelectorType.XPATH);
-            waitForTitleToBePresent("Application overview");
         }
+
         waitForTitleToBePresent("Application overview");
     }
 }

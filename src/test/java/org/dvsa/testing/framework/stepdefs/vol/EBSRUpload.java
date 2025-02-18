@@ -46,7 +46,7 @@ public class EBSRUpload extends BasePage {
 
     @And("i add a new bus registration")
     public void iAddANewBusRegistration() {
-        world.internalUIJourney.manualBusRegistration(0,5,0);
+        world.internalUIJourney.manualBusRegistration(0, 5, 0);
     }
 
     @When("it has been paid and granted")
@@ -71,17 +71,15 @@ public class EBSRUpload extends BasePage {
     @And("Documents are generated")
     public void documentsAreGenerated() throws IllegalBrowserException, IOException {
         String licenceNumber;
-        if(world.configuration.env.toString().equals("int")){
-            licenceNumber = existingLicenceNumber;
-        }else{
-            licenceNumber = world.applicationDetails.getLicenceNumber();
-        }
+
+        licenceNumber = world.applicationDetails.getLicenceNumber();
+
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
         }
         long kickOutTime = System.currentTimeMillis() + 60000;
-        if(!world.configuration.env.toString().equals("local")) {
+        if (!world.configuration.env.toString().equals("local")) {
             do {
                 // Refresh page
                 refreshPageWithJavascript();
