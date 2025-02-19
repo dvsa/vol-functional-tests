@@ -32,8 +32,8 @@
         <jsoup.version>1.18.3</jsoup.version>
         <gson.version>2.11.0</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
-        <java.version>11</java.version>
-
+        <java.version>17</java.version>
+        <maven.compiler.release>17</maven.compiler.release>
         <jvmMemory>4000</jvmMemory>
     </properties>
 
@@ -192,7 +192,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <release>${java.version}</release>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
