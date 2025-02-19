@@ -44,6 +44,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -359,7 +360,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode(env + "&&api&&olcs");
+        String node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node, batchCommand, env);
 
@@ -370,32 +371,30 @@ public class GenericUtils extends BasePage {
     }
 
     public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode(env + "&&api&&olcs");
+        String node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
                         "buildWithParameters?delay=0sec&INCLUDED_TYPES=%s&EXCLUDED_TYPES=%s&ENVIRONMENT_NAME=%s",
-                URLEncoder.encode(includedTypes, "UTF-8"),
-                URLEncoder.encode(excludedTypes, "UTF-8"),
-                URLEncoder.encode(String.valueOf(env), "UTF-8"));
+                URLEncoder.encode(includedTypes, StandardCharsets.UTF_8),
+                URLEncoder.encode(excludedTypes, StandardCharsets.UTF_8),
+                URLEncoder.encode(String.valueOf(env), StandardCharsets.UTF_8));
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
         Thread.sleep(4000);
         return (statusCode == 201);
-        // Cannot use this yet as the sudo commmand on the process queue requires a password
+        // Cannot use this yet as the sudo command on the process queue requires a password
     }
 
     public static String readXML() throws IOException {
         String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
-        String xmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
-        return xmlContent;// Now xmlContent holds the XML content
+        return new String(Files.readAllBytes(Paths.get(filePath)));// Now xmlContent holds the XML content
     }
 
     public static void writeXmlStringToFile(String xmlString, String filePath) throws IOException {
         // Read the existing XML file content
         byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
-        String updatedContent = xmlString;
         // Write the updated content back to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(updatedContent);
+            writer.write(xmlString);
         }
     }
 }
