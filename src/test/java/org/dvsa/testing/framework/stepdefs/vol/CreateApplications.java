@@ -27,9 +27,9 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        waitForTextToBePresent("Applications for a new licence");
         String currentUrl = getCurrentUrl();
         if (!currentUrl.contains("tm-declaration") && (currentUrl.contains("dashboard"))) {
+            waitForTextToBePresent("Applications for a new licence");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
