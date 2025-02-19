@@ -31,11 +31,8 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
 
-
-
   Scenario: Short notice import EBSR in self-serve smoke test
     Given as a "admin" I have a psv application with traffic area "west" and enforcement area "west" which has been granted
-#    When i trigger the ebsr process queue
     When I upload an ebsr file with "41" days notice
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
@@ -47,7 +44,6 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Then A short notice flag should not be displayed in selfserve
     And Documents are generated
 
-
   Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test
     Given as a "admin" I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And the licence status is "curtail"
@@ -56,7 +52,6 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     And Documents are generated
 
 #  The upload will be Successful but it's only from accessing the bus registration or checking the created task that you can see if the files were generated.
-
   @accessibility
   Scenario: Scan for accessibility violations
     Given as a "admin" I have a psv application with traffic area "west" and enforcement area "west" which has been granted

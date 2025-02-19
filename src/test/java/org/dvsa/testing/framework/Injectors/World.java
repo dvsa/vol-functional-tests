@@ -73,7 +73,6 @@ public class World {
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;
     public SubmitApplicationJourney submitApplicationJourney;
-    public GrantApplicationJourney grantApplicationJourney;
 
     public EcmtInternationalRemovalJourney ecmtInternationalRemovalJourney;
     public EcmtApplicationJourney ecmtApplicationJourney;

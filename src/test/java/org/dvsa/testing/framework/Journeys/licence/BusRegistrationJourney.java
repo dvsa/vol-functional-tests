@@ -2,7 +2,9 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
+import activesupport.aws.s3.SecretsManager;
 import activesupport.string.Str;
+import activesupport.system.Properties;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
@@ -10,6 +12,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -34,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRegistrationJourney extends BasePage {
     World world;
-
+    EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public BusRegistrationJourney(World world) {
         this.world = world;
     }
@@ -140,11 +143,12 @@ public class BusRegistrationJourney extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewEBSRInExternal() throws IllegalBrowserException, IOException {
+    public void viewEBSRInExternal() throws IllegalBrowserException, IOException, InterruptedException {
         long kickOutTime = System.currentTimeMillis() + 250000;
         do {
             // Refresh page
             refreshPageWithJavascript();
+            assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
         } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
