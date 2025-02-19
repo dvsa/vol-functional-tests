@@ -30,12 +30,12 @@ public class CreateApplications extends BasePage {
         if (!currentUrl.contains("tm-declaration") && (currentUrl.contains("dashboard"))) {
             waitForTextToBePresent("Applications for a new licence");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-            clickByXPath("//*[contains(text(),'Print')]");
-            clickByXPath("//*[@name='form-actions[submitAndPay]']");
+            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            scrollAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         } else {
             waitForTitleToBePresent("Declaration");
-            clickByXPath("//*[contains(text(),'Print')]");
-            clickByXPath("//*[@name='form-actions[submit]']");
+            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            scrollAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
 
