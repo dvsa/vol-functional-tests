@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.11](https://github.com/dvsa/vol-functional-tests/compare/v3.14.10...v3.14.11) (2025-02-20)
+
+
+### Bug Fixes
+
+* build on same arch as prod ([025e9d1](https://github.com/dvsa/vol-functional-tests/commit/025e9d164132c440d2f2085fe1aab923fa91098c))
+
 ## [3.14.10](https://github.com/dvsa/vol-functional-tests/compare/v3.14.9...v3.14.10) (2025-02-19)
 
 
