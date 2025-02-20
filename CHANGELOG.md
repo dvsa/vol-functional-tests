@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.12](https://github.com/dvsa/vol-functional-tests/compare/v3.14.11...v3.14.12) (2025-02-20)
+
+
+### Bug Fixes
+
+* correct plugin for new runner arch ([dfaf7fc](https://github.com/dvsa/vol-functional-tests/commit/dfaf7fcce0a228a3bd64dcd25c5861da3c40fa1a))
+
 ## [3.14.11](https://github.com/dvsa/vol-functional-tests/compare/v3.14.10...v3.14.11) (2025-02-20)
 
 
