@@ -32,6 +32,7 @@ public class CreateApplications extends BasePage {
             scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             scrollAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         } else {
+            refreshPageWithJavascript();
             waitForTitleToBePresent("Declaration");
             scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             scrollAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
