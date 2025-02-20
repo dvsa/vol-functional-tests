@@ -10,7 +10,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class DataGenerator extends BasePage {
 
-    private World world;
+    private final World world;
     private String operatorUser;
     private String operatorUserEmail;
     private String operatorForeName;
@@ -25,7 +25,39 @@ public class DataGenerator extends BasePage {
     private String consultantFamilyName;
     private String consultantUserEmail;
 
-    public String getRandomWord() {return randomWord;}
+    public DataGenerator(World world) {
+        FakerUtils faker = new FakerUtils();
+        Lorem lorem = LoremIpsum.getInstance();
+        setOperatorForeName(faker.generateFirstName());
+        setOperatorFamilyName(faker.generateLastName());
+        setOperatorUser(String.format("%s%s%s",
+                getOperatorForeName(),
+                getOperatorFamilyName(), Int.random(1000, 9999))
+        );
+        setOperatorUserEmail(
+                getOperatorUser().concat("@dvsaUser.com")
+        );
+        setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
+        setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
+        setOperatorTown(faker.generateAddress().get("town"));
+        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
+        setConsultantForename(faker.generateFirstName());
+        setConsultantFamilyName(faker.generateLastName());
+        setConsultantUser(String.format("%s%s%s",
+                getConsultantForeName(),
+                getConsultantFamilyName(), Int.random(1000, 9999))
+        );
+        setConsultantUserEmail(
+                getConsultantUser().concat("@consultantUser.com")
+        );
+        setRandomWord(lorem.getWords(10, 20));
+        this.world = world;
+    }
+
+    public String getRandomWord() {
+        return randomWord;
+    }
+
     public void setRandomWord(String randomWord) {
         this.randomWord = randomWord;
     }
@@ -98,57 +130,32 @@ public class DataGenerator extends BasePage {
         return consultantUser;
     }
 
-    public void setConsultantUser(String consultantUser) {this.consultantUser = consultantUser;}
-
-    public String getConsultantFamilyName() {return consultantFamilyName;
+    public void setConsultantUser(String consultantUser) {
+        this.consultantUser = consultantUser;
     }
 
-    public String getConsultantForeName() {return consultantForeName;
+    public String getConsultantFamilyName() {
+        return consultantFamilyName;
     }
 
-    private void setConsultantFamilyName(String consultantFamilyName) {
+    public String getConsultantForeName() {
+        return consultantForeName;
+    }
+
+    public void setConsultantFamilyName(String consultantFamilyName) {
         this.consultantFamilyName = consultantFamilyName;
     }
 
-    private void setConsultantForename(String consultantForename) {
+    public void setConsultantForename(String consultantForename) {
         this.consultantForeName = consultantForename;
     }
 
-    private void setConsultantUserEmail(String consultantUserEmail) {
+    public void setConsultantUserEmail(String consultantUserEmail) {
         this.consultantUserEmail = consultantUserEmail;
     }
 
     public String getConsultantUserEmail() {
         return consultantUserEmail;
-    }
-
-    public DataGenerator(World world) {
-        FakerUtils faker = new FakerUtils();
-        Lorem lorem = LoremIpsum.getInstance();
-        setOperatorForeName(faker.generateFirstName());
-        setOperatorFamilyName(faker.generateLastName());
-        setOperatorUser(String.format("%s%s%s",
-                getOperatorForeName(),
-                getOperatorFamilyName(), Int.random(1000, 9999))
-        );
-        setOperatorUserEmail(
-                getOperatorUser().concat("@dvsaUser.com")
-        );
-        setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
-        setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
-        setOperatorTown(faker.generateAddress().get("town"));
-        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
-        setConsultantForename(faker.generateFirstName());
-        setConsultantFamilyName(faker.generateLastName());
-        setConsultantUser(String.format("%s%s%s",
-                        getConsultantForeName(),
-                        getConsultantFamilyName(), Int.random(1000, 9999))
-        );
-        setConsultantUserEmail(
-                getConsultantUser().concat("@consultantUser.com")
-        );
-        setRandomWord(lorem.getWords(10, 20));
-        this.world = world;
     }
 
     public void generateAndAddOperatorUser() {

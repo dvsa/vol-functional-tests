@@ -6,30 +6,11 @@ import activesupport.number.Int;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,6 +34,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Base64;
 
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
@@ -77,57 +64,52 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String RegistrationNumber = String.valueOf(Int.random(0, 9999));
+            String registrationNumber = String.valueOf(Int.random(0, 9999));
             String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
-            //update licence number
+
+            // Update licence number
             NodeList nodeList = xmlDoc.getElementsByTagName("*");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    // do something with the current element
-
-                    if ("StartDate".equals(node.getNodeName())) {
-                        node.setTextContent(getDates(dateState, months));
-                    }
-                    if ("LicenceNumber".equals(node.getNodeName())) {
-                        if (world.configuration.env.toString().equals("int")) {
-                            node.setTextContent(existingLicenceNumber);
-                        } else {
-                            node.setTextContent(world.applicationDetails.getLicenceNumber());
-                        }
-                    }
-                    if ("RegistrationNumber".equals(node.getNodeName())) {
-                        String getContent = node.getTextContent();
-                        int newRegNumber = Integer.parseInt(getContent);
-                        setRegistrationNumber(String.valueOf(newRegNumber + 1));
-                        node.setTextContent(getRegistrationNumber());
-                    }
-                    if ("TrafficAreaName".equals(node.getNodeName())) {
-                        String trafficAreaName;
-                        if (world.configuration.env.toString().equals("int")) {
-                            trafficAreaName = "East";
-                        } else {
-                            trafficAreaName = world.updateLicence.getTrafficAreaName();
-                        }
-                        switch (trafficAreaName) {
-                            case "Wales":
-                                node.setTextContent("Welsh");
-                                break;
-                            case "Scotland":
-                                node.setTextContent("Scottish");
-                                break;
-                            default:
-                                node.setTextContent("WestMidlands");
-                                break;
-                        }
-
+                    switch (node.getNodeName()) {
+                        case "StartDate":
+                            node.setTextContent(getDates(dateState, months));
+                            break;
+                        case "LicenceNumber":
+                            if ("int".equals(world.configuration.env.toString())) {
+                                node.setTextContent(existingLicenceNumber);
+                            } else {
+                                node.setTextContent(world.applicationDetails.getLicenceNumber());
+                            }
+                            break;
+                        case "RegistrationNumber":
+                            int newRegNumber = Integer.parseInt(node.getTextContent());
+                            setRegistrationNumber(String.valueOf(newRegNumber + 1));
+                            node.setTextContent(getRegistrationNumber());
+                            break;
+                        case "TrafficAreaName":
+                            String trafficAreaName = "int".equals(world.configuration.env.toString()) ? "East" : world.updateLicence.getTrafficAreaName();
+                            switch (trafficAreaName) {
+                                case "Wales":
+                                    node.setTextContent("Welsh");
+                                    break;
+                                case "Scotland":
+                                    node.setTextContent("Scottish");
+                                    break;
+                                default:
+                                    node.setTextContent("WestMidlands");
+                                    break;
+                            }
+                            break;
                     }
                 }
             }
-            // write the content on console
+
+            // Write the content on console
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(xmlDoc);
@@ -142,10 +124,18 @@ public class GenericUtils extends BasePage {
         }
     }
 
+    private String sanitizeHTML(String htmlContent, String... regexReplacements) {
+        for (String regexReplacement : regexReplacements) {
+            String[] parts = regexReplacement.split("->");
+            htmlContent = htmlContent.replaceAll(parts[0], parts[1]);
+        }
+        return htmlContent;
+    }
+
     public String getTransportManagerLink() throws InterruptedException {
         Thread.sleep(2000);
         String htmlContent = world.configuration.getTmAppLink();
-        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        String sanitizedHTML = sanitizeHTML(htmlContent, "(?<!=)=(?!=)->", "\\s+->");
         Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
         Matcher matcher = pattern.matcher(sanitizedHTML);
         if (matcher.find()) {
@@ -158,45 +148,35 @@ public class GenericUtils extends BasePage {
     public void getResetPasswordLink() throws InterruptedException {
         Thread.sleep(1000);
         String htmlContent = world.configuration.getPasswordResetLink();
-        String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
-                .replaceAll("=0A", "")
-                .replaceAll("=20", "")
-                .replaceAll("=\r\n", "");
+        String sanitizedHTML = sanitizeHTML(htmlContent, "=3D->=", "=0A->", "=20->", "=\r\n->");
         Browser.navigate().get(sanitizedHTML);
     }
 
 
-    public static String getDates(String state, int months) {
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDateTime now = LocalDateTime.now();
-        String myDate = null;
 
-        switch (state) {
-            case "futureMonth":
-                myDate = date.format(now.plusMonths(months));
-                break;
-            case "futureDay":
-                myDate = date.format(now.plusDays(months));
-                break;
-            case "past":
-                myDate = date.format(now.minusMonths(months));
-                break;
-            case "current":
-                myDate = date.format(now);
-                break;
-            default:
-                System.out.println(state + ": does not exist, needs to either be 'current', or 'past' or 'futureDay' or 'futureMonth'");
-        }
-        return myDate;
+    public static String getDates(String state, int months) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime now = LocalDateTime.now();
+
+        return switch (state) {
+            case "futureMonth" -> dateFormatter.format(now.plusMonths(months));
+            case "futureDay" -> dateFormatter.format(now.plusDays(months));
+            case "past" -> dateFormatter.format(now.minusMonths(months));
+            case "current" -> dateFormatter.format(now);
+            default -> {
+                System.out.println(state + ": does not exist, needs to either be 'current', 'past', 'futureDay', or 'futureMonth'");
+                yield null;
+            }
+        };
     }
 
     public static String createZipFolder(String fileName) {
-        /*
-        / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
-         */
+    /*
+    / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
+     */
         Path path = Paths.get("target/EBSR");
         try {
-            if (!Files.exists(path)) {
+            if (Files.notExists(path)) {
                 Files.createDirectory(path);
             }
         } catch (IOException e) {
@@ -257,30 +237,31 @@ public class GenericUtils extends BasePage {
     public void writeToFile(String userId, String password, String fileName) throws Exception {
         String CSV_HEADERS = "Username,Password";
 
-        FileWriter fileWriter = new FileWriter(fileName, true);
-        BufferedWriter writer = new BufferedWriter(fileWriter);
-        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
 
-        if (!searchForString(fileName, CSV_HEADERS)) {
-            csvPrinter.printRecord((Object[]) CSV_HEADERS.split(","));
-            csvPrinter.printRecord(Arrays.asList(userId, password));
-            csvPrinter.flush();
-        } else {
+            if (!searchForString(fileName, CSV_HEADERS)) {
+                csvPrinter.printRecord((Object[]) CSV_HEADERS.split(","));
+            }
             csvPrinter.printRecord(Arrays.asList(userId, password));
             csvPrinter.flush();
         }
     }
 
     private boolean searchForString(String file, String searchText) throws IOException {
-        boolean foundIt;
         File f = new File(file);
-        if (f.exists() && (FileUtils.readFileToString(new File(file), "UTF-8").contains(searchText)))
-            foundIt = true;
-        else {
-            System.out.println("File not found or text not found");
-            foundIt = false;
+        if (!f.exists()) {
+            System.out.println("File not found");
+            return false;
         }
-        return foundIt;
+
+        String fileContent = FileUtils.readFileToString(f, "UTF-8");
+        if (fileContent.contains(searchText)) {
+            return true;
+        } else {
+            System.out.println("Text not found");
+            return false;
+        }
     }
 
     public static Scanner scanText(String input, String delimeter) {
@@ -298,17 +279,15 @@ public class GenericUtils extends BasePage {
             String line = null;
             String prevLine = null;
             int lineCounter = 0;
-            while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
-                line = br.readLine();
-                prevLine = line;
+            while ((line = br.readLine()) != null) {
+                if (lineNumber == -1) {
+                    prevLine = line;
+                } else if (lineCounter == lineNumber) {
+                    return line;
+                }
                 lineCounter++;
             }
-            br.close();
-            if (lineNumber == -1) {
-                return prevLine;
-            } else {
-                return line;
-            }
+            return lineNumber == -1 ? prevLine : null;
         }
     }
 
@@ -334,28 +313,20 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public static int kickOffJenkinsJob(String urlString, String username, String password)
-            throws IOException {
-
+    public static int kickOffJenkinsJob(String urlString, String username, String password) throws IOException, InterruptedException {
         URI uri = URI.create(urlString);
-        HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
-        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
-                new UsernamePasswordCredentials(username, password));
-        // Create AuthCache instance
-        AuthCache authCache = new BasicAuthCache();
-        // Generate BASIC scheme object and add it to the local auth cache
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(host, basicAuth);
-        CloseableHttpClient httpClient =
-                HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
-        HttpPost httpPost = new HttpPost(uri);
-        // Add AuthCache to the execution context
-        HttpClientContext localContext = HttpClientContext.create();
-        localContext.setAuthCache(authCache);
+        String auth = username + ":" + password;
+        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
 
-        HttpResponse response = httpClient.execute(host, httpPost, localContext);
-        return response.getStatusLine().getStatusCode();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("Authorization", "Basic " + encodedAuth)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+        return response.statusCode();
     }
 
     public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
