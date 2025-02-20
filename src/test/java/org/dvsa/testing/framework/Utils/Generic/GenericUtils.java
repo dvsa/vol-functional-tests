@@ -355,10 +355,10 @@ public class GenericUtils extends BasePage {
 
     public static boolean jenkinsCLi(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
-        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
+        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node, batchCommand, env);
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
         Thread.sleep(4000);
         //you can assert against the status code here == 201
         return (statusCode == 201);
@@ -366,13 +366,13 @@ public class GenericUtils extends BasePage {
 
     public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode("api&&"+env+"&&olcs", StandardCharsets.UTF_8);
-        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
+        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
                         "buildWithParameters?build?delay=0sec&ENVIRONMENT_NAME=%s&Run+on+Nodes=%s&INCLUDE_TYPES=%s&EXCLUDE_TYPES=%s",
                 env,node,
                 URLEncoder.encode(includedTypes, StandardCharsets.UTF_8),
                 URLEncoder.encode(excludedTypes, StandardCharsets.UTF_8));
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
         Thread.sleep(4000);
         return (statusCode == 201);
         // Cannot use this yet as the sudo command on the process queue requires a password
