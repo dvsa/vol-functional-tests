@@ -124,20 +124,12 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    private String sanitizeHTML(String htmlContent, String... regexReplacements) {
-        for (String regexReplacement : regexReplacements) {
-            String[] parts = regexReplacement.split("->");
-            htmlContent = htmlContent.replaceAll(parts[0], parts[1]);
-        }
-        return htmlContent;
-    }
-
     public String getTransportManagerLink() throws InterruptedException {
         Thread.sleep(2000);
         String htmlContent = world.configuration.getTmAppLink();
-        String sanitizedHTML = sanitizeHTML(htmlContent, "(?<!=)=(?!=)->", "\\s+->");
+        htmlContent = htmlContent.replaceAll("(?<!=)=(?!=)", "=").replaceAll("\\s+", " ");
         Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
-        Matcher matcher = pattern.matcher(sanitizedHTML);
+        Matcher matcher = pattern.matcher(htmlContent);
         if (matcher.find()) {
             return matcher.group(1);
         } else {
@@ -148,11 +140,9 @@ public class GenericUtils extends BasePage {
     public void getResetPasswordLink() throws InterruptedException {
         Thread.sleep(1000);
         String htmlContent = world.configuration.getPasswordResetLink();
-        String sanitizedHTML = sanitizeHTML(htmlContent, "=3D->=", "=0A->", "=20->", "=\r\n->");
-        Browser.navigate().get(sanitizedHTML);
+        htmlContent = htmlContent.replaceAll("=3D", "=").replaceAll("=0A", "").replaceAll("=20", " ").replaceAll("=\r\n", "");
+        Browser.navigate().get(htmlContent);
     }
-
-
 
     public static String getDates(String state, int months) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
