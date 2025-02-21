@@ -1,5 +1,12 @@
 # Revision History for the VOL Functional Tests
 
+## [3.14.14](https://github.com/dvsa/vol-functional-tests/compare/v3.14.13...v3.14.14) (2025-02-21)
+
+
+### Bug Fixes
+
+* remove ecmt smoke ([c27aac8](https://github.com/dvsa/vol-functional-tests/commit/c27aac80461538d6ebe5ec5db667b3720b74c055))
+
 ## [3.14.13](https://github.com/dvsa/vol-functional-tests/compare/v3.14.12...v3.14.13) (2025-02-21)
 
 
