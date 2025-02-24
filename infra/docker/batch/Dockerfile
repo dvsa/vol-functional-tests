@@ -26,6 +26,6 @@ COPY ./settings.xml /root/.m2/settings.xml
 
 
 RUN --mount=type=cache,target=/root/.m2 \
-    chmod +x ./run.sh \
+    chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]
