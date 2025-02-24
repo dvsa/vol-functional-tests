@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.time.Duration;
@@ -45,7 +45,7 @@ public class GlobalMethods extends BasePage {
 
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = SecretsManager.getSecretValue("internalNewPassword");
-        String domainURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
+        String domainURL = webAppURL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));

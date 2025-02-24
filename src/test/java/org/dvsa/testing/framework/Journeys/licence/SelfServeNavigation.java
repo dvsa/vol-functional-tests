@@ -12,7 +12,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -29,7 +29,7 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existin
 public class SelfServeNavigation extends BasePage {
 
     private final World world;
-    private final String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private final String url = webAppURL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     public SelfServeNavigation(World world) {
         this.world = world;
@@ -58,12 +58,12 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToCheckerPage() {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
+        String myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
     }
 
     public void navigateToLoginPage() {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
+        String myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
     }
 
@@ -224,7 +224,7 @@ public class SelfServeNavigation extends BasePage {
         java.net.URL url = getURL();
         String[] urlParts = url.getPath().split("/");
         String id = urlParts[urlParts.length - 3];
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
+        String myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
         navigate().get(myURL);
     }
 

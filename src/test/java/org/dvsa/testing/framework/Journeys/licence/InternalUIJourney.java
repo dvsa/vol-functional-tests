@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
 import org.openqa.selenium.By;
@@ -104,7 +104,7 @@ public class InternalUIJourney extends BasePage {
     public void editDocumentWithWebDav() throws IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
         String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
-        String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
+        String wordLoginWindow = StringUtils.removeEnd(webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
 
         Thread.sleep(1000);
         clickByLinkText("BUS");
@@ -158,7 +158,7 @@ public class InternalUIJourney extends BasePage {
 
     public void closeCase() {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
+        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
         String casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
@@ -256,7 +256,7 @@ public class InternalUIJourney extends BasePage {
         String user = SecretsManager.getSecretValue("adminUser");
         String password = SecretsManager.getSecretValue("defaultPassword");
 
-        String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+        String internalURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
         get(internalURL);
         world.globalMethods.signIn(user, password);
     }

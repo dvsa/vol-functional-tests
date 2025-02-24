@@ -16,7 +16,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.InvalidArgumentException;
 
@@ -501,7 +501,7 @@ public class ManageApplications extends BasePage {
         if (Objects.requireNonNull(getDriver().getCurrentUrl()).contains("dashboard")) {
             clickByLinkText("Sign out");
         }
-        String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+        String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         waitForTextToBePresent("Password");
 

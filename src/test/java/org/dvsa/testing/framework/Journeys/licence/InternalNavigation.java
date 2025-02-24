@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ import static activesupport.driver.Browser.navigate;
 public class InternalNavigation extends BasePage {
 
     World world;
-    private final String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private final String url = webAppURL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
     public String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
 
@@ -128,7 +128,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void urlViewUsers() {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
+        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
     }
 
     public void getCase() {
@@ -237,7 +237,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToLoginPage() {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
+        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
     }
 }

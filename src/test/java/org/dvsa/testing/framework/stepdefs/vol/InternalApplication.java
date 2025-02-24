@@ -10,7 +10,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -95,7 +95,7 @@ public class InternalApplication extends BasePage {
         }
         String docStoreLink = getLink("//*[@id='letter-link']", SelectorType.XPATH);
         assertNotNull(docStoreLink);
-        String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
+        String webDAVUrl = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
         assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s", webDAVUrl)));
         assertTrue(docStoreLink.contains(".rtf"));
     }

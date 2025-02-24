@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import apiCalls.enums.*;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.WebElement;
 import java.util.List;
@@ -159,7 +159,7 @@ public class TypeOfLicence extends BasePage {
     @When("a caseworker goes to apply for a goods standard_international licence")
     public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() throws HttpException {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
-        String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
+        String internalOrganisationUrl = String.format("%soperator/%s/licences/", webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
         world.internalNavigation.loginIntoInternal("");
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());

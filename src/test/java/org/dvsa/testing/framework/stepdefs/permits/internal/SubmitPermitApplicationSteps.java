@@ -16,7 +16,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.util.concurrent.TimeUnit;
@@ -34,7 +34,7 @@ public class SubmitPermitApplicationSteps extends BasePage{
     public void iamOnTheVolInternalSite() {
         deleteCookies();
         refreshPage();
-        get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
+        get(webAppURL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
     }
     @When("I apply for an ECMT APGG Euro5 or Euro 6 application")
     public void iApplyForAnECMTAPGGEuro5OrEuro6Application() {
