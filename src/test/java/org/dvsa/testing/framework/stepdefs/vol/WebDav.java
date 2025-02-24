@@ -12,7 +12,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 
@@ -61,7 +61,7 @@ public class WebDav extends BasePage{
 
     @Then("i should be prompted to login")
     public void iShouldBePromptedToLogin() {
-        String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(), "/");
+        String wordLoginWindow = StringUtils.removeEnd(webAppURL.build(ApplicationType.INTERNAL, env).toString(), "/");
         assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
     }
 

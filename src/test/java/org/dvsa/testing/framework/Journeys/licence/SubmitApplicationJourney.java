@@ -1,31 +1,19 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
-import org.apache.hc.core5.http.HttpException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.clickContinue;
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
-import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
     public World world;

@@ -8,7 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,7 +50,7 @@ public class CreateNewOperatorLicense extends BasePage {
         if (getDriver().getCurrentUrl().contains("dashboard")) {
             clickByLinkText("Sign out");
         }
-        String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+        String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         waitForTextToBePresent("Password");
         {

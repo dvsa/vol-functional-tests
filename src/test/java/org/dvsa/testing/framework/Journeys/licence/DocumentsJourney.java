@@ -4,7 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -26,13 +26,13 @@ public class DocumentsJourney extends BasePage {
     }
 
     public void noErrorOnDownload() {
-        String myURL = String.valueOf(URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
+        String myURL = String.valueOf(webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
         DriverUtils.get(myURL);
         assertFalse(isTitlePresent("We can't find that page", 5));
     }
 
     public void errorOnDownload() {
-        String myURL = String.valueOf(URL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
+        String myURL = String.valueOf(webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, trimmedUrl));
         DriverUtils.get(myURL);
         assertTrue(isTitlePresent("We can't find that page", 5));
     }

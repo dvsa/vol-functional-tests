@@ -14,7 +14,7 @@ import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourn
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 
@@ -32,7 +32,7 @@ public class CommonSteps extends BasePermitJourney {
     public void iAmOnTheVOLSelfServeSite() {
         deleteCookies();
         refreshPage();
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
+        get(webAppURL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
     }
 
     @And("I am on the Annual ECMT licence selection page")
