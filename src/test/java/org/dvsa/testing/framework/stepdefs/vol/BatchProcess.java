@@ -29,12 +29,12 @@ public class BatchProcess extends BasePage {
 
     @And("the duplicate letter job is run")
     public void theDuplicateLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
     }
 
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.LAST_TM_LETTER.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.LAST_TM_LETTER.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
     }
     @Then("i should receive a duplicate vehicle email")
     public void iShouldReceiveADuplicateVehicleEmail() {
@@ -51,7 +51,7 @@ public class BatchProcess extends BasePage {
 
     @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsTest(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
     }
 
     @Then("the registration should be marked as expired")
@@ -66,8 +66,8 @@ public class BatchProcess extends BasePage {
         assertTrue(actualText.equalsIgnoreCase("Expired"));
     }
 
-//    @When("i trigger the ebsr process queue")
-//    public void iTriggerTheEbsrProcessQueue() throws IOException, InterruptedException {
-//        assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
-//    }
+    @When("i trigger the ebsr process queue")
+    public void iTriggerTheEBSRProcessQueue() throws IOException, InterruptedException {
+        assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+    }
 }

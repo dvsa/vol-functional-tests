@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
@@ -27,15 +26,16 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        waitForTextToBePresent("Applications for a new licence");
-        String currentUrl = getCurrentUrl();
-        if (!currentUrl.contains("tm-declaration") && (currentUrl.contains("dashboard"))) {
+        if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
+            waitForTextToBePresent("Applications for a new licence");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            scrollAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         } else {
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+            refreshPageWithJavascript();
+            waitForTitleToBePresent("Declaration");
+            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            scrollAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
 

@@ -22,14 +22,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -44,6 +38,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -156,7 +151,7 @@ public class GenericUtils extends BasePage {
     }
 
     public void getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
                 .replaceAll("=0A", "")
@@ -358,44 +353,42 @@ public class GenericUtils extends BasePage {
         return response.getStatusLine().getStatusCode();
     }
 
-    public static boolean jenkinsTest(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode(env + "&&api&&olcs");
-        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
+    public static boolean jenkinsCLi(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
+        String node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
+        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node, batchCommand, env);
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
         Thread.sleep(4000);
         //you can assert against the status code here == 201
         return (statusCode == 201);
     }
 
     public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode(env + "&&api&&olcs");
-        String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
-                        "buildWithParameters?delay=0sec&INCLUDED_TYPES=%s&EXCLUDED_TYPES=%s&ENVIRONMENT_NAME=%s",
-                URLEncoder.encode(includedTypes, "UTF-8"),
-                URLEncoder.encode(excludedTypes, "UTF-8"),
-                URLEncoder.encode(String.valueOf(env), "UTF-8"));
+        String node = URLEncoder.encode("api&&"+env+"&&olcs", StandardCharsets.UTF_8);
+        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
+                        "buildWithParameters?build?delay=0sec&ENVIRONMENT_NAME=%s&Run+on+Nodes=%s&INCLUDE_TYPES=%s&EXCLUDE_TYPES=%s",
+                env,node,
+                URLEncoder.encode(includedTypes, StandardCharsets.UTF_8),
+                URLEncoder.encode(excludedTypes, StandardCharsets.UTF_8));
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
+        int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
         Thread.sleep(4000);
         return (statusCode == 201);
-        // Cannot use this yet as the sudo commmand on the process queue requires a password
+        // Cannot use this yet as the sudo command on the process queue requires a password
     }
 
     public static String readXML() throws IOException {
         String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
-        String xmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
-        return xmlContent;// Now xmlContent holds the XML content
+        return new String(Files.readAllBytes(Paths.get(filePath)));// Now xmlContent holds the XML content
     }
 
     public static void writeXmlStringToFile(String xmlString, String filePath) throws IOException {
         // Read the existing XML file content
         byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
-        String updatedContent = xmlString;
         // Write the updated content back to the file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(updatedContent);
+            writer.write(xmlString);
         }
     }
 }
