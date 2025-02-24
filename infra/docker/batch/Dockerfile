@@ -14,7 +14,7 @@ RUN yum update -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-# Install latest version of the aws cli 
+# Install latest version of the aws cli
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
@@ -25,6 +25,7 @@ COPY . .
 COPY ./settings.xml /root/.m2/settings.xml
 
 
-RUN chmod +x ./run.sh
+RUN --mount=type=cache,target=/root/.m2 \
+    chmod +x ./run.sh \
 
 CMD ["/bin/sh", "-c", "./run.sh"]
