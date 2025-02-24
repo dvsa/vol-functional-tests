@@ -23,6 +23,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 COPY ./settings.xml /root/.m2/settings.xml
 COPY pom.xml .
 
+COPY . .
+
 RUN --mount=type=cache,target=/root/.m2 \
     mvn dependency:go-offline
 
