@@ -103,7 +103,7 @@ jobs:
           cache: 'maven'
           cache-dependency-path: '**/pom.xml' # optional
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B -P package --file pom.xml
 
       - name: Submit AWS Batch Job
         id: submit-job
