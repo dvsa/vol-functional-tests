@@ -1,6 +1,28 @@
 # Revision History for the VOL Functional Tests
 
 
+## [3.14.10](https://github.com/dvsa/vol-functional-tests/compare/v3.14.14...v3.14.10) (2025-02-24)
+
+
+### Features
+
+* call updated surefire report summary with 95% pass percentage threshold ([bf654c2](https://github.com/dvsa/vol-functional-tests/commit/bf654c2a55d66e02a3ba95f8b7331be6a9add337))
+
+
+### Bug Fixes
+
+* rebasing ([82efe91](https://github.com/dvsa/vol-functional-tests/commit/82efe919cbcd6775707c794973d2ab2dbda25d34))
+* reduce jvms and removed submissions ecmt ([1fe3898](https://github.com/dvsa/vol-functional-tests/commit/1fe38984758bd0c9018ba6cedd335adeb0310984))
+* remove ecmt smoke ([7d35d41](https://github.com/dvsa/vol-functional-tests/commit/7d35d4157d03da3fb5d88ae89b78016dd72d15dd))
+
+
+### Miscellaneous Chores
+
+* bump to 3.14.10 ([5c32067](https://github.com/dvsa/vol-functional-tests/commit/5c32067e140a13393c7c46ab593e9434c3c99a49))
+* bump to 3.14.10 ([cd05010](https://github.com/dvsa/vol-functional-tests/commit/cd05010c99540f77a2c0a2c97c94d26b27225dc6))
+* bump to 3.14.10 ([d42a0c7](https://github.com/dvsa/vol-functional-tests/commit/d42a0c7036696cbcfcbbd0864cf235957e654672))
+* bump to 3.14.10 ([03d5b34](https://github.com/dvsa/vol-functional-tests/commit/03d5b34a8f9266ab32cba0e85aea07306f713cc1))
+
 ## [3.14.14](https://github.com/dvsa/vol-functional-tests/compare/v3.14.13...v3.14.14) (2025-02-21)
 
 
