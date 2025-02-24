@@ -24,6 +24,8 @@ COPY . .
 
 COPY ./settings.xml /root/.m2/settings.xml
 
+COPY pom.xml .
+
 RUN --mount=type=cache,target=/root/.m2 \
     mvn dependency:go-offline
 
