@@ -10,7 +10,6 @@ import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
 import org.joda.time.LocalDate;
 
-import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -260,7 +259,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         isElementPresent("//a[@id='menu-irhp-application-decisions-withdraw']",SelectorType.XPATH);
     }
     public static void permitsFeePage(){
-        untilElementWithText(ChronoUnit.SECONDS);
+        untilElementWithText();
     }
     public static void permitsSelectFeeTab(){
         waitAndClick("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH);

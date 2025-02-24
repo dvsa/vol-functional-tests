@@ -35,7 +35,7 @@ public class EBSRUpload extends BasePage {
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
-    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
+    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException, InterruptedException {
         world.busRegistrationJourney.viewEBSRInExternal();
         world.selfServeNavigation.refreshUntilSuccessfulOrTimeout();
         waitForTextToBePresent("Successful");

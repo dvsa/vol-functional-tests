@@ -34,20 +34,30 @@ public class RefundInterim extends BasePage {
     @Then("the interim fee should be refunded")
     public void theInterimFeeShouldBeRefunded() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
+        final String EXPECTED_AMOUNT = "£68.00";
+        final String REFUNDED_TEXT = "refunded";
+        final long TIMEOUT_MILLIS = 50_000;
+
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
-        waitForTextToBePresent("£68.00");
+        waitForTextToBePresent(EXPECTED_AMOUNT);
         clickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
-        long kickoutTime = System.currentTimeMillis() + 250000;
-        do {
+
+        long timeoutDeadline = System.currentTimeMillis() + TIMEOUT_MILLIS;
+
+        while (System.currentTimeMillis() < timeoutDeadline) {
             refreshPageWithJavascript();
-        } while(!getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
-        if (System.currentTimeMillis() > kickoutTime) {
-            throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
+            String feeStatus = getText("//*//dd//strong", SelectorType.XPATH).toLowerCase();
+            if (feeStatus.contains(REFUNDED_TEXT)) {
+                break;
+            }
         }
-        assertTrue(getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded"));
-        assertTrue(checkForPartialMatch("£68.00"));
+        if (System.currentTimeMillis() >= timeoutDeadline) {
+            throw new TimeoutException("Timeout while waiting for the interim fee to be refunded.");
+        }
+        assertTrue(getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains(REFUNDED_TEXT));
+        assertTrue(checkForPartialMatch(EXPECTED_AMOUNT));
     }
 
     @And("the application has been withdrawn")

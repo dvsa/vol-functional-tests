@@ -19,7 +19,6 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.time.Duration.ofSeconds;
@@ -65,17 +64,17 @@ public abstract class BasePage extends DriverUtils {
         return webElement.findElement(By.xpath(selector)).getText();
     }
 
-    protected static void untilElementWithText(ChronoUnit unit) {
+    protected static void untilElementWithText() {
         new FluentWait<>(getDriver())
                 .ignoreAll(Arrays.asList(NoSuchElementException.class, StaleElementReferenceException.class))
-                .withTimeout(Duration.of(org.dvsa.testing.framework.enums.Duration.CENTURY, unit))
+                .withTimeout(Duration.of(org.dvsa.testing.framework.enums.Duration.CENTURY, ChronoUnit.SECONDS))
                 .pollingEvery(Duration.of(500, ChronoUnit.MILLIS))
                 .until(driver -> driver.findElement(by("//h1[@class='govuk-heading-xl']", SelectorType.XPATH)).getText().equalsIgnoreCase("Permit fee"));
     }
 
     protected static boolean isTextPresent(String locator) {
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(5))
+            new WebDriverWait(getDriver(), Duration.ofSeconds(1))
                     .until(driver -> visibilityOf(findElement(String.format("//*[contains(text(),'%s')]", locator), SelectorType.XPATH)));
             return true;
         } catch (Exception e) {

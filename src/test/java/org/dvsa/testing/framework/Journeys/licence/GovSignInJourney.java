@@ -48,7 +48,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-        if (isElementPresent("sign-in-button", SelectorType.ID)) {
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("sign-in-or-create")) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -96,8 +96,7 @@ public class GovSignInJourney extends BasePage {
             clickByXPath("//*[@id='select-device-choice']");
         }
 
-        if (isTitlePresent("You have already proved your identity", 1) ||
-                isTitlePresent("Do you have a smartphone you can use?", 1)) {
+        if (isTitlePresent("Do you have a smartphone you can use?", 1)) {
             goThroughVerificationSteps();
         }
 

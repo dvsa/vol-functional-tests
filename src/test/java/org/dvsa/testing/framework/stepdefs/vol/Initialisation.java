@@ -73,7 +73,6 @@ public class Initialisation {
         world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);
         world.submitApplicationJourney = new SubmitApplicationJourney(world);
-        world.grantApplicationJourney = new GrantApplicationJourney();
         world.ecmtInternationalRemovalJourney = new EcmtInternationalRemovalJourney(world);
         world.ecmtApplicationJourney = new EcmtApplicationJourney(world);
         world.irhpPageJourney = new IRHPPageJourney(world);
