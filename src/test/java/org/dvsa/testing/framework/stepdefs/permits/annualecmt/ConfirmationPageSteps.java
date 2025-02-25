@@ -14,7 +14,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -47,11 +47,11 @@ public class ConfirmationPageSteps extends BasePage {
     public void iHaveAnOngoingAnnualECMTWithAllFeesPaid() {
         world.ecmtApplicationJourney.beginApplication();
         world.ecmtApplicationJourney.completeUntilCheckYourAnswersPage();
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
+        get(webAppURL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
         HomePageJourney.payAllOutstandingFees();
         world.feeAndPaymentJourney.customerPaymentModule();
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
+        get(webAppURL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
         HomePageJourney.selectPermitTab();
 
         HomePage.PermitsTab.selectFirstOngoingApplication();

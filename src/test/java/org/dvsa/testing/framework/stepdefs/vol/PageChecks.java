@@ -7,7 +7,7 @@ import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -30,7 +30,7 @@ public class PageChecks extends BasePage {
     public void onSelfServeTheWithdrawApplicationLinkIsNotPresentOn(String page) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Sign out");
-        String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+        String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         Browser.navigate().get(externalURL);
         waitForTextToBePresent("Licences");
         world.selfServeNavigation.navigateToPage(page, SelfServeSection.VIEW);

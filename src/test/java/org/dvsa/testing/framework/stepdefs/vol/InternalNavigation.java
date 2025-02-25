@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
-import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 public class InternalNavigation extends BasePage {
@@ -51,7 +51,7 @@ public class InternalNavigation extends BasePage {
 
     @When("I am on a licence Overview page")
     public void iAmOnALicenceOverviewPage() {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "licence/318365/").toString();
+        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "licence/318365/").toString();
         DriverUtils.get(myURL);
     }
 
