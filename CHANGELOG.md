@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.1.0](https://github.com/dvsa/vol-functional-tests/compare/v4.0.0...v4.1.0) (2025-02-25)
+
+
+### Features
+
+* refactor for uri constructor ([4fbe456](https://github.com/dvsa/vol-functional-tests/commit/4fbe456d87ca8e613c412d0f3caccaa3862eb22c))
+* up uri constructor ([c2e2046](https://github.com/dvsa/vol-functional-tests/commit/c2e2046b7b1b630f1456a6346812d0bf399f781f))
+
 ## [4.0.0](https://github.com/dvsa/vol-functional-tests/compare/v3.14.10...v4.0.0) (2025-02-24)
 
 
