@@ -141,7 +141,7 @@ public class GenericUtils extends BasePage {
     }
 
     public void getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2500);
         String htmlContent = world.configuration.getPasswordResetLink();
         htmlContent = htmlContent.replaceAll("=3D", "=").replaceAll("=0A", "").replaceAll("=20", " ").replaceAll("=\r\n", "");
         Browser.navigate().get(htmlContent);
