@@ -130,9 +130,9 @@ public class GenericUtils extends BasePage {
     public String getTransportManagerLink() throws InterruptedException {
         Thread.sleep(2000);
         String htmlContent = world.configuration.getTmAppLink();
-        htmlContent = htmlContent.replaceAll("(?<!=)=(?!=)", "=").replaceAll("\\s+", " ");
+        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
         Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
-        Matcher matcher = pattern.matcher(htmlContent);
+        Matcher matcher = pattern.matcher(sanitizedHTML);
         if (matcher.find()) {
             return matcher.group(1);
         } else {
