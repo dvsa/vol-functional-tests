@@ -6,19 +6,6 @@ import activesupport.number.Int;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -38,6 +25,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -140,9 +130,9 @@ public class GenericUtils extends BasePage {
     public String getTransportManagerLink() throws InterruptedException {
         Thread.sleep(2000);
         String htmlContent = world.configuration.getTmAppLink();
-        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        htmlContent = htmlContent.replaceAll("(?<!=)=(?!=)", "=").replaceAll("\\s+", " ");
         Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
-        Matcher matcher = pattern.matcher(sanitizedHTML);
+        Matcher matcher = pattern.matcher(htmlContent);
         if (matcher.find()) {
             return matcher.group(1);
         } else {
@@ -151,38 +141,28 @@ public class GenericUtils extends BasePage {
     }
 
     public void getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         String htmlContent = world.configuration.getPasswordResetLink();
-        String sanitizedHTML = htmlContent.replaceAll("=3D", "=")
-                .replaceAll("=0A", "")
-                .replaceAll("=20", "")
-                .replaceAll("=\r\n", "");
-        Browser.navigate().get(sanitizedHTML);
+        htmlContent = htmlContent.replaceAll("=3D", "=").replaceAll("=0A", "").replaceAll("=20", " ").replaceAll("=\r\n", "");
+        Browser.navigate().get(htmlContent);
     }
 
 
     public static String getDates(String state, int months) {
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String myDate = null;
 
-        switch (state) {
-            case "futureMonth":
-                myDate = date.format(now.plusMonths(months));
-                break;
-            case "futureDay":
-                myDate = date.format(now.plusDays(months));
-                break;
-            case "past":
-                myDate = date.format(now.minusMonths(months));
-                break;
-            case "current":
-                myDate = date.format(now);
-                break;
-            default:
-                System.out.println(state + ": does not exist, needs to either be 'current', or 'past' or 'futureDay' or 'futureMonth'");
-        }
-        return myDate;
+        return switch (state) {
+            case "futureMonth" -> dateFormatter.format(now.plusMonths(months));
+            case "futureDay" -> dateFormatter.format(now.plusDays(months));
+            case "past" -> dateFormatter.format(now.minusMonths(months));
+            case "current" -> dateFormatter.format(now);
+            default -> {
+                System.out.println(state + ": does not exist, needs to either be 'current', 'past', 'futureDay', or 'futureMonth'");
+                yield null;
+            }
+        };
     }
 
     public static String createZipFolder(String fileName) {
@@ -293,18 +273,16 @@ public class GenericUtils extends BasePage {
             String line = null;
             String prevLine = null;
             int lineCounter = 0;
-            while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
-                line = br.readLine();
-                prevLine = line;
+            while ((line = br.readLine()) != null) {
+                if (lineNumber == -1) {
+                    prevLine = line;
+                } else if (lineCounter == lineNumber) {
+                    return line;
+                }
                 lineCounter++;
             }
-            br.close();
-            if (lineNumber == -1) {
-                return prevLine;
-            } else {
-                return line;
-            }
         }
+        return fileLocation;
     }
 
     public static String readLastLineFromFile(String fileLocation) throws IOException {
@@ -329,33 +307,25 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public static int kickOffJenkinsJob(String urlString, String username, String password)
-            throws IOException {
-
+    public static int kickOffJenkinsJob(String urlString, String username, String password) throws IOException, InterruptedException {
         URI uri = URI.create(urlString);
-        HttpHost host = new HttpHost(uri.getHost(), uri.getPort(), uri.getScheme());
-        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(new AuthScope(uri.getHost(), uri.getPort()),
-                new UsernamePasswordCredentials(username, password));
-        // Create AuthCache instance
-        AuthCache authCache = new BasicAuthCache();
-        // Generate BASIC scheme object and add it to the local auth cache
-        BasicScheme basicAuth = new BasicScheme();
-        authCache.put(host, basicAuth);
-        CloseableHttpClient httpClient =
-                HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
-        HttpPost httpPost = new HttpPost(uri);
-        // Add AuthCache to the execution context
-        HttpClientContext localContext = HttpClientContext.create();
-        localContext.setAuthCache(authCache);
+        String auth = username + ":" + password;
+        String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
 
-        HttpResponse response = httpClient.execute(host, httpPost, localContext);
-        return response.getStatusLine().getStatusCode();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .header("Authorization", "Basic " + encodedAuth)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+        return ((java.net.http.HttpResponse<?>) response).statusCode();
     }
 
     public static boolean jenkinsCLi(EnvironmentType env, String batchCommand, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
-        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
+        var node = URLEncoder.encode(env + "&&api&&olcs", StandardCharsets.UTF_8);
+        var JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli_New/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=%s&ARGS=-v&ENVIRONMENT_NAME=%s", node, batchCommand, env);
 
         int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
@@ -365,29 +335,26 @@ public class GenericUtils extends BasePage {
     }
 
     public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
-        String node = URLEncoder.encode("api&&"+env+"&&olcs", StandardCharsets.UTF_8);
-        String JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
+        var node = URLEncoder.encode("api&&" + env + "&&olcs", StandardCharsets.UTF_8);
+        var JenkinsURL = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Process_Queue_New/" +
                         "buildWithParameters?build?delay=0sec&ENVIRONMENT_NAME=%s&Run+on+Nodes=%s&INCLUDE_TYPES=%s&EXCLUDE_TYPES=%s",
-                env,node,
+                env, node,
                 URLEncoder.encode(includedTypes, StandardCharsets.UTF_8),
                 URLEncoder.encode(excludedTypes, StandardCharsets.UTF_8));
 
         int statusCode = kickOffJenkinsJob(JenkinsURL, username, password);
         Thread.sleep(4000);
         return (statusCode == 201);
-        // Cannot use this yet as the sudo command on the process queue requires a password
     }
 
     public static String readXML() throws IOException {
-        String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
-        return new String(Files.readAllBytes(Paths.get(filePath)));// Now xmlContent holds the XML content
+        var filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
+        return Files.readString(Paths.get(filePath)); // Now xmlContent holds the XML content
     }
 
     public static void writeXmlStringToFile(String xmlString, String filePath) throws IOException {
-        // Read the existing XML file content
-        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
         // Write the updated content back to the file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (var writer = Files.newBufferedWriter(Paths.get(filePath))) {
             writer.write(xmlString);
         }
     }
