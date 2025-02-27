@@ -3,9 +3,12 @@ FROM maven:3.9.6-amazoncorretto-17 as maven
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
-
 ENV proxyHost=$proxyHost
 ENV proxyPort=$proxyPort
+
+ENV mavenVersion=3.9.6
+ENV M2_HOME=/opt/apache-maven-${mavenVersion}
+ENV M2=$M2_HOME/bin
 
 WORKDIR /app
 
@@ -20,15 +23,17 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-COPY . .
-
 COPY ./settings.xml /root/.m2/settings.xml
-
 COPY pom.xml .
 
-RUN --mount=type=cache,target=/root/.m2 \
-    mvn dependency:go-offline
+COPY .m2 /root/.m2
 
-RUN --mount=type=cache,target=/root/.m2 chmod +x ./run.sh
+RUN mvn dependency:go-offline
+
+COPY . .
+
+RUN mvn package
+
+RUN chmod +x ./run.sh
 
 CMD ["/bin/sh", "-c", "./run.sh"]
