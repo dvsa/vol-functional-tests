@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.1.4](https://github.com/dvsa/vol-functional-tests/compare/v4.1.3...v4.1.4) (2025-03-05)
+
+
+### Bug Fixes
+
+* re introduced threadCount ([31337a1](https://github.com/dvsa/vol-functional-tests/commit/31337a16138888e4161ddf486acf390444da6673))
+
 ## [4.1.3](https://github.com/dvsa/vol-functional-tests/compare/v4.1.2...v4.1.3) (2025-03-05)
 
 
