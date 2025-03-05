@@ -338,9 +338,7 @@ public class ManageApplications extends BasePage {
             refreshPageWithJavascript();
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
             world.selfServeNavigation.navigateThroughApplication();
-            if (!world.configuration.env.equals("local")) {
-                world.selfServeUIJourney.signDeclaration();
-            }
+            world.selfServeUIJourney.signDeclaration();
         } finally {
             writeLock.unlock();
         }
