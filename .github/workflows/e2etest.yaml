@@ -25,7 +25,7 @@ on:
         type: number
         required: false
         description: "Timeout in minutes for the AWS Batch job"
-        default: 180
+        default: 520
       aws_role:
         description: 'AWS IAM Role ARN to assume'
         required: false
