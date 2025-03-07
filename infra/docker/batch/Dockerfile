@@ -4,7 +4,7 @@ ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies and AWS CLI
 RUN yum update -y && \
     yum install -y zip-3.* unzip-6.* && \
     yum clean all && \
@@ -14,14 +14,17 @@ RUN yum update -y && \
     ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update && \
     rm -f awscliv2.zip
 
-# Copy Maven settings
-COPY ./settings.xml /root/.m2/settings.xml
+# Copy build-time Maven settings (without proxy)
+COPY ./settings-build.xml /root/.m2/settings.xml
 
 # Copy pom files for dependency resolution
 COPY ./pom.xml ./
 
-# Try to download dependencies using the settings.xml credentials
+# Download dependencies (should work without proxy)
 RUN mvn dependency:go-offline -B || echo "Dependency download failed, will download at runtime"
+
+# Now copy the runtime settings file (with proxy) for later use
+COPY ./settings-runtime.xml /root/.m2/settings.xml
 
 # Copy the rest of the application
 COPY . .
