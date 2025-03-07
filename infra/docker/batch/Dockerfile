@@ -21,7 +21,10 @@ COPY ./settings-build.xml /root/.m2/settings.xml
 COPY ./pom.xml ./
 
 # Download dependencies (should work without proxy)
-RUN mvn dependency:go-offline -B || echo "Dependency download failed, will download at runtime"
+RUN echo "Install mvn deps" && \
+    timeout 20m mvn dependency:resolve -B -Dmaven.test.skip=true -Dmaven.main.skip=true || true && \
+    echo "catch for occasional stalling on first mvn run" && \
+    timeout 20m mvn dependency:resolve -B -Dmaven.test.skip=true -Dmaven.main.skip=true || echo "Dependency resolution completed"
 
 # Now copy the runtime settings file (with proxy) for later use
 COPY ./settings-runtime.xml /root/.m2/settings.xml
