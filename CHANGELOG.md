@@ -1,6 +1,28 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.2.0](https://github.com/dvsa/vol-functional-tests/compare/v4.1.4...v4.2.0) (2025-03-07)
+
+
+### Features
+
+* try downloading mvn deps - allow manual docker build workflow d… ([389d1e7](https://github.com/dvsa/vol-functional-tests/commit/389d1e75430e1d4ba01b80fc0eee85f068f62b3b))
+* try downloading mvn deps - allow manual docker build workflow dispatch ([ff797f6](https://github.com/dvsa/vol-functional-tests/commit/ff797f61763a0c30c97d5fdbbd32dd7d092160a7))
+
+
+### Bug Fixes
+
+* avoid linting error ([7881416](https://github.com/dvsa/vol-functional-tests/commit/78814161bbc27cb66d3fa09785a4fd336bb1f154))
+* avoid linting error ([1cfb6e2](https://github.com/dvsa/vol-functional-tests/commit/1cfb6e255c595b4c6f27b43200bfefb4a517d255))
+* generate build-time settings.xml with no proxy and runtime with proxy baked in ([3c963ee](https://github.com/dvsa/vol-functional-tests/commit/3c963ee820bddf2290f7066f7d6d43a233f91c66))
+* generate build-time settings.xml with no proxy and runtime with proxy baked in ([e53688f](https://github.com/dvsa/vol-functional-tests/commit/e53688f5e8ddb6f0a8a267317235beacee53ab7d))
+* generate build-time settings.xml with no proxy and runtime with proxy baked in ([4526f5a](https://github.com/dvsa/vol-functional-tests/commit/4526f5a265350fc20deca971786eaa17ba7ce097))
+* just build arm64, and pull suitable awscli binary for that arch ([aed90ba](https://github.com/dvsa/vol-functional-tests/commit/aed90ba1518956570340cb29f230f9ca8721bd4b))
+* perms needed for despatch to work ([ea1fc51](https://github.com/dvsa/vol-functional-tests/commit/ea1fc5137485c498f99e12432e3fbf12eb317b3b))
+* perms needed for despatch to work ([57aa53f](https://github.com/dvsa/vol-functional-tests/commit/57aa53fc8afb426daa68bc181b4b5bc5bc41e7c1))
+* proxy settings not needed when installing deps on GH Runner ([41558ec](https://github.com/dvsa/vol-functional-tests/commit/41558ec592c2b110d92b4cbf994da8b46ce488ee))
+* proxy settings not needed when installing deps on GH Runner ([d3186d2](https://github.com/dvsa/vol-functional-tests/commit/d3186d20e0def3a1547dc5027fa8a6c09c768c4f))
+
 ## [4.1.4](https://github.com/dvsa/vol-functional-tests/compare/v4.1.3...v4.1.4) (2025-03-05)
 
 
