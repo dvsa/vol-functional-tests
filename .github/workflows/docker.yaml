@@ -77,15 +77,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: whelk-io/maven-settings-xml-action@v22
-        name: generate settings xml
+        name: generate runtime settings xml
         with:
           servers: ${{ needs.prepare.outputs.push == 'true' && env.BATCH_SETTINGS || env.RUNNER_SETTINGS }}
           proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${{vars.CI_PROXY}}", "port": "${{vars.CI_PROXYPORT}}" }]'
           repositories: '[ { "id":"dvsa-github-packages", "name":"dvsa-github-packages", "url":"https://maven.pkg.github.com/dvsa/*", "releases": { "enabled": "true" }, "snapshots": { "enabled": "true" } }]'
-          output_file: ./settings.xml
+          output_file: ./settings-runtime.xml
 
-      - name: view settings.xml
-        run: cat ./settings.xml
+      - uses: whelk-io/maven-settings-xml-action@v22
+        name: generate build-time settings xml
+        with:
+          servers: ${{ needs.prepare.outputs.push == 'true' && env.BATCH_SETTINGS || env.RUNNER_SETTINGS }}
+          repositories: '[ { "id":"dvsa-github-packages", "name":"dvsa-github-packages", "url":"https://maven.pkg.github.com/dvsa/*", "releases": { "enabled": "true" }, "snapshots": { "enabled": "true" } }]'
+          output_file: ./settings-build.xml
+
+      - name: view settings files
+        run: |
+          echo "Build-time settings:"
+          cat ./settings-build.xml
+          echo "Runtime settings:"
+          cat ./settings-runtime.xml
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -134,7 +145,7 @@ jobs:
         with:
           context: .
           file: infra/docker/batch/Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           push: ${{ needs.prepare.outputs.push == 'true' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
