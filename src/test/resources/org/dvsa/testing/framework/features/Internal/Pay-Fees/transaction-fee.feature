@@ -1,5 +1,5 @@
 @int_regression
-@ec2_smoke
+@smoke
 @FullRegression
 @printAndSign
 @transactionFees

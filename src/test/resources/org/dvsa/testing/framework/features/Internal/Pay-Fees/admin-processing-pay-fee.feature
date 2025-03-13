@@ -1,6 +1,6 @@
 @Admin-Payment-Processing
 @CPMS_tests
-@ec2_smoke
+@smoke
 @printAndSign
 @FullRegression
 @smoke

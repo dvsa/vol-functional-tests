@@ -1,4 +1,4 @@
-@OLCS-7284 @ss_regression @gov-sign-in @ec2_smoke @FullRegression @smoke
+@OLCS-7284 @ss_regression @gov-sign-in @smoke @FullRegression @smoke
 Feature: Operator signs digitally
   Scenario Outline: Operator chooses to sign digitally
     Given i have a "<OperatorType>" application in progress

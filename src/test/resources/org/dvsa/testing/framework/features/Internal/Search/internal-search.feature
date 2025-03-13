@@ -3,13 +3,13 @@
 @printAndSign
 Feature: Internal Search
 
-  @ec2_smoke @searchLicence @int_regression
+  @smoke @searchLicence @int_regression
   Scenario: Search a Licence on Internal
     Given I have a submitted "goods" "restricted" application
     When i search for and click on my licence
     Then the "Licence details" page should display
 
-  @ec2_smoke @searchApplication @int_regression
+  @smoke @searchApplication @int_regression
   Scenario: Search an Application on Internal
     Given I have a "goods" "restricted" application
     When i search for and click on my application
