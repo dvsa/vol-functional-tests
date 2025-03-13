@@ -30,7 +30,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-   @NI_application @ec2_smoke @smoke
+   @NI_application @smoke @smoke
    Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

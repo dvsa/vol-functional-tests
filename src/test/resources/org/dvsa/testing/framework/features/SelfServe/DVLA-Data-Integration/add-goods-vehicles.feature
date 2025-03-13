@@ -1,7 +1,7 @@
 @DVLA @VOL-147 @ss_regression @FullRegression @printAndSign @consultant
 Feature: Search and add a vehicle
 
-  @ec2_smoke @dvla-add-vehicle @localsmoke @smoke
+  @smoke @dvla-add-vehicle @localsmoke @smoke
   Scenario Outline: Add a vehicle to a licence
     Given as a "<user_type>" I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence

@@ -1,5 +1,5 @@
 @sign-surrender
-@ec2_smoke
+@smoke
 @ss_regression
 @FullRegression
 @smoke

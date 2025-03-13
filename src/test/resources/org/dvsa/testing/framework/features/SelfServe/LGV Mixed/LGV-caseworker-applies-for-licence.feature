@@ -38,7 +38,7 @@ Feature: Caseworkers can apply for lgv only and mixed fleet licences and are red
     Then the caseworker is navigated to the lgv only application overview
     And the type of licence section is marked as complete
 
-   @ec2_smoke @int_regression @smoke
+   @smoke @int_regression
    Scenario: Caseworker clicks no to lgv only and clicks create is redirected to mixed fleet application overview and type of licence is marked complete
     Given I create a new external user
     And a caseworker goes to apply for a goods standard_international licence
