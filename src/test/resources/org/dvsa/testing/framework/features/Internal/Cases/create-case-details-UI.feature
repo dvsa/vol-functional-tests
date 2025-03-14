@@ -12,7 +12,7 @@ Feature: Public enquiry added and published and deletion of case notes
     And i have logged in to internal as "admin"
     When i url search for my licence
 
-  @inquiry
+  @inquiry @15.6
   Scenario: Publish public inquiry
     And i add a new public inquiry
     And i add and publish a hearing

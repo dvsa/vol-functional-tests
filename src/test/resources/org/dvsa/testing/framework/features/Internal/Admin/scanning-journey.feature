@@ -6,7 +6,7 @@ Feature: Generate scanning separator sheets as an internal user
 
   Background:
     Given i have a valid "public" "standard_national" licence with an open case and bus reg
-
+@15.6
     Scenario: User wishes to create a scanning separator
       And I am on the Scanning page
       When I complete the Compliance Scanning details

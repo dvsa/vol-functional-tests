@@ -9,7 +9,7 @@ Feature: Multiple licence holder
   Background:
     Given I have "2" "goods" "standard_national" licences
 
-  @multiple-surrenders
+  @multiple-surrenders @15.6-ss
   Scenario: Surrender multiple licences
     And my application to surrender is under consideration
     When the caseworker approves the surrender

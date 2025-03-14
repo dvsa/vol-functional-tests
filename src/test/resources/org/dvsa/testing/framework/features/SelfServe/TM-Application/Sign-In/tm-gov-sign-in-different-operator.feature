@@ -25,7 +25,7 @@ Feature: TM signs through gov-sign-in
     And I sign in to gov sign in to complete the process
     And the VOL 'Review and declarations' post signature page is displayed
 
-  @operator-cosigns
+  @operator-cosigns @15.6-ss
   Scenario: Operator co-signs through gov sign in
     When i add an existing person as a transport manager who is not the operator on "application"
     And i sign the declaration
