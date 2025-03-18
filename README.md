@@ -3,7 +3,7 @@ This project holds functional tests for the VOL website. These end to end tests 
 
 ## Prerequisite 
 The following technologies should be installed on your system.
-* Java JDK 17
+* Java JDK 17.
 * Maven 3
 
 ## Technologies
