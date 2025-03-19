@@ -220,7 +220,7 @@
                     <forkCount>4</forkCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
-                    <threadCount>10</threadCount>
+                    <threadCount>8</threadCount>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
