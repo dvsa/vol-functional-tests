@@ -132,7 +132,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY_MIRROR }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PRIVATE_KEY}}
 
       - name: Untag existing latest image in ECR
         if: ${{ needs.prepare.outputs.push == 'true' }}
