@@ -9,7 +9,10 @@ import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -126,6 +129,35 @@ public class HomePage extends BasePage {
                 getDriver().navigate().refresh();
             }
             assertTrue(found);
+        }
+
+        public static void untilUntilPermitHasStatus(String references, PermitStatus status, long duration, TimeUnit unit) {
+            if (duration <= 0 || unit == null) {
+                throw new IllegalArgumentException("Duration must be greater than 0 and TimeUnit cannot be null");
+            }
+            long maxSeconds = TimeUnit.SECONDS.convert(duration, unit);
+            if (maxSeconds <= 0) {
+                throw new IllegalArgumentException("Converted maxSeconds should be greater than 0");
+            }
+            String selector = String.format("//td[text()='%s']/following-sibling::td[last()]/span[text()='%s']", references, status.toString());
+//            long maxSeconds = TimeUnit.SECONDS.convert(duration, unit);
+            Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                    .withTimeout(Duration.ofSeconds((int) maxSeconds))   // Max time to wait
+                    .pollingEvery(Duration.ofSeconds(2))           // Poll every 2 seconds
+                    .ignoring(Exception.class);
+
+            boolean found = wait.until(driver -> {
+                WebElement element = driver.findElement(By.xpath(selector));
+                return element != null && element.isDisplayed();
+            });
+            assertTrue(found);
+        }
+
+        private static WebDriver getDriver() {
+            // Your WebDriver instance code here
+            return null;
+
+
         }
 
         public enum Table {

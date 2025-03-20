@@ -5,4 +5,8 @@ public interface Duration {
     int MEDIUM = 6;
     int LONG = 12;
     int CENTURY = 30;
+
+    static java.time.Duration ofSeconds(int i) {
+        return null;
+    }
 }

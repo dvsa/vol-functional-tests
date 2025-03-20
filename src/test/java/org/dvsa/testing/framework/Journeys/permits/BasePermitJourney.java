@@ -81,7 +81,7 @@ public class BasePermitJourney extends BasePermitPage {
     }
 
     public void waitUntilPermitHasStatus() {
-        HomePage.PermitsTab.untilPermitHasStatus(
+        HomePage.PermitsTab.untilUntilPermitHasStatus(
                 world.applicationDetails.getLicenceNumber(),
                 PermitStatus.VALID,
                 Duration.LONG,
