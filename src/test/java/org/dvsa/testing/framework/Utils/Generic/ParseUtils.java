@@ -50,38 +50,16 @@ public class ParseUtils {
     }
 
     public static String parseTrafficArea(TrafficArea trafficArea) {
-        String trafficAreaString;
-        switch (trafficArea) {
-            case NORTH_EAST:
-                trafficAreaString = "North East of England";
-                break;
-            case NORTH_WEST:
-                trafficAreaString = "North West of England";
-                break;
-            case MIDLANDS:
-                trafficAreaString = "West Midlands";
-                break;
-            case EAST:
-                trafficAreaString = "East of England";
-                break;
-            case WALES:
-                trafficAreaString = "Wales";
-                break;
-            case WEST:
-                trafficAreaString = "West of England";
-                break;
-            case LONDON:
-                trafficAreaString = "London and the South East of England";
-                break;
-            case SCOTLAND:
-                trafficAreaString = "Scotland";
-                break;
-            case NORTHERN_IRELAND:
-                trafficAreaString = "Northern Ireland";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + trafficArea);
-        }
-        return trafficAreaString;
+        return switch (trafficArea) {
+            case NORTH_EAST -> "North East Of England";
+            case NORTH_WEST -> "North West Of England";
+            case MIDLANDS -> "West Midlands";
+            case EAST  -> "East of England";
+            case WALES -> "Wales";
+            case WEST -> "West of England";
+            case LONDON -> "London";
+            case SCOTLAND -> "Scotland";
+            case NORTHERN_IRELAND -> "Northern Ireland";
+        };
     }
 }
