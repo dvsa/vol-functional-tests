@@ -115,17 +115,8 @@ public class HomePage extends BasePage {
 
 
         public static void untilPermitHasStatus(String reference, PermitStatus status, long duration, TimeUnit unit) {
-            String selector = String.format("//td['%s']/following-sibling::td[last()]/span[text()='%s']", reference, status.toString());
-            long maxSeconds = TimeUnit.SECONDS.convert(duration, unit);
-            int interval = 2;
-            boolean found = false;
-
-            while (maxSeconds >= 0 && !found) {
-                maxSeconds -= interval;
-                found = isElementVisible(selector, interval);
-                getDriver().navigate().refresh();
-            }
-            assertTrue(found);
+            String selector = String.format("//td[text()='%s']/following-sibling::td[last()]/span[text()='%s']", reference, status.toString());
+            untilElementIsPresent(selector, SelectorType.XPATH, duration, unit);
         }
 
         public enum Table {
