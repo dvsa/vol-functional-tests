@@ -40,5 +40,5 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Upgrade to Java 17
 - Refactor Java 11 Methods to Java 17
 
-##EUPA refactor
+##EUPA Refactor
 - Add documentation on the changes and how to modify things

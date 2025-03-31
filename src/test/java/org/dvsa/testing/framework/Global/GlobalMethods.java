@@ -44,18 +44,22 @@ public class GlobalMethods extends BasePage {
     }
 
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
-        String newPassword = SecretsManager.getSecretValue("internalNewPassword");
-        String domainURL = webAppURL.build(applicationType, world.configuration.env, "auth/login").toString();
+        var newPassword = SecretsManager.getSecretValue("internalNewPassword");
+        var domainURL = webAppURL.build(applicationType, world.configuration.env, "auth/login").toString();
+
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
+
         DriverUtils.get(domainURL);
+
         try {
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
             e.printStackTrace();
         }
+
         if (isTextPresent("Welcome to your account")) {
             click("termsAgreed", SelectorType.ID);
             UniversalActions.clickSubmit();
@@ -65,13 +69,12 @@ public class GlobalMethods extends BasePage {
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-        String password;
-        QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        if (!world.configuration.env.toString().equals("local")) {
-            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        } else {
-            throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
-        }
+        var quotedPrintableCodec = new QuotedPrintableCodec();
+        var password = switch (world.configuration.env.toString()) {
+            case "local" -> throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
+            default -> quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+        };
+
         if (password == null) {
             throw new IllegalArgumentException("Retrieved password is null");
         }
