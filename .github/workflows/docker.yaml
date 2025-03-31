@@ -36,6 +36,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  packages: write
 
 env:
   WORKING_DIR: infra/docker/batch
