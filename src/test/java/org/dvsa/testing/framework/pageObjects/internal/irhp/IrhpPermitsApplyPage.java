@@ -198,7 +198,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     public static void selectCardPayment() {
         String paymentMethod = "//select[@id='details[paymentType]']";
-        untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
+        untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         selectValueFromDropDown(paymentMethod, SelectorType.XPATH, PaymentMethod.Card.toString());
         scrollAndClick("//button[@id='form-actions[pay]']", SelectorType.XPATH);
         untilElementIsPresent("#scp_cardPage_cardNumber_input", SelectorType.CSS, Duration.LONG, TimeUnit.SECONDS);
