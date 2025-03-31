@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.3.0](https://github.com/dvsa/vol-functional-tests/compare/v4.2.0...v4.3.0) (2025-03-31)
+
+
+### Features
+
+* refactor global methods ([eafb4fc](https://github.com/dvsa/vol-functional-tests/commit/eafb4fc73c4b02eb38abe36c931fb081bfb76f2c))
+* refactor global methods ([6008bca](https://github.com/dvsa/vol-functional-tests/commit/6008bcad44213e9b629bbc7942d73e88be9fe812))
+
 ## [4.2.0](https://github.com/dvsa/vol-functional-tests/compare/v4.1.4...v4.2.0) (2025-03-07)
 
 
