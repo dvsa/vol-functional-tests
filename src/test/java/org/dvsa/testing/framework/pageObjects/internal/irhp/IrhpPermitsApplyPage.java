@@ -197,6 +197,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     }
 
     public static void selectCardPayment() {
+        waitForElementToBePresent("//div[@class='modal__content']//form[@id='fee_payment']");
         String paymentMethod = "//select[@id='details[paymentType]']";
         untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         selectValueFromDropDown(paymentMethod, SelectorType.XPATH, PaymentMethod.Card.toString());
