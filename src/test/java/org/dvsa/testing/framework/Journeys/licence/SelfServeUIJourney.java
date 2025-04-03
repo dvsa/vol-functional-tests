@@ -223,9 +223,9 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void addNewAddressDetails(HashMap<String, String> address, String postcodeMatchingTrafficArea, String typeOfAddress) {
-        String[] addressFields = {"addressLine1", "addressLine2", "addressLine3", "addressLine4", "town"};
-        for (String addressField : addressFields)
-            replaceText(String.format("//*[contains(@name,'%s[%s]')]", typeOfAddress, addressField), SelectorType.XPATH, address.get(addressField));
+        address.forEach((key, value) ->
+                replaceText(String.format("//*[contains(@name,'%s[%s]')]", typeOfAddress, key), SelectorType.XPATH, value)
+        );
         replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcodeMatchingTrafficArea);
     }
 
