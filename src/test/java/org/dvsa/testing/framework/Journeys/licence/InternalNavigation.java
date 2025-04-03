@@ -18,7 +18,6 @@ import java.util.Objects;
 
 import static activesupport.driver.Browser.navigate;
 
-
 public class InternalNavigation extends BasePage {
 
     World world;
@@ -61,30 +60,13 @@ public class InternalNavigation extends BasePage {
         waitAndClick(adminDropdown, SelectorType.XPATH);
         clickByLinkText(option.toString());
         switch (option) {
-            case CONTINUATIONS:
-            case PRESIDING_TCS:
-                break;
-            case PUBLICATIONS:
-            case REPORTS:
-            case PRINTING:
-            case DATA_RETENTION:
-            case USER_MANAGEMENT:
-                waitForElementToBePresent(String.format("//h4[contains(text(),'%s')]", option));
-                break;
-            case BUS_REGISTRATIONS:
-                waitForElementToBePresent("//h4[contains(text(),'Bus Registrations')]");
-                break;
-            case FEATURE_TOGGLE:
-                waitForElementToBePresent("//h4[contains(text(),'Feature toggles')]");
-                break;
-            case FEE_RATES:
-                waitForElementToBePresent("//h4[contains(text(),'Fee Rates')]");
-                break;
-            case CONTENT_MANAGEMENT:
-                waitForElementToBePresent("//h4[contains(text(),'Templates')]");
-                break;
-            default:
-                waitForTitleToBePresent(option.toString());
+            case CONTINUATIONS, PRESIDING_TCS -> {}
+            case PUBLICATIONS, REPORTS, PRINTING, DATA_RETENTION, USER_MANAGEMENT -> waitForElementToBePresent(String.format("//h4[contains(text(),'%s')]", option));
+            case BUS_REGISTRATIONS -> waitForElementToBePresent("//h4[contains(text(),'Bus Registrations')]");
+            case FEATURE_TOGGLE -> waitForElementToBePresent("//h4[contains(text(),'Feature toggles')]");
+            case FEE_RATES -> waitForElementToBePresent("//h4[contains(text(),'Fee Rates')]");
+            case CONTENT_MANAGEMENT -> waitForElementToBePresent("//h4[contains(text(),'Templates')]");
+            default -> waitForTitleToBePresent(option.toString());
         }
     }
 
@@ -92,21 +74,11 @@ public class InternalNavigation extends BasePage {
         navigateToLoginPage();
         if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
             switch (userRole) {
-                case "limitedReadOnlyUser":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
-                    break;
-                case "readOnlyUser":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
-                    break;
-                case "intSystemAdmin":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
-                    break;
-                case "intPrepUser":
-                    world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
-                    break;
-                default:
-                    world.internalNavigation.logInAsAdmin();
-                    break;
+                case "limitedReadOnlyUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                case "readOnlyUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
+                case "intSystemAdmin" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
+                case "intPrepUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
+                default -> world.internalNavigation.logInAsAdmin();
             }
         }
     }
@@ -128,16 +100,13 @@ public class InternalNavigation extends BasePage {
     }
 
     public void urlViewUsers() {
-        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
+        var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
     }
 
     public void getCase() {
-        String caseUrl;
-        if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION))    {
-            caseUrl = this.url.concat("licence/318365/cases/");
-        } else {
-            caseUrl = this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId()));
-        }
+        var caseUrl = world.configuration.env.equals(EnvironmentType.PREPRODUCTION) ?
+                this.url.concat("licence/318365/cases/") :
+                this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId()));
         get(caseUrl);
     }
 
@@ -196,32 +165,24 @@ public class InternalNavigation extends BasePage {
             world.internalNavigation.logInAsAdmin();
         }
         switch (type) {
-            case "application":
-                getApplication();
-                break;
-            case "licence":
-                getLicence();
-                break;
-            case "variation":
-                getVariationApplication();
-                break;
+            case "application" -> getApplication();
+            case "licence" -> getLicence();
+            case "variation" -> getVariationApplication();
         }
         switch (page.toString()) {
-            case "View":
-                break;
-            case "Vehicles":
+            case "View" -> {}
+            case "Vehicles" -> {
                 clickByLinkText("Vehicles");
-                //Once DVLA integration has been switched on, this needs updating
                 waitForTextToBePresent("Vehicle details");
-                break;
-            case "Convictions and penalties":
+            }
+            case "Convictions and penalties" -> {
                 clickByLinkText("Convictions and penalties");
                 waitForTextToBePresent("Convictions and Penalties");
-                break;
-            default:
+            }
+            default -> {
                 clickByLinkText(page.toString());
                 waitForTextToBePresent(page.toString());
-                break;
+            }
         }
     }
 
@@ -237,7 +198,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToLoginPage() {
-        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
+        var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
     }
 }

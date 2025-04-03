@@ -22,7 +22,6 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
 
-
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
@@ -58,12 +57,12 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToCheckerPage() {
-        String myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
+        var myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
     }
 
     public void navigateToLoginPage() {
-        String myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
+        var myURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
     }
 
@@ -82,68 +81,64 @@ public class SelfServeNavigation extends BasePage {
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
-            case "licence":
+            case "licence" -> {
                 if (world.configuration.env.toString().equals("int")) {
                     clickByLinkText(existingLicenceNumber);
                 } else {
                     clickByLinkText(world.applicationDetails.getLicenceNumber());
                 }
                 waitForTitleToBePresent("View and amend your licence");
-                break;
-            case "application":
+            }
+            case "application" -> {
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.createApplication.getApplicationId());
-                if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                    waitForTitleToBePresent("Apply for a new licence");
-                } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTitleToBePresent("Application overview");
+                switch (applicationStatus) {
+                    case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply for a new licence");
+                    case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
                 }
-                break;
-            case "variation":
+            }
+            case "variation" -> {
                 clickByLinkText("Home");
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationId());
-                if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                    waitForTitleToBePresent("Apply to change a licence");
-                } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTitleToBePresent("Application overview");
+                switch (applicationStatus) {
+                    case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply to change a licence");
+                    case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
                 }
-                break;
+            }
         }
         switch (page.toString()) {
-            case "View":
-                break;
-            case "Vehicles":
-                clickByLinkText("Vehicles");
-                //Once DVLA integration has been switched on, this needs updating
+            case "View" -> {}
+            case "Vehicles" -> clickByLinkText("Vehicles");
+            //Once DVLA integration has been switched on, this needs updating
 //                waitForTitleToBePresent("Vehicle details");
-                break;
-            case "Convictions and penalties":
+            case "Convictions and penalties" -> {
                 clickByLinkText("Convictions and penalties");
                 waitForTitleToBePresent("Convictions and Penalties");
-                break;
-            default:
+            }
+            default -> {
                 clickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
-                break;
+            }
         }
     }
 
     public void navigateToNavBarPage(SelfServeNavBar page) {
         switch (page.toString()) {
-            case "Home":
+            case "Home" -> {
                 clickByLinkText("Home");
                 waitForTextToBePresent("Licences");
-                break;
-            case "Sign out":
+            }
+            case "Sign out" -> {
                 clickByLinkText("Sign out");
                 waitForTextToBePresent("Thank you");
-                break;
-            default:
+            }
+            default -> {
                 clickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
+            }
         }
     }
 
@@ -175,8 +170,8 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateThroughApplication() {
-        String workingDir = System.getProperty("user.dir");
-        String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
+        var workingDir = System.getProperty("user.dir");
+        var financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
 
         UniversalActions.clickSaveAndContinue();
         waitAndContinuePage("Business type");
@@ -234,18 +229,10 @@ public class SelfServeNavigation extends BasePage {
         String password;
         if (!isTextPresent("Current licences")) {
             switch (userName) {
-                case "prepUser":
-                    user = SecretsManager.getSecretValue("prepUser");
-                    break;
-                case "prepUser2":
-                    user = SecretsManager.getSecretValue("prepUser2");
-                    break;
-                case "prodUser":
-                    user = SecretsManager.getSecretValue("prodUser");
-                    break;
-                default:
-                    user = userName;
-                    break;
+                case "prepUser" -> user = SecretsManager.getSecretValue("prepUser");
+                case "prepUser2" -> user = SecretsManager.getSecretValue("prepUser2");
+                case "prodUser" -> user = SecretsManager.getSecretValue("prodUser");
+                default -> user = userName;
             }
             if (user != null && (user.equals(userName))) {
                 password = SecretsManager.getSecretValue("internalNewPassword");
