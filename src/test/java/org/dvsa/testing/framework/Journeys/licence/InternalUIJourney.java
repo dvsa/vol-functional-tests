@@ -103,8 +103,8 @@ public class InternalUIJourney extends BasePage {
 
     public void editDocumentWithWebDav() throws IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
-        String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
-        String wordLoginWindow = StringUtils.removeEnd(webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
+        var window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
+        var wordLoginWindow = StringUtils.removeEnd(webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
 
         Thread.sleep(1000);
         clickByLinkText("BUS");
@@ -158,8 +158,8 @@ public class InternalUIJourney extends BasePage {
 
     public void closeCase() {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
-        String myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        String casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
+        var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
+        var casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
@@ -181,19 +181,13 @@ public class InternalUIJourney extends BasePage {
 
     public void createCaseUI(String target) {
         switch (target.toLowerCase()) {
-            case "licence":
-                world.internalNavigation.getLicence();
-                break;
-            case "application":
-                world.internalNavigation.getApplication();
-                break;
-            case "variation":
-                world.internalNavigation.getVariationApplication();
-                break;
+            case "licence" -> world.internalNavigation.getLicence();
+            case "application" -> world.internalNavigation.getApplication();
+            case "variation" -> world.internalNavigation.getVariationApplication();
         }
         String actualText = getText("//strong[@class='govuk-tag govuk-tag--orange']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("UNDER CONSIDERATION"));
-        if(isTextPresent(actualText)) {
+        if (isTextPresent(actualText)) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
         } else if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equalsIgnoreCase("VALID")) {
             waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
@@ -325,7 +319,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void createVariationInInternal(boolean variationFeeRequired) {
-        String variationFeeDecision = variationFeeRequired ? "Yes" : "No";
+        var variationFeeDecision = variationFeeRequired ? "Yes" : "No";
         waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(String.format("//*[contains(text(),'%s')]", variationFeeDecision), SelectorType.XPATH);
