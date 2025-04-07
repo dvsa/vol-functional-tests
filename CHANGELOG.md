@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.6.0](https://github.com/dvsa/vol-functional-tests/compare/v4.5.0...v4.6.0) (2025-04-07)
+
+
+### Features
+
+* use env vars for proxy and host rather than embedding github vars into the xml ([d62c0c1](https://github.com/dvsa/vol-functional-tests/commit/d62c0c13e8d27d0c97cddb5dd96a68864d887dcb))
+* use env vars for proxy and host rather than embedding in xml ([83a1ec7](https://github.com/dvsa/vol-functional-tests/commit/83a1ec72db78bd16ce804f743e636f17a453aba4))
+
 ## [4.5.0](https://github.com/dvsa/vol-functional-tests/compare/v4.4.0...v4.5.0) (2025-04-07)
 
 
