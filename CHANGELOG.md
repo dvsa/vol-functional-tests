@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.5.0](https://github.com/dvsa/vol-functional-tests/compare/v4.4.0...v4.5.0) (2025-04-07)
+
+
+### Features
+
+* bump up as ([dc374d5](https://github.com/dvsa/vol-functional-tests/commit/dc374d54c958e679fb34f42a6d8d8ef52e7b17f8))
+* refactor navigation classes ([801faae](https://github.com/dvsa/vol-functional-tests/commit/801faae1b76bf20fd103998545c2709080ff28f5))
+* refactor navigation classes ([60491e8](https://github.com/dvsa/vol-functional-tests/commit/60491e8d9068b034356a6ff47d8188b9a7715478))
+* use new AS ([68a6a1e](https://github.com/dvsa/vol-functional-tests/commit/68a6a1ed445f3a685a79ac49c07a205f82eefdb3))
+
 ## [4.4.0](https://github.com/dvsa/vol-functional-tests/compare/v4.3.3...v4.4.0) (2025-04-02)
 
 
