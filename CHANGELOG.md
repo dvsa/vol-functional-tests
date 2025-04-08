@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.6.1](https://github.com/dvsa/vol-functional-tests/compare/v4.6.0...v4.6.1) (2025-04-08)
+
+
+### Bug Fixes
+
+* proxy port not int error in logs ([bc64c4e](https://github.com/dvsa/vol-functional-tests/commit/bc64c4ea1dce19f82760113489905eef570626e4))
+* proxy port not int error in logs ([faa1beb](https://github.com/dvsa/vol-functional-tests/commit/faa1beb0de99ccd4a0f58dd565de4f5a7f8ffb5d))
+
 ## [4.6.0](https://github.com/dvsa/vol-functional-tests/compare/v4.5.0...v4.6.0) (2025-04-07)
 
 
