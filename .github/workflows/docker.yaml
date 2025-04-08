@@ -81,7 +81,7 @@ jobs:
         name: generate runtime settings xml
         with:
           servers: ${{ needs.prepare.outputs.push == 'true' && env.BATCH_SETTINGS || env.RUNNER_SETTINGS }}
-          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${env.proxyHost}", "port": "${env.proxyPort}" }]'
+          proxies: '[{ "id":"dvsa-ci-proxy", "active": "true", "protocol": "http", "host": "${env.proxyHost}", "port": "3128" }]'
           repositories: '[ { "id":"dvsa-github-packages", "name":"dvsa-github-packages", "url":"https://maven.pkg.github.com/dvsa/*", "releases": { "enabled": "true" }, "snapshots": { "enabled": "true" } }]'
           output_file: ./settings-runtime.xml
 
