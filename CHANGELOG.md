@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.6.3](https://github.com/dvsa/vol-functional-tests/compare/v4.6.2...v4.6.3) (2025-04-09)
+
+
+### Bug Fixes
+
+* ebsr wait ([02264b9](https://github.com/dvsa/vol-functional-tests/commit/02264b962b4e5614875ef3ba23882c4e01c4a132))
+
 ## [4.6.2](https://github.com/dvsa/vol-functional-tests/compare/v4.6.1...v4.6.2) (2025-04-08)
 
 
