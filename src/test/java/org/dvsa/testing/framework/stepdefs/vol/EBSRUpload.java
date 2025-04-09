@@ -9,9 +9,12 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import scanner.AXEScanner;
 
 import java.io.IOException;
+import java.time.Duration;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
@@ -70,25 +73,24 @@ public class EBSRUpload extends BasePage {
 
     @And("Documents are generated")
     public void documentsAreGenerated() throws IllegalBrowserException, IOException {
-        String licenceNumber;
-
-        licenceNumber = world.applicationDetails.getLicenceNumber();
+        String licenceNumber = world.applicationDetails.getLicenceNumber();
 
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
         }
-        long kickOutTime = System.currentTimeMillis() + 60000;
-        if (!world.configuration.env.toString().equals("local")) {
-            do {
-                // Refresh page
-                refreshPageWithJavascript();
 
-            } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() < 2 && System.currentTimeMillis() < kickOutTime);
+        if (!world.configuration.env.toString().equals("local")) {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(60));
             try {
+                boolean filesGenerated = wait.until(driver -> {
+                    refreshPageWithJavascript(); // Refresh the page
+                    return findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() >= 2;
+                });
+
                 assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
                         webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
-            } catch (Exception e) {
+            } catch (TimeoutException e) {
                 throw new NotFoundException("Files not generated.");
             }
         }
