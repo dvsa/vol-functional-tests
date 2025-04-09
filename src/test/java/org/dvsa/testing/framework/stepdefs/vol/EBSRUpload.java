@@ -71,7 +71,7 @@ public class EBSRUpload extends BasePage {
         assertNotNull(trafficArea);
     }
 
-    @And("documents are generated")
+    @And("Documents are generated")
     public void documentsAreGenerated() throws IllegalBrowserException, IOException {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
 
