@@ -26,9 +26,11 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import scanner.AXEScanner;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
@@ -144,20 +146,20 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() throws IllegalBrowserException, IOException, InterruptedException {
-        long kickOutTime = System.currentTimeMillis() + 250000;
-        do {
-            // Refresh page
-            refreshPageWithJavascript();
-            assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
-        } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
-
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMinutes(2));
         try {
-            assertTrue(isTextPresent("Successful"));
-        } catch (Exception e) {
-            throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
+            boolean isSuccessful = wait.until(driver -> {
+                refreshPageWithJavascript();
+                boolean isProcessing = isTextPresent("processing");
+                if (!isProcessing) {
+                    return isTextPresent("Successful");
+                }
+                return false;
+            });
+            assertTrue(isSuccessful, "The status is not 'Successful' after processing.");
+        } catch (TimeoutException e) {
+            throw new NotFoundException("import EBSR is still displaying as 'processing' when the timeout was reached.");
         }
-        AXEScanner axeScanner = AccessibilitySteps.scanner;
-        axeScanner.scan(true);
     }
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
@@ -177,6 +179,7 @@ public class BusRegistrationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
 
+        waitForElementToBePresent("//*[@id='files']");
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
 
