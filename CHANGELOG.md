@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.6.4](https://github.com/dvsa/vol-functional-tests/compare/v4.6.3...v4.6.4) (2025-04-09)
+
+
+### Bug Fixes
+
+* use new uri ([495f7d8](https://github.com/dvsa/vol-functional-tests/commit/495f7d870e7b24bab99fdd49805126a0ec0bf9fe))
+* use new uri ([e9d27c5](https://github.com/dvsa/vol-functional-tests/commit/e9d27c53b0714939cd06e8fce6060d8dcb595df4))
+
 ## [4.6.3](https://github.com/dvsa/vol-functional-tests/compare/v4.6.2...v4.6.3) (2025-04-09)
 
 
