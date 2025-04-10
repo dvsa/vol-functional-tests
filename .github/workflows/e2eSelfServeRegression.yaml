@@ -40,7 +40,7 @@ jobs:
     with:
       platform_env: ${{ inputs.platform_env }}
       cucumber_tags: "@ss_regression"
-      browser_name: "edge"
+      browser_name: "chrome"
       browser_version: "latest"
       exclude_tags: "none"
       aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
