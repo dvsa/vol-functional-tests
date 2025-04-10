@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.6.6](https://github.com/dvsa/vol-functional-tests/compare/v4.6.5...v4.6.6) (2025-04-10)
+
+
+### Bug Fixes
+
+* use edge ([3de4a11](https://github.com/dvsa/vol-functional-tests/commit/3de4a115622079aacc035f1f719d16c98ac0229c))
+* use edge ([852da8a](https://github.com/dvsa/vol-functional-tests/commit/852da8a4211159cf52778a4f335066355afb1a60))
+
 ## [4.6.5](https://github.com/dvsa/vol-functional-tests/compare/v4.6.4...v4.6.5) (2025-04-09)
 
 
