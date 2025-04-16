@@ -233,7 +233,7 @@ jobs:
           else
             echo "Reports directory does not exist."
           fi
-          aws s3 cp Reports s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ env.FOLDER_NAME }}/axe-results/ --recursive
+          aws s3 cp Reports s3:xyz //${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{ env.FOLDER_NAME }}/axe-results/ --recursive
 
       - name: Download Allure Report from S3
         env:
