@@ -237,7 +237,7 @@ public class SelfServeNavigation extends BasePage {
             if (user != null && (user.equals(userName))) {
                 password = SecretsManager.getSecretValue("internalNewPassword");
             } else {
-                password = SecretsManager.getSecretValue("intEnvPassword");
+                password = SecretsManager.getSecretValue("prepEnvPassword");
             }
             world.globalMethods.signIn(user, password);
         }
