@@ -77,8 +77,7 @@ public class InternalNavigation extends BasePage {
                 case "limitedReadOnlyUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("limitedReadOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
                 case "readOnlyUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
                 case "intSystemAdmin" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
-                case "intPrepUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("intEnvPassword"));
-                case "internalPrepUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("internalPrepUser"), SecretsManager.getSecretValue("prepEnvPassword "));
+                case "intPrepUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("prepEnvPassword"));
                 default -> world.internalNavigation.logInAsAdmin();
             }
         }
