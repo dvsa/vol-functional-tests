@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.7.0](https://github.com/dvsa/vol-functional-tests/compare/v4.6.10...v4.7.0) (2025-04-25)
+
+
+### Features
+
+* prepEnv ([eac24be](https://github.com/dvsa/vol-functional-tests/commit/eac24beb8d215afd708f2c9378ac12bd1d4ea377))
+* prepEnv ([ed0c385](https://github.com/dvsa/vol-functional-tests/commit/ed0c38528933caad64ddf80369064af1766f78ea))
+
 ## [4.6.10](https://github.com/dvsa/vol-functional-tests/compare/v4.6.9...v4.6.10) (2025-04-24)
 
 
