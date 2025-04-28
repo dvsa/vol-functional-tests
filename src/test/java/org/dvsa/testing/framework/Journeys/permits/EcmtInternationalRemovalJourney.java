@@ -47,8 +47,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public void completeUntilCheckYourAnswersPage() {
-        completeUntilNumberOfPermitsPage();
-        NumberOfPermitsPageJourney.completePage();
+        completeUntilNumberOfPermitsPage();NumberOfPermitsPageJourney.completePage();
     }
 
     public void completeUntilDeclarationPage() {
