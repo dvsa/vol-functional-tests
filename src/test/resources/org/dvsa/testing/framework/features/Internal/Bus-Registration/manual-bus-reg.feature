@@ -3,6 +3,7 @@
 @CPMS_tests
 @FullRegression
 @printAndSign
+  @test-branch
 
 Feature: Complete Manual Bus Registration Steps
 
