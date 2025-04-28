@@ -83,7 +83,7 @@ public class SurrenderJourney extends BasePage {
 
 
     public void addOperatorLicenceDetails() throws IllegalBrowserException, IOException {
-        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         UniversalActions.clickSubmit();
     }
@@ -176,6 +176,7 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void addDiscInformation() throws IllegalBrowserException, IOException {
+        waitForPageLoad();
         assertTrue(getCurrentUrl().contains("current-discs"));
         clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
