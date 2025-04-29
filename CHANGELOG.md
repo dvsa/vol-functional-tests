@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.7.2](https://github.com/dvsa/vol-functional-tests/compare/v4.7.1...v4.7.2) (2025-04-29)
+
+
+### Bug Fixes
+
+* bus reg complete date ([cd372d2](https://github.com/dvsa/vol-functional-tests/commit/cd372d2ec16b2900d4025483e7ff9006700ae93f))
+* revert accidental permit change ([18fc40c](https://github.com/dvsa/vol-functional-tests/commit/18fc40c79903937179cdfdb89ba6294588cf14ef))
+
 ## [4.7.1](https://github.com/dvsa/vol-functional-tests/compare/v4.7.0...v4.7.1) (2025-04-28)
 
 
