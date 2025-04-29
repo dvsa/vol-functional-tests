@@ -50,6 +50,7 @@ public class UnlicensedOperatorSteps extends BasePage {
 
     @Then("the operator should be created")
     public void theOperatorShouldBeCreated() {
+        waitForTextToBePresent("The operator has been created successfully");
         assertTrue(isTextPresent("The operator has been created successfully"));
         assertTrue(isTextPresent(operatorName));
     }
