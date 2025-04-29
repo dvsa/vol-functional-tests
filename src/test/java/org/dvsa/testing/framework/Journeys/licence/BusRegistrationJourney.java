@@ -79,6 +79,9 @@ public class BusRegistrationJourney extends BasePage {
         dates = world.globalMethods.date.getDateHashMap(-2, 0, 0);
         enterDateFieldsByPartialId("endDate", dates);
 
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
+        enterDateFieldsByPartialId("applicationCompleteDate", dates);
+
         UniversalActions.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
