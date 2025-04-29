@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.7.4](https://github.com/dvsa/vol-functional-tests/compare/v4.7.3...v4.7.4) (2025-04-29)
+
+
+### Bug Fixes
+
+* remove submodule, added waits for prep tests ([7ccd165](https://github.com/dvsa/vol-functional-tests/commit/7ccd16539e06280a5b5e3712138e8c8991c3c621))
+* remove submodule, added waits for prep tests ([cebca70](https://github.com/dvsa/vol-functional-tests/commit/cebca70e77c37ba812464ff8fdf5a9ee3ad904f4))
+
 ## [4.7.3](https://github.com/dvsa/vol-functional-tests/compare/v4.7.2...v4.7.3) (2025-04-29)
 
 
