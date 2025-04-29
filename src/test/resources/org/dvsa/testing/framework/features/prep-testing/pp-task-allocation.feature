@@ -1,4 +1,4 @@
-@PP-SMOKE
+#@PP-SMOKE
 @PP-TASK-ALLOCATION
 
 Feature: Operator re-assigns a task
