@@ -122,6 +122,7 @@ public class PrepTestsStepDefs extends BasePage {
 
     @And("the licence authorisation should be {string}")
     public void theLicenceAuthorisationShouldBe(String status) {
+        scrollToBottom();
         waitForElementToBePresent("//*[@id='overview-item__operating_centres']/strong");
         assertEquals(status,getText("//*[@id='overview-item__operating_centres']/strong", SelectorType.XPATH));
     }
