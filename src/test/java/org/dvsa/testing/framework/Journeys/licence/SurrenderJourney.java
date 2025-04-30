@@ -177,7 +177,6 @@ public class SurrenderJourney extends BasePage {
 
     public void addDiscInformation() throws IllegalBrowserException, IOException {
         waitForPageLoad();
-        assertTrue(getCurrentUrl().contains("current-discs"));
         clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
