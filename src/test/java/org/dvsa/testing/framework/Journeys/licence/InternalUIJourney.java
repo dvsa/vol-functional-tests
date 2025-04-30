@@ -261,8 +261,8 @@ public class InternalUIJourney extends BasePage {
         clickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
-        clickByLinkText("Service details");
-        clickByLinkText("TA's");
+        clickById("menu-licence_bus_details");
+        clickByLinkText("menu-licence_bus_details-ta");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);

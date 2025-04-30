@@ -72,7 +72,9 @@ public class TaskAllocation extends BasePage {
         enterText("search", SelectorType.NAME,   world.applicationDetails.getLicenceNumber());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalNavigation.getLicence();
-        waitAndClick("Processing", SelectorType.LINKTEXT);
+        var licenceNo = world.applicationDetails.getLicenceNumber();
+        refreshPage();
+        clickById("menu-licence_processing");
         waitAndClick("create task", SelectorType.ID);
         waitForTextToBePresent("Action date");
         HashMap<String, String> currentDate = world.publicHolidayJourney.date.getDateHashMap(0, 0, 1);
