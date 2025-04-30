@@ -282,6 +282,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("I publish the application on internal")
     public void iPublishTheApplicationOnInternal() {
+        waitForPageLoad();
         waitForTextToBePresent("Publish application");
         clickByLinkText("Publish application");
         waitForTextToBePresent("publish this application");
