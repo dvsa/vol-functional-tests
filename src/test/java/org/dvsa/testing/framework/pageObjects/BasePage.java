@@ -28,7 +28,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 8;
     private static final int TIME_OUT_SECONDS = 350;
-    private static final int POLLING_SECONDS = 5;
+    private static final int POLLING_SECONDS = 4;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
@@ -496,11 +496,19 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void findSelectAllRadioButtonsByValue(String value) {
-        var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
-        radioButtons.stream()
-                .filter(x -> x.getAttribute("value").equals(value))
-                .filter(isChecked -> !isChecked.isSelected())
-                .forEach(WebElement::click);
+        var wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofMillis(500))
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(NoSuchElementException.class);
+        wait.until(driver -> {
+            var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
+            radioButtons.stream()
+                    .filter(x -> x.getAttribute("value").equals(value))
+                    .filter(isChecked -> !isChecked.isSelected())
+                    .forEach(WebElement::click);
+            return true;
+        });
     }
 
     public void refreshUntilSuccessfulOrTimeout() {
