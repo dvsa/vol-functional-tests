@@ -62,12 +62,14 @@ public class TMDetails extends BasePage {
 
     @When("I click on the {string} button")
     public void iClickOnTheButton(String button) {
+        scrollToBottom();
         findSelectAllRadioButtonsByValue("Y");
-        click(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
+        waitAndClick(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
     }
 
     @Then("I should see the {string} page")
     public void iShouldSeeThePage(String page) {
+        waitForPageLoad();
         assertTrue(Browser.navigate().getCurrentUrl().contains(page));
     }
 
