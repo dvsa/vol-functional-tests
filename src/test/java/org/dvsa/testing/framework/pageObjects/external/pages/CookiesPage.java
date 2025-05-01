@@ -8,7 +8,7 @@ public class CookiesPage extends BasePage {
     private static String COOKIES_BANNER = "//span[@class='govuk-heading-m']";
     private static String COOKIES_CONFIRMED = "//p[@class='gem-c-cookie-banner__confirmation-message']";
     private static String HIDE_BANNER = "//button[@class='gem-c-cookie-banner__hide-button']";
-    private static String COOKIES_DETAILS_PAGE = "//a[@class='gem-c-button govuk-button gem-c-button--inline']";
+    private static String COOKIES_DETAILS_PAGE = "//a[@class='govuk-link' and text()='Set cookie preferences']";
     private static String COOKIES_DETAILS_PAGE_LINK = "//a[@class='govuk-link']";
 
 
