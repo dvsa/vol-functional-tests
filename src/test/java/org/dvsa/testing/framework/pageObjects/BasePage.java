@@ -26,8 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
-    public static final int WAIT_TIME_SECONDS = 8;
-    private static final int TIME_OUT_SECONDS = 360;
+    public static final int WAIT_TIME_SECONDS = 7;
+    private static final int TIME_OUT_SECONDS = 350;
     private static final int POLLING_SECONDS = 5;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
@@ -419,29 +419,16 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        int maxRetries = 3;
-        int retryCount = 0;
+        var wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
 
-        while (retryCount < maxRetries) {
-            try {
-                var wait = new FluentWait<>(getDriver())
-                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
-                        .ignoring(NoSuchElementException.class)
-                        .ignoring(ElementClickInterceptedException.class)
-                        .ignoring(TimeoutException.class)
-                        .ignoring(ElementNotInteractableException.class);
-
-                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
-                element.click();
-                return;
-            } catch (StaleElementReferenceException e) {
-                retryCount++;
-                if (retryCount == maxRetries) {
-                    throw e;
-                }
-            }
-        }
+        wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
@@ -457,56 +444,30 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForElementToBePresent(@NotNull String selector) {
-        int maxRetries = 3;
-        int retryCount = 0;
+        var wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
 
-        while (retryCount < maxRetries) {
-            try {
-                var wait = new FluentWait<>(getDriver())
-                        .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                        .pollingEvery(ofSeconds(POLLING_SECONDS))
-                        .ignoring(NoSuchElementException.class)
-                        .ignoring(StaleElementReferenceException.class)
-                        .ignoring(ElementClickInterceptedException.class)
-                        .ignoring(TimeoutException.class)
-                        .ignoring(ElementNotInteractableException.class);
-
-                wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
-                return;
-            } catch (Exception e) {
-                retryCount++;
-                if (retryCount == maxRetries) {
-                    throw e;
-                }
-            }
-        }
+        wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
-        int maxRetries = 3;
-        int retryCount = 0;
+        var wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(InvalidElementStateException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(TimeoutException.class)
+                .ignoring(ElementNotInteractableException.class);
 
-        while (retryCount < maxRetries) {
-            try {
-                var wait = new FluentWait<>(getDriver())
-                        .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                        .pollingEvery(ofSeconds(POLLING_SECONDS))
-                        .ignoring(NoSuchElementException.class)
-                        .ignoring(InvalidElementStateException.class)
-                        .ignoring(ElementClickInterceptedException.class)
-                        .ignoring(TimeoutException.class)
-                        .ignoring(ElementNotInteractableException.class);
-
-                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
-                element.sendKeys(textValue);
-                return;
-            } catch (StaleElementReferenceException e) {
-                retryCount++;
-                if (retryCount == maxRetries) {
-                    throw e;
-                }
-            }
-        }
+        wait.until(driver -> wait.until(elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {
@@ -535,19 +496,11 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void findSelectAllRadioButtonsByValue(String value) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(10))
-                .pollingEvery(Duration.ofMillis(500))
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(NoSuchElementException.class);
-        wait.until(driver -> {
-            var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
-            radioButtons.stream()
-                    .filter(x -> x.getAttribute("value").equals(value))
-                    .filter(isChecked -> !isChecked.isSelected())
-                    .forEach(WebElement::click);
-            return true;
-        });
+        var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
+        radioButtons.stream()
+                .filter(x -> x.getAttribute("value").equals(value))
+                .filter(isChecked -> !isChecked.isSelected())
+                .forEach(WebElement::click);
     }
 
     public void refreshUntilSuccessfulOrTimeout() {
