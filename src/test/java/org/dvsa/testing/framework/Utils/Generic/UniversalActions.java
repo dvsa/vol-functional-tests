@@ -72,14 +72,17 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickManageUsers() {
+        refreshPage();
         waitAndClick("//a[@href='/manage-user/']", SelectorType.XPATH);
     }
 
     public static void clickYourAccount() {
+        refreshPage();
         waitAndClick("//a[@href='/your-account/']", SelectorType.XPATH);
     }
 
     public static void clickSignOut() {
+        refreshPage();
         waitAndClick("//a[@href='/auth/logout/']", SelectorType.XPATH);
     }
 
