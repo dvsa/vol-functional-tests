@@ -49,7 +49,7 @@ public class EBSRUpload extends BasePage {
 
     @And("i add a new bus registration")
     public void iAddANewBusRegistration() {
-        world.internalUIJourney.manualBusRegistration(-2, 0, 0);
+        world.internalUIJourney.manualBusRegistration(0, 5, 0);
     }
 
     @When("it has been paid and granted")

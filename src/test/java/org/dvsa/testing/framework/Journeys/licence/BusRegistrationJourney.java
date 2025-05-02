@@ -70,13 +70,13 @@ public class BusRegistrationJourney extends BasePage {
         plusOrMinusYear = plusOrMinusYear == null ? 0 : plusOrMinusYear;
 
         HashMap<String, String> dates;
-        dates = world.globalMethods.date.getDateHashMap(0, 0, -1);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         enterDateFieldsByPartialId("receivedDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(plusOrMinusDay, plusOrMinusMonth, plusOrMinusYear);
         enterDateFieldsByPartialId("effectiveDate", dates);
 
-        dates = world.globalMethods.date.getDateHashMap(-1, 0, 0);
+        dates = world.globalMethods.date.getDateHashMap(-2, 0, 0);
         enterDateFieldsByPartialId("endDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
