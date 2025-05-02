@@ -43,7 +43,7 @@ public class ContinuationJourney extends BasePage {
         waitAndEnterText("filters[licenceNo]", SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
-        waitAndClick("checkall", SelectorType.ID);
+        waitAndClick("//input[@id='checkall' and @type='checkbox' and @name='checkall' and contains(@class, 'js-visible')]", SelectorType.XPATH);
         waitAndClick("generate", SelectorType.ID);
         UniversalActions.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");

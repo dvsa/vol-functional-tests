@@ -33,7 +33,7 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSubmit() {
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
     public static void clickSend() {

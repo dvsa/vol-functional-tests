@@ -76,6 +76,7 @@ public class InternalSearchJourney extends BasePage {
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         if (!searchType.name().equals("Vehicle")) {
+            waitForTextToBePresent(linkText);
             waitAndClick(linkText, SelectorType.LINKTEXT);
         }
     }
