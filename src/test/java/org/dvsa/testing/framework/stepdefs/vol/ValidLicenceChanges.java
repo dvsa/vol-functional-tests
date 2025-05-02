@@ -179,7 +179,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the vehicles page are made")
     public void theChangesToTheVehiclesPageAreMade() {
-        clickByLinkText("Home");
+        waitAndClick("//a[contains(@class, 'govuk-service-navigation__link') and @href='/dashboard/' and normalize-space(text())='Home']", SelectorType.XPATH);
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         waitForTitleToBePresent("Vehicle details");
         UniversalActions.refreshPageWithJavascript();

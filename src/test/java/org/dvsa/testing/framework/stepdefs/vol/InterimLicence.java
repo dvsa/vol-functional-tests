@@ -287,6 +287,6 @@ public class InterimLicence extends BasePage {
         click("(//input[@name='declarationsAndUndertakings[declarationConfirmation]'])[2]", SelectorType.XPATH);
         click(interimRadioYes, SelectorType.XPATH);
         waitAndEnterText("applicationInterimReason", SelectorType.ID, "I request an interim");
-        UniversalActions.clickSubmit();
+        waitAndClick("submit", SelectorType.ID);
     }
 }

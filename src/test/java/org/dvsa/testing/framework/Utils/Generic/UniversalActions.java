@@ -33,7 +33,7 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSubmit() {
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
     public static void clickSend() {
@@ -65,6 +65,26 @@ public class UniversalActions extends BasePage {
     public static void clickPay() {waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);}
 
     public static void ClickPayAndSubmit() {waitAndClick( "//*[@id='submitAndPay']", SelectorType.XPATH);}
+
+    public static void clickHome() {
+        refreshPage();
+        click("//a[@href='/dashboard/']", SelectorType.XPATH);
+    }
+
+    public static void clickManageUsers() {
+        refreshPage();
+        waitAndClick("//a[@href='/manage-user/']", SelectorType.XPATH);
+    }
+
+    public static void clickYourAccount() {
+        refreshPage();
+        waitAndClick("//a[@href='/your-account/']", SelectorType.XPATH);
+    }
+
+    public static void clickSignOut() {
+        refreshPage();
+        waitAndClick("//a[@href='/auth/logout/']", SelectorType.XPATH);
+    }
 
     public static void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
