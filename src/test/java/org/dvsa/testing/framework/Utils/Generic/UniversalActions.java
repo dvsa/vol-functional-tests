@@ -66,6 +66,23 @@ public class UniversalActions extends BasePage {
 
     public static void ClickPayAndSubmit() {waitAndClick( "//*[@id='submitAndPay']", SelectorType.XPATH);}
 
+    public static void clickHome() {
+        refreshPage();
+        click("//a[@href='/dashboard/']", SelectorType.XPATH);
+    }
+
+    public static void clickManageUsers() {
+        waitAndClick("//a[@href='/manage-user/']", SelectorType.XPATH);
+    }
+
+    public static void clickYourAccount() {
+        waitAndClick("//a[@href='/your-account/']", SelectorType.XPATH);
+    }
+
+    public static void clickSignOut() {
+        waitAndClick("//a[@href='/auth/logout/']", SelectorType.XPATH);
+    }
+
     public static void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
         waitAndClick("//*[contains(text(),'Close')]", SelectorType.XPATH);
