@@ -215,8 +215,8 @@ public class ValidLicenceChanges extends BasePage {
         assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(), 0);
         waitAndClick("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         waitAndClick("//*[@id='ceased-show-hide']", SelectorType.XPATH);
-        assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(), 7);
-    }
+        List<WebElement> rows = Browser.navigate().findElements(By.xpath("//tbody//tr"));
+        assertEquals(7, rows.size(), "The number of rows in the table should be 7");    }
 
     @When("i make changes to the safety and compliance page")
     public void iMakeChangesToTheSafetyAndCompliancePage() {
