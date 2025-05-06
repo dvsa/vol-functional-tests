@@ -59,6 +59,8 @@ public class GoodVarUpgrade extends BasePage {
         UniversalActions.clickHome();
         world.TMJourney.addNewPersonAsTransportManager("variation");
         UniversalActions.clickHome();
+        scrollToBottom();
+        refreshPage();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_HISTORY);
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
         UniversalActions.clickHome();
