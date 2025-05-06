@@ -38,7 +38,7 @@ public class SurrenderLogic extends BasePage {
     @Given("i update my address details on my licence")
     public void iUpdateMyAddressDetailsOnMyLicence() {
         UniversalActions.clickSubmit();
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
         world.selfServeUIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
@@ -86,7 +86,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("i leave the surrenders journey")
     public void iLeaveTheSurrendersJourney() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 

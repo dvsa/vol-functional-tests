@@ -23,7 +23,7 @@ public class TMDetails extends BasePage {
 
     @And("i navigate to the admin transport managers details page")
     public void iNavigateToTheAdminTransportManagersDetailsPage() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");

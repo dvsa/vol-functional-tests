@@ -60,7 +60,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the business details page are made")
     public void theChangesToTheBusinessDetailsPageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
 
         String expectedChangedText1 = tradingName;
@@ -104,7 +104,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the addresses page are made")
     public void theChangesToTheAddressesPageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
 
         String correspondenceFaoXpath = "//*[@id='correspondence[fao]']";
@@ -237,7 +237,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the safety and compliance page are made")
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
         assertEquals("6", getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH));
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());

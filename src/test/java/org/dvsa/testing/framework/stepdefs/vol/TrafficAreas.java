@@ -246,10 +246,10 @@ public class TrafficAreas extends BasePage {
 
     private void navigateToAppropriateAuthorisationPageAndAssert(String trafficAreaText, boolean presence) {
         if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString())) {
-            clickByLinkText("Home");
+              UniversalActions.clickHome();
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
         } else {
-            clickByLinkText("Home");
+              UniversalActions.clickHome();
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         }
         if (presence) {

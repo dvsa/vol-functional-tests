@@ -32,7 +32,7 @@ public class SelfServePayFees extends BasePage {
 
         @Then("^my licence should valid")
         public void myLicenceShouldValid() {
-            clickByLinkText("Home");
+              UniversalActions.clickHome();
             assertTrue(isTextPresent("Valid"));
         }
 }

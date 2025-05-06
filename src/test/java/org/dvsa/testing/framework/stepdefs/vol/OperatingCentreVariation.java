@@ -38,7 +38,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.operatingCentreJourney.submitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
     }
 
@@ -130,7 +130,7 @@ public class OperatingCentreVariation extends BasePage {
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(newTotalHGVAuthorisation), "0", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
     }
 
     @When("i increase my lgv authorisation and delete the new operating centre")
