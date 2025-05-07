@@ -77,7 +77,7 @@ public class InternalUIJourney extends BasePage {
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
         waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 5);
-        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 2);
+        waitAndSelectValueFromDropDown("//*[@id='documentSubCategory']", SelectorType.XPATH,  "Other Documents");
         waitAndSelectValueFromDropDown("//*[@id='documentTemplate']", SelectorType.XPATH, "GV - Blank letter to operator");
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Amend letter");

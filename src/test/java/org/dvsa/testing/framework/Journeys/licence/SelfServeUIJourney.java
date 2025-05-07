@@ -117,11 +117,11 @@ public class SelfServeUIJourney extends BasePage {
     public void addUser() {
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
-        enterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        waitAndEnterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         UniversalActions.clickSubmit();
     }
 

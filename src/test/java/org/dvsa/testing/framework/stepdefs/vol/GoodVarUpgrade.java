@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -49,20 +50,23 @@ public class GoodVarUpgrade extends BasePage {
 
     @And("i complete the required five sections")
     public void iCompleteTheRequiredFiveSections() {
-        clickByLinkText("Home");
+        UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Home");
+        UniversalActions.clickHome();
         world.selfServeUIJourney.completeFinancialEvidencePage();
-        clickByLinkText("Home");
+        refreshPage();
+        UniversalActions.clickHome();
         world.TMJourney.addNewPersonAsTransportManager("variation");
-        clickByLinkText("Home");
+        UniversalActions.clickHome();
+        scrollToBottom();
+        refreshPage();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_HISTORY);
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
-        clickByLinkText("Home");
+        UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.CONVICTIONS_AND_PENALTIES);
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation");
-        clickByLinkText("Home");
+        UniversalActions.clickHome();
     }
 
     @Then("the upgrade variation and interim are submitted")

@@ -47,6 +47,8 @@ public class TestRunConfiguration {
         if (scenarioStatus.isFailed()) {
             Allure.addAttachment("Oops something has gone wrong",
                     new ByteArrayInputStream(((TakesScreenshot) Browser.navigate()).getScreenshotAs(OutputType.BYTES)));
+                    var currentUrl = Browser.getDriver().getCurrentUrl();
+             Allure.addAttachment("Current URL", currentUrl);
+        }
         }
     }
-}

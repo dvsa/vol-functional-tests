@@ -62,7 +62,7 @@ public class GlobalMethods extends BasePage {
 
         if (isTextPresent("Welcome to your account")) {
             click("termsAgreed", SelectorType.ID);
-            UniversalActions.clickSubmit();
+            waitAndClick("submit", SelectorType.ID);
         }
     }
 

@@ -77,6 +77,7 @@ public class TmVerifyDifferentOperator extends BasePage {
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         Browser.navigate().get(world.genericUtils.getTransportManagerLink());
+        scrollToBottom();
         UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
@@ -112,7 +113,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     @When("the operator rejects the transport managers details")
     public void theOperatorRejectsTheTransportManagersDetails() {
         waitForTextToBePresent("What happens next?");
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         clickByLinkText("Sign out");

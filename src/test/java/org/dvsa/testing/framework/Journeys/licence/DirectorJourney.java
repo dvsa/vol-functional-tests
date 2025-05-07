@@ -102,6 +102,7 @@ public class DirectorJourney extends BasePage {
     }
 
     private void personDetails() {
+        waitForElementToBePresent(directorTitleDropdown);
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
         directorLastName = faker.generateLastName();

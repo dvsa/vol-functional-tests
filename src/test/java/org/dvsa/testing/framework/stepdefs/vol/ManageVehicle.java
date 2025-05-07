@@ -72,7 +72,7 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.VRM = vrm;
         waitAndClick("//*[contains(text(),'Add a vehicle')]", SelectorType.XPATH);
         waitAndClick("next", SelectorType.ID);
-        enterText("vehicle-search[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
+        waitAndEnterText("vehicle-search[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
         waitAndClick("vehicle-search[submit]", SelectorType.NAME);
     }
 

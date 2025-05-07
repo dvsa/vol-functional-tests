@@ -60,7 +60,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the business details page are made")
     public void theChangesToTheBusinessDetailsPageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
 
         String expectedChangedText1 = tradingName;
@@ -104,7 +104,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the addresses page are made")
     public void theChangesToTheAddressesPageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
 
         String correspondenceFaoXpath = "//*[@id='correspondence[fao]']";
@@ -179,7 +179,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the vehicles page are made")
     public void theChangesToTheVehiclesPageAreMade() {
-        clickByLinkText("Home");
+        waitAndClick("//a[contains(@class, 'govuk-service-navigation__link') and @href='/dashboard/' and normalize-space(text())='Home']", SelectorType.XPATH);
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         waitForTitleToBePresent("Vehicle details");
         UniversalActions.refreshPageWithJavascript();
@@ -215,8 +215,8 @@ public class ValidLicenceChanges extends BasePage {
         assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(), 0);
         waitAndClick("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         waitAndClick("//*[@id='ceased-show-hide']", SelectorType.XPATH);
-        assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(), 7);
-    }
+        List<WebElement> rows = Browser.navigate().findElements(By.xpath("//tbody//tr"));
+        assertEquals(7, rows.size(), "The number of rows in the table should be 7");    }
 
     @When("i make changes to the safety and compliance page")
     public void iMakeChangesToTheSafetyAndCompliancePage() {
@@ -237,7 +237,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the safety and compliance page are made")
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
         assertEquals("6", getValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH));
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
