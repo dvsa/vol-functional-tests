@@ -1,6 +1,23 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.7.5](https://github.com/dvsa/vol-functional-tests/compare/v4.7.4...v4.7.5) (2025-05-07)
+
+
+### Bug Fixes
+
+* fixes ([c6f8aa5](https://github.com/dvsa/vol-functional-tests/commit/c6f8aa5f42d6f80e1ed696bfb7a975fc06e7babe))
+* fixes ([4497d77](https://github.com/dvsa/vol-functional-tests/commit/4497d77d3346c2df105606c84d5bc40df24ecaf4))
+* fixes ([e5ed8ad](https://github.com/dvsa/vol-functional-tests/commit/e5ed8ad872bc8a2447ce711bb6aeba6a04dc4f12))
+* increase time out ([04ac790](https://github.com/dvsa/vol-functional-tests/commit/04ac790051ec9b93fc62c19cd8198fe45abbc259))
+* increase time out ([9282a4a](https://github.com/dvsa/vol-functional-tests/commit/9282a4ac94c763d0f33906b91d269177d5074cdd))
+* increase time out ([9889965](https://github.com/dvsa/vol-functional-tests/commit/9889965c8d984ad83245dc2f8570bba5566d812a))
+* increase time out ([e1143d6](https://github.com/dvsa/vol-functional-tests/commit/e1143d635041bbd38a1528d66b88db2422721a72))
+* increase time out ([b7cc00d](https://github.com/dvsa/vol-functional-tests/commit/b7cc00d23d7040c5f6e760f02ef896bc98418fd1))
+* increase time out ([218ddf4](https://github.com/dvsa/vol-functional-tests/commit/218ddf490bff93264e9911d4554865252a331b3d))
+* remove stored card ([235b7be](https://github.com/dvsa/vol-functional-tests/commit/235b7bebac8af9b4cfef59458bb4c81db8fd1d10))
+* remove stored card ([c3f903b](https://github.com/dvsa/vol-functional-tests/commit/c3f903b5fc792a42e9df696ca01f815f12201f7c))
+
 ## [4.7.4](https://github.com/dvsa/vol-functional-tests/compare/v4.7.3...v4.7.4) (2025-04-29)
 
 
