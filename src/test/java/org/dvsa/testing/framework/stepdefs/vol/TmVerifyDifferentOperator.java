@@ -113,7 +113,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     @When("the operator rejects the transport managers details")
     public void theOperatorRejectsTheTransportManagersDetails() {
         waitForTextToBePresent("What happens next?");
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         clickByLinkText("Sign out");

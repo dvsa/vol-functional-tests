@@ -192,7 +192,7 @@ public class SurrenderJourney extends BasePage {
     public void removeDisc() throws IllegalBrowserException, IOException {
         UniversalActions.clickSubmit();
         addDiscInformation();
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);

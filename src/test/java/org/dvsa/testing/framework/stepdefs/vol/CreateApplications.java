@@ -59,7 +59,7 @@ public class CreateApplications extends BasePage {
 
             String previousAppId = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
 
-            clickByLinkText("Home");
+              UniversalActions.clickHome();
 
             getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td"))
                     .stream()

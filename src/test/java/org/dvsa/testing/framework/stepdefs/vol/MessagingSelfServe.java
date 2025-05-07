@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -56,13 +57,13 @@ public class MessagingSelfServe extends BasePage {
 
     @Then("the messages tab is not displayed on the dashboard")
     public void theMessagesTabIsNotDisplayedOnTheDashboard() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.messagingJourney.messageTabHidden();
     }
 
     @Then("the messages tab is displayed on the dashboard")
     public void theMessagesTabIsDisplayedOnTheDashboard() {
-        clickByLinkText("Home");
+          UniversalActions.clickHome();
         world.messagingJourney.messageTabShown();
     }
 

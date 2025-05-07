@@ -99,7 +99,7 @@ public class SelfServeNavigation extends BasePage {
                 }
             }
             case "variation" -> {
-                clickByLinkText("Home");
+                  UniversalActions.clickHome();
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationId());
@@ -128,7 +128,7 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToNavBarPage(SelfServeNavBar page) {
         switch (page.toString()) {
             case "Home" -> {
-                clickByLinkText("Home");
+                  UniversalActions.clickHome();
                 waitForTextToBePresent("Licences");
             }
             case "Sign out" -> {
