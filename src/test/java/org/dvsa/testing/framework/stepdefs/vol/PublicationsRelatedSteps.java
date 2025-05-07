@@ -282,8 +282,8 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("I publish the application on internal")
     public void iPublishTheApplicationOnInternal() {
-        waitForTextToBePresent("Publish application");
-        clickByLinkText("Publish application");
+        waitForElementToBePresent("//*[@id='menu-application-quick-actions-publish-application']");
+        waitAndClick("//*[@id='menu-application-quick-actions-publish-application']", SelectorType.XPATH);
         waitForTextToBePresent("publish this application");
         UniversalActions.clickOk();
         waitForTextToBePresent("Republish application");
