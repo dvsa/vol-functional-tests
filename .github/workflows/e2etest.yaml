@@ -233,6 +233,7 @@ jobs:
           ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: Store Allure Results
+        if: ${{ !contains(inputs.cucumber_tags, 'PP-SMOKE') }}
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}
