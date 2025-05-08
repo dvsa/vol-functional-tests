@@ -45,8 +45,8 @@ public class BatchProcess extends BasePage {
 
     @When("i add a new bus registration with a past date")
     public void iAddANewBusRegistrationWithAPastDate() {
-        world.internalUIJourney.manualBusRegistration(0,5,0);
-        world.internalUIJourney.payFee();
+        world.internalUIJourney.manualBusRegistration(0,0,1);
+        // world.internalUIJourney.payFee();
     }
 
     @And("i trigger the expire-bus-registration batch job")

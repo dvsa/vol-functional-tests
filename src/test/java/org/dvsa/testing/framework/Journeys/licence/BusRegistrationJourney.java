@@ -58,10 +58,10 @@ public class BusRegistrationJourney extends BasePage {
         click(nameAttribute("button", "action"), SelectorType.CSS);
         waitForTextToBePresent("Service details");
         assertTrue(isTextPresent("Service No. & type"));
-        enterText("serviceNo", SelectorType.ID, "123");
-        enterText("startPoint", SelectorType.ID, Str.randomWord(9));
-        enterText("finishPoint", SelectorType.ID, Str.randomWord(11));
-        enterText("via", SelectorType.ID, Str.randomWord(5));
+        waitAndEnterText("serviceNo", SelectorType.ID, "123");
+        waitAndEnterText("startPoint", SelectorType.ID, Str.randomWord(9));
+        waitAndEnterText("finishPoint", SelectorType.ID, Str.randomWord(11));
+        waitAndEnterText("via", SelectorType.ID, Str.randomWord(5));
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 

@@ -15,4 +15,5 @@ Feature: Batch process
     And i have logged in to internal as "admin"
     When i add a new bus registration with a past date
     And i trigger the expire-bus-registration batch job
+    And it has been paid and granted
     Then the registration should be marked as expired
