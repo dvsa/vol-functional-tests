@@ -525,6 +525,25 @@ public abstract class BasePage extends DriverUtils {
         findElements(selector, SelectorType.XPATH).stream().findFirst().get().click();
     }
 
+    public void selectFirstValueFromDropdown(String dropdownSelector, String optionSelector) {
+        var wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(10))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .ignoring(ElementClickInterceptedException.class);
+
+        WebElement dropdown = wait.until(driver -> driver.findElement(By.xpath(dropdownSelector)));
+        dropdown.click();
+
+        List<WebElement> options = wait.until(driver -> driver.findElements(By.xpath(optionSelector)));
+        if (!options.isEmpty()) {
+            options.get(0).click();
+        } else {
+            throw new NoSuchElementException("No options found in the dropdown.");
+        }
+    }
+
     public boolean checkForFullMatch(String searchTerm) {
         return findElements("//table/tbody/tr[*]", SelectorType.XPATH).stream().allMatch(w -> w.getText().contains(searchTerm));
     }
