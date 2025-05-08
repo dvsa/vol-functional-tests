@@ -269,8 +269,6 @@ public class InternalUIJourney extends BasePage {
         clickByLinkText("TA's");
         selectFirstValueFromDropdown("//*[@class='chosen-choices']", "//*[@class='active-result']");
         selectFirstValueFromDropdown("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']",  "//*[@class=\"active-result group-option\"]");
-//        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
-//        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
         UniversalActions.clickSubmit();
     }
 
