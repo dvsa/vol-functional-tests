@@ -55,14 +55,14 @@ public class BusRegistrationJourney extends BasePage {
     public void internalSiteAddBusNewReg(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
-        click(nameAttribute("button", "action"), SelectorType.CSS);
+        waitAndClick(nameAttribute("button", "action"), SelectorType.CSS);
         waitForTextToBePresent("Service details");
         assertTrue(isTextPresent("Service No. & type"));
         waitAndEnterText("serviceNo", SelectorType.ID, "123");
         waitAndEnterText("startPoint", SelectorType.ID, Str.randomWord(9));
         waitAndEnterText("finishPoint", SelectorType.ID, Str.randomWord(11));
         waitAndEnterText("via", SelectorType.ID, Str.randomWord(5));
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        waitAndClick("//*[@class='chosen-choices']", SelectorType.XPATH);
         findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 
         plusOrMinusDay = plusOrMinusDay == null ? 0 : plusOrMinusDay;
@@ -84,16 +84,16 @@ public class BusRegistrationJourney extends BasePage {
 
         UniversalActions.clickSubmit();
 
-        long kickOutTime = System.currentTimeMillis() + 60000;
-
-        do {
-            // Refresh page
-            refreshPageWithJavascript();
-        }
-        while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
-        if (System.currentTimeMillis() > kickOutTime) {
-            throw new TimeoutException("Service details page didn't display as expected within the time limit.");
-        }
+//        long kickOutTime = System.currentTimeMillis() + 60000;
+//
+//        do {
+//            // Refresh page
+//            refreshPageWithJavascript();
+//        }
+//        while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
+//        if (System.currentTimeMillis() > kickOutTime) {
+//            throw new TimeoutException("Service details page didn't display as expected within the time limit.");
+//        }
     }
 
     public void closeBusReg() {

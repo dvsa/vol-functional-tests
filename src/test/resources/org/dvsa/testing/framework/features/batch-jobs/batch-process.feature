@@ -14,6 +14,6 @@ Feature: Batch process
     Given as a "admin" I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal as "admin"
     When i add a new bus registration with a past date
-    And i trigger the expire-bus-registration batch job
     And it has been paid and granted
+    And i trigger the expire-bus-registration batch job
     Then the registration should be marked as expired
