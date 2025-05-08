@@ -84,16 +84,6 @@ public class BusRegistrationJourney extends BasePage {
 
         UniversalActions.clickSubmit();
 
-        long kickOutTime = System.currentTimeMillis() + 60000;
-
-        do {
-            // Refresh page
-            refreshPageWithJavascript();
-        }
-        while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
-        if (System.currentTimeMillis() > kickOutTime) {
-            throw new TimeoutException("Service details page didn't display as expected within the time limit.");
-        }
     }
 
     public void closeBusReg() {

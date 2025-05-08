@@ -258,19 +258,24 @@ public class InternalUIJourney extends BasePage {
     public void manualBusRegistration(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
         world.internalNavigation.getLicence();
         world.busRegistrationJourney.internalSiteAddBusNewReg(plusOrMinusDay,plusOrMinusMonth,plusOrMinusYear);
+        refreshPage();
         clickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
+        refreshPage();
         clickByLinkText("Service details");
+        UniversalActions.clickSubmit();
+        refreshPage();
         clickByLinkText("TA's");
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result\"]");
-        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
+        selectFirstValueFromDropdown("//*[@class='chosen-choices']", "//*[@class='active-result']");
+        selectFirstValueFromDropdown("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']",  "//*[@class=\"active-result group-option\"]");
+//        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
+//        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
         UniversalActions.clickSubmit();
     }
 
     public void payFee() {
+        refreshPage();
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
 
