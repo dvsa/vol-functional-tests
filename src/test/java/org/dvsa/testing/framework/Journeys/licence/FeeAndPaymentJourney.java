@@ -126,7 +126,7 @@ public class FeeAndPaymentJourney extends BasePage {
 
     public void customerPaymentModule() {
         waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
-                SecretsManager.getSecretValue("cardNumber"));
+                SecretsManager.getSecretValue("govPayCardNo"));
         waitAndEnterText("//*[@id='expiry-month']", SelectorType.XPATH,
                 SecretsManager.getSecretValue("cardExpiryMonth"));
         waitAndEnterText("//*[@id='expiry-year']", SelectorType.XPATH,
