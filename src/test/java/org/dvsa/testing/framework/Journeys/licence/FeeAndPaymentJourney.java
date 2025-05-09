@@ -139,7 +139,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void enterCardHolderDetails() {
         waitAndEnterText("address-line-1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
         waitAndEnterText("address-city", SelectorType.ID, world.DataGenerator.getOperatorTown());
-        waitAndEnterText("address-postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
+        waitAndEnterText("address-postcode", SelectorType.ID, world.DataGenerator.generateUkPostCode());
         waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("submit-card-details", SelectorType.ID);
     }

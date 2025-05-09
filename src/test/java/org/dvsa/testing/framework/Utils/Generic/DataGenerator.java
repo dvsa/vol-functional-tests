@@ -7,6 +7,7 @@ import apiCalls.enums.TrafficArea;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.jetbrains.annotations.NotNull;
 
 public class DataGenerator extends BasePage {
 
@@ -149,6 +150,13 @@ public class DataGenerator extends BasePage {
         );
         setRandomWord(lorem.getWords(10, 20));
         this.world = world;
+    }
+
+    public @NotNull String generateUkPostCode() {
+        FakerUtils faker = new FakerUtils();
+        String generatedPostCode = faker.getRandomRealUKPostcode();
+        setOperatorPostCode(generatedPostCode);
+        return generatedPostCode;
     }
 
     public void generateAndAddOperatorUser() {
