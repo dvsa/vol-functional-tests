@@ -62,8 +62,9 @@ public class OperatingCentreJourney extends BasePage {
             click(submitApplication, SelectorType.XPATH);
         } else {
             click(submitAndPayForApplication, SelectorType.XPATH);
-            click(payNow, SelectorType.XPATH);
+            waitAndClick(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
+            world.feeAndPaymentJourney.clickPayAndConfirm();
         }
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
