@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -45,7 +45,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCashCustomerRef");
-                    clickPayAndConfirm(paymentMethod);
+                    clickPayAndConfirm();
                 } else {
                     waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
                 }
@@ -65,7 +65,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 waitAndEnterText("details[chequeDate][day]", SelectorType.NAME, dates.get("day").toString());
                 waitAndEnterText("details[chequeDate][month]", SelectorType.NAME, dates.get("month").toString());
                 waitAndEnterText("details[chequeDate][year]", SelectorType.NAME, dates.get("year").toString());
-                clickPayAndConfirm(paymentMethod);
+                clickPayAndConfirm();
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
@@ -76,7 +76,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationPostalOrderCustomerRef");
                 waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                 waitAndEnterText("details[poNo]", SelectorType.NAME, "123456");
-                clickPayAndConfirm(paymentMethod);
+                clickPayAndConfirm();
                 break;
             case "card":
                 if (isTextPresent("Pay fee")) {
@@ -85,7 +85,7 @@ public class FeeAndPaymentJourney extends BasePage {
                         waitAndEnterText("details[customerName]", SelectorType.NAME, "Veena Skish");
                         waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef"); // 15 Chars max due to CPSM API value length cap.
                         world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
-                        clickPayAndConfirm(paymentMethod);
+                        clickPayAndConfirm();
                     }
                     if (isElementPresent("form-actions[pay]", SelectorType.ID)) {
                         waitAndClick("form-actions[pay]", SelectorType.ID);
@@ -125,8 +125,9 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void customerPaymentModule() {
-        waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
-                SecretsManager.getSecretValue("govPayCardNo"));
+        waitForTitleToBePresent("Enter payment details");
+       waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
+               SecretsManager.getSecretValue("govPayCardNo"));
         waitAndEnterText("//*[@id='expiry-month']", SelectorType.XPATH,
                 SecretsManager.getSecretValue("cardExpiryMonth"));
         waitAndEnterText("//*[@id='expiry-year']", SelectorType.XPATH,
@@ -136,16 +137,17 @@ public class FeeAndPaymentJourney extends BasePage {
         enterCardHolderDetails();
     }
 
-    public void enterCardHolderDetails() {
+    public void enterCardHolderDetails(){
         waitAndEnterText("address-line-1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
         waitAndEnterText("address-city", SelectorType.ID, world.DataGenerator.getOperatorTown());
-        waitAndEnterText("address-postcode", SelectorType.ID, world.DataGenerator.generateUkPostCode());
+        waitAndEnterText("address-postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
         waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("submit-card-details", SelectorType.ID);
+        assertFalse(isElementPresent("h1.govuk-heading-l.system-error", SelectorType.CSS),
+                "Technical problems error message is displayed.");
     }
 
-    public void clickPayAndConfirm(String paymentMethod) {
-       waitAndClick("Confirm payment", SelectorType.NAME);
-        waitForTextToBePresent("The payment was made successfully");
+    public void clickPayAndConfirm() {
+       waitAndClick("confirm", SelectorType.ID );
     }
 }

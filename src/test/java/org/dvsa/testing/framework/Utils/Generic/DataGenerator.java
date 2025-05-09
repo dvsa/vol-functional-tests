@@ -138,7 +138,7 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
-        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
+        setOperatorPostCode(generateUkPostCode());
         setConsultantForename(faker.generateFirstName());
         setConsultantFamilyName(faker.generateLastName());
         setConsultantUser(String.format("%s%s%s",
