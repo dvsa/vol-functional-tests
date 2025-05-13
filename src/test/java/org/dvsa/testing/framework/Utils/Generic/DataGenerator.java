@@ -7,7 +7,6 @@ import apiCalls.enums.TrafficArea;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.jetbrains.annotations.NotNull;
 
 public class DataGenerator extends BasePage {
 
@@ -138,7 +137,7 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
-        setOperatorPostCode(generateUkPostCode());
+        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
         setConsultantForename(faker.generateFirstName());
         setConsultantFamilyName(faker.generateLastName());
         setConsultantUser(String.format("%s%s%s",
@@ -150,13 +149,6 @@ public class DataGenerator extends BasePage {
         );
         setRandomWord(lorem.getWords(10, 20));
         this.world = world;
-    }
-
-    public @NotNull String generateUkPostCode() {
-        FakerUtils faker = new FakerUtils();
-        String generatedPostCode = faker.getRandomRealUKPostcode();
-        setOperatorPostCode(generatedPostCode);
-        return generatedPostCode;
     }
 
     public void generateAndAddOperatorUser() {
