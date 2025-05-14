@@ -127,7 +127,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void customerPaymentModule() {
         waitForTitleToBePresent("Enter payment details");
        waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
-               SecretsManager.getSecretValue("cardNumber"));
+               SecretsManager.getSecretValue("govPayCardNo"));
         waitAndEnterText("//*[@id='expiry-month']", SelectorType.XPATH,
                 SecretsManager.getSecretValue("cardExpiryMonth"));
         waitAndEnterText("//*[@id='expiry-year']", SelectorType.XPATH,
@@ -140,7 +140,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void enterCardHolderDetails(){
         waitAndEnterText("address-line-1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
         waitAndEnterText("address-city", SelectorType.ID, world.DataGenerator.getOperatorTown());
-        waitAndEnterText("address-postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
+        waitAndEnterText("address-postcode", SelectorType.ID, "NG2 1AW");
         waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("submit-card-details", SelectorType.ID);
         assertFalse(isElementPresent("h1.govuk-heading-l.system-error", SelectorType.CSS),
