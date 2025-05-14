@@ -45,7 +45,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCashCustomerRef");
-                    clickPayAndConfirm();
+                    clickPayAndConfirm(paymentMethod);
                 } else {
                     waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
                 }
@@ -65,7 +65,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 waitAndEnterText("details[chequeDate][day]", SelectorType.NAME, dates.get("day").toString());
                 waitAndEnterText("details[chequeDate][month]", SelectorType.NAME, dates.get("month").toString());
                 waitAndEnterText("details[chequeDate][year]", SelectorType.NAME, dates.get("year").toString());
-                clickPayAndConfirm();
+                clickPayAndConfirm(paymentMethod);
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
@@ -76,7 +76,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationPostalOrderCustomerRef");
                 waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                 waitAndEnterText("details[poNo]", SelectorType.NAME, "123456");
-                clickPayAndConfirm();
+                clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
                 if (isTextPresent("Pay fee")) {
@@ -85,7 +85,7 @@ public class FeeAndPaymentJourney extends BasePage {
                         waitAndEnterText("details[customerName]", SelectorType.NAME, "Veena Skish");
                         waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef"); // 15 Chars max due to CPSM API value length cap.
                         world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
-                        clickPayAndConfirm();
+                        clickPayAndConfirm(paymentMethod);
                     }
                     if (isElementPresent("form-actions[pay]", SelectorType.ID)) {
                         waitAndClick("form-actions[pay]", SelectorType.ID);
@@ -147,7 +147,12 @@ public class FeeAndPaymentJourney extends BasePage {
                 "Technical problems error message is displayed.");
     }
 
-    public void clickPayAndConfirm() {
-       waitAndClick("confirm", SelectorType.ID );
+    public void clickPayAndConfirm(String paymentMethod) {
+        waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='postcode']");
+        UniversalActions.clickPay();
+        waitForTextToBePresent("The payment was made successfully");
+        if (!paymentMethod.toLowerCase().trim().equals("card"))
+            waitForTextToBePresent("The payment was made successfully");
     }
 }
