@@ -15,7 +15,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @gov_pay @printAndSign @localsmoke @flaky
+   @gov_pay @printAndSign @localsmoke @flaky
      Scenario Outline: Gov Pay  Payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
