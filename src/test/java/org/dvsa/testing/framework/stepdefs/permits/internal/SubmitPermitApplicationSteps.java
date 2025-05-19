@@ -161,6 +161,7 @@ public class SubmitPermitApplicationSteps extends BasePage{
         BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
         selectCardPayment();
         world.feeAndPaymentJourney.customerPaymentModule();
+        waitAndClick("confirm", SelectorType.ID);
         FeesDetailsPage.untilFeePaidNotification();
     }
 

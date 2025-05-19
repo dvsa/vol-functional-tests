@@ -125,28 +125,36 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void customerPaymentModule() {
-        waitForTitleToBePresent("Enter payment details");
-       waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
-               SecretsManager.getSecretValue("govPayCardNo"));
-        waitAndEnterText("//*[@id='expiry-month']", SelectorType.XPATH,
-                SecretsManager.getSecretValue("cardExpiryMonth"));
-        waitAndEnterText("//*[@id='expiry-year']", SelectorType.XPATH,
-                SecretsManager.getSecretValue("cardExpiryYear"));
-        waitAndEnterText("cardholder-name", SelectorType.ID, world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
-        waitAndEnterText("//*[@id='cvc']", SelectorType.XPATH, "123");
-        enterCardHolderDetails();
+        if (isTitlePresent("Enter payment details" , 4) || isTitlePresent("Enter card details", 4)) {
+            waitAndEnterText("//*[@id='card-no']", SelectorType.XPATH,
+                    SecretsManager.getSecretValue("govPayCardNo"));
+            waitAndEnterText("//*[@id='expiry-month']", SelectorType.XPATH,
+                    SecretsManager.getSecretValue("cardExpiryMonth"));
+            waitAndEnterText("//*[@id='expiry-year']", SelectorType.XPATH,
+                    SecretsManager.getSecretValue("cardExpiryYear"));
+            waitAndEnterText("cardholder-name", SelectorType.ID,
+                    world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
+            waitAndEnterText("//*[@id='cvc']", SelectorType.XPATH, "123");
+            enterCardHolderDetails();
+        } else {
+            throw new IllegalStateException("Expected title not found: 'Enter payment details' or 'Enter card details'");
+        }
     }
 
-    public void enterCardHolderDetails(){
-        waitAndEnterText("address-line-1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
-        waitAndEnterText("address-city", SelectorType.ID, world.DataGenerator.getOperatorTown());
-        waitAndEnterText("address-postcode", SelectorType.ID, "NG2 1AW");
-        waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        waitAndClick("submit-card-details", SelectorType.ID);
+    public void enterCardHolderDetails() {
+        if (isTitlePresent("Enter card details", 4)) {
+            waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndClick("submit-card-details", SelectorType.ID);
+        } else {
+            waitAndEnterText("address-line-1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
+            waitAndEnterText("address-city", SelectorType.ID, world.DataGenerator.getOperatorTown());
+            waitAndEnterText("address-postcode", SelectorType.ID, "NG2 1AW");
+            waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndClick("submit-card-details", SelectorType.ID);
+        }
         assertFalse(isElementPresent("h1.govuk-heading-l.system-error", SelectorType.CSS),
                 "Technical problems error message is displayed.");
     }
-
     public void clickPayAndConfirm(String paymentMethod) {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
