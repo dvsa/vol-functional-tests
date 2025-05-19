@@ -110,6 +110,7 @@ public class ContinuationJourney extends BasePage {
             waitAndClick("submitAndPay", SelectorType.ID);
             UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
+            waitAndClick("confirm", SelectorType.ID);
         } else {
             waitForTextToBePresent("Declaration");
             click("submit", SelectorType.ID);
