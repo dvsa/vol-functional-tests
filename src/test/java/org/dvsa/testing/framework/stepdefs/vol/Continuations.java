@@ -164,4 +164,10 @@ public class Continuations extends BasePage {
     public void theContinuationShouldBeApproved() {
         assertTrue(isTextPresent("The licence has been continued"));
     }
+
+    @Then("i click Finish and am returned to the licence overview")
+    public void iClickFinishAndAmReturnedToTheLicenceOverview() {
+        clickByLinkText("Finish");
+        assertTrue(isTextPresent("View and amend your licence"));
+    }
 }

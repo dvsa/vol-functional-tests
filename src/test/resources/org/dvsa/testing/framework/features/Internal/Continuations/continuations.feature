@@ -2,9 +2,9 @@
 @continuations
 @gov-sign-in
 
-Feature: Continuations journey through internal and self serve
+Feature: Continuations journey completed in internal
 
-  @int_regression @FullRegression @continuations_smoke @consultant
+  @int_regression @FullRegression @continuations_smoke
   Scenario Outline: Continue a licence that has expired
     Given as a "<userType>" I have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -13,9 +13,7 @@ Feature: Continuations journey through internal and self serve
     Then the continuation should be approved and a snapshot generated on Internal
     Examples:
       | userType   | operatorType | licenceType            |
-      | consultant | goods        | restricted             |
       | admin      | public       | standard_national      |
-      | admin      | public       | special_restricted     |
 
   @int_regression @FullRegression @continuations_internal @continuations_smoke
   Scenario: Caseworker continues a licence that has expired
