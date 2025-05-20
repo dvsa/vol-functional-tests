@@ -142,7 +142,7 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void enterCardHolderDetails() {
-        if (isTitlePresent("Enter card details", 4)) {
+        if (!isElementPresent("//*[@id='address-line-1']", SelectorType.XPATH)) {
             waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
             waitAndClick("submit-card-details", SelectorType.ID);
         } else {
@@ -155,6 +155,7 @@ public class FeeAndPaymentJourney extends BasePage {
         assertFalse(isElementPresent("h1.govuk-heading-l.system-error", SelectorType.CSS),
                 "Technical problems error message is displayed.");
     }
+
     public void clickPayAndConfirm(String paymentMethod) {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
