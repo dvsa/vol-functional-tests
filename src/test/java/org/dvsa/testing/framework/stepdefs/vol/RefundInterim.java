@@ -90,6 +90,7 @@ public class RefundInterim extends BasePage {
     @When("i pay for the interim application")
     public void iPayForTheInterimApplication() {
         world.internalUIJourney.payForInterimApp();
+        waitAndClick("confirm", SelectorType.ID);
         waitForTitleToBePresent("Application overview");
     }
 

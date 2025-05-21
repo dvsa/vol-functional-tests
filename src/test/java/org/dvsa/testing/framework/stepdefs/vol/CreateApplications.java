@@ -41,6 +41,7 @@ public class CreateApplications extends BasePage {
 
     @Then("the application should be submitted")
     public void theApplicationShouldBeSubmitted() {
+        waitAndClick("confirm", SelectorType.ID);
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Your application reference number is"));
     }
@@ -49,7 +50,8 @@ public class CreateApplications extends BasePage {
     public void iPayForMyApplication() {
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
-        waitForTitleToBePresent("Application overview");
+        waitForTextToBePresent("Confirm your payment");
+        waitAndClick("confirm", SelectorType.ID);
     }
 
     @And("i pay my second application with my saved card details")
