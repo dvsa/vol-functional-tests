@@ -1,6 +1,18 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.8.0](https://github.com/dvsa/vol-functional-tests/compare/v4.7.7...v4.8.0) (2025-05-22)
+
+
+### Features
+
+* cardno ([9b29584](https://github.com/dvsa/vol-functional-tests/commit/9b2958403281c73e5158e49b809f6fba722110fe))
+* cardno ([8554d57](https://github.com/dvsa/vol-functional-tests/commit/8554d5705b12f4f5c52782decfa626e9c4ff79e2))
+* cardno ([b810f2a](https://github.com/dvsa/vol-functional-tests/commit/b810f2ad4e19c56048996c0f179f96cef34bd5ee))
+* govPay ([a23fed9](https://github.com/dvsa/vol-functional-tests/commit/a23fed9b27ab064d7936f3e6106123beb518fdc0))
+* govPay ([3a481c0](https://github.com/dvsa/vol-functional-tests/commit/3a481c00c1c53529bc446706e4de6a4abb6c447e))
+* postcode gen ([e6239ef](https://github.com/dvsa/vol-functional-tests/commit/e6239ef4165ea97be25af7d9c8876f1498b683ed))
+
 ## [4.7.7](https://github.com/dvsa/vol-functional-tests/compare/v4.7.6...v4.7.7) (2025-05-08)
 
 
