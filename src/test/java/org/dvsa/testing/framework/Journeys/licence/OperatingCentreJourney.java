@@ -62,10 +62,12 @@ public class OperatingCentreJourney extends BasePage {
             click(submitApplication, SelectorType.XPATH);
         } else {
             click(submitAndPayForApplication, SelectorType.XPATH);
-            click(payNow, SelectorType.XPATH);
+            waitAndClick(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
         }
-        waitForTextToBePresent("Thank you, your application has been submitted.");
+        waitForTextToBePresent("Confirm your payment");
+        waitAndClick("confirm", SelectorType.ID);
+
     }
 
     public void saveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority) {
