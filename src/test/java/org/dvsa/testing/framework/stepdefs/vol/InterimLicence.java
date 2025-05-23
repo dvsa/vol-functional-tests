@@ -138,6 +138,7 @@ public class InterimLicence extends BasePage {
         click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
+        waitAndClick("confirm", SelectorType.ID);
         waitForTitleToBePresent("Application overview");
     }
 
