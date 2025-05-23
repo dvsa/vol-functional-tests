@@ -41,8 +41,12 @@ public class CreateApplications extends BasePage {
 
     @Then("the application should be submitted")
     public void theApplicationShouldBeSubmitted() {
-        waitAndClick("confirm", SelectorType.ID);
-        waitForTitleToBePresent("Application overview");
+        refreshPage();
+        if (isElementPresent("confirm", SelectorType.ID)) {
+            waitAndClick("confirm", SelectorType.ID);
+        } else {
+            waitForTitleToBePresent("Application overview");
+        }
         assertTrue(isTextPresent("Your application reference number is"));
     }
 

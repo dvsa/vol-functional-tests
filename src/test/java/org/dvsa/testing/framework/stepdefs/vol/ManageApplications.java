@@ -423,6 +423,7 @@ public class ManageApplications extends BasePage {
 
     @Then("the application should be under consideration")
     public void theApplicationShouldBeUnderConsideration() {
+        waitAndClick("confirm", SelectorType.ID);
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Under Consideration"));
     }
