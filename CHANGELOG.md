@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.0](https://github.com/dvsa/vol-functional-tests/compare/v4.9.0...v4.10.0) (2025-05-27)
+
+
+### Features
+
+* timeout ([db211fa](https://github.com/dvsa/vol-functional-tests/commit/db211fa5a624d24b4b67bdb3b6124dade525fc7e))
+* timeout ([8987e5c](https://github.com/dvsa/vol-functional-tests/commit/8987e5c43003ce06197346b23691e9dc4b67c907))
+
 ## [4.9.0](https://github.com/dvsa/vol-functional-tests/compare/v4.8.4...v4.9.0) (2025-05-27)
 
 
