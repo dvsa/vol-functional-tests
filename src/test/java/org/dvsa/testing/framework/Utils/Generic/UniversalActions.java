@@ -30,7 +30,6 @@ public class UniversalActions extends BasePage {
 
     public static void clickSaveAndContinue() {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        refreshPage();
     }
 
     public static void clickSubmit() {
