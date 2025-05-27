@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.9.0](https://github.com/dvsa/vol-functional-tests/compare/v4.8.4...v4.9.0) (2025-05-27)
+
+
+### Features
+
+* fail on ([ab500db](https://github.com/dvsa/vol-functional-tests/commit/ab500db6ea70dfe568caa5e2f192954794722931))
+* fail on ([ed3de76](https://github.com/dvsa/vol-functional-tests/commit/ed3de765b153d5ef78a6df6f4020607541a55779))
+
 ## [4.8.1](https://github.com/dvsa/vol-functional-tests/compare/v4.8.3...v4.8.1) (2025-05-27)
 
 
