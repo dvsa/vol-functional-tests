@@ -39,6 +39,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
 
@@ -144,7 +145,7 @@ public class GenericUtils extends BasePage {
         Thread.sleep(2500);
         String htmlContent = world.configuration.getPasswordResetLink();
         htmlContent = htmlContent.replaceAll("=3D", "=").replaceAll("=0A", "").replaceAll("=20", " ").replaceAll("=\r\n", "");
-        Browser.navigate().get(htmlContent);
+        navigate().get(htmlContent);
     }
 
 
@@ -193,6 +194,20 @@ public class GenericUtils extends BasePage {
         return value.replaceAll("[^\\d]+", " ").split(" ")[num];
     }
 
+    public String waitForUrlWithNumericSequence() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException("Thread was interrupted while waiting for URL", e);
+        }
+        String currentUrl = navigate().getCurrentUrl();
+        if (currentUrl.matches(".*\\d+.*")) {
+            return currentUrl;
+        }
+        throw new IllegalStateException("URL does not contain a numeric sequence");
+    }
+
     public static java.time.LocalDate getFutureDate(@NotNull int month) {
         return LocalDate.now().plusMonths(month);
     }
@@ -212,12 +227,12 @@ public class GenericUtils extends BasePage {
     }
 
     public String confirmationPanel(String locator, String cssValue) {
-        return Browser.navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
+        return navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
     }
 
     public void switchTab(int tab) {
-        ArrayList<String> tabs = new ArrayList<>(Browser.navigate().getWindowHandles());
-        Browser.navigate().switchTo().window(tabs.get(tab));
+        ArrayList<String> tabs = new ArrayList<>(navigate().getWindowHandles());
+        navigate().switchTo().window(tabs.get(tab));
     }
 
     public String readFileAsString(String fileName) throws IOException {
@@ -265,7 +280,7 @@ public class GenericUtils extends BasePage {
     }
 
     public boolean returnFeeStatus(String searchTerm) {
-        return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
+        return navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
     }
 
     public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
