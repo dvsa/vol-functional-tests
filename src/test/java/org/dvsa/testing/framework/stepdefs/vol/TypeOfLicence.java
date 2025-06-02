@@ -122,7 +122,7 @@ public class TypeOfLicence extends BasePage {
         click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
-        String url = navigate().getCurrentUrl();
+        String url = world.genericUtils.waitForUrlWithNumericSequence();
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
