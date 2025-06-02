@@ -196,7 +196,7 @@ public class GenericUtils extends BasePage {
 
     public String waitForUrlWithNumericSequence() {
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Thread was interrupted while waiting for URL", e);
