@@ -43,6 +43,7 @@ public class ContinuationJourney extends BasePage {
         waitAndEnterText("filters[licenceNo]", SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
+        refreshPage();
         waitAndClick("//input[@id='checkall' and @type='checkbox' and @name='checkall' and contains(@class, 'js-visible')]", SelectorType.XPATH);
         waitAndClick("generate", SelectorType.ID);
         UniversalActions.clickSubmit();
@@ -109,6 +110,7 @@ public class ContinuationJourney extends BasePage {
             waitAndClick("submitAndPay", SelectorType.ID);
             UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
+            waitAndClick("confirm", SelectorType.ID);
         } else {
             waitForTextToBePresent("Declaration");
             click("submit", SelectorType.ID);

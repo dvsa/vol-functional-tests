@@ -423,6 +423,7 @@ public class ManageApplications extends BasePage {
 
     @Then("the application should be under consideration")
     public void theApplicationShouldBeUnderConsideration() {
+        waitAndClick("confirm", SelectorType.ID);
         waitForTitleToBePresent("Application overview");
         assertTrue(isTextPresent("Under Consideration"));
     }
@@ -506,7 +507,7 @@ public class ManageApplications extends BasePage {
         world.globalMethods.signIn(user, password);
         if (isTextPresent("Welcome to your account")) {
             click("termsAgreed", SelectorType.ID);
-            UniversalActions.clickSubmit();
+            waitAndClick("submit", SelectorType.ID);
         }
         waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
     }
