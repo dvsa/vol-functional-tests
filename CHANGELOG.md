@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.3](https://github.com/dvsa/vol-functional-tests/compare/v4.10.2...v4.10.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* temp remove external search ([611bd24](https://github.com/dvsa/vol-functional-tests/commit/611bd2481ac9ff693ee50b5fc8ee35406329d121))
+* temp remove external search ([4fa9a31](https://github.com/dvsa/vol-functional-tests/commit/4fa9a318b79659f5cc163e5697618bc9728a6b3c))
+
 ## [4.10.2](https://github.com/dvsa/vol-functional-tests/compare/v4.10.1...v4.10.2) (2025-06-05)
 
 
