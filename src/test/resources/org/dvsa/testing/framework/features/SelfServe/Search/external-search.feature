@@ -1,4 +1,5 @@
-@OLCS-20956 @SS-EXTERNAL-SEARCH @ss_regression
+@OLCS-20956 @SS-EXTERNAL-SEARCH
+#@ss_regression
 @FullRegression @printAndSign
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
