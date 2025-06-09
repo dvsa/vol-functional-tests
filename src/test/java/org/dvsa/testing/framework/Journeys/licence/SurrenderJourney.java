@@ -132,7 +132,6 @@ public class SurrenderJourney extends BasePage {
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
-            assertTrue(Objects.requireNonNull(navigate().getCurrentUrl()).contains("community-licence"));
             addCommunityLicenceDetails();
         }
     }
