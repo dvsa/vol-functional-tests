@@ -202,6 +202,13 @@ public abstract class BasePage extends DriverUtils {
         checkboxes.get(index).click();
     }
 
+    public void tickCheckbox(String checkboxXPath) {
+        WebElement checkbox = getDriver().findElement(By.xpath(checkboxXPath));
+        if (!checkbox.isSelected()) {
+            checkbox.click();
+        }
+    }
+
     public void selectRandomRadioBtn() {
         var radioButtons = findElements("//tr//*[@type='radio']", SelectorType.XPATH);
         var result = radioButtons.stream().findAny();
