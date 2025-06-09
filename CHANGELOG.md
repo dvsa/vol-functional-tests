@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.4](https://github.com/dvsa/vol-functional-tests/compare/v4.10.3...v4.10.4) (2025-06-09)
+
+
+### Bug Fixes
+
+* tick checkbox ([976279c](https://github.com/dvsa/vol-functional-tests/commit/976279ce0988f011921ae28cdab83756bd0f938c))
+* tick checkbox ([e4e2030](https://github.com/dvsa/vol-functional-tests/commit/e4e203040dfb7f1e572afa2bd1ff6512f2904e1a))
+
 ## [4.10.3](https://github.com/dvsa/vol-functional-tests/compare/v4.10.2...v4.10.3) (2025-06-05)
 
 
