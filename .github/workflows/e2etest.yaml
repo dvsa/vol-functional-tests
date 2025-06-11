@@ -103,12 +103,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Clear MailPit Inbox
-        env:
-          MAILPIT_URL: https://selenium-mail.olcs.dev-dvsacloud.uk:8025/api/v1/messages
-        run: |
-          curl -X DELETE "$MAILPIT_URL" -H "Accept: application/json" -H "test: dvsa"
-
       - name: Submit AWS Batch Job
         id: submit-job
         run: |
