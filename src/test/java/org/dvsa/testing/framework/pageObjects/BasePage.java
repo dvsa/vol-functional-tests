@@ -426,16 +426,25 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class)
-                .ignoring(TimeoutException.class)
-                .ignoring(ElementNotInteractableException.class);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
 
-        wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
+                wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
