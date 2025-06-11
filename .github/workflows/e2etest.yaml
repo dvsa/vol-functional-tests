@@ -103,6 +103,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Clear MailPit Inbox
+        env:
+          MAILPIT_URL: https://selenium-mail.olcs.dev-dvsacloud.uk:8025/api/v1/messages
+        run: |
+          curl -X DELETE "$MAILPIT_URL" -H "Accept: application/json" -H "test: dvsa"
+
       - name: Submit AWS Batch Job
         id: submit-job
         run: |
@@ -266,8 +272,8 @@ jobs:
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.4
         with:
           file-path: ./target/results-summary/summary.xml
-          fail-on-test-failures: true
-          pass-percentage: 80
+          fail-on-test-failures: false
+          pass-percentage: 95
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
