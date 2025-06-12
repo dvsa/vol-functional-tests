@@ -91,7 +91,7 @@ public class SurrenderJourney extends BasePage {
 
 
     public void addCommunityLicenceDetails() {
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
         UniversalActions.clickSubmit();
     }
@@ -178,8 +178,8 @@ public class SurrenderJourney extends BasePage {
     public void addDiscInformation() throws IllegalBrowserException, IOException {
         waitForPageLoad();
         tickCheckbox("//input[@type='checkbox' and @name='stolenSection[stolen]' and @id='stolenSection[stolen]']");
-        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
-        click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Lost')]", SelectorType.XPATH);
+       waitAndClick("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs stolen");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());
