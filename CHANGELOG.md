@@ -1,6 +1,17 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.8](https://github.com/dvsa/vol-functional-tests/compare/v4.10.7...v4.10.8) (2025-06-12)
+
+
+### Bug Fixes
+
+* gov sign in new page ([24fd24c](https://github.com/dvsa/vol-functional-tests/commit/24fd24cbe4cc926c04ad8fd401edc7f6abe3128c))
+* pass % ([1516f85](https://github.com/dvsa/vol-functional-tests/commit/1516f851b8b023553dc7b77d9ce62958d0ae1355))
+* test fixes ([c6414c1](https://github.com/dvsa/vol-functional-tests/commit/c6414c1999fe477e6e1d247ae43521c4e2555669))
+* test fixes ([1a02fd7](https://github.com/dvsa/vol-functional-tests/commit/1a02fd7a8d61c11263d7940ef5e2d5be62c4d096))
+* time out ([31af71b](https://github.com/dvsa/vol-functional-tests/commit/31af71b385a9b3216f72d55799fcd4f58ae0bea5))
+
 ## [4.10.7](https://github.com/dvsa/vol-functional-tests/compare/v4.10.6...v4.10.7) (2025-06-09)
 
 
