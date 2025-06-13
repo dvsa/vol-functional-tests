@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.9](https://github.com/dvsa/vol-functional-tests/compare/v4.10.8...v4.10.9) (2025-06-13)
+
+
+### Bug Fixes
+
+* increase time out ([861a3f3](https://github.com/dvsa/vol-functional-tests/commit/861a3f3ea81dfb3e04d32032d603e8c6bac044c6))
+* remove click step ([8febab3](https://github.com/dvsa/vol-functional-tests/commit/8febab32b0795f093e206f6d51675aebe9cd69a6))
+
 ## [4.10.8](https://github.com/dvsa/vol-functional-tests/compare/v4.10.7...v4.10.8) (2025-06-12)
 
 
