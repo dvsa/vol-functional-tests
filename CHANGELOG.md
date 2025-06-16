@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.10](https://github.com/dvsa/vol-functional-tests/compare/v4.10.9...v4.10.10) (2025-06-16)
+
+
+### Bug Fixes
+
+* stale element fix, edit user using search ([5a55e6f](https://github.com/dvsa/vol-functional-tests/commit/5a55e6ff438e9d5b3c1bc57bed933af86b6f938f))
+* stale element fix, edit user using search ([3a92b1d](https://github.com/dvsa/vol-functional-tests/commit/3a92b1d8292c7dfa59a3dbbc78e0612e4374b05a))
+
 ## [4.10.9](https://github.com/dvsa/vol-functional-tests/compare/v4.10.8...v4.10.9) (2025-06-13)
 
 
