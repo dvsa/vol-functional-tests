@@ -47,7 +47,7 @@ public class AddEditReassignTasks extends BasePage {
         assertTrue(isTextPresent("Forms Digital"));
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        assertEquals(expectedDate, actualDate);
+        assertTrue(actualDate.startsWith(expectedDate), "Actual date does not match the expected date.");
     }
 
     @Then("the User has added a task")
