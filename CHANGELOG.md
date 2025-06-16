@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.12](https://github.com/dvsa/vol-functional-tests/compare/v4.10.11...v4.10.12) (2025-06-16)
+
+
+### Bug Fixes
+
+* removed changeed permits tag ([ddf2ae2](https://github.com/dvsa/vol-functional-tests/commit/ddf2ae2c3f610bfa840342f3b60d12fc407d9006))
+* test-branch tag ([d44449a](https://github.com/dvsa/vol-functional-tests/commit/d44449a54f58d3b899c0bbcfd06b4834c2862a18))
+* test-branch tag removed ([b43aa13](https://github.com/dvsa/vol-functional-tests/commit/b43aa139aeb4ff75fb22a8b74c562345238a8e88))
+* waits added to download permissions tests ([053a34f](https://github.com/dvsa/vol-functional-tests/commit/053a34fd614abbfc6c0f86b2bf601b8312dfd510))
+
 ## [4.10.11](https://github.com/dvsa/vol-functional-tests/compare/v4.10.10...v4.10.11) (2025-06-16)
 
 
