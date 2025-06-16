@@ -5,13 +5,13 @@
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 
-    <version>4.10.2-SNAPSHOT</version>
+    <version>4.10.10-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
-        <active-support.version>2.7.5</active-support.version>
+        <active-support.version>2.7.6</active-support.version>
         <api-calls.version>3.0.7</api-calls.version>
         <uri-constructor.version>2.2.3</uri-constructor.version>
 

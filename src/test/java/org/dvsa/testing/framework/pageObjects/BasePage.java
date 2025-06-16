@@ -27,8 +27,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 200;
-    private static final int POLLING_SECONDS = 2;
+    private static final int TIME_OUT_SECONDS = 350;
+    private static final int POLLING_SECONDS = 5;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
@@ -200,6 +200,23 @@ public abstract class BasePage extends DriverUtils {
         var checkboxes = findElements(String.format("//input[@type='%s']", typeArgument), SelectorType.XPATH);
         var index = (int) (Math.random() * checkboxes.size());
         checkboxes.get(index).click();
+    }
+
+    public void tickCheckbox(String checkboxXPath) {
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                WebElement checkbox = getDriver().findElement(By.xpath(checkboxXPath));
+                if (!checkbox.isSelected()) {
+                    checkbox.click();
+                }
+                return;
+            } catch (NoSuchElementException e) {
+                LOGGER.warn("NoSuchElementException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to locate and click checkbox after " + maxRetries + " attempts.");
     }
 
     public void selectRandomRadioBtn() {
@@ -419,16 +436,25 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class)
-                .ignoring(TimeoutException.class)
-                .ignoring(ElementNotInteractableException.class);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
 
-        wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
+                wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
@@ -496,11 +522,21 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void findSelectAllRadioButtonsByValue(String value) {
-        var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
-        radioButtons.stream()
-                .filter(x -> x.getAttribute("value").equals(value))
-                .filter(isChecked -> !isChecked.isSelected())
-                .forEach(WebElement::click);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
+                radioButtons.stream()
+                        .filter(x -> x.getAttribute("value").equals(value))
+                        .filter(isChecked -> !isChecked.isSelected())
+                        .forEach(WebElement::click);
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public void refreshUntilSuccessfulOrTimeout() {
