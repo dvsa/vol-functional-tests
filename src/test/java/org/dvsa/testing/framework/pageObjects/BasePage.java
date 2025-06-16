@@ -105,7 +105,17 @@ public abstract class BasePage extends DriverUtils {
     }
 
     protected static void clickByLinkText(@NotNull String selector) {
-        findElement(selector, SelectorType.PARTIALLINKTEXT).click();
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                findElement(selector, SelectorType.PARTIALLINKTEXT).click();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     protected static void clickByFullLinkText(@NotNull String selector) {
