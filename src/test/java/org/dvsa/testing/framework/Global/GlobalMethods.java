@@ -104,6 +104,9 @@ public class GlobalMethods extends BasePage {
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
+        if (isTextPresent("Welcome to your account")) {
+            waitAndClick("termsAgreed", SelectorType.ID);
+        }
     }
     public void submit() {
         click(submitButton, SelectorType.CSS);
