@@ -106,6 +106,7 @@ public class GlobalMethods extends BasePage {
         untilNotInDOM(submitButton, 5);
         if (isTextPresent("Welcome to your account")) {
             waitAndClick("termsAgreed", SelectorType.ID);
+            waitAndClick("submit", SelectorType.ID);
         }
     }
     public void submit() {
