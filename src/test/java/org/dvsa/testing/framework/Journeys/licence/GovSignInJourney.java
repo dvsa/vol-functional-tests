@@ -87,8 +87,7 @@ public class GovSignInJourney extends BasePage {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         } else {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
+            waitAndClick("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH);        }
 
         if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);

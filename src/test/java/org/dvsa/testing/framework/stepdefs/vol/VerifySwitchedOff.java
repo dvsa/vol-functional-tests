@@ -35,6 +35,7 @@ public class VerifySwitchedOff extends BasePage {
 
     @And("submit to operator button is displayed")
     public void submitToOperatorButtonIsDisplayed() {
+        waitForTextToBePresent("Awaiting operator review");
         assertTrue(isElementPresent("//h1[contains(text(),'Awaiting operator review')]", SelectorType.XPATH));
         clickByLinkText("Back to Transport Managers");
     }
