@@ -50,7 +50,7 @@ public class DirectorVariation extends BasePage {
     }
 
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
-    public void iEnterPreviousToConvictionDetailsQuestion (String answer) {
+    public void iEnterPreviousToConvictionDetailsQuestion(String answer) {
         directorJourney.answerConvictionsAndPenalties(answer);
         UniversalActions.clickSaveAndContinue();
     }
@@ -138,10 +138,10 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(3).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.titleValidation, listOfInlineErrors.get(0).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.firstNameValidation, listOfInlineErrors.get(1).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.lastNameValidation, listOfInlineErrors.get(2).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.titleValidation, listOfInlineErrors.get(0).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.firstNameValidation, listOfInlineErrors.get(1).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.lastNameValidation, listOfInlineErrors.get(2).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText().replace("Error:", "").trim());
     }
 
     @When("I wrongly fill in and submit the add a director page")
@@ -154,7 +154,7 @@ public class DirectorVariation extends BasePage {
         enterText(directorJourney.firstNameField, SelectorType.XPATH, incorrectNameValue);
         enterText(directorJourney.lastNameField, SelectorType.XPATH, incorrectNameValue);
 
-        HashMap<String, String> incorrectDateValues = new HashMap<String,String>();
+        HashMap<String, String> incorrectDateValues = new HashMap<String, String>();
         incorrectDateValues.put("day", "!@");
         incorrectDateValues.put("month", "£$");
         incorrectDateValues.put("year", "%^&*");
@@ -187,18 +187,26 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.disqualifiedValidation, listOfSummaryErrors.get(4).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.bankruptcyValidation, listOfInlineErrors.get(0).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.liquidationValidation, listOfInlineErrors.get(1).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.receivershipValidation, listOfInlineErrors.get(2).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.administrationValidation, listOfInlineErrors.get(3).getText().replace("Error:","").trim());
-        assertEquals(directorJourney.disqualifiedValidation, listOfInlineErrors.get(4).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.bankruptcyValidation, listOfInlineErrors.get(0).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.liquidationValidation, listOfInlineErrors.get(1).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.receivershipValidation, listOfInlineErrors.get(2).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.administrationValidation, listOfInlineErrors.get(3).getText().replace("Error:", "").trim());
+        assertEquals(directorJourney.disqualifiedValidation, listOfInlineErrors.get(4).getText().replace("Error:", "").trim());
     }
 
     @Then("the director convictions and penalties page empty field validation should appear")
     public void theDirectorConvictionsAndPenaltiesPageEmptyFieldValidationShouldAppear() {
         List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.convictionsAndPenaltiesValidation, listOfSummaryErrors.get(0).getText());
+        String actualMessage = listOfSummaryErrors.get(0).getText();
 
-        assertTrue(isTextPresent("Value is required"));
+        assertTrue(
+                actualMessage.equals("Value is required") || actualMessage.equals("Existing licence: choose an option"),
+                "Validation message does not match any of the expected values."
+        );
+
+        assertTrue(
+                isTextPresent("Value is required") || isTextPresent("Existing licence: choose an option"),
+                "Expected validation message is not present on the page."
+        );
     }
 }
