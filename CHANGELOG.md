@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.16](https://github.com/dvsa/vol-functional-tests/compare/v4.10.15...v4.10.16) (2025-06-18)
+
+
+### Bug Fixes
+
+* bring down pass perc temporarily ([e6ef028](https://github.com/dvsa/vol-functional-tests/commit/e6ef028dbe420caf31c42b8acc1856bf4ea223db))
+* remove company changes from test ([ca833e8](https://github.com/dvsa/vol-functional-tests/commit/ca833e8a0fced7d79cfc05f3025cd6d2d11a60a9))
+* remove company changes from test ([aca71ad](https://github.com/dvsa/vol-functional-tests/commit/aca71ad4b0684698cf419dfa5e530cf6d75bc60b))
+
 ## [4.10.15](https://github.com/dvsa/vol-functional-tests/compare/v4.10.14...v4.10.15) (2025-06-17)
 
 
