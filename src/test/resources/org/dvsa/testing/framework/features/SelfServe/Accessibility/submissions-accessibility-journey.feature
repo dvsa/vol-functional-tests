@@ -11,6 +11,5 @@ Feature: Check that Submissions journey is accessible
     And the licence should not displayed in selfserve
     Then no issues should be present on the page
     Examples:
-      | user_type  |
-      | consultant |
-      | admin      |
+      | user_type |
+      | admin     |

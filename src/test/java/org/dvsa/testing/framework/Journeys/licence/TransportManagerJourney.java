@@ -166,6 +166,7 @@ public class TransportManagerJourney extends BasePage {
 
     public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) {
         String hours = "8";
+        waitForTextToBePresent("Transport Manager details ");
         findElement("//*[@value='Y'][@name='details[hasUndertakenTraining]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + isOwner + "'][@name='responsibilities[isOwner]']", SelectorType.XPATH, 30).click();
