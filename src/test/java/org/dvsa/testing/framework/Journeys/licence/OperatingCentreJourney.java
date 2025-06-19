@@ -127,7 +127,7 @@ public class OperatingCentreJourney extends BasePage {
         waitForElementToBePresent(addOperatingCentre);
         waitAndClick(addOperatingCentre, SelectorType.XPATH);
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
-        clickByLinkText(enterAddressManually);
+        waitAndClick(enterAddressManually,  SelectorType.LINKTEXT);
         world.selfServeUIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
