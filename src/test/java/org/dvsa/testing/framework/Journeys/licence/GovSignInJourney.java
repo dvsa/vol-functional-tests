@@ -77,6 +77,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
+        if (isTextPresent("You have already proved your identity")) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+
         if (isTextPresent("Are your details up to date?" )) {
             clickByXPath("//input[contains(@class, 'govuk-radios__input') and @id='up-to-date']");
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
