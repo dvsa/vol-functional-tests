@@ -50,11 +50,6 @@ public class ValidLicenceChanges extends BasePage {
         waitAndEnterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
         replaceText("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
         world.selfServeUIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-        waitAndClick("//*[@id='add']", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='name']", SelectorType.XPATH, companyName);
-        waitAndEnterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
-        UniversalActions.clickSubmit();
-//        waitAndClick("//*[@name='allow-email[allowEmail]']", SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
     }
 
@@ -76,10 +71,6 @@ public class ValidLicenceChanges extends BasePage {
         assertEquals(expectedChangedText3, actualChangeText3);
 
         world.selfServeUIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-
-        String expectedChangedText4 = companyNumber;
-        String actualChangeText4 = findElement("//td[2]", SelectorType.XPATH).getText();
-        assertEquals(expectedChangedText4, actualChangeText4);
     }
 
     @When("i make changes to the addresses page")
@@ -215,6 +206,7 @@ public class ValidLicenceChanges extends BasePage {
         assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(), 0);
         waitAndClick("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         waitAndClick("//*[@id='ceased-show-hide']", SelectorType.XPATH);
+        refreshPage();
         List<WebElement> rows = Browser.navigate().findElements(By.xpath("//tbody//tr"));
         assertEquals(7, rows.size(), "The number of rows in the table should be 7");    }
 

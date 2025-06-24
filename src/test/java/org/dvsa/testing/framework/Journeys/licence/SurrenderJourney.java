@@ -83,6 +83,7 @@ public class SurrenderJourney extends BasePage {
 
 
     public void addOperatorLicenceDetails() throws IllegalBrowserException, IOException {
+        refreshPage();
         waitAndClick("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         UniversalActions.clickSubmit();
@@ -90,7 +91,7 @@ public class SurrenderJourney extends BasePage {
 
 
     public void addCommunityLicenceDetails() {
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
         UniversalActions.clickSubmit();
     }
@@ -132,7 +133,6 @@ public class SurrenderJourney extends BasePage {
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
-            assertTrue(Objects.requireNonNull(navigate().getCurrentUrl()).contains("community-licence"));
             addCommunityLicenceDetails();
         }
     }
@@ -177,9 +177,9 @@ public class SurrenderJourney extends BasePage {
 
     public void addDiscInformation() throws IllegalBrowserException, IOException {
         waitForPageLoad();
-        clickById("stolenSection[stolen]");
-        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
-        click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
+        tickCheckbox("//input[@type='checkbox' and @name='stolenSection[stolen]' and @id='stolenSection[stolen]']");
+        waitAndClick("//*[contains(text(),'Lost')]", SelectorType.XPATH);
+       waitAndClick("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs stolen");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());

@@ -233,7 +233,6 @@ jobs:
           ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
       - name: Store Allure Results
-        if: ${{ !contains(inputs.cucumber_tags, 'PP-SMOKE') }}
         uses: actions/upload-artifact@v4
         with:
           name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}
@@ -266,8 +265,8 @@ jobs:
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.4
         with:
           file-path: ./target/results-summary/summary.xml
-          fail-on-test-failures: false
-          pass-percentage: 70
+          fail-on-test-failures: true
+          pass-percentage: 90
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:

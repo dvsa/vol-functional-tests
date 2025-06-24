@@ -47,8 +47,21 @@ public class GovSignInJourney extends BasePage {
         String AUTH_KEY = SecretsManager.getSecretValue("AUTH_KEY");
         String signInUsername = SecretsManager.getSecretValue("signInUsername");
         String signInPassword = SecretsManager.getSecretValue("signInPassword");
+        String authCode = getTOTPCode(AUTH_KEY);
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
+            waitAndEnterText("email", SelectorType.ID, signInUsername);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndEnterText("password", SelectorType.ID, signInPassword);
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+            waitAndEnterText("code", SelectorType.ID, authCode);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+
+            waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
@@ -59,7 +72,7 @@ public class GovSignInJourney extends BasePage {
             waitAndEnterText("password", SelectorType.ID, signInPassword);
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
 
-            String authCode = getTOTPCode(AUTH_KEY);
+
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
@@ -74,8 +87,7 @@ public class GovSignInJourney extends BasePage {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         } else {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
+            waitAndClick("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH);        }
 
         if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -154,6 +166,15 @@ public class GovSignInJourney extends BasePage {
         if(isTitlePresent("Continue to the service you want to use",1)){
             waitAndClick("submitButton", SelectorType.ID);
         }
+    }
+
+    private void performSignIn(String signInUsername, String signInPassword, String authCode) {
+        waitAndEnterText("email", SelectorType.ID, signInUsername);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndEnterText("password", SelectorType.ID, signInPassword);
+        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        waitAndEnterText("code", SelectorType.ID, authCode);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
     }
 
     public void photoIDQuestion() {

@@ -1,6 +1,149 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.18](https://github.com/dvsa/vol-functional-tests/compare/v4.10.17...v4.10.18) (2025-06-19)
+
+
+### Bug Fixes
+
+* refresh ([c47b90b](https://github.com/dvsa/vol-functional-tests/commit/c47b90b0f05ec905c1cbdc45636eae9867625327))
+* refresh ([84b767f](https://github.com/dvsa/vol-functional-tests/commit/84b767ff4f4383d9af1a8f557cc2d15fe7f48253))
+
+## [4.10.17](https://github.com/dvsa/vol-functional-tests/compare/v4.10.16...v4.10.17) (2025-06-18)
+
+
+### Bug Fixes
+
+* synk ignore ([440d41d](https://github.com/dvsa/vol-functional-tests/commit/440d41d2701c4c91f40094e2804953af4b55f2f3))
+* synk ignore ([fb66578](https://github.com/dvsa/vol-functional-tests/commit/fb665786064120555e4fdc063448f19162236817))
+
+## [4.10.16](https://github.com/dvsa/vol-functional-tests/compare/v4.10.15...v4.10.16) (2025-06-18)
+
+
+### Bug Fixes
+
+* bring down pass perc temporarily ([e6ef028](https://github.com/dvsa/vol-functional-tests/commit/e6ef028dbe420caf31c42b8acc1856bf4ea223db))
+* remove company changes from test ([ca833e8](https://github.com/dvsa/vol-functional-tests/commit/ca833e8a0fced7d79cfc05f3025cd6d2d11a60a9))
+* remove company changes from test ([aca71ad](https://github.com/dvsa/vol-functional-tests/commit/aca71ad4b0684698cf419dfa5e530cf6d75bc60b))
+
+## [4.10.15](https://github.com/dvsa/vol-functional-tests/compare/v4.10.14...v4.10.15) (2025-06-17)
+
+
+### Bug Fixes
+
+* factor in welcome page ([903a8de](https://github.com/dvsa/vol-functional-tests/commit/903a8de08746e39376af2f7928e7a52c1a4846b2))
+* factor in welcome page ([2b3f9d3](https://github.com/dvsa/vol-functional-tests/commit/2b3f9d36f6d21335c7008c654fac98e62678dda1))
+* submit ([98c000c](https://github.com/dvsa/vol-functional-tests/commit/98c000ccb8bc84b86d50bfbb0cbfde52209c6f57))
+
+## [4.10.14](https://github.com/dvsa/vol-functional-tests/compare/v4.10.13...v4.10.14) (2025-06-17)
+
+
+### Bug Fixes
+
+* report ([b47741f](https://github.com/dvsa/vol-functional-tests/commit/b47741f74890907edb0dfce00dc8f1652bb4a562))
+* report ([d19efb6](https://github.com/dvsa/vol-functional-tests/commit/d19efb645b2446574c37379f3d75caa154b41495))
+* revert ([1256056](https://github.com/dvsa/vol-functional-tests/commit/12560567f4be894bab0163476383565ac9ab25da))
+
+## [4.10.13](https://github.com/dvsa/vol-functional-tests/compare/v4.10.12...v4.10.13) (2025-06-17)
+
+
+### Bug Fixes
+
+* report ([cfccc35](https://github.com/dvsa/vol-functional-tests/commit/cfccc35c094d0afb28ec86de0b105cfa17a8e9ac))
+* report ([495e152](https://github.com/dvsa/vol-functional-tests/commit/495e15219c237fb4a3d4b053d1858f2ca3c0adbb))
+
+## [4.10.12](https://github.com/dvsa/vol-functional-tests/compare/v4.10.11...v4.10.12) (2025-06-16)
+
+
+### Bug Fixes
+
+* removed changeed permits tag ([ddf2ae2](https://github.com/dvsa/vol-functional-tests/commit/ddf2ae2c3f610bfa840342f3b60d12fc407d9006))
+* test-branch tag ([d44449a](https://github.com/dvsa/vol-functional-tests/commit/d44449a54f58d3b899c0bbcfd06b4834c2862a18))
+* test-branch tag removed ([b43aa13](https://github.com/dvsa/vol-functional-tests/commit/b43aa139aeb4ff75fb22a8b74c562345238a8e88))
+* waits added to download permissions tests ([053a34f](https://github.com/dvsa/vol-functional-tests/commit/053a34fd614abbfc6c0f86b2bf601b8312dfd510))
+
+## [4.10.11](https://github.com/dvsa/vol-functional-tests/compare/v4.10.10...v4.10.11) (2025-06-16)
+
+
+### Bug Fixes
+
+* active support ([9617200](https://github.com/dvsa/vol-functional-tests/commit/9617200343151cc6f62126b6f5752038e967b1a7))
+* active support ([b9f829a](https://github.com/dvsa/vol-functional-tests/commit/b9f829a52d81b70fadc244a38c8d512032385a03))
+
+## [4.10.10](https://github.com/dvsa/vol-functional-tests/compare/v4.10.9...v4.10.10) (2025-06-16)
+
+
+### Bug Fixes
+
+* stale element fix, edit user using search ([5a55e6f](https://github.com/dvsa/vol-functional-tests/commit/5a55e6ff438e9d5b3c1bc57bed933af86b6f938f))
+* stale element fix, edit user using search ([3a92b1d](https://github.com/dvsa/vol-functional-tests/commit/3a92b1d8292c7dfa59a3dbbc78e0612e4374b05a))
+
+## [4.10.9](https://github.com/dvsa/vol-functional-tests/compare/v4.10.8...v4.10.9) (2025-06-13)
+
+
+### Bug Fixes
+
+* increase time out ([861a3f3](https://github.com/dvsa/vol-functional-tests/commit/861a3f3ea81dfb3e04d32032d603e8c6bac044c6))
+* remove click step ([8febab3](https://github.com/dvsa/vol-functional-tests/commit/8febab32b0795f093e206f6d51675aebe9cd69a6))
+
+## [4.10.8](https://github.com/dvsa/vol-functional-tests/compare/v4.10.7...v4.10.8) (2025-06-12)
+
+
+### Bug Fixes
+
+* gov sign in new page ([24fd24c](https://github.com/dvsa/vol-functional-tests/commit/24fd24cbe4cc926c04ad8fd401edc7f6abe3128c))
+* pass % ([1516f85](https://github.com/dvsa/vol-functional-tests/commit/1516f851b8b023553dc7b77d9ce62958d0ae1355))
+* test fixes ([c6414c1](https://github.com/dvsa/vol-functional-tests/commit/c6414c1999fe477e6e1d247ae43521c4e2555669))
+* test fixes ([1a02fd7](https://github.com/dvsa/vol-functional-tests/commit/1a02fd7a8d61c11263d7940ef5e2d5be62c4d096))
+* time out ([31af71b](https://github.com/dvsa/vol-functional-tests/commit/31af71b385a9b3216f72d55799fcd4f58ae0bea5))
+
+## [4.10.7](https://github.com/dvsa/vol-functional-tests/compare/v4.10.6...v4.10.7) (2025-06-09)
+
+
+### Bug Fixes
+
+* search ([d118cf3](https://github.com/dvsa/vol-functional-tests/commit/d118cf39ec3333c397041c1b1607e8e169e4ebed))
+* search ([071037d](https://github.com/dvsa/vol-functional-tests/commit/071037d7e9954bd7a1c245ef36d61d14b180bb63))
+
+## [4.10.6](https://github.com/dvsa/vol-functional-tests/compare/v4.10.5...v4.10.6) (2025-06-09)
+
+
+### Bug Fixes
+
+* new active support' ([b46564d](https://github.com/dvsa/vol-functional-tests/commit/b46564dddec8ca539c634d6ef69ca1487801dec4))
+* new active support' ([1c86c00](https://github.com/dvsa/vol-functional-tests/commit/1c86c00bfc0770b856885fd38bb741e0d9d29659))
+
+## [4.10.5](https://github.com/dvsa/vol-functional-tests/compare/v4.10.4...v4.10.5) (2025-06-09)
+
+
+### Bug Fixes
+
+* remove assertion ([52eeec5](https://github.com/dvsa/vol-functional-tests/commit/52eeec5105e1ba4acf1b0d24dfae99280e2b1912))
+* remove assertion ([f1fbb72](https://github.com/dvsa/vol-functional-tests/commit/f1fbb727e51ba5a091ee253cbe3b65258b3768e0))
+
+## [4.10.4](https://github.com/dvsa/vol-functional-tests/compare/v4.10.3...v4.10.4) (2025-06-09)
+
+
+### Bug Fixes
+
+* tick checkbox ([976279c](https://github.com/dvsa/vol-functional-tests/commit/976279ce0988f011921ae28cdab83756bd0f938c))
+* tick checkbox ([e4e2030](https://github.com/dvsa/vol-functional-tests/commit/e4e203040dfb7f1e572afa2bd1ff6512f2904e1a))
+
+## [4.10.3](https://github.com/dvsa/vol-functional-tests/compare/v4.10.2...v4.10.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* temp remove external search ([611bd24](https://github.com/dvsa/vol-functional-tests/commit/611bd2481ac9ff693ee50b5fc8ee35406329d121))
+* temp remove external search ([4fa9a31](https://github.com/dvsa/vol-functional-tests/commit/4fa9a318b79659f5cc163e5697618bc9728a6b3c))
+
+## [4.10.2](https://github.com/dvsa/vol-functional-tests/compare/v4.10.1...v4.10.2) (2025-06-05)
+
+
+### Bug Fixes
+
+* extend wait ([6f1e9f6](https://github.com/dvsa/vol-functional-tests/commit/6f1e9f68a8f00ffee77bd1bab1e437fe12de0c12))
+
 ## [4.10.1](https://github.com/dvsa/vol-functional-tests/compare/v4.10.0...v4.10.1) (2025-05-28)
 
 

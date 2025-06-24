@@ -27,9 +27,8 @@ public class TaskAllocation extends BasePage {
         if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             licenceNumber = "OC1057274";
         } else {
-            licenceNumber = world.applicationDetails.getLicenceNumber();
+            world.internalSearchJourney.searchAndViewLicence(world.applicationDetails.getLicenceNumber());
         }
-        enterText("search", SelectorType.NAME, licenceNumber);
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             waitAndClick("OC1057274", SelectorType.LINKTEXT);
