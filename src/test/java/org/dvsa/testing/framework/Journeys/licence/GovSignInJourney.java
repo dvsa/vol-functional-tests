@@ -90,8 +90,13 @@ public class GovSignInJourney extends BasePage {
                 isTextPresent("Choose a way to prove your identity")) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        }
+
+        if (isElementPresent("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH)) {
+            waitAndClick("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH);
         } else {
-            waitAndClick("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH);        }
+            return;
+        }
 
         if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
