@@ -1,6 +1,29 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.21](https://github.com/dvsa/vol-functional-tests/compare/v4.10.20...v4.10.21) (2025-06-25)
+
+
+### Miscellaneous Chores
+
+* bump to 4.10.21 ([29cbce2](https://github.com/dvsa/vol-functional-tests/commit/29cbce28c93b2f92efde9ce326d41df329e7092e))
+
+## [4.10.20](https://github.com/dvsa/vol-functional-tests/compare/v4.10.19...v4.10.20) (2025-06-24)
+
+
+### Bug Fixes
+
+* retry DOM ([39631d9](https://github.com/dvsa/vol-functional-tests/commit/39631d96135731ce1d68c0cc5fb41814e4f3ae75))
+* retry DOM ([f80f796](https://github.com/dvsa/vol-functional-tests/commit/f80f7961156a3e8ae46bc68ea11059a1158635d3))
+
+## [4.10.19](https://github.com/dvsa/vol-functional-tests/compare/v4.10.18...v4.10.19) (2025-06-24)
+
+
+### Bug Fixes
+
+* page ([3a70469](https://github.com/dvsa/vol-functional-tests/commit/3a70469a78449c3e3a8e61c0d2a3e9d59acdc8d2))
+* page ([8bf7be5](https://github.com/dvsa/vol-functional-tests/commit/8bf7be51c68f0d600c6ef12a7dff4213e0552695))
+
 ## [4.10.18](https://github.com/dvsa/vol-functional-tests/compare/v4.10.17...v4.10.18) (2025-06-19)
 
 

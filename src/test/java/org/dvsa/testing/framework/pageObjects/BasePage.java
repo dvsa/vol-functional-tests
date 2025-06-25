@@ -493,17 +493,27 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(InvalidElementStateException.class)
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class)
-                .ignoring(TimeoutException.class)
-                .ignoring(ElementNotInteractableException.class);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(InvalidElementStateException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
 
-        wait.until(driver -> wait.until(elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
+                wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to enter text after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {
