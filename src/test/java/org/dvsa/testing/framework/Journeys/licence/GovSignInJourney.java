@@ -61,8 +61,16 @@ public class GovSignInJourney extends BasePage {
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
 
-            waitAndEnterText("code", SelectorType.ID, authCode);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            if (isTextPresent("You have already proved your identity")) {
+                waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+            } else {
+                waitAndEnterText("code", SelectorType.ID, authCode);
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            }
+        }
+
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("https://identity.integration.account.gov.uk/ipv/page/page-ipv-reuse")) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("sign-in-or-create")) {
