@@ -65,6 +65,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("https://identity.integration.account.gov.uk/ipv/page/page-ipv-reuse")) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("sign-in-or-create")) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
