@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.24](https://github.com/dvsa/vol-functional-tests/compare/v4.10.23...v4.10.24) (2025-06-27)
+
+
+### Bug Fixes
+
+* You have already proved your identity ([29e6ab9](https://github.com/dvsa/vol-functional-tests/commit/29e6ab956c62d49f6ee547fc29317f038f82b708))
+* You have already proved your identity ([c683cc9](https://github.com/dvsa/vol-functional-tests/commit/c683cc9df1ec758a191b7176040a24e29b3d7ee5))
+
 ## [4.10.23](https://github.com/dvsa/vol-functional-tests/compare/v4.10.22...v4.10.23) (2025-06-26)
 
 
