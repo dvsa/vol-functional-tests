@@ -54,15 +54,19 @@ public class GovSignInJourney extends BasePage {
         }
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
-            waitAndEnterText("email", SelectorType.ID, signInUsername);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndEnterText("password", SelectorType.ID, signInPassword);
-            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-            waitAndEnterText("code", SelectorType.ID, authCode);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            if (isTextPresent("You have already proved your identity")) {
+                waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+            } else {
+                waitAndEnterText("email", SelectorType.ID, signInUsername);
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+                waitAndEnterText("password", SelectorType.ID, signInPassword);
+                waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+                waitAndEnterText("code", SelectorType.ID, authCode);
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
 
-            waitAndEnterText("code", SelectorType.ID, authCode);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+                waitAndEnterText("code", SelectorType.ID, authCode);
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            }
         }
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("https://identity.integration.account.gov.uk/ipv/page/page-ipv-reuse")) {
