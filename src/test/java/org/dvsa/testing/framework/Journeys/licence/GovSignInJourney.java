@@ -53,7 +53,9 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
+        if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("https://identity.integration.account.gov.uk/ipv/page/page-ipv-reuse")) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        } else if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
             if (isTextPresent("You have already proved your identity")) {
                 waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
             } else {

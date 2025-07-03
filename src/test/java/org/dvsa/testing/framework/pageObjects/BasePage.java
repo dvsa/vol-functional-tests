@@ -462,9 +462,16 @@ public abstract class BasePage extends DriverUtils {
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                if (e.getMessage().contains("Node with given id does not belong to the document")) {
+                    LOGGER.warn("WebDriverException encountered: Node with given id does not belong to the document. Attempting retry " + (attempt + 1));
+                    getDriver().navigate().refresh();
+                } else {
+                    throw e;
+                }
             }
         }
-        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
