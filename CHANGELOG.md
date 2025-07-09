@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.34](https://github.com/dvsa/vol-functional-tests/compare/v4.10.33...v4.10.34) (2025-07-09)
+
+
+### Bug Fixes
+
+* sign in page, active support ([24d7576](https://github.com/dvsa/vol-functional-tests/commit/24d7576471f46b62e2368f971b58818e96b18df7))
+* sign in page, active support ([a0139d1](https://github.com/dvsa/vol-functional-tests/commit/a0139d1c2a3301a1ca919bc7f887e04c3a934c13))
+
 ## [4.10.33](https://github.com/dvsa/vol-functional-tests/compare/v4.10.32...v4.10.33) (2025-07-09)
 
 
