@@ -702,12 +702,22 @@ public abstract class BasePage extends DriverUtils {
         return option.getFirstSelectedOption().getText();
     }
 
-    public void scrollToBottom() {
-        var footer = getDriver().findElement(By.className("govuk-footer"));
-        int deltaY = footer.getRect().y;
-        new Actions(getDriver())
-                .scrollByAmount(0, deltaY)
-                .perform();
+    public static void scrollToBottom() {
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var footer = getDriver().findElement(By.className("govuk-footer"));
+                int deltaY = footer.getRect().y;
+                new Actions(getDriver())
+                        .scrollByAmount(0, deltaY)
+                        .perform();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to scroll to bottom after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public boolean pageContains(String text) {
