@@ -76,8 +76,6 @@ public class GovSignInJourney extends BasePage {
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("https://identity.integration.account.gov.uk/ipv/page/page-ipv-reuse")) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
-        } else {
-            return;
         }
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("sign-in-or-create")) {
