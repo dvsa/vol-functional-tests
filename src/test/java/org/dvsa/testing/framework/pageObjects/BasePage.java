@@ -445,7 +445,7 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
+    public static void waitAndDoubleClick(@NotNull String selector, @NotNull SelectorType selectorType) {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
@@ -457,7 +457,8 @@ public abstract class BasePage extends DriverUtils {
                         .ignoring(TimeoutException.class)
                         .ignoring(ElementNotInteractableException.class);
 
-                wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
+                WebElement element = wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType))));
+                new Actions(getDriver()).doubleClick(element).perform();
                 return;
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
@@ -471,7 +472,7 @@ public abstract class BasePage extends DriverUtils {
                 }
             }
         }
-        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
+        throw new RuntimeException("Failed to double-click element after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
