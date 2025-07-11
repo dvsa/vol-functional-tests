@@ -445,7 +445,7 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    public static void waitAndDoubleClick(@NotNull String selector, @NotNull SelectorType selectorType) {
+    public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
