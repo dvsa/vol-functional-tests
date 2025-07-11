@@ -27,8 +27,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 350;
-    private static final int POLLING_SECONDS = 5;
+    private static final int TIME_OUT_SECONDS = 400;
+    private static final int POLLING_SECONDS = 6;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
@@ -462,9 +462,16 @@ public abstract class BasePage extends DriverUtils {
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                if (e.getMessage().contains("Node with given id does not belong to the document")) {
+                    LOGGER.warn("WebDriverException encountered: Node with given id does not belong to the document. Attempting retry " + (attempt + 1));
+                    getDriver().navigate().refresh();
+                } else {
+                    throw e;
+                }
             }
         }
-        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
@@ -695,12 +702,22 @@ public abstract class BasePage extends DriverUtils {
         return option.getFirstSelectedOption().getText();
     }
 
-    public void scrollToBottom() {
-        var footer = getDriver().findElement(By.className("govuk-footer"));
-        int deltaY = footer.getRect().y;
-        new Actions(getDriver())
-                .scrollByAmount(0, deltaY)
-                .perform();
+    public static void scrollToBottom() {
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var footer = getDriver().findElement(By.className("govuk-footer"));
+                int deltaY = footer.getRect().y;
+                new Actions(getDriver())
+                        .scrollByAmount(0, deltaY)
+                        .perform();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to scroll to bottom after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public boolean pageContains(String text) {

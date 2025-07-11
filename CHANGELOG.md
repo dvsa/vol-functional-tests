@@ -1,6 +1,195 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.10.42](https://github.com/dvsa/vol-functional-tests/compare/v4.10.41...v4.10.42) (2025-07-11)
+
+
+### Bug Fixes
+
+* 2.7.25 ([113168f](https://github.com/dvsa/vol-functional-tests/commit/113168f1f38e1379c7134693cb6c0c5b8ba61c7c))
+* 2.7.25 ([fc37255](https://github.com/dvsa/vol-functional-tests/commit/fc37255a3b256cf12cf48feb9ab388dc92cc0437))
+
+## [4.10.41](https://github.com/dvsa/vol-functional-tests/compare/v4.10.40...v4.10.41) (2025-07-11)
+
+
+### Bug Fixes
+
+* wait ([73b4d9b](https://github.com/dvsa/vol-functional-tests/commit/73b4d9b04cf635f05f7fcf9c7c41b8e1c2a54227))
+* wait ([d11061b](https://github.com/dvsa/vol-functional-tests/commit/d11061b84d30163de0399ecc15539d0d4cda9dea))
+* wait ([7a41080](https://github.com/dvsa/vol-functional-tests/commit/7a4108096fbf02cc79fd062cc599565896b2e988))
+
+## [4.10.40](https://github.com/dvsa/vol-functional-tests/compare/v4.10.39...v4.10.40) (2025-07-10)
+
+
+### Bug Fixes
+
+* bump up ([28a6e29](https://github.com/dvsa/vol-functional-tests/commit/28a6e296ef6684ee59350e041bf3a6c3743eae54))
+* bump up ([10e1f5b](https://github.com/dvsa/vol-functional-tests/commit/10e1f5b43aeeec3d969a9525f90ab34d049a5481))
+
+## [4.10.39](https://github.com/dvsa/vol-functional-tests/compare/v4.10.38...v4.10.39) (2025-07-10)
+
+
+### Bug Fixes
+
+* 2.7.20 ([378cd0f](https://github.com/dvsa/vol-functional-tests/commit/378cd0f0c83c60076562175cf3224f00257dd6a5))
+* 2.7.20 ([9dae74a](https://github.com/dvsa/vol-functional-tests/commit/9dae74a59df5dbd7fbfc3893149da7a1350b860b))
+
+## [4.10.38](https://github.com/dvsa/vol-functional-tests/compare/v4.10.37...v4.10.38) (2025-07-09)
+
+
+### Bug Fixes
+
+* 2.7.20 ([5876241](https://github.com/dvsa/vol-functional-tests/commit/5876241f4c55a6de50073a00977385e526c59097))
+* 2.7.20 ([96c6347](https://github.com/dvsa/vol-functional-tests/commit/96c63471199344e2c414fe1b2072a630ceac934a))
+
+## [4.10.37](https://github.com/dvsa/vol-functional-tests/compare/v4.10.36...v4.10.37) (2025-07-09)
+
+
+### Bug Fixes
+
+* scroll to bottom ([1b21395](https://github.com/dvsa/vol-functional-tests/commit/1b2139570d30136e9117fcf22872ae0780af8575))
+* scroll to bottom ([db278ac](https://github.com/dvsa/vol-functional-tests/commit/db278ac32befd7464cb3b526a388bbd1db633559))
+
+## [4.10.36](https://github.com/dvsa/vol-functional-tests/compare/v4.10.35...v4.10.36) (2025-07-09)
+
+
+### Bug Fixes
+
+* 2.17.19 ([f5f9ac5](https://github.com/dvsa/vol-functional-tests/commit/f5f9ac5660109e1bf23ccb5e931485b9ea9fe34f))
+
+## [4.10.35](https://github.com/dvsa/vol-functional-tests/compare/v4.10.34...v4.10.35) (2025-07-09)
+
+
+### Bug Fixes
+
+* increase wait ([b00c7ca](https://github.com/dvsa/vol-functional-tests/commit/b00c7ca33e6416099633768d11fcdd1c94cd5001))
+* revert sign in ([c426089](https://github.com/dvsa/vol-functional-tests/commit/c426089c309fe41b9c63192e3cd29d0424203915))
+* revert sign in ([fdc1288](https://github.com/dvsa/vol-functional-tests/commit/fdc1288eeb11a247c3a87a50166ff1cddd034744))
+
+## [4.10.34](https://github.com/dvsa/vol-functional-tests/compare/v4.10.33...v4.10.34) (2025-07-09)
+
+
+### Bug Fixes
+
+* sign in page, active support ([24d7576](https://github.com/dvsa/vol-functional-tests/commit/24d7576471f46b62e2368f971b58818e96b18df7))
+* sign in page, active support ([a0139d1](https://github.com/dvsa/vol-functional-tests/commit/a0139d1c2a3301a1ca919bc7f887e04c3a934c13))
+
+## [4.10.33](https://github.com/dvsa/vol-functional-tests/compare/v4.10.32...v4.10.33) (2025-07-09)
+
+
+### Bug Fixes
+
+* use 2.7.17 ([c33ac8d](https://github.com/dvsa/vol-functional-tests/commit/c33ac8d0e4de98087fcbaf448949f05b076b86ee))
+* use 2.7.17 ([e3912df](https://github.com/dvsa/vol-functional-tests/commit/e3912dff92b3261e3e02ce220921d59d3036343e))
+
+## [4.10.32](https://github.com/dvsa/vol-functional-tests/compare/v4.10.31...v4.10.32) (2025-07-08)
+
+
+### Miscellaneous Chores
+
+* bump to 4.10.32 ([bd7e90e](https://github.com/dvsa/vol-functional-tests/commit/bd7e90e54adf67b2ba5fe96564ef75db52b95659))
+
+## [4.10.31](https://github.com/dvsa/vol-functional-tests/compare/v4.10.30...v4.10.31) (2025-07-08)
+
+
+### Bug Fixes
+
+* 2.7.14 ([d785a69](https://github.com/dvsa/vol-functional-tests/commit/d785a69f9de44c92188a9fca23c5385d69eec890))
+* 2.7.14 ([6105183](https://github.com/dvsa/vol-functional-tests/commit/61051835245be608eb2bffb99f1340fbeeb542ce))
+
+## [4.10.30](https://github.com/dvsa/vol-functional-tests/compare/v4.10.29...v4.10.30) (2025-07-07)
+
+
+### Bug Fixes
+
+* up active support ([df87c86](https://github.com/dvsa/vol-functional-tests/commit/df87c8645b1ba61071d0b07298845d8de872a06a))
+* up active support ([8c10084](https://github.com/dvsa/vol-functional-tests/commit/8c100849e8b7e6c3c90c78900d4b75f6812d3942))
+
+## [4.10.29](https://github.com/dvsa/vol-functional-tests/compare/v4.10.28...v4.10.29) (2025-07-04)
+
+
+### Bug Fixes
+
+* 2.17.12 ([c35b163](https://github.com/dvsa/vol-functional-tests/commit/c35b163afea40729bbdca8ef8b18e7978dc4f02c))
+* active support ([b793f1e](https://github.com/dvsa/vol-functional-tests/commit/b793f1ebea55adc12748c0177b6a43c5234c1ebb))
+* active support ([472b799](https://github.com/dvsa/vol-functional-tests/commit/472b79990f898a9f0172b813a87f4b9d9469b9e0))
+
+## [4.10.28](https://github.com/dvsa/vol-functional-tests/compare/v4.10.27...v4.10.28) (2025-07-04)
+
+
+### Bug Fixes
+
+* sign in ([085e9c5](https://github.com/dvsa/vol-functional-tests/commit/085e9c5b8df1b5d66a9d98ccacc2463c4f925ff3))
+* sign in ([e061bbb](https://github.com/dvsa/vol-functional-tests/commit/e061bbbed08d516a58bf4fca4263386636d27173))
+
+## [4.10.27](https://github.com/dvsa/vol-functional-tests/compare/v4.10.26...v4.10.27) (2025-07-03)
+
+
+### Bug Fixes
+
+* use new active support ([b420f48](https://github.com/dvsa/vol-functional-tests/commit/b420f484ce8dff72ef3773bb31d301c3afb59b4a))
+* use new active support ([0052d46](https://github.com/dvsa/vol-functional-tests/commit/0052d46a7770d039caa34e01209d1dbe016f105b))
+
+## [4.10.26](https://github.com/dvsa/vol-functional-tests/compare/v4.10.25...v4.10.26) (2025-07-03)
+
+
+### Bug Fixes
+
+* use new active support ([87fe210](https://github.com/dvsa/vol-functional-tests/commit/87fe21080cb2f12f466f3da3dd1a5837b75cd567))
+* use new active support ([ac1b1cc](https://github.com/dvsa/vol-functional-tests/commit/ac1b1cc8c9e7ae749ef48e10cd04dbaa03410886))
+
+## [4.10.25](https://github.com/dvsa/vol-functional-tests/compare/v4.10.24...v4.10.25) (2025-07-03)
+
+
+### Bug Fixes
+
+* else if ([fd51513](https://github.com/dvsa/vol-functional-tests/commit/fd51513d8edb72c3aa6ab6052a08d6eb0fe49076))
+* else if ([38ceed8](https://github.com/dvsa/vol-functional-tests/commit/38ceed801cdbbd32f1e5a1c7f65c622be8358832))
+
+## [4.10.24](https://github.com/dvsa/vol-functional-tests/compare/v4.10.23...v4.10.24) (2025-06-27)
+
+
+### Bug Fixes
+
+* You have already proved your identity ([29e6ab9](https://github.com/dvsa/vol-functional-tests/commit/29e6ab956c62d49f6ee547fc29317f038f82b708))
+* You have already proved your identity ([c683cc9](https://github.com/dvsa/vol-functional-tests/commit/c683cc9df1ec758a191b7176040a24e29b3d7ee5))
+
+## [4.10.23](https://github.com/dvsa/vol-functional-tests/compare/v4.10.22...v4.10.23) (2025-06-26)
+
+
+### Bug Fixes
+
+* sign in ([0c21eb0](https://github.com/dvsa/vol-functional-tests/commit/0c21eb0976ca5633c3b12752526d60d8184e269d))
+* sign in ([b1f946a](https://github.com/dvsa/vol-functional-tests/commit/b1f946a07acfba699e16b4748684615d396c4f8f))
+* sign in ([16392bb](https://github.com/dvsa/vol-functional-tests/commit/16392bbb36e3784bb0698d42dba010931787e80b))
+
+
+### Miscellaneous Chores
+
+* bump to 4.10.22 ([6bf6a26](https://github.com/dvsa/vol-functional-tests/commit/6bf6a26107fe0392196cb7bd116126d359aa0783))
+* bump to 4.10.23 ([a6fb817](https://github.com/dvsa/vol-functional-tests/commit/a6fb8175899b2666ed09f1dafe3fcdfa656c4379))
+
+## [4.10.22](https://github.com/dvsa/vol-functional-tests/compare/v4.10.22...v4.10.22) (2025-06-26)
+
+
+### Bug Fixes
+
+* sign in ([0c21eb0](https://github.com/dvsa/vol-functional-tests/commit/0c21eb0976ca5633c3b12752526d60d8184e269d))
+* sign in ([b1f946a](https://github.com/dvsa/vol-functional-tests/commit/b1f946a07acfba699e16b4748684615d396c4f8f))
+* sign in ([16392bb](https://github.com/dvsa/vol-functional-tests/commit/16392bbb36e3784bb0698d42dba010931787e80b))
+
+
+### Miscellaneous Chores
+
+* bump to 4.10.22 ([6bf6a26](https://github.com/dvsa/vol-functional-tests/commit/6bf6a26107fe0392196cb7bd116126d359aa0783))
+
+## [4.10.22](https://github.com/dvsa/vol-functional-tests/compare/v4.10.21...v4.10.22) (2025-06-26)
+
+
+### Miscellaneous Chores
+
+* bump to 4.10.22 ([97bef5b](https://github.com/dvsa/vol-functional-tests/commit/97bef5b8112652cc185c04d5fad93bc0a902bf96))
+
 ## [4.10.21](https://github.com/dvsa/vol-functional-tests/compare/v4.10.20...v4.10.21) (2025-06-25)
 
 
