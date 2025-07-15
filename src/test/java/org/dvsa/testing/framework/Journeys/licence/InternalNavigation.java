@@ -78,11 +78,11 @@ public class InternalNavigation extends BasePage {
                 case "readOnlyUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("readOnlyUser"), SecretsManager.getSecretValue("adminPassword"));
                 case "intSystemAdmin" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intSystemAdmin"), SecretsManager.getSecretValue("intEnvPassword"));
                 case "intPrepUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intPrepUser"), SecretsManager.getSecretValue("prepEnvPassword"));
+                case "intProdUser" -> world.globalMethods.signIn(SecretsManager.getSecretValue("intProdUser"), SecretsManager.getSecretValue("prepEnvPassword"));
                 default -> world.internalNavigation.logInAsAdmin();
             }
         }
     }
-
     public void navigateToAuthorisationPage() {
         if (world.licenceCreation.isLGVOnlyLicence())
             clickByLinkText("Licence authorisation");
