@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.11.0](https://github.com/dvsa/vol-functional-tests/compare/v4.10.45...v4.11.0) (2025-07-15)
+
+
+### Features
+
+* int prod user ([2aaf042](https://github.com/dvsa/vol-functional-tests/commit/2aaf042e1acfddbce9548ad8846fac63e59c1120))
+* int prod user ([cd750ec](https://github.com/dvsa/vol-functional-tests/commit/cd750ec25a4d38f9953fd67e8b61798a269cad06))
+
 ## [4.10.45](https://github.com/dvsa/vol-functional-tests/compare/v4.10.44...v4.10.45) (2025-07-14)
 
 
