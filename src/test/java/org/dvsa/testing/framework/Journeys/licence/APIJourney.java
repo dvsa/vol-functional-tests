@@ -80,6 +80,9 @@ public class APIJourney {
             world.createApplication.submitTmResponsibilities();
             world.createApplication.addVehicleDetails();
             world.createApplication.submitVehicleDeclaration();
+            world.createApplication.selectSmallVehicle();
+            world.createApplication.selectDocumentaryEvidenceSmall();
+            world.createApplication.selectPsvOperateNovelty();
             world.createApplication.addFinancialHistory();
             world.createApplication.addApplicationSafetyAndComplianceDetails();
             world.createApplication.addSafetyInspector();
