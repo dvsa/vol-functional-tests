@@ -13,7 +13,7 @@ Feature: Create an Account
     Then accounts should be registered for both Operator and Consultant
 
   @localsmoke
-  @smoke
+  @smoke @testRerun
   Scenario: User who does not have a VOL or application in progress wishes to Create an Account
     And an Operator with no licence
     Then I should be able to register an account
