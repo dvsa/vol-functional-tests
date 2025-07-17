@@ -218,7 +218,7 @@
                     </argLine>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>4</forkCount>
-                    <parallel>methods</parallel>
+                    <parallel>none</parallel>
                     <reuseForks>true</reuseForks>
                     <threadCount>10</threadCount>
                     <properties>
