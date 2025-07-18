@@ -41,4 +41,15 @@ public class PSVJourney extends BasePage {
         click(limousinesNoDeclarations, SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
     }
+
+    public void completeVehicleSize() {
+    clickByLinkText("Vehicle size");
+    clickByXPath("//*[@id='psvVehicleSize[size]']");
+    UniversalActions.clickSaveAndContinue();
+    waitForElementToBePresent("//*[@id='psvSmallVhlConfirmation']");
+    clickByXPath("//*[@id='psvSmallVhlConfirmation']");
+    UniversalActions.clickSaveAndReturn();
+    }
+
+
 }
