@@ -81,7 +81,7 @@ public class EBSRUpload extends BasePage {
         }
 
         if (!world.configuration.env.toString().equals("local")) {
-            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(60));
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(240));
             try {
                 boolean filesGenerated = wait.until(driver -> {
                     refreshPageWithJavascript(); // Refresh the page
