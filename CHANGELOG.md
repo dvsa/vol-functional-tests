@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.11.4](https://github.com/dvsa/vol-functional-tests/compare/v4.11.3...v4.11.4) (2025-07-24)
+
+
+### Bug Fixes
+
+* alter psv journey ([80fd4c9](https://github.com/dvsa/vol-functional-tests/commit/80fd4c96911ff0408b038cb3f7418f7fdfb39d6f))
+
 ## [4.11.3](https://github.com/dvsa/vol-functional-tests/compare/v4.11.2...v4.11.3) (2025-07-23)
 
 
