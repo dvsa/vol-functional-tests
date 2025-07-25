@@ -79,7 +79,6 @@ public class APIJourney {
             world.createApplication.addTmResponsibilities();
             world.createApplication.submitTmResponsibilities();
             world.createApplication.addVehicleDetails();
-            world.createApplication.submitVehicleDeclaration();
             world.createApplication.addFinancialHistory();
             world.createApplication.addApplicationSafetyAndComplianceDetails();
             world.createApplication.addSafetyInspector();
