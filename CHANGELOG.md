@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.11.5](https://github.com/dvsa/vol-functional-tests/compare/v4.11.4...v4.11.5) (2025-07-25)
+
+
+### Bug Fixes
+
+* remove vehicle declartion ([ec64f4b](https://github.com/dvsa/vol-functional-tests/commit/ec64f4b53002e138b5b1c330be5b9aafda63986f))
+* remove vehicle declartion ([c4274ef](https://github.com/dvsa/vol-functional-tests/commit/c4274ef4a9fdbf9fb1f8ad389e61ec198e0f0402))
+* remove vehicle declartion ([69b06c8](https://github.com/dvsa/vol-functional-tests/commit/69b06c8c228f1b63e3fd5e0d3df573958f3690f6))
+
 ## [4.11.4](https://github.com/dvsa/vol-functional-tests/compare/v4.11.3...v4.11.4) (2025-07-24)
 
 
