@@ -1,13 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class PSVApplication extends BasePage {
@@ -55,5 +62,43 @@ public class PSVApplication extends BasePage {
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    @When("i select the Vehicle size section")
+    public void iSelectTheVehicleSizeSection() {
+        world.psvJourney.selectVehicleSizeSection();
+    }
+
+    @And("i select Small vehicles - less than 9 seats")
+    public void iSelectSmallVehiclesLessThan9Seats() {
+        waitForTitleToBePresent("Vehicles size");
+        world.psvJourney.smallVehiclesLessThan9Seats();
+    }
+
+    @And("i complete the Small vehicles conditions page")
+    public void iCompleteTheSmallVehiclesConditionsPage() {
+        waitForTitleToBePresent("Small vehicle conditions and undertakings");
+        world.psvJourney.completeSmallVehicleConditionsPage();
+    }
+
+    @And("i complete the Documentary evidence - small vehicles page")
+    public void iCompleteTheDocumentaryEvidenceSmallVehiclesPage() {
+        waitForTitleToBePresent("Documentary evidence - small vehicles");
+        world.psvJourney.completeDocumentaryEvidenceSmallVehiclesPage();
+    }
+
+    @And("i complete the Limousines and novelty vehicles on the small vehicles journey")
+    public void iCompleteTheLimousinesAndNoveltyVehiclesOnTheSmallVehiclesJourney() {
+        waitForTitleToBePresent("Limousines and novelty vehicles");
+        world.psvJourney.completeLimousinesSmallVehiclesJourney();
+    }
+
+    @Then("the completed Small vehicle sections should be marked Updated")
+    public void theCompletedSmallVehicleSectionsShouldBeMarkedUpdated() {
+        waitForTitleToBePresent("Apply to change a licence");
+        assertTrue(world.psvJourney.isVehicleSizeUpdated());
+        assertTrue(world.psvJourney.isSmallVehiclesConditionsUpdated());
+        assertTrue(world.psvJourney.isDocumentaryEvidenceSmallVehiclesUpdated());
+        assertTrue(world.psvJourney.isLimousinesUpdated());
     }
 }
