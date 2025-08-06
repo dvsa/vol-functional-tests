@@ -101,4 +101,30 @@ public class PSVApplication extends BasePage {
         assertTrue(world.psvJourney.isDocumentaryEvidenceSmallVehiclesUpdated());
         assertTrue(world.psvJourney.isLimousinesUpdated());
     }
+
+    @And("i select Vehicles 9 seats and above")
+    public void iSelectVehiclesSeatsAndAbove() {
+        waitForTitleToBePresent("Vehicles size");
+        world.psvJourney.vehicles9SeatsAndAbove();
+    }
+
+    @And("i complete the Vehicles with nine seats or more page")
+    public void iCompleteTheVehiclesWithNineSeatsOrMorePage() {
+        waitForTitleToBePresent("Vehicles with nine seats or more");
+        world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
+    }
+
+    @And("i complete the Limousines page selecting Yes")
+    public void iCompleteTheLimousinesPageSelectingYes() {
+        waitForTitleToBePresent("Limousines and novelty vehicles");
+        world.psvJourney.completeLimousinesVehiclesSelectingYes();
+    }
+
+    @Then("the completed 9 vehicles and above sections should be marked Updated")
+    public void theCompletedVehiclesAndAboveSectionsShouldBeMarkedUpdated() {
+        waitForTitleToBePresent("Apply to change a licence");
+        assertTrue(world.psvJourney.isVehicleSizeUpdated());
+        assertTrue(world.psvJourney.isVehicles9SeatsOrMoreUpdated());
+        assertTrue(world.psvJourney.isLimousinesUpdated());
+    }
 }

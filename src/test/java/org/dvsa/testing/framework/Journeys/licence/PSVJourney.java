@@ -103,4 +103,33 @@ public class PSVJourney extends BasePage {
         String sectionStatus = getText("//*[@id=\"overview-item__psv_operate_novelty\"]", SelectorType.XPATH);
         return sectionStatus.contains("Updated");
     }
+
+    public void vehicles9SeatsAndAbove() {
+        UniversalActions.clickSaveAndContinue();
+        waitForTextToBePresent("Which sizes of vehicles do you intend to operate?: value is required");
+        findSelectAllRadioButtonsByValue("psvvs_medium_large");
+        UniversalActions.clickSaveAndContinue();
+    }
+
+    public void completeVehiclesWith9SeatsOrMorePage() {
+        UniversalActions.clickSaveAndContinue();
+        waitForTextToBePresent("Select an option for: \"Please confirm that vehicles with eight passenger seats or less will not be operated under the licence without the prior written agreement of the Traffic Commissioner who may require you to agree to certain undertakings\"");
+        click("//*[@id=\"psvNoSmallVhlConfirmation\"]", SelectorType.XPATH);
+        UniversalActions.clickSaveAndContinue();
+    }
+
+    public void completeLimousinesVehiclesSelectingYes() {
+        UniversalActions.clickSaveAndReturn();
+        waitForTextToBePresent("Select an option for: \"Are the vehicles you are applying for to be used as limousines or novelty type vehicles?\"");
+        findSelectAllRadioButtonsByValue("Y");
+        UniversalActions.clickSaveAndReturn();
+        waitForTextToBePresent("Check box to continue");
+        click("//*[@id=\"lva-vehicles-declarations-novelty\"]/fieldset[1]/div[4]/div/label", SelectorType.XPATH);
+        UniversalActions.clickSaveAndReturn();
+    }
+
+    public boolean isVehicles9SeatsOrMoreUpdated() {
+        String sectionStatus = getText("//*[@id=\"overview-item__psv_operate_large\"]", SelectorType.XPATH);
+        return sectionStatus.contains("Updated");
+    }
 }
