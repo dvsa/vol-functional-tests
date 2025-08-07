@@ -56,7 +56,7 @@ env:
   REPORT_NAME: "allure_attempt_${{ github.run_number }}.zip"
   ROLE_ARN: ${{ inputs.aws_role }}
   BUCKET_NAME: ${{ inputs.bucket_name }}
-  BUCKET_KEY: ${{ inputs.bucket_key }}
+  BUCKET_KEY: ${{ inputs.bucket_key }}ƒ
   BATCH_JOB_QUEUE: ${{ inputs.batch_job_queue }}
   BATCH_JOB_DEFINITION: ${{ inputs.batch_job_definition }}
 
@@ -235,7 +235,7 @@ jobs:
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}
+          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.event.workflow_dispatch.inputs.timestamp || format('YYYYMMDDHHmmssSSS', now()) }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
 
