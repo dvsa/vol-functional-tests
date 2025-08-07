@@ -232,12 +232,15 @@ jobs:
           unzip ./upload/${{env.FOLDER_NAME }}/${{ env.REPORT_NAME }} -d ./upload/${{env.FOLDER_NAME }}/allure-results
           ls -R ./upload/${{env.FOLDER_NAME }}/allure-results
 
+      - name: Generate Timestamp
+        id: generate-timestamp
+        run: echo "timestamp=$(date +%Y%m%d%H%M%S%3N)" >> $GITHUB_ENV
+
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}-${{ github.run_id }}-${{ github.run_number }}-${{ github.event.workflow_dispatch.inputs.timestamp || format('YYYYMMDDHHmmssSSS', now()) }}
+          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}-${{ github.run_id }}-${{ github.run_number }}-${{ env.timestamp }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
-
 
   report:
     name: Display Report
