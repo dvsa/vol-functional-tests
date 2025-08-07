@@ -56,7 +56,7 @@ env:
   REPORT_NAME: "allure_attempt_${{ github.run_number }}.zip"
   ROLE_ARN: ${{ inputs.aws_role }}
   BUCKET_NAME: ${{ inputs.bucket_name }}
-  BUCKET_KEY: ${{ inputs.bucket_key }}ƒ
+  BUCKET_KEY: ${{ inputs.bucket_key }}
   BATCH_JOB_QUEUE: ${{ inputs.batch_job_queue }}
   BATCH_JOB_DEFINITION: ${{ inputs.batch_job_definition }}
 
