@@ -170,8 +170,8 @@ public class PSVApplication extends BasePage {
         world.psvJourney.completeMainOccupationUndertakingsPage();
     }
 
-    @Then("the completed Both Yes sections should be marked {string}")
-    public void theCompletedBothYesSectionsShouldBeMarkedComplete(String status) {
+    @Then("the completed Restricted Both Yes sections should be marked {string}")
+    public void theCompletedRestrictedBothYesSectionsShouldBeMarkedComplete(String status) {
         if (status.equals("Updated")) {
             waitForTitleToBePresent("Apply to change a licence");
         } else if (status.equals("Complete")) {
@@ -180,6 +180,22 @@ public class PSVApplication extends BasePage {
         assertTrue(world.psvJourney.vehicleSizeStatus(status));
         assertTrue(world.psvJourney.smallVehiclesStatus(status));
         assertTrue(world.psvJourney.writtenExplanationSmallVehiclesStatus(status));
+        assertTrue(world.psvJourney.documentaryEvidenceMainOccupationStatus(status));
+        assertTrue(world.psvJourney.mainOccupationUndertakingsStatus(status));
+        assertTrue(world.psvJourney.limousinesStatus(status));
+    }
+
+    @Then("the completed Restricted Both No sections should be marked {string}")
+    public void theCompletedRestrictedBothNoSectionsShouldBeMarked(String status) {
+        if (status.equals("Updated")) {
+            waitForTitleToBePresent("Apply to change a licence");
+        } else if (status.equals("Complete")) {
+            waitForTitleToBePresent("Apply for a new licence");
+        }
+        assertTrue(world.psvJourney.vehicleSizeStatus(status));
+        assertTrue(world.psvJourney.smallVehiclesStatus(status));
+        assertTrue(world.psvJourney.smallVehiclesConditionsStatus(status));
+        assertTrue(world.psvJourney.documentaryEvidenceSmallVehiclesStatus(status));
         assertTrue(world.psvJourney.documentaryEvidenceMainOccupationStatus(status));
         assertTrue(world.psvJourney.mainOccupationUndertakingsStatus(status));
         assertTrue(world.psvJourney.limousinesStatus(status));

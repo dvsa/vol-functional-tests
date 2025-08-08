@@ -16,6 +16,6 @@
       And i complete the Documentary evidence - main occupation page
       And i complete the Main occupation undertakings page
       And i complete the Limousines page selecting "No"
-      Then the completed Both Yes sections should be marked "Complete"
+      Then the completed Restricted Both Yes sections should be marked "Complete"
 
 
