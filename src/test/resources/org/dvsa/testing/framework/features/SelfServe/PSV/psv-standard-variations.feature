@@ -1,4 +1,4 @@
-@psv-standard-variation
+@psv-standard-variation @psv-vehicle-size
 
   Feature: PSV variation applications for Standard licences
 

@@ -1,4 +1,4 @@
-@psv-restricted-application
+@psv-restricted-application @psv-vehicle-size
 
   Feature: PSV new applications for Restricted licences
 
