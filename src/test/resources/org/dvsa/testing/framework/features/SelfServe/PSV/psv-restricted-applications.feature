@@ -1,4 +1,4 @@
-@psv-restricted-application @psv-vehicle-size
+@psv-restricted-application @psv-vehicle-size @ss_regression
 
   Feature: PSV new applications for Restricted licences
 

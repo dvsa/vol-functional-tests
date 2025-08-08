@@ -1,4 +1,4 @@
-@psv-standard-application @psv-vehicle-size
+@psv-standard-application @psv-vehicle-size @ss_regression
 
   Feature: PSV new applications for Standard licences
 
