@@ -239,7 +239,7 @@ jobs:
       - name: Store Allure Results
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}-${{ github.run_id }}-${{ github.run_number }}-${{ env.timestamp }}
+          name: e2e-${{ needs.create-job-name.outputs.job_name }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
 
   report:
@@ -257,7 +257,7 @@ jobs:
       - name: Download Allure Report
         uses: actions/download-artifact@v4
         with:
-          name: allure-results-${{ inputs.platform_env }}-${{ contains(inputs.cucumber_tags, 'ss_') && 'selfserve' || contains(inputs.cucumber_tags, 'int_') && 'internal' || 'default' }}-${{ github.run_id }}-${{ github.run_number }}-${{ env.timestamp }}
+          name: e2e-${{ needs.create-job-name.outputs.job_name }}
 
       - name: Console Output Report
         run: |
