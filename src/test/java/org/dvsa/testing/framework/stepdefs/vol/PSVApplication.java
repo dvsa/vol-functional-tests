@@ -14,6 +14,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -69,15 +70,10 @@ public class PSVApplication extends BasePage {
         world.psvJourney.selectVehicleSizeSection();
     }
 
-    @And("i select Small vehicles - less than 9 seats")
-    public void iSelectSmallVehiclesLessThan9Seats() {
-        waitForTitleToBePresent("Vehicles size");
-        world.psvJourney.smallVehiclesLessThan9Seats();
-    }
-
     @And("i complete the Small vehicles conditions page")
     public void iCompleteTheSmallVehiclesConditionsPage() {
         waitForTitleToBePresent("Small vehicle conditions and undertakings");
+        assertTrue(world.psvJourney.areSmallVehicleConditionsPresent());
         world.psvJourney.completeSmallVehicleConditionsPage();
     }
 
@@ -93,19 +89,17 @@ public class PSVApplication extends BasePage {
         world.psvJourney.completeLimousinesSmallVehiclesJourney();
     }
 
-    @Then("the completed Small vehicle sections should be marked Updated")
-    public void theCompletedSmallVehicleSectionsShouldBeMarkedUpdated() {
-        waitForTitleToBePresent("Apply to change a licence");
-        assertTrue(world.psvJourney.isVehicleSizeUpdated());
-        assertTrue(world.psvJourney.isSmallVehiclesConditionsUpdated());
-        assertTrue(world.psvJourney.isDocumentaryEvidenceSmallVehiclesUpdated());
-        assertTrue(world.psvJourney.isLimousinesUpdated());
-    }
-
-    @And("i select Vehicles 9 seats and above")
-    public void iSelectVehiclesSeatsAndAbove() {
-        waitForTitleToBePresent("Vehicles size");
-        world.psvJourney.vehicles9SeatsAndAbove();
+    @Then("the completed Small vehicle sections should be marked {string}")
+    public void theCompletedSmallVehicleSectionsShouldBeMarked(String status) {
+        if (status.equals("Updated")) {
+            waitForTitleToBePresent("Apply to change a licence");
+        } else if (status.equals("Complete")) {
+            waitForTitleToBePresent("Apply for a new licence");
+        }
+        assertTrue(world.psvJourney.vehicleSizeStatus(status));
+        assertTrue(world.psvJourney.smallVehiclesConditionsStatus(status));
+        assertTrue(world.psvJourney.documentaryEvidenceSmallVehiclesStatus(status));
+        assertTrue(world.psvJourney.limousinesStatus(status));
     }
 
     @And("i complete the Vehicles with nine seats or more page")
@@ -114,17 +108,80 @@ public class PSVApplication extends BasePage {
         world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
     }
 
-    @And("i complete the Limousines page selecting Yes")
-    public void iCompleteTheLimousinesPageSelectingYes() {
+    @And("i complete the Limousines page selecting {string}")
+    public void iCompleteTheLimousinesPageSelectingYes(String limousines) {
         waitForTitleToBePresent("Limousines and novelty vehicles");
-        world.psvJourney.completeLimousinesVehiclesSelectingYes();
+        world.psvJourney.completeLimousinesVehicles(limousines);
     }
 
-    @Then("the completed 9 vehicles and above sections should be marked Updated")
-    public void theCompletedVehiclesAndAboveSectionsShouldBeMarkedUpdated() {
-        waitForTitleToBePresent("Apply to change a licence");
-        assertTrue(world.psvJourney.isVehicleSizeUpdated());
-        assertTrue(world.psvJourney.isVehicles9SeatsOrMoreUpdated());
-        assertTrue(world.psvJourney.isLimousinesUpdated());
+    @Then("the completed 9 vehicles and above sections should be marked {string}")
+    public void theCompletedVehiclesAndAboveSectionsShouldBeMarkedUpdated(String status) {
+        if (status.equals("Updated")) {
+            waitForTitleToBePresent("Apply to change a licence");
+        } else if (status.equals("Complete")) {
+            waitForTitleToBePresent("Apply for a new licence");
+        }
+        assertTrue(world.psvJourney.vehicleSizeStatus(status));
+        assertTrue(world.psvJourney.vehicles9SeatsOrMoreStatus(status));
+        assertTrue(world.psvJourney.limousinesStatus(status));
+    }
+
+    @And("i select operating centres and add a PSV operating centre for {string} vehicles")
+    public void iSelectOperatingCentresAndAddAPSVOperatingCentreForVehicles(String numberOfVehicles) {
+        world.operatingCentreJourney.selectOperatingCentreAndAuthorisationSection();
+        world.operatingCentreJourney.addPsvOperatingCentre(numberOfVehicles);
+        world.operatingCentreJourney.savePsvAuthorisation(numberOfVehicles);
+    }
+
+    @And("i select Vehicle Size {string}")
+    public void iSelectVehicleSize(String vehicleSize) {
+        waitForTitleToBePresent("Vehicles size");
+        world.psvJourney.selectVehicleSize(vehicleSize);
+    }
+
+    @And("i answer {string} to the Operating small vehicles question")
+    public void iAnswerToTheOperatingSmallVehiclesQuestion(String answer) {
+        waitForTitleToBePresent("Operating small vehicles");
+        world.psvJourney.answerOperatingSmallVehiclesQuestion(answer);
+    }
+
+    @And("i complete the Small vehicles conditions page after answering Yes")
+    public void iCompleteTheSmallVehiclesConditionsPageAfterAnsweringYes() {
+        waitForTitleToBePresent("Small vehicle conditions and undertakings");
+        assertFalse(world.psvJourney.areSmallVehicleConditionsPresent());
+        world.psvJourney.completeSmallVehicleConditionsPage();
+    }
+
+    @And("i complete Written explanation small vehicles")
+    public void iCompleteWrittenExplanationSmallVehicles() {
+        waitForTitleToBePresent("Written explanation (small vehicles)");
+        world.psvJourney.completeWrittenExplanationSmallVehiclesPage();
+    }
+
+    @And("i complete the Documentary evidence - main occupation page")
+    public void iCompleteTheDocumentaryEvidenceMainOccupationPage() {
+        waitForTitleToBePresent("Documentary evidence - main occupation");
+        world.psvJourney.completeDocumentaryEvidenceMainOccupationPage();
+    }
+
+    @And("i complete the Main occupation undertakings page")
+    public void iCompleteTheMainOccupationUndertakingsPage() {
+        waitForTitleToBePresent("Main occupation undertakings");
+        world.psvJourney.completeMainOccupationUndertakingsPage();
+    }
+
+    @Then("the completed Both Yes sections should be marked {string}")
+    public void theCompletedBothYesSectionsShouldBeMarkedComplete(String status) {
+        if (status.equals("Updated")) {
+            waitForTitleToBePresent("Apply to change a licence");
+        } else if (status.equals("Complete")) {
+            waitForTitleToBePresent("Apply for a new licence");
+        }
+        assertTrue(world.psvJourney.vehicleSizeStatus(status));
+        assertTrue(world.psvJourney.smallVehiclesStatus(status));
+        assertTrue(world.psvJourney.writtenExplanationSmallVehiclesStatus(status));
+        assertTrue(world.psvJourney.documentaryEvidenceMainOccupationStatus(status));
+        assertTrue(world.psvJourney.mainOccupationUndertakingsStatus(status));
+        assertTrue(world.psvJourney.limousinesStatus(status));
     }
 }

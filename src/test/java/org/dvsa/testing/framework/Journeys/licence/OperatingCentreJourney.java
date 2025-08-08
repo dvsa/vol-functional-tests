@@ -36,6 +36,8 @@ public class OperatingCentreJourney extends BasePage {
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
 
     String payNow = "//button[@id='form-actions[pay]']";
+    public String psvCertifiedDocsField = "//*[@id=\"totCommunityLicences\"]";
+    public String trafficAreaDropdown = "//*[@id='trafficArea']";
 
     public OperatingCentreJourney(World world) {
         this.world = world;
@@ -160,5 +162,30 @@ public class OperatingCentreJourney extends BasePage {
 
     private boolean hasNumberOfTrailersChanged(String newTrailerTotalAuthority) {
         return !newTrailerTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()));
+    }
+
+    public void addPsvOperatingCentre(String numberOfVehicles) {
+        waitForElementToBePresent(addOperatingCentre);
+        waitAndClick(addOperatingCentre, SelectorType.XPATH);
+        HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
+        waitAndClick(enterAddressManually, SelectorType.LINKTEXT);
+        world.selfServeUIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
+        enterText(operatingCentreVehicleField, SelectorType.XPATH, numberOfVehicles);
+        clickById(confirmOffStreetParkingCheckbox);
+        UniversalActions.clickSubmit();
+    }
+
+    public void selectOperatingCentreAndAuthorisationSection() {
+        waitAndClick("//*[@id=\"overview-item__operating_centres\"]/span", SelectorType.XPATH);
+    }
+
+    public void savePsvAuthorisation(String numberOfVehicles) {
+        if (isElementPresent(trafficAreaDropdown, SelectorType.XPATH)) {
+            waitAndClick(trafficAreaDropdown, SelectorType.XPATH);
+            selectValueFromDropDownByIndex(trafficAreaDropdown, SelectorType.XPATH, 1);
+        }
+        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, numberOfVehicles);
+        replaceText(psvCertifiedDocsField, SelectorType.XPATH, "0");
+        UniversalActions.clickSaveAndReturn();
     }
 }

@@ -96,4 +96,22 @@ public class CreateApplications extends BasePage {
 
         waitForTitleToBePresent("Application overview");
     }
+
+    @And("i create a new {string} {string} application")
+    public void iCreateANewApplication(String operatorType, String licenceType) {
+        click("//*[@id=\"main-content\"]/div[2]/div[1]/div[4]/a", SelectorType.XPATH);
+        waitForTitleToBePresent("Type of licence");
+        findSelectAllRadioButtonsByValue("N");
+            if(operatorType.equals("public")){
+                findSelectAllRadioButtonsByValue("lcat_psv");}
+            else if(operatorType.equals("goods")){
+                findSelectAllRadioButtonsByValue("lcat_gv");}
+            switch (licenceType) {
+                case "restricted" -> findSelectAllRadioButtonsByValue("ltyp_r");
+                case "standard_national" -> findSelectAllRadioButtonsByValue("ltyp_sn");
+                case "standard_international" -> findSelectAllRadioButtonsByValue("ltyp_si");
+                case "special_restricted" -> findSelectAllRadioButtonsByValue("ltyp_sr");
+            }
+        UniversalActions.clickSaveAndReturn();
+    }
 }
