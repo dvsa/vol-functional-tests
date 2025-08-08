@@ -33,25 +33,6 @@ public class PSVJourney extends BasePage {
         UniversalActions.clickSaveAndReturn();
     }
 
-    public void completeRestrictedVehicleDeclarations() {
-        click(smallVehiclesButton, SelectorType.XPATH);
-        click(smallVehiclesConditionsNo, SelectorType.XPATH);
-        click(confirmSmallVehiclesConditions, SelectorType.XPATH);
-        click(limousinesNo, SelectorType.XPATH);
-        click(limousinesNoDeclarations, SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
-    }
-
-    public void completeVehicleSize() {
-    clickByLinkText("Vehicle size");
-    clickByXPath("//*[@id='psvVehicleSize[size]']");
-    UniversalActions.clickSaveAndContinue();
-    waitForElementToBePresent("//*[@id='psvSmallVhlConfirmation']");
-    clickByXPath("//*[@id='psvSmallVhlConfirmation']");
-    UniversalActions.clickSaveAndReturn();
-    }
-
-
     public void selectVehicleSizeSection() {
         waitAndClick("//*[@id=\"overview-item__vehicles_size\"]/span", SelectorType.XPATH);
     }
