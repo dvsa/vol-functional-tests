@@ -216,7 +216,7 @@ public class OperatingCentreVariation extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
     }
 
-    @And("i create a new operating centre with {string} vehicles and {string} trailers")
+    @Then("i create a new operating centre with {string} vehicles and {string} trailers")
     public void iCreateANewOperatingCentreWithVehiclesAndTrailers(String numberOfVehicles, String numberOfTrailers) {
         world.operatingCentreJourney.addNewOperatingCentre(numberOfVehicles, numberOfTrailers);
     }

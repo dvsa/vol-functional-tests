@@ -5,16 +5,16 @@
     Background:
       Given i have a self serve account
       And i create a new "public" "restricted" application
-      And i select operating centres and add a PSV operating centre for "2" vehicles
+      Then i select operating centres and add a PSV operating centre for "2" vehicles
 
     Scenario: Restricted new application for Both - Yes to Small vehicles
       When i select the Vehicle size section
       And i select Vehicle Size "both"
-      And i answer "Yes" to the Operating small vehicles question
+      Then i answer "Yes" to the Operating small vehicles question
       And i complete the Small vehicles conditions page after answering Yes
-      And i complete Written explanation small vehicles
+      Then i complete Written explanation small vehicles
       And i complete the Documentary evidence - main occupation page
-      And i complete the Main occupation undertakings page
+      When i complete the Main occupation undertakings page
       And i complete the Limousines page selecting "No"
       Then the completed Restricted Both Yes sections should be marked "Complete"
 

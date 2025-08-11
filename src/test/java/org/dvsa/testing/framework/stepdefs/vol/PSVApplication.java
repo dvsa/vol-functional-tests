@@ -70,14 +70,14 @@ public class PSVApplication extends BasePage {
         world.psvJourney.selectVehicleSizeSection();
     }
 
-    @And("i complete the Small vehicles conditions page")
+    @Then("i complete the Small vehicles conditions page")
     public void iCompleteTheSmallVehiclesConditionsPage() {
         waitForTitleToBePresent("Small vehicle conditions and undertakings");
         assertTrue(world.psvJourney.areSmallVehicleConditionsPresent());
         world.psvJourney.completeSmallVehicleConditionsPage();
     }
 
-    @And("i complete the Documentary evidence - small vehicles page")
+    @Then("i complete the Documentary evidence - small vehicles page")
     public void iCompleteTheDocumentaryEvidenceSmallVehiclesPage() {
         waitForTitleToBePresent("Documentary evidence - small vehicles");
         world.psvJourney.completeDocumentaryEvidenceSmallVehiclesPage();
@@ -102,13 +102,13 @@ public class PSVApplication extends BasePage {
         assertTrue(world.psvJourney.limousinesStatus(status));
     }
 
-    @And("i complete the Vehicles with nine seats or more page")
+    @Then("i complete the Vehicles with nine seats or more page")
     public void iCompleteTheVehiclesWithNineSeatsOrMorePage() {
         waitForTitleToBePresent("Vehicles with nine seats or more");
         world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
     }
 
-    @And("i complete the Limousines page selecting {string}")
+    @When("i complete the Limousines page selecting {string}")
     public void iCompleteTheLimousinesPageSelectingYes(String limousines) {
         waitForTitleToBePresent("Limousines and novelty vehicles");
         world.psvJourney.completeLimousinesVehicles(limousines);
@@ -126,7 +126,7 @@ public class PSVApplication extends BasePage {
         assertTrue(world.psvJourney.limousinesStatus(status));
     }
 
-    @And("i select operating centres and add a PSV operating centre for {string} vehicles")
+    @Then("i select operating centres and add a PSV operating centre for {string} vehicles")
     public void iSelectOperatingCentresAndAddAPSVOperatingCentreForVehicles(String numberOfVehicles) {
         world.operatingCentreJourney.selectOperatingCentreAndAuthorisationSection();
         world.operatingCentreJourney.addPsvOperatingCentre(numberOfVehicles);
@@ -139,7 +139,7 @@ public class PSVApplication extends BasePage {
         world.psvJourney.selectVehicleSize(vehicleSize);
     }
 
-    @And("i answer {string} to the Operating small vehicles question")
+    @Then("i answer {string} to the Operating small vehicles question")
     public void iAnswerToTheOperatingSmallVehiclesQuestion(String answer) {
         waitForTitleToBePresent("Operating small vehicles");
         world.psvJourney.answerOperatingSmallVehiclesQuestion(answer);
@@ -152,7 +152,7 @@ public class PSVApplication extends BasePage {
         world.psvJourney.completeSmallVehicleConditionsPage();
     }
 
-    @And("i complete Written explanation small vehicles")
+    @Then("i complete Written explanation small vehicles")
     public void iCompleteWrittenExplanationSmallVehicles() {
         waitForTitleToBePresent("Written explanation (small vehicles)");
         world.psvJourney.completeWrittenExplanationSmallVehiclesPage();
@@ -164,7 +164,7 @@ public class PSVApplication extends BasePage {
         world.psvJourney.completeDocumentaryEvidenceMainOccupationPage();
     }
 
-    @And("i complete the Main occupation undertakings page")
+    @Then("i complete the Main occupation undertakings page")
     public void iCompleteTheMainOccupationUndertakingsPage() {
         waitForTitleToBePresent("Main occupation undertakings");
         world.psvJourney.completeMainOccupationUndertakingsPage();
