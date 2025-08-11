@@ -1,6 +1,20 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.0](https://github.com/dvsa/vol-functional-tests/compare/v4.11.13...v4.12.0) (2025-08-11)
+
+
+### Features
+
+* PSV new restricted both Y - refactored variation tests ([24f9120](https://github.com/dvsa/vol-functional-tests/commit/24f912066f65e20fa843b6f188ef181accc0c54b))
+* PSV new SI Small vehs ([7931813](https://github.com/dvsa/vol-functional-tests/commit/7931813ffb34bab3e6e68f1d4116d0668a63d67b))
+* Restricted var both N option ([8c12ab5](https://github.com/dvsa/vol-functional-tests/commit/8c12ab576f30d5d960eb9ecdcde0ac65c683d976))
+
+
+### Bug Fixes
+
+* existing psv restricted variation test ([d9aaecd](https://github.com/dvsa/vol-functional-tests/commit/d9aaecd656a1fcb5093685a0f11609064e38e211))
+
 ## [4.11.13](https://github.com/dvsa/vol-functional-tests/compare/v4.11.12...v4.11.13) (2025-08-08)
 
 
