@@ -216,7 +216,7 @@ public class OperatingCentreVariation extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
     }
 
-    @And("i create a new operating centre with {string} vehicles and {string} trailers")
+    @Then("i create a new operating centre with {string} vehicles and {string} trailers")
     public void iCreateANewOperatingCentreWithVehiclesAndTrailers(String numberOfVehicles, String numberOfTrailers) {
         world.operatingCentreJourney.addNewOperatingCentre(numberOfVehicles, numberOfTrailers);
     }
@@ -249,10 +249,15 @@ public class OperatingCentreVariation extends BasePage {
         assertTrue(isTextPresent("The total number of vehicles on a restricted licence cannot exceed 2"));
     }
 
-    @And("the {string} {string} variation is submitted")
-    public void theVariationIsSubmitted(String operatorType, String licenceType) {
+    @And("the PSV Restricted variation is submitted")
+    public void theVariationIsSubmitted() {
         world.selfServeUIJourney.completeFinancialEvidencePage();
-        world.psvJourney.completeVehicleSize();
+        world.psvJourney.selectVehicleSizeSection();
+        world.psvJourney.selectVehicleSize("nine_and_above");
+        world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
+        world.psvJourney.completeDocumentaryEvidenceMainOccupationPage();
+        world.psvJourney.completeMainOccupationUndertakingsPage();
+        world.psvJourney.completeLimousinesVehicles("Yes");
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
