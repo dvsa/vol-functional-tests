@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.1](https://github.com/dvsa/vol-functional-tests/compare/v4.12.0...v4.12.1) (2025-08-12)
+
+
+### Bug Fixes
+
+* new proving env ([7416515](https://github.com/dvsa/vol-functional-tests/commit/74165151fc88e202cc5fdffb8a59785b5d09dbdf))
+* new proving env ([05294d7](https://github.com/dvsa/vol-functional-tests/commit/05294d779ee84ea3b88af1951c0ed393cc4b8d4a))
+
 ## [4.12.0](https://github.com/dvsa/vol-functional-tests/compare/v4.11.13...v4.12.0) (2025-08-11)
 
 
