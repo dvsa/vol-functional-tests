@@ -210,24 +210,24 @@ public class TransportManagerJourney extends BasePage {
             waitForTextToBePresent("Transport Managers");
             waitAndClick("//button[@id='add']", SelectorType.XPATH);
             waitAndClick("addUser", SelectorType.ID);
-            enterText("forename", SelectorType.ID, "prep-forename");
-            enterText("familyName", SelectorType.ID, "prep-familyname");
+            waitAndEnterText("forename", SelectorType.ID, "prep-forename");
+            waitAndEnterText("familyName", SelectorType.ID, "prep-familyname");
             LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
             enterDateFieldsByPartialId("dob", dob);
-            enterText("username", SelectorType.ID, "prepusername" + System.currentTimeMillis());
-            enterText("emailAddress", SelectorType.ID, "prep-email@example.com");
-            enterText("emailConfirm", SelectorType.ID, "prep-email@example.com");
+            waitAndEnterText("username", SelectorType.ID, "prepusername" + System.currentTimeMillis());
+            waitAndEnterText("emailAddress", SelectorType.ID, "prep-email@example.com");
+            waitAndEnterText("emailConfirm", SelectorType.ID, "prep-email@example.com");
         } else {
             world.selfServeNavigation.navigateToPage(licenceType, SelfServeSection.TRANSPORT_MANAGERS);
             click("add", SelectorType.ID);
             waitAndClick("addUser", SelectorType.ID);
-            enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-            enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+            waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+            waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
             LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
             enterDateFieldsByPartialId("dob", dob);
-            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-            enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-            enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            waitAndEnterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndEnterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         }
         UniversalActions.clickContinue();
         waitForTextToBePresent("user account has been created and a link sent to them");
