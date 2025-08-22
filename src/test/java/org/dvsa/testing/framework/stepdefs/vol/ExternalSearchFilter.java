@@ -19,13 +19,21 @@ public class ExternalSearchFilter extends BasePage {
     @And("i have searched for a licence")
     public void iHaveSearchedForALicence() {
         String env = System.getProperty("env");
-        String myURL = org.dvsa.testing.lib.url.webapp.webAppURL.build(ApplicationType.EXTERNAL, env,"search/find-lorry-bus-operators/").toString();
+        String myURL = org.dvsa.testing.lib.url.webapp.webAppURL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
         Browser.navigate().get(myURL);
         findSelectAllRadioButtonsByValue("licence");
         enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
-        click(nameAttribute("button","submit"), SelectorType.CSS);
-        while (!isLinkPresent(world.applicationDetails.getLicenceNumber(),20)){
-            click(nameAttribute("button","submit"), SelectorType.CSS);
+
+        long kickOut = System.currentTimeMillis() + 120000;
+        boolean licenceFound = false;
+
+        do {
+            click(nameAttribute("button", "submit"), SelectorType.CSS);
+            licenceFound = isLinkPresent(world.applicationDetails.getLicenceNumber(), 20);
+        } while (!licenceFound && System.currentTimeMillis() < kickOut);
+
+        if (!licenceFound) {
+            throw new RuntimeException("Licence not found. Please rerun or check the reindex job in Jenkins.");
         }
     }
 
