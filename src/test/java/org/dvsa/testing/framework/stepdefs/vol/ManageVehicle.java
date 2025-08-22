@@ -183,19 +183,19 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} confirmation banner should appear")
     public void theConfirmationBannerShouldAppear(String bannerValue) {
-        String banner = getText("//h1[@class='govuk-panel__title']", SelectorType.XPATH);
+        String banner = waitAndGetText("//h1[@class='govuk-panel__title']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
     @Then("the {string} confirmation body should appear")
     public void theConfirmationBodyShouldAppear(String bannerValue) {
-        String banner = getText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        String banner = waitAndGetText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
     @Then("a {string} error banner should appear")
     public void aErrorBannerShouldAppear(String bannerValue) {
-        String banner = getText("//p[@role='alert']", SelectorType.XPATH);
+        String banner = waitAndGetText("//p[@role='alert']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
