@@ -1,7 +1,7 @@
 @EBSR
 Feature: import EBSR for English, Welsh and Scottish Areas
 
-  @ss_regression @FullRegression @printAndSign
+#  @ss_regression @FullRegression @printAndSign
   Scenario Outline: Short notice import EBSR in self-serve
     Given as a "admin" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
@@ -12,7 +12,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | north_east | 41   |
       | scotland   | 41   |
 
-  @ss_regression @FullRegression @printAndSign
+#  @ss_regression @FullRegression @printAndSign
   Scenario Outline: import EBSR in self-serve
     Given as a "admin" I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice

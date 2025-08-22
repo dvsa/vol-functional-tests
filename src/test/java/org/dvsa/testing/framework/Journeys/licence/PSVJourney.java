@@ -46,7 +46,7 @@ public class PSVJourney extends BasePage {
 
     public void completeDocumentaryEvidenceSmallVehiclesPage() {
         UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Upload your evidence");
+        waitForTextToBePresent("Upload your financial evidence");
         findSelectAllRadioButtonsByValue("2");
         UniversalActions.clickSaveAndContinue();
     }
