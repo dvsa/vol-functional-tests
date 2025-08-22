@@ -1,5 +1,5 @@
 @accessibility
-@ss_regression
+#@ss_regression
 Feature: Check that Submissions journey is accessible
 
   Scenario Outline: Scan for accessibility violations
