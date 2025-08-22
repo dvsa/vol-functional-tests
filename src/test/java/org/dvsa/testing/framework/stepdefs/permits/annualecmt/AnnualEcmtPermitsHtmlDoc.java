@@ -29,8 +29,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage{
     public void iViewTheAnnualPermitsDocumentation(String permitType) {
         IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
         String permitApplicationNumber = getText("//td[@data-heading='Reference number']/a", SelectorType.XPATH);
-        clickByLinkText(permitApplicationNumber);
-        clickByLinkText("Docs & Attachments");
+        waitAndClickByLinkText(permitApplicationNumber);
+        waitAndClickByLinkText("Docs & Attachments");
         DocsAndAttachmentsPage.select(permitApplicationNumber);
     }
 

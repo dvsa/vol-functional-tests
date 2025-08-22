@@ -98,10 +98,10 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @And("the other licence contains that vehicle")
     public void theOtherLicenceContainsThatVehicle() {
-        clickByLinkText("GOV.UK");
+        waitAndClickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
-        clickByLinkText(transferLicence);
-        clickByLinkText("Vehicles");
+        waitAndClickByLinkText(transferLicence);
+        waitAndClickByLinkText("Vehicles");
         String valueOfFirstVRMInTable = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         assertEquals(firstVRM, valueOfFirstVRMInTable);
     }

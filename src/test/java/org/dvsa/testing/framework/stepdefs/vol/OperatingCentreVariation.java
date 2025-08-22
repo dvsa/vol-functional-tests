@@ -58,14 +58,14 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("the review and declaration page should display pay and submit")
     public void completeTheReviewAndDeclarationPageShouldDisplayPayAndSubmit() {
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         assertTrue(isElementPresent(submitAndPayForApplication, SelectorType.XPATH));
     }
 
     @And("the review and declaration page should only display submit application")
     public void theReviewAndDeclarationShouldDisplayOnlyDisplaySubmitApplication() {
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         assertTrue(isElementPresent(submitApplication, SelectorType.XPATH));
         assertFalse(isElementPresent(submitAndPayForApplication, SelectorType.XPATH));
@@ -125,7 +125,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("increase the authority on an existing operating centre authorisation and update the total authorisations")
     public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
-        clickByLinkText("Operating centres and authorisation");
+        waitAndClickByLinkText("Operating centres and authorisation");
         String updatedOperatingCentreVehicleAuthorisation = "10";
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
@@ -153,14 +153,14 @@ public class OperatingCentreVariation extends BasePage {
 
     @Then("the variation fee is required on internal")
     public void theVariationFeeIsRequiredOnInternal() {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         assertEquals("£257.00", getText("//td[@data-heading='Fee amount']", SelectorType.XPATH));
         assertEquals("£257.00", getText("//td[@data-heading='Outstanding']", SelectorType.XPATH));
     }
 
     @Then("the variation fee is not required on internal")
     public void theVariationFeeIsNotRequiredOnInternal() {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         assertFalse(isTextPresent("//td[@data-heading='Fee amount']"));
         assertFalse(isTextPresent("//td[@data-heading='Outstanding']"));
         assertTrue(isTextPresent("There are no results matching your search"));
@@ -224,7 +224,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("The variation is submitted")
     public void variationSubmitted() {
         world.selfServeUIJourney.completeFinancialEvidencePage();
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
         UniversalActions.clickPay();
@@ -258,7 +258,7 @@ public class OperatingCentreVariation extends BasePage {
         world.psvJourney.completeDocumentaryEvidenceMainOccupationPage();
         world.psvJourney.completeMainOccupationUndertakingsPage();
         world.psvJourney.completeLimousinesVehicles("Yes");
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
         UniversalActions.clickPay();

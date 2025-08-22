@@ -101,7 +101,7 @@ public class InternalSearch extends BasePage {
     public void iSearchForACompanyAndClickCreateOperator() {
         world.internalSearchJourney.searchForLicenceByName("Company Name");
         waitForTextToBePresent("Search results");
-        clickByLinkText("Create operator");
+        waitAndClickByLinkText("Create operator");
     }
 
     @And("i enter and search for a Company number")

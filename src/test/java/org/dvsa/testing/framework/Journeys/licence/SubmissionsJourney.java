@@ -33,15 +33,15 @@ public class SubmissionsJourney extends BasePage {
 
     public void createAndSubmitSubmission() {
         waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
-        clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
-        clickByLinkText("Submissions");
+        waitAndClickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
+        waitAndClickByLinkText("Submissions");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("fields[submissionSections][submissionType]", SelectorType.NAME, 13);
         UniversalActions.clickSubmit();
     }
 
     public void setInfoCompleteAndAssignSubmission() {
-        clickByLinkText("Set info complete");
+        waitAndClickByLinkText("Set info complete");
         UniversalActions.clickSubmit();
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
         waitForTextToBePresent("Assign to:");
@@ -53,7 +53,7 @@ public class SubmissionsJourney extends BasePage {
     }
 
     public void checkTCDcDropDown() {
-        clickByLinkText("Set info complete");
+        waitAndClickByLinkText("Set info complete");
         UniversalActions.clickSubmit();
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
         waitForElementToBePresent("//input[@name='fields[tcOrOther]']");
@@ -62,7 +62,7 @@ public class SubmissionsJourney extends BasePage {
     }
 
     public void editSubmission() {
-        clickByLinkText("Edit submission");
+        waitAndClickByLinkText("Edit submission");
         selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
         refreshPage();
         UniversalActions.clickSubmit();
@@ -75,7 +75,7 @@ public class SubmissionsJourney extends BasePage {
     }
 
     public void closeSubmission() {
-        clickByLinkText("Close submission");
+        waitAndClickByLinkText("Close submission");
         clickById("form-actions[confirm]");
     }
 

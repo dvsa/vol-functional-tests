@@ -51,7 +51,7 @@ public class WebDav extends BasePage{
     public void iOpenTheDocumentInWordForTheFirstTime() throws MalformedURLException, InterruptedException {
         String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         Thread.sleep(1000);
-        clickByLinkText("BUS");
+        waitAndClickByLinkText("BUS");
         this.autoIt = initiateAutoItX("jacob-1.16", "lib/jacob-1.16");
         this.autoIt.winWaitActive(window, "Chrome Legacy Window");
         Thread.sleep(1000);
@@ -81,7 +81,7 @@ public class WebDav extends BasePage{
     @Then("the document should contain the changes")
     public void theDocumentShouldContainTheChanges() throws IOException {
         assertTrue(isTextPresent(templateName));
-        clickByLinkText(templateName);
+        waitAndClickByLinkText(templateName);
 
         String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
 

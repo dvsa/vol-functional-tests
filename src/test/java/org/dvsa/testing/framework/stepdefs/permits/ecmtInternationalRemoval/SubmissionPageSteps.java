@@ -91,7 +91,7 @@ public class SubmissionPageSteps extends BasePermitPage {
         String newPassword = SecretsManager.getSecretValue("internalNewPassword");
         world.globalMethods.signIn(world.registerUser.getUserName(), newPassword);
         HomePageJourney.selectPermitTab();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         DeclarationPageJourney.completeDeclaration();
     }

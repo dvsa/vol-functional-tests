@@ -220,7 +220,7 @@ public class ValidLicenceChanges extends BasePage {
         click("//*[@id='add']", SelectorType.XPATH);
         click("//*[contains(text(),'An owner or employee')]", SelectorType.XPATH);
         enterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
-        clickByLinkText("Enter the address yourself");
+        waitAndClickByLinkText("Enter the address yourself");
         world.selfServeUIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Safety inspectors");

@@ -54,7 +54,7 @@ public class GoodVarIncreaseVehicle extends BasePage {
 
     @Then("the {string} fee should be paid")
     public void theFeeShouldBePaid(String arg0) {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH,"All");
         waitForTextToBePresent("Grant Fee for application");
         assertTrue(getElementValueByText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH).equalsIgnoreCase("PAID"));

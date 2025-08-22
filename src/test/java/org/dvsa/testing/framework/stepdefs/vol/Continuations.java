@@ -52,7 +52,7 @@ public class Continuations extends BasePage {
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         assertTrue(isTextPresent("Digital continuation snapshot"));
     }
@@ -147,11 +147,11 @@ public class Continuations extends BasePage {
         world.internalNavigation.getLicence();
         waitForTitleToBePresent(world.applicationDetails.getLicenceNumber());
         refreshPage();
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("401", "cash");
         waitForTextToBePresent("The payment was made successfully");
-        clickByLinkText("Update details");
+        waitAndClickByLinkText("Update details");
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
         if(isElementClickable("fields[checklistStatus]",SelectorType.ID)) {
             selectValueFromDropDown("fields[checklistStatus]", SelectorType.ID, "Acceptable");

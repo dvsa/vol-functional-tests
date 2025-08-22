@@ -58,7 +58,7 @@ public class OperatingCentreJourney extends BasePage {
         if (world.licenceCreation.isPSVLicence()) {
             world.psvJourney.completeVehicleDeclarationsPage();
         }
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority)) {
             click(submitApplication, SelectorType.XPATH);

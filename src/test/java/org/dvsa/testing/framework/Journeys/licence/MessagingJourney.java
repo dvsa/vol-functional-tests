@@ -66,7 +66,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void createNewConversationAndSelectTheLicenceNumber() {
-        clickByLinkText("Start a new conversation");
+        waitAndClickByLinkText("Start a new conversation");
         selectValueFromDropDownByIndex("//*[@id='form-actions[inputs][messageSubject]']", SelectorType.XPATH,1);
         click("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH);
 
@@ -80,7 +80,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void checkForNewTask() {
-        clickByLinkText("Processing");
+        waitAndClickByLinkText("Processing");
         assertTrue(isElementPresent("New message", SelectorType.LINKTEXT));
     }
 
@@ -91,20 +91,20 @@ public class MessagingJourney extends BasePage {
     }
 
     public void openMessageStatusCheck() {
-        clickByLinkText("Messages");
+        waitAndClickByLinkText("Messages");
         String actualText = getText("//*[@class='govuk-tag govuk-tag--blue']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("OPEN"));
     }
 
     public void notificationCount() {
         assertEquals(getText("//*[contains(@class,'notification-count__number')]", SelectorType.XPATH), "1");
-        clickByLinkText("Messages");
+        waitAndClickByLinkText("Messages");
         String actualText = getText("//*[@class='govuk-tag govuk-tag--red']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("NEW MESSAGE"));
     }
 
     public void backToConversation() {
-        clickByLinkText("Back to conversations");
+        waitAndClickByLinkText("Back to conversations");
     }
 
 
@@ -117,8 +117,8 @@ public class MessagingJourney extends BasePage {
     }
 
     public void disableMessaging() {
-        clickByLinkText("Messages");
-        clickByLinkText("Disable Messaging");
+        waitAndClickByLinkText("Messages");
+        waitAndClickByLinkText("Disable Messaging");
         waitAndClick("close", SelectorType.ID);
         waitForTextToBePresent("Messaging will be disabled for this operator");
         click("close", SelectorType.ID);
@@ -126,7 +126,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void submitMessageWithoutSelectingAnyOption() {
-        clickByLinkText("Start a new conversation");
+        waitAndClickByLinkText("Start a new conversation");
         clickById("send");
     }
 

@@ -105,7 +105,7 @@ public class FeeAndPaymentJourney extends BasePage {
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
         if (isTextPresent("50")) {
-            clickByLinkText("50");
+            waitAndClickByLinkText("50");
         }
         waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);

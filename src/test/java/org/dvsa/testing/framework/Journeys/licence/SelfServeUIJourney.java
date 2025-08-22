@@ -111,11 +111,11 @@ public class SelfServeUIJourney extends BasePage {
             navigate().manage().deleteAllCookies();
         }
         world.selfServeNavigation.navigateToLoginPage();
-        clickByLinkText("Forgotten your password?");
+        waitAndClickByLinkText("Forgotten your password?");
     }
 
     public void addUser() {
-        clickByLinkText("Manage");
+        waitAndClickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
@@ -129,7 +129,7 @@ public class SelfServeUIJourney extends BasePage {
         if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         } else {
-            clickByLinkText("Financial evidence");
+            waitAndClickByLinkText("Financial evidence");
         }
         click("//input[@id='uploadLaterRadio']", SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
@@ -149,7 +149,7 @@ public class SelfServeUIJourney extends BasePage {
         if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
         } else {
-            clickByLinkText("Review and declarations");
+            waitAndClickByLinkText("Review and declarations");
         }
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
@@ -163,7 +163,7 @@ public class SelfServeUIJourney extends BasePage {
         Set<String> windows;
         waitForTextToBePresent("A business owner");
         do {
-            clickByLinkText("Print");
+            waitAndClickByLinkText("Print");
             windows = navigate().getWindowHandles();
         } while (windows.size() == 1);
         String printWindow = windows.stream().reduce((first, second) -> second).get();
@@ -175,7 +175,7 @@ public class SelfServeUIJourney extends BasePage {
     public void changeLicenceForVariation() {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
-        clickByLinkText("change your licence");
+        waitAndClickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         UniversalActions.clickSubmit();
         refreshPageWithJavascript();

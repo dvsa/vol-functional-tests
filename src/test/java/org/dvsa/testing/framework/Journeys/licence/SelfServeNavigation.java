@@ -48,12 +48,12 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToFindLorryAndBusOperatorsSearch() {
         navigateToExternalSearch();
-        clickByLinkText("Lorry and bus operators");
+        waitAndClickByLinkText("Lorry and bus operators");
     }
 
     public void navigateToVehicleOperatorDecisionsAndApplications() {
         navigateToExternalSearch();
-        clickByLinkText("Vehicle operator decisions and applications");
+        waitAndClickByLinkText("Vehicle operator decisions and applications");
     }
 
     public void navigateToCheckerPage() {
@@ -68,12 +68,12 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToCreateAnAccount() {
         if (isLinkPresent("Sign out", 3)) {
-            clickByLinkText("Sign out");
+            waitAndClickByLinkText("Sign out");
         }
         getDriver().manage().deleteAllCookies();
         refreshPage();
         waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
-        clickByLinkText("create an account");
+        waitAndClickByLinkText("create an account");
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
@@ -83,16 +83,16 @@ public class SelfServeNavigation extends BasePage {
         switch (type.toLowerCase()) {
             case "licence" -> {
                 if (world.configuration.env.toString().equals("int")) {
-                    clickByLinkText(existingLicenceNumber);
+                    waitAndClickByLinkText(existingLicenceNumber);
                 } else {
-                    clickByLinkText(world.applicationDetails.getLicenceNumber());
+                    waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
                 }
                 waitForTitleToBePresent("View and amend your licence");
             }
             case "application" -> {
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.createApplication.getApplicationId());
+                waitAndClickByLinkText(world.createApplication.getApplicationId());
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply for a new licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
@@ -102,7 +102,7 @@ public class SelfServeNavigation extends BasePage {
                   UniversalActions.clickHome();
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.updateLicence.getVariationApplicationId());
+                waitAndClickByLinkText(world.updateLicence.getVariationApplicationId());
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply to change a licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
@@ -111,15 +111,15 @@ public class SelfServeNavigation extends BasePage {
         }
         switch (page.toString()) {
             case "View" -> {}
-            case "Vehicles" -> clickByLinkText("Vehicles");
+            case "Vehicles" -> waitAndClickByLinkText("Vehicles");
             //Once DVLA integration has been switched on, this needs updating
 //                waitForTitleToBePresent("Vehicle details");
             case "Convictions and penalties" -> {
-                clickByLinkText("Convictions and penalties");
+                waitAndClickByLinkText("Convictions and penalties");
                 waitForTitleToBePresent("Convictions and Penalties");
             }
             default -> {
-                clickByLinkText(page.toString());
+                waitAndClickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
             }
         }
@@ -132,11 +132,11 @@ public class SelfServeNavigation extends BasePage {
                 waitForTextToBePresent("Licences");
             }
             case "Sign out" -> {
-                clickByLinkText("Sign out");
+                waitAndClickByLinkText("Sign out");
                 waitForTextToBePresent("Thank you");
             }
             default -> {
-                clickByLinkText(page.toString());
+                waitAndClickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
             }
         }

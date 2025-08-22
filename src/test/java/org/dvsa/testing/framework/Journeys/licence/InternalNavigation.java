@@ -47,18 +47,18 @@ public class InternalNavigation extends BasePage {
 
     public void logInAndNavigateToApplicationDocsTable(boolean variation) throws HttpException {
         loginAndGetApplication(variation);
-        clickByLinkText("Docs");
+        waitAndClickByLinkText("Docs");
     }
 
     public void logInAndNavigateToApplicationProcessingPage(boolean variation) throws HttpException {
         loginAndGetApplication(variation);
         waitForTextToBePresent("Processing");
-        clickByLinkText("Processing");
+        waitAndClickByLinkText("Processing");
     }
 
     public void adminNavigation(@NotNull AdminOption option) {
         waitAndClick(adminDropdown, SelectorType.XPATH);
-        clickByLinkText(option.toString());
+        waitAndClickByLinkText(option.toString());
         switch (option) {
             case CONTINUATIONS, PRESIDING_TCS -> {}
             case PUBLICATIONS, REPORTS, PRINTING, DATA_RETENTION, USER_MANAGEMENT -> waitForElementToBePresent(String.format("//h4[contains(text(),'%s')]", option));
@@ -85,9 +85,9 @@ public class InternalNavigation extends BasePage {
     }
     public void navigateToAuthorisationPage() {
         if (world.licenceCreation.isLGVOnlyLicence())
-            clickByLinkText("Licence authorisation");
+            waitAndClickByLinkText("Licence authorisation");
         else
-            clickByLinkText("Operating centres and authorisation");
+            waitAndClickByLinkText("Operating centres and authorisation");
     }
 
     public void loginAndGetApplication(boolean variation) throws HttpException {
@@ -172,15 +172,15 @@ public class InternalNavigation extends BasePage {
         switch (page.toString()) {
             case "View" -> {}
             case "Vehicles" -> {
-                clickByLinkText("Vehicles");
+                waitAndClickByLinkText("Vehicles");
                 waitForTextToBePresent("Vehicle details");
             }
             case "Convictions and penalties" -> {
-                clickByLinkText("Convictions and penalties");
+                waitAndClickByLinkText("Convictions and penalties");
                 waitForTextToBePresent("Convictions and Penalties");
             }
             default -> {
-                clickByLinkText(page.toString());
+                waitAndClickByLinkText(page.toString());
                 waitForTextToBePresent(page.toString());
             }
         }

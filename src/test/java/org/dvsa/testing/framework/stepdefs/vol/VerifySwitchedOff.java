@@ -24,7 +24,7 @@ public class VerifySwitchedOff extends BasePage {
     @And("transport manager details approved banner appears")
     public void transportManagerDetailsApprovedBannerAppears() {
         assertTrue(isTextPresent("Transport Manager details approved"));
-        clickByLinkText("Back to Transport Managers");
+        waitAndClickByLinkText("Back to Transport Managers");
     }
 
     @And("transport manager status is {string} and {string}")
@@ -37,7 +37,7 @@ public class VerifySwitchedOff extends BasePage {
     public void submitToOperatorButtonIsDisplayed() {
         waitForTextToBePresent("Awaiting operator review");
         assertTrue(isElementPresent("//h1[contains(text(),'Awaiting operator review')]", SelectorType.XPATH));
-        clickByLinkText("Back to Transport Managers");
+        waitAndClickByLinkText("Back to Transport Managers");
     }
 
     @And("i select a transport manager to add")

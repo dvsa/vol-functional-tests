@@ -30,7 +30,7 @@ public class TypeOfLicence extends BasePage {
 
     @Given("I apply for a {string} {string} {string} {string} {string} licence")
     public void iApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
-        clickByLinkText("Apply for a new licence");
+        waitAndClickByLinkText("Apply for a new licence");
         world.typeOfLicenceJourney.chooseGBOrNI(licenceWhere);
         if (licenceWhere.equals("GB")) {
             clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
@@ -47,7 +47,7 @@ public class TypeOfLicence extends BasePage {
 
     @Given("I go to update the vehicle type on the licence to {string} {string} {string}")
     public void iGoToUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
-        clickByLinkText("Type of licence");
+        waitAndClickByLinkText("Type of licence");
         world.selfServeUIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
     }
 
@@ -104,7 +104,7 @@ public class TypeOfLicence extends BasePage {
 
     @When("i go to apply for a {string} goods standard international licence")
     public void iManuallyApplyForAGoodsStandardInternationalLicence(String licenceWhere) {
-        clickByLinkText("Apply for a new licence");
+        waitAndClickByLinkText("Apply for a new licence");
         waitForTitleToBePresent("Type of licence");
         world.typeOfLicenceJourney.chooseGBOrNI(licenceWhere);
         if (licenceWhere.equals("GB"))
@@ -163,7 +163,7 @@ public class TypeOfLicence extends BasePage {
         world.internalNavigation.loginIntoInternal("");
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
-        clickByLinkText("New application");
+        waitAndClickByLinkText("New application");
         waitForTextToBePresent("Application received");
         click(world.typeOfLicenceJourney.goodsLicence, SelectorType.XPATH);
         click(world.typeOfLicenceJourney.standardInternational, SelectorType.XPATH);

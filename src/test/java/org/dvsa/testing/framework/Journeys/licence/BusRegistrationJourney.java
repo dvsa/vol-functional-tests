@@ -49,12 +49,12 @@ public class BusRegistrationJourney extends BasePage {
         do {
             SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
         } while (!isLinkPresent(world.applicationDetails.getLicenceNumber(), 60));
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void internalSiteAddBusNewReg(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
         waitForTextToBePresent("Overview");
-        clickByLinkText("Bus registrations");
+        waitAndClickByLinkText("Bus registrations");
         waitAndClick(nameAttribute("button", "action"), SelectorType.CSS);
         waitForTextToBePresent("Service details");
         assertTrue(isTextPresent("Service No. & type"));
@@ -87,7 +87,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void closeBusReg() {
-        clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
+        waitAndClickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", SelectorType.ID, "Mistake");
@@ -95,18 +95,18 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void payFeesAndGrantNewBusReg() {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("60", "cash");
         long kickOutTime = System.currentTimeMillis() + 60000;
         do {
             refreshPageWithJavascript();
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
-        clickByLinkText("Register service");
+        waitAndClickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
-        clickByLinkText("Service details");
-        clickByLinkText("TA's");
+        waitAndClickByLinkText("Service details");
+        waitAndClickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
@@ -168,7 +168,7 @@ public class BusRegistrationJourney extends BasePage {
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
 
-        clickByLinkText("Bus");
+        waitAndClickByLinkText("Bus");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
 

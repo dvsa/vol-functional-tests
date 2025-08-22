@@ -48,7 +48,7 @@ public class InterimPage extends BasePage{
     }
 
     public static void addInterimValues() {
-        clickByLinkText("add interim");
+        waitAndClickByLinkText("add interim");
         findSelectAllRadioButtonsByValue("Y");
         InterimPage.enterInterimDetail("Test Test");
         InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());

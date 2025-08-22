@@ -38,10 +38,10 @@ public class RefundInterim extends BasePage {
         final String REFUNDED_TEXT = "refunded";
         final long TIMEOUT_MILLIS = 50_000;
 
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
         waitForTextToBePresent(EXPECTED_AMOUNT);
-        clickByLinkText("Grant Interim Fee for application");
+        waitAndClickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
 
         long timeoutDeadline = System.currentTimeMillis() + TIMEOUT_MILLIS;
@@ -79,7 +79,7 @@ public class RefundInterim extends BasePage {
     @Then("the interim fee should not be refunded")
     public void theInterimFeeShouldNotBeRefunded() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         do {
             waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
         } while (!isTextPresent("Paid"));

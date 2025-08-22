@@ -104,18 +104,30 @@ public abstract class BasePage extends DriverUtils {
         scrollAndEnterField(selector, SelectorType.CSS, text);
     }
 
-    protected static void clickByLinkText(@NotNull String selector) {
+    protected static void waitAndClickByLinkText(@NotNull String selector) {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                findElement(selector, SelectorType.PARTIALLINKTEXT).click();
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class);
+
+                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(
+                        by(selector, SelectorType.PARTIALLINKTEXT)
+                ));
+                element.click();
                 return;
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
             }
         }
-        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
     }
 
     protected static void clickByFullLinkText(@NotNull String selector) {

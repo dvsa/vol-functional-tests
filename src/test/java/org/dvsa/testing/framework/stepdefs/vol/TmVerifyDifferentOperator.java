@@ -73,7 +73,7 @@ public class TmVerifyDifferentOperator extends BasePage {
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
         }
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         Browser.navigate().get(world.genericUtils.getTransportManagerLink());
@@ -92,11 +92,11 @@ public class TmVerifyDifferentOperator extends BasePage {
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
-        clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
+        waitAndClickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         UniversalActions.clickSubmit();
         click("//*[contains(text(),'Print')]", SelectorType.XPATH);
         UniversalActions.clickSubmit();
@@ -106,7 +106,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
-        clickByLinkText("Provide details");
+        waitAndClickByLinkText("Provide details");
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
     }
 
@@ -116,11 +116,11 @@ public class TmVerifyDifferentOperator extends BasePage {
           UniversalActions.clickHome();
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
-        clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
+        waitAndClickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
@@ -133,7 +133,7 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @And("the TM should see the incomplete label and provide details link")
     public void theTMShouldSeeTheIncompleteLabelAndProvideDetailsLink() {
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
         if (!isTextPresent("Current licences")) {
             world.globalMethods.signIn(world.DataGenerator.getOperatorUser(), SecretsManager.getSecretValue("internalNewPassword"));
@@ -180,7 +180,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
         if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
-            clickByLinkText("Transport Managers");
+            waitAndClickByLinkText("Transport Managers");
             world.transportManagerJourney.addNewTmPrepTest();
         } else {
             UniversalActions.refreshPageWithJavascript();
@@ -248,8 +248,8 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @And("the TM print and signs")
     public void theTMPrintAndSigns() {
-        clickByLinkText("Print");
-        clickByLinkText("Print");
+        waitAndClickByLinkText("Print");
+        waitAndClickByLinkText("Print");
         ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
         switchToWindow(tabs.get(0));
         waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);

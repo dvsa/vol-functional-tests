@@ -39,8 +39,8 @@ public class SurrenderLogic extends BasePage {
     public void iUpdateMyAddressDetailsOnMyLicence() {
         UniversalActions.clickSubmit();
           UniversalActions.clickHome();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Addresses");
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText("Addresses");
         world.selfServeUIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
         String contactNumber = "07123465976";
         replaceText("phone_primary", SelectorType.ID, contactNumber);
@@ -55,7 +55,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("user is taken to information change page on clicking continue application")
     public void userIsTakenToInformationChangePageOnClickingContinueApplication() {
-        clickByLinkText("Continue with");
+        waitAndClickByLinkText("Continue with");
         assertTrue(Browser.navigate().getCurrentUrl().contains("information-changed"));
         String expectedChangedText = "Warning Since starting your application to surrender your licence, you have made changes to your licence information.";
         String actualChangeText = getText("//*[@class='govuk-warning-text__text']", SelectorType.XPATH);
@@ -87,12 +87,12 @@ public class SurrenderLogic extends BasePage {
     @And("i leave the surrenders journey")
     public void iLeaveTheSurrendersJourney() {
           UniversalActions.clickHome();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     @And("user is taken to review contact page on clicking continue application")
     public void userIsTakenToContactPage() {
-        clickByLinkText("Continue");
+        waitAndClickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
         assertEquals(world.surrenderJourney.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", world.createApplication.getCorrespondenceAddressLine1(), world.createApplication.getCorrespondenceAddressLine2(), world.createApplication.getCorrespondenceAddressLine3(), world.createApplication.getCorrespondenceAddressLine4()));
     }
@@ -105,7 +105,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("user is taken to the surrenders current discs on clicking continue application")
     public void userIsTakenToCurrentDiscs() {
-        clickByLinkText("Continue");
+        waitAndClickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("current-discs"));
     }
 
@@ -119,7 +119,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("user is taken to the operator licence page on clicking continue application")
     public void userIsTakenToContinueApplication() {
-        clickByLinkText("Continue");
+        waitAndClickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
     }
 
@@ -138,7 +138,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("user is taken to the community licence page on clicking continue application")
     public void userIsTakenToCommunityLicencePageOnClickingContinueApplication() {
-        clickByLinkText("Continue");
+        waitAndClickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
     }
 
@@ -157,7 +157,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("user is taken to the disc and doc review page on clicking continue application")
     public void userIsTakenToTheDiscReviewPage() {
-        clickByLinkText("Continue");
+        waitAndClickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("review"));
     }
 
@@ -298,7 +298,7 @@ public class SurrenderLogic extends BasePage {
         assertFalse(isTextPresent("Quick actions"));
         List<String> section_button = buttons.asList(String.class);
         for (String button : section_button) {
-            clickByLinkText(button);
+            waitAndClickByLinkText(button);
             assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-quick-actions')]", SelectorType.XPATH));
             assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-decisions')]", SelectorType.XPATH));
         }

@@ -72,7 +72,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void generateLetter() {
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         waitForTextToBePresent("New Letter");
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
@@ -84,7 +84,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void generatePTRLetter() {
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         waitForTextToBePresent("New Letter");
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
@@ -107,7 +107,7 @@ public class InternalUIJourney extends BasePage {
         var wordLoginWindow = StringUtils.removeEnd(webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
 
         Thread.sleep(1000);
-        clickByLinkText("BUS");
+        waitAndClickByLinkText("BUS");
         AutoItX autoIt = initiateAutoItX("jacob-1.16", "lib/jacob-1.16");
 
         autoIt.winWaitActive(window, "Chrome Legacy Window", 20);
@@ -138,7 +138,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void deleteLicenceDocument() {
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         deleteDocument();
     }
 
@@ -157,20 +157,20 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void closeCase() {
-        clickByLinkText("" + world.updateLicence.getCaseId() + "");
+        waitAndClickByLinkText("" + world.updateLicence.getCaseId() + "");
         var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
         var casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
-        clickByLinkText("Close");
+        waitAndClickByLinkText("Close");
         waitForTextToBePresent("Close the case");
         UniversalActions.clickConfirm();
     }
 
     public void payForInterimApp() {
-        clickByLinkText("Financial");
+        waitAndClickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Review");
+        waitAndClickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
         enterText("applicationInterimReason", SelectorType.ID, "Testing");
@@ -213,12 +213,12 @@ public class InternalUIJourney extends BasePage {
 
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
-        clickByLinkText("Conditions and undertakings");
+        waitAndClickByLinkText("Conditions and undertakings");
         UniversalActions.clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
     }
@@ -231,7 +231,7 @@ public class InternalUIJourney extends BasePage {
 
     public void createPublicInquiry() {
         click("//*[@id='menu-case_hearings_appeals']", SelectorType.XPATH);
-        clickByLinkText("Add Public Inquiry");
+        waitAndClickByLinkText("Add Public Inquiry");
         waitForTextToBePresent("Add Traffic Commissioner agreement and legislation");
         HashMap<String, String> agreedDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -7);
         enterDateFieldsByPartialId("fields[agreedDate]", agreedDate);
@@ -259,14 +259,14 @@ public class InternalUIJourney extends BasePage {
         world.internalNavigation.getLicence();
         world.busRegistrationJourney.internalSiteAddBusNewReg(plusOrMinusDay,plusOrMinusMonth,plusOrMinusYear);
         refreshPage();
-        clickByLinkText("Register");
+        waitAndClickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
         refreshPage();
-        clickByLinkText("Service details");
+        waitAndClickByLinkText("Service details");
         UniversalActions.clickSubmit();
         refreshPage();
-        clickByLinkText("TA's");
+        waitAndClickByLinkText("TA's");
         selectFirstValueFromDropdown("//*[@class='chosen-choices']", "//*[@class='active-result']");
         selectFirstValueFromDropdown("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']",  "//*[@class=\"active-result group-option\"]");
         UniversalActions.clickSubmit();
@@ -274,7 +274,7 @@ public class InternalUIJourney extends BasePage {
 
     public void payFee() {
         refreshPage();
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
 
         String feeAmountXpath = "//td[@data-heading='Fee amount']";
@@ -290,7 +290,7 @@ public class InternalUIJourney extends BasePage {
 
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
-        clickByLinkText("Add hearing");
+        waitAndClickByLinkText("Add hearing");
         waitForTextToBePresent("Venue");
         selectValueFromDropDown("//*[@id='venue']", SelectorType.XPATH, "Other");
         enterText("//*[@id='venueOther']", SelectorType.XPATH, "Test");
@@ -306,8 +306,8 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void deleteCaseNote() {
-        clickByLinkText("Processing");
-        clickByLinkText("Notes");
+        waitAndClickByLinkText("Processing");
+        waitAndClickByLinkText("Notes");
         click("//*[@name='id']", SelectorType.XPATH);
         click("//*[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Delete record");
@@ -315,9 +315,9 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void navigateToChangeHistory() {
-        clickByLinkText("Processing");
+        waitAndClickByLinkText("Processing");
         waitForTextToBePresent("Tasks");
-        clickByLinkText("Change history");
+        waitAndClickByLinkText("Change history");
         waitForTextToBePresent("Details");
     }
 
@@ -357,9 +357,9 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void printLicence() {
-        clickByLinkText("Print licence");
+        waitAndClickByLinkText("Print licence");
         waitForTextToBePresent("Licence printed successfully");
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         waitForTextToBePresent("GV Licence");
     }
 
@@ -372,7 +372,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void navigateToLicenceFromOperatorProfile() {
-        clickByLinkText("Licences");
+        waitAndClickByLinkText("Licences");
         waitForElementToBePresent("//a[@class='govuk-link']");
         click("//a[@class='govuk-link']", SelectorType.XPATH);
     }

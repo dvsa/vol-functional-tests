@@ -28,7 +28,7 @@ public class ElectronicBusRegistration extends BasePage {
 
     @Then("I should be able to view to bus registration details")
     public void iShouldBeAbleToViewToBusRegistrationDetails() {
-        clickByLinkText("EBSR uploads");
+        waitAndClickByLinkText("EBSR uploads");
         List<String> expectedHeaders = Arrays.asList(
                 "Organisation", "Reg. number", "Status", "Variation", "Service numbers", "Uploaded");
         for (String header : expectedHeaders) {
@@ -38,7 +38,7 @@ public class ElectronicBusRegistration extends BasePage {
 
     @And("I should also be able to view EBSR uploads")
     public void iShouldAlsoBeAbleToViewEBSRUploads() {
-        clickByLinkText("Registrations");
+        waitAndClickByLinkText("Registrations");
         List<String> expectedHeaders = Arrays.asList(
                 "Organisation", "Bus registration No.", "Status", "Variation No.", "Service No.", "First registered / cancelled",
                 "Starting point", "Finishing point");

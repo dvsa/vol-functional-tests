@@ -412,11 +412,11 @@ public class ManageApplications extends BasePage {
     public void iHaveAnExistingLicence(String licenceNumber) {
         world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
         existingLicenceNumber = licenceNumber;
-        clickByLinkText(existingLicenceNumber);
+        waitAndClickByLinkText(existingLicenceNumber);
     }
 
     public static void withDrawApplication() {
-        clickByLinkText("Not taken up");
+        waitAndClickByLinkText("Not taken up");
         waitForTextToBePresent("Not taken up");
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
@@ -498,7 +498,7 @@ public class ManageApplications extends BasePage {
         String password = SecretsManager.getSecretValue("partnerUserPassword");
 
         if (Objects.requireNonNull(getDriver().getCurrentUrl()).contains("dashboard")) {
-            clickByLinkText("Sign out");
+            waitAndClickByLinkText("Sign out");
         }
         String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);

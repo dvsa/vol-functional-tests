@@ -49,7 +49,7 @@ public class PaymentProcessing extends BasePage {
     @Given("i am on the payment processing page")
     public void iAmOnThePaymentProcessingPage() {
         waitAndClick("//li[@class='admin__title']", SelectorType.XPATH);
-        clickByLinkText("Payment processing");
+        waitAndClickByLinkText("Payment processing");
         waitForTextToBePresent("Payment Processing");
     }
 
@@ -74,13 +74,13 @@ public class PaymentProcessing extends BasePage {
 
     @And("i search for transactional fees")
     public void iSearchForTransactionalFees() {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         waitAndSelectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Historic");
         waitForTextToBePresent("2 Fees");
-        clickByLinkText(String.format("GV/SN Grant Fee for application %s", world.createApplication.getApplicationId()));
+        waitAndClickByLinkText(String.format("GV/SN Grant Fee for application %s", world.createApplication.getApplicationId()));
         waitForTextToBePresent("Payments and adjustments");
         String[] transactionId = findElements("//tbody", SelectorType.XPATH).get(0).getText().split(" ");
-        clickByLinkText(transactionId[0]);
+        waitAndClickByLinkText(transactionId[0]);
         waitForTextToBePresent("Payment details");
     }
 

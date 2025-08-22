@@ -40,7 +40,7 @@ public class Snapshots extends BasePage {
             LOGGER.info("Each open tab ID : " + howManyTabs);
         }
 
-        clickByLinkText("Check your answers");
+        waitAndClickByLinkText("Check your answers");
         WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(1));
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 

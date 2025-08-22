@@ -116,7 +116,7 @@ public class ExternalSearch extends BasePage {
     @And("i check if the licence contains any interim vehicles")
     public void iCheckIfTheLicenceContainsAnyInterimVehicles() {
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     @Then("the vehicle table should contain the interim status")

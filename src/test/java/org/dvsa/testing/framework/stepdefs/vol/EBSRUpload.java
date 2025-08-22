@@ -65,8 +65,8 @@ public class EBSRUpload extends BasePage {
 
     @And("the traffic areas should be displayed on the service details page")
     public void theTrafficAreasShouldBeDisplayedOnTheServiceDetailsPage() {
-        clickByLinkText("Service details");
-        clickByLinkText("TA's");
+        waitAndClickByLinkText("Service details");
+        waitAndClickByLinkText("TA's");
         String trafficArea = findElement("//*[@id='bus-reg-ta']", SelectorType.XPATH, 10).getText();
         assertNotNull(trafficArea);
     }
@@ -98,7 +98,7 @@ public class EBSRUpload extends BasePage {
 
     @Then("all Service Details fields should be editable")
     public void allServiceDetailsFieldsShouldBeEditable() {
-        clickByLinkText("Service details");
+        waitAndClickByLinkText("Service details");
         world.busRegistrationJourney.internalSiteEditBusReg();
     }
 

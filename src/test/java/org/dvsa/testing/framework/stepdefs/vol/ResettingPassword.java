@@ -21,7 +21,7 @@ public class ResettingPassword extends BasePage {
 
     @And("i reset my password")
     public void iResetMyPassword() {
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         world.selfServeUIJourney.resettingExternalPassword();
         enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
         waitAndClick("auth.forgot-password.button", SelectorType.ID);
