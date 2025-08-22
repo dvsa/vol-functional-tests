@@ -35,10 +35,10 @@ public class TransportManagerJourney extends BasePage {
     public void promptRemovalOfInternalTransportManager() {
         assertTrue(isTextPresent("Overview"));
         if (!isLinkPresent("Transport", 60) && isTextPresent("Granted")) {
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
+            waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
             tmCount = returnTableRows("//*[@id='lva-transport-managers']/fieldset/div/div[2]/table/tbody/tr", SelectorType.XPATH);
         }
-        clickByLinkText("Transport");
+        waitAndClickByLinkText("Transport");
         assertTrue(isTextPresent("Transport Managers"));
         click("//button[contains(@name,'table[action][delete]')]", SelectorType.XPATH);
     }
@@ -160,7 +160,7 @@ public class TransportManagerJourney extends BasePage {
         } else {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
         }
-        clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
+        waitAndClickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
@@ -201,7 +201,7 @@ public class TransportManagerJourney extends BasePage {
     public void submitTMApplicationAndNavigateToTMLandingPage() {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         UniversalActions.clickSubmit();
-        clickByLinkText("Back to Transport");
+        waitAndClickByLinkText("Back to Transport");
         waitForTextToBePresent("Transport Managers");
     }
 
@@ -235,7 +235,7 @@ public class TransportManagerJourney extends BasePage {
 
     public void addNewTmPrepTest() {
         waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
-        clickByLinkText("change your licence");
+        waitAndClickByLinkText("change your licence");
         UniversalActions.clickSubmit();
         addNewPersonAsTransportManager(null);
     }
@@ -257,7 +257,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTitleToBePresent("Declaration");
         waitAndClick("//*[contains(text(),'Print')]",SelectorType.XPATH);
         UniversalActions.clickSubmit();
-        clickByLinkText("Back to Transport Managers");
+        waitAndClickByLinkText("Back to Transport Managers");
         waitForTitleToBePresent("Transport Managers");
         UniversalActions.clickSaveAndContinue();
     }

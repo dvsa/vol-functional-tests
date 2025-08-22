@@ -73,7 +73,7 @@ public class SurrenderJourney extends BasePage {
             }
         }
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("Apply to surrender licence");
+        waitAndClickByLinkText("Apply to surrender licence");
     }
 
     public void startSurrender() throws IllegalBrowserException, IOException {
@@ -139,7 +139,7 @@ public class SurrenderJourney extends BasePage {
 
     public void caseworkManageSurrender() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("Surrender");
+        waitAndClickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
         // Refresh page
@@ -193,8 +193,8 @@ public class SurrenderJourney extends BasePage {
         UniversalActions.clickSubmit();
         addDiscInformation();
           UniversalActions.clickHome();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Licence discs");
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
         UniversalActions.clickSubmit();

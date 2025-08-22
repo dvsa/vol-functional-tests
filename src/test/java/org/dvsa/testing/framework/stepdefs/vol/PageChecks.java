@@ -29,7 +29,7 @@ public class PageChecks extends BasePage {
     @Then("on self serve the withdraw application link is not present on {string}")
     public void onSelfServeTheWithdrawApplicationLinkIsNotPresentOn(String page) {
         waitForTextToBePresent("Overview");
-        clickByLinkText("Sign out");
+        waitAndClickByLinkText("Sign out");
         String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         Browser.navigate().get(externalURL);
         waitForTextToBePresent("Licences");
@@ -40,7 +40,7 @@ public class PageChecks extends BasePage {
     @Then("the {string} document should be generated")
     public void documentShouldBeGenerated(String documentType) {
         if (isElementPresent("//a[contains(text(),'Docs & attachments')]", SelectorType.XPATH)) {
-            clickByLinkText("Docs & attachments");
+            waitAndClickByLinkText("Docs & attachments");
         }
         assertTrue(checkForPartialMatch(documentType));
     }

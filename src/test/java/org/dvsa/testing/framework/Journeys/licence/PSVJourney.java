@@ -25,7 +25,7 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeVehicleDeclarationsPage() {
-        clickByLinkText(pageTitle);
+        waitAndClickByLinkText(pageTitle);
         click(nineSeatsAndAboveButton, SelectorType.XPATH);
         click(nineSeatsOrMoreDeclarations, SelectorType.XPATH);
         click(limousinesYes, SelectorType.XPATH);

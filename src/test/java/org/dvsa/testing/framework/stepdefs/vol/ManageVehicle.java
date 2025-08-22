@@ -343,7 +343,7 @@ public class ManageVehicle extends BasePage {
             waitAndClick("//*[contains(text(), 'Yes')]", SelectorType.XPATH);
             waitAndClick("next",SelectorType.ID);
         }else {
-            clickByLinkText("manage your vehicles");
+            waitAndClickByLinkText("manage your vehicles");
         }
     }
 

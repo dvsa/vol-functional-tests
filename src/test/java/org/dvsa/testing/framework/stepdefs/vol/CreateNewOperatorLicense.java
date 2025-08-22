@@ -48,7 +48,7 @@ public class CreateNewOperatorLicense extends BasePage {
         String password = SecretsManager.getSecretValue("defaultPassword");
 
         if (getDriver().getCurrentUrl().contains("dashboard")) {
-            clickByLinkText("Sign out");
+            waitAndClickByLinkText("Sign out");
         }
         String externalURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);

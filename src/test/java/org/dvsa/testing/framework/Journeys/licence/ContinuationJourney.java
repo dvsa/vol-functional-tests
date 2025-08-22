@@ -88,10 +88,10 @@ public class ContinuationJourney extends BasePage {
     public void viewContinuationSnapshotOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         assertTrue(isTextPresent("Digital continuation snapshot"));
-        clickByLinkText("Digital continuation snapshot");
+        waitAndClickByLinkText("Digital continuation snapshot");
         waitForTabsToLoad(2, 60);
         ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
         switchToWindow(tabs.get(1));

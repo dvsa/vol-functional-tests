@@ -76,7 +76,7 @@ public class TMDetails extends BasePage {
     @And("page title {string} should be displayed on page")
     public void pageTitleShouldBeDisplayedOnPage(String arg0) {
         assertTrue(isTextPresent(arg0));
-        clickByLinkText("Back");
+        waitAndClickByLinkText("Back");
     }
 
     @When("the users attempts to save without entering any data")

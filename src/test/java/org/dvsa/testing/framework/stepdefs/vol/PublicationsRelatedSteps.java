@@ -70,7 +70,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
                 radioButtons = show50ResultsAndUpdateWebElementsList(radioButtonsColumn);
 
-                clickByLinkText(currentPubNo);
+                waitAndClickByLinkText(currentPubNo);
                 waitForTextToBePresent("Open document");
 
                 if (getText("//*[@id='letter-link']", SelectorType.XPATH).isEmpty()) {
@@ -153,7 +153,7 @@ public class PublicationsRelatedSteps extends BasePage {
                         kickOut = false;
                     } else {
                         pageNumber++;
-                        clickByLinkText(Integer.toString(pageNumber));
+                        waitAndClickByLinkText(Integer.toString(pageNumber));
                     }
                 }
                 click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
@@ -244,7 +244,7 @@ public class PublicationsRelatedSteps extends BasePage {
         }
 
         waitForPageLoad();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
         boolean licenceHasUpdated = publicationType.equals("Variation Granted");
         String hgvValue = licenceHasUpdated ? hgvs : String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority());
@@ -268,16 +268,16 @@ public class PublicationsRelatedSteps extends BasePage {
     @And("i navigate to the application publications page")
     public void iNavigateToTheApplicationPublicationsPage() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
-        clickByLinkText("Processing");
+        waitAndClickByLinkText("Processing");
         waitForTextToBePresent("Processing");
-        clickByLinkText("Publications");
+        waitAndClickByLinkText("Publications");
     }
 
     @And("I view the application publications page")
     public void iViewTheApplicationPublicationsPage() {
-        clickByLinkText("Processing");
+        waitAndClickByLinkText("Processing");
         waitForTextToBePresent("Processing");
-        clickByLinkText("Publications");
+        waitAndClickByLinkText("Publications");
     }
 
     @And("I publish the application on internal")
@@ -293,7 +293,7 @@ public class PublicationsRelatedSteps extends BasePage {
     public void theNewApplicationPublicationForLGVOnlyShouldBeCorrectOnInternal() {
         Dates date = new Dates(org.joda.time.LocalDate::new);
         String todayDate = date.getFormattedDate(0, 0, 0, "dd/MM/yyyy");
-        clickByLinkText(todayDate);
+        waitAndClickByLinkText(todayDate);
         waitForTextToBePresent("Edit publication");
         checkLGVOnlyTextBeforePublicationOnInternal();
     }
@@ -325,7 +325,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("the licence view of the publication for LGV Only is correct on self serve")
     public void theLicenceViewOfThePublicationForLGVOnlyIsCorrectOnSelfServe() {
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
         String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains("The table is empty"));
@@ -340,7 +340,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("the licence view of the publication for PSV SI is correct on self serve")
     public void theLicenceViewOfThePublicationForPSVSIIsCorrectOnSelfServe() {
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
         String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
@@ -354,7 +354,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("the licence view of the publication for Goods SN is correct on self serve")
     public void theLicenceViewOfThePublicationForGoodsSNIsCorrectOnSelfServe() {
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
         String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
@@ -371,12 +371,12 @@ public class PublicationsRelatedSteps extends BasePage {
     @Then("^the out of objection date is present on the application (\\d+) days after the publication date$")
     public void theOutOfObjectionDateIsPresentOnTheApplication(Integer arg0) throws HttpException {
         world.internalNavigation.logInAndNavigateToApplicationProcessingPage(true);
-        clickByLinkText("Publications");
+        waitAndClickByLinkText("Publications");
         String publicationDate = getText("//td[@data-heading='Publication date']", SelectorType.XPATH);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate formattedDate = LocalDate.parse(publicationDate, formatter);
         String expectedDate = formattedDate.plusDays(22).format(formatter);
-        clickByLinkText("Application details");
+        waitAndClickByLinkText("Application details");
         String actualDate = getText("//dt[text()='Out of objection']/../dd", SelectorType.XPATH);
         assertEquals(expectedDate, actualDate);
     }

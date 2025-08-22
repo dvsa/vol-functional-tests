@@ -119,7 +119,7 @@ public class Surrenders extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {
-            clickByLinkText("Surrender");
+            waitAndClickByLinkText("Surrender");
             waitForTextToBePresent("Summary: Application to surrender an operator licence");
             assertTrue(isTextPresent("open cases associated with this licence"));
             assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
@@ -133,11 +133,11 @@ public class Surrenders extends BasePage {
     @When("the open case and bus reg is closed")
     public void theOpenCaseAndBusRegIsClosed() {
         world.internalNavigation.getLicence();
-        clickByLinkText("Cases");
+        waitAndClickByLinkText("Cases");
         world.internalUIJourney.closeCase();
         waitForTextToBePresent("Case closed");
         world.internalNavigation.getLicence();
-        clickByLinkText("Bus registrations");
+        waitAndClickByLinkText("Bus registrations");
         world.busRegistrationJourney.closeBusReg();
     }
 

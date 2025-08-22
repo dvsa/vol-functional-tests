@@ -68,7 +68,7 @@ public class InterimLicence extends BasePage {
 
     @When("I create an interim application with no start and end dates")
     public void iCreateAnInterimApplicationWithNoStartAndEndDates() {
-        clickByLinkText("add interim");
+        waitAndClickByLinkText("add interim");
         findSelectAllRadioButtonsByValue("Y");
         InterimPage.enterInterimDetail("Test Test");
         InterimPage.vehicleHgvAuthority(world.createApplication.getTotalOperatingCentreHgvAuthority());
@@ -105,7 +105,7 @@ public class InterimLicence extends BasePage {
     @Then("I should error when i attempt to grant the application")
     public void iShouldErrorWhenIAttemptToGrantTheApplication() {
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Interim details");
+        waitAndClickByLinkText("Interim details");
         waitForTextToBePresent("Interim application");
         InterimPage.grant();
         isTextPresent(valueIsRequiredErrorMessage);
@@ -113,7 +113,7 @@ public class InterimLicence extends BasePage {
 
     @When("I create an interim application with a start and no end date")
     public void iCreateAnInterimApplicationWithAStartAndNoEndDate() {
-        clickByLinkText("add interim");
+        waitAndClickByLinkText("add interim");
         findSelectAllRadioButtonsByValue("Y");
         InterimPage.startDate(10, 8, 2017);
         InterimPage.enterInterimDetail("Interim with no dates");
@@ -145,7 +145,7 @@ public class InterimLicence extends BasePage {
     @When("i view the application interim on internal")
     public void iViewTheApplicationInterimOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
-        clickByLinkText("Interim details");
+        waitAndClickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");
     }
 
@@ -256,7 +256,7 @@ public class InterimLicence extends BasePage {
     @And("the lgv mixed interim is granted on internal")
     public void theLgvMixedInterimIsGrantedOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
-        clickByLinkText("Interim details");
+        waitAndClickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");
         HashMap<String, String> futureDate = new Dates(LocalDate::new).getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("interimStart", futureDate);

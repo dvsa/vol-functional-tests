@@ -20,7 +20,7 @@ public class InternalSearchJourney extends BasePage {
         String applicationId = world.createApplication.getApplicationId();
         internalSearchUntilTextPresent(SearchType.Application, applicationId, applicationId);
         if (isLinkPresent("Interim", 3))
-            clickByLinkText("Interim ");
+            waitAndClickByLinkText("Interim ");
     }
 
     public void searchAndViewLicence(String licenceNumber) {
@@ -42,14 +42,14 @@ public class InternalSearchJourney extends BasePage {
     public void searchAndViewPSVDisc() {
         String licenceNo = world.applicationDetails.getLicenceNumber();
         internalSearchUntilTextPresent(SearchType.PsvDisc, world.updateLicence.getStartNumber(), licenceNo);
-        clickByLinkText("Licence discs");
+        waitAndClickByLinkText("Licence discs");
     }
 
     public void searchAndViewVehicleRegistration() {
         enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
         click("//*[@name='submit']", SelectorType.XPATH);
         searchAndViewLicence(world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Vehicles");
+        waitAndClickByLinkText("Vehicles");
     }
 
     public void registeredVRMDisplay() {
@@ -65,7 +65,7 @@ public class InternalSearchJourney extends BasePage {
     public void searchAndViewAddress() {
         String address = world.formattedStrings.getFullCommaOperatingAddress();
         internalSearchUntilTextPresent(SearchType.Address, address, world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Addresses");
+        waitAndClickByLinkText("Addresses");
     }
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {

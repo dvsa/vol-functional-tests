@@ -78,7 +78,7 @@ public class TrafficAreas extends BasePage {
 
     @When("i apply for a new {string} lgv only application and enter a postcode in the North West of England")
     public void iApplyForANewGoodsStandardInternationalApplicationAndEnterAPostcodeInTheNorthWestOfEngland(String GBOrNI) {
-        clickByLinkText("Apply for a new licence");
+        waitAndClickByLinkText("Apply for a new licence");
         world.typeOfLicenceJourney.chooseGBOrNI(GBOrNI);
         clickByXPath("//input[@value='lcat_gv']");
         clickByXPath("//input[@value='ltyp_si']");
@@ -88,7 +88,7 @@ public class TrafficAreas extends BasePage {
         waitForTitleToBePresent("Apply for a new licence");
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
-        clickByLinkText("Business type");
+        waitAndClickByLinkText("Business type");
         UniversalActions.clickSaveAndContinue();
         UniversalActions.clickSaveAndContinue();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
@@ -166,7 +166,7 @@ public class TrafficAreas extends BasePage {
         completeApplicationUntilAddressesPage();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
         enterPhoneAndEmail();
-        clickByLinkText("Enter the address yourself");
+        waitAndClickByLinkText("Enter the address yourself");
         waitForElementToBePresent(establishmentAddressPostcode);
         waitAndClick(establishmentAddressPostcode, SelectorType.XPATH);
         enterText(establishmentAddressLine1, SelectorType.XPATH, "test");
@@ -179,7 +179,7 @@ public class TrafficAreas extends BasePage {
     @When("i complete the application to and enter and save a non-uk correspondence address")
     public void iCompleteTheApplicationToAndEnterAndSaveANonUkCorrespondenceAddress() {
         completeApplicationUntilAddressesPage();
-        clickByLinkText("Enter the address yourself");
+        waitAndClickByLinkText("Enter the address yourself");
         waitForElementToBePresent(correspondenceAddressLine1);
         enterText(correspondenceAddressLine1, SelectorType.XPATH, "test");
         enterText(correspondenceAddressTown, SelectorType.XPATH, "test");
@@ -196,7 +196,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void completeApplicationUntilAddressesPage() {
-        clickByLinkText("Business type");
+        waitAndClickByLinkText("Business type");
         UniversalActions.clickSaveAndContinue();
         enterText("//*[@id='data[companyNumber][company_number]']", SelectorType.XPATH, "12321212");
         click("//*[@id='data[companyNumber][submit_lookup_company]']", SelectorType.XPATH);

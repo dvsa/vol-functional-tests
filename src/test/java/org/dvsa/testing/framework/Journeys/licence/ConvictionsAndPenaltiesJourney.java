@@ -70,7 +70,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
 
     public void addConvictionToCase() {
         generateConvictionDescription();
-        clickByLinkText("Convictions");
+        waitAndClickByLinkText("Convictions");
         waitAndClick("add", SelectorType.ID);
         waitForElementToBePresent("//select[@id='defendantType']");
         selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 2);
@@ -90,7 +90,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void addComplaint() {
-        clickByLinkText("Complaints");
+        waitAndClickByLinkText("Complaints");
         waitAndClick("//button[text()='Add complaint']", SelectorType.XPATH);
         enterText("//input[@id='complainantForename']", SelectorType.XPATH, (faker.generateFirstName()));
         enterText("//input[@id='complainantFamilyName']", SelectorType.XPATH, (faker.generateLastName()));
@@ -103,7 +103,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
 
     public void completConditionUndertakings() {
         generateConvictionDescription();
-        clickByLinkText("Conditions and undertakings");
+        waitAndClickByLinkText("Conditions and undertakings");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("type", SelectorType.ID, 2);
         selectValueFromDropDownByIndex("conditionCategory", SelectorType.ID, 3);

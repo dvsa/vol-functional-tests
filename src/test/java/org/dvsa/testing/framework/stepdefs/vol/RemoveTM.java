@@ -130,7 +130,7 @@ public class RemoveTM extends BasePage {
     public void theLastTMLetterShouldBeSent() throws InterruptedException, HttpException {
         sleep(20000);
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("Docs & attachments");
+        waitAndClickByLinkText("Docs & attachments");
         assertTrue(isTextPresent("Last TM letter"));
     }
 }

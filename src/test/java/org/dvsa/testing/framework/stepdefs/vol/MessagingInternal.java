@@ -28,7 +28,7 @@ public class MessagingInternal extends BasePage {
 
     @When("i click the messages heading")
     public void iClickTheMessagesHeading() {
-        clickByLinkText("Messages");
+        waitAndClickByLinkText("Messages");
     }
 
     @Then("the internal messages page is displayed correctly")

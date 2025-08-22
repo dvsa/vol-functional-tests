@@ -62,7 +62,7 @@ public class GrantApplication extends BasePage {
         findElements("//*[@value]", SelectorType.XPATH)
                 .stream().filter(x -> x.getText().equals("Accepted")).forEach(WebElement::click);
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Operating centres");
+        waitAndClickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
         selectValueFromDropDown("trafficArea", SelectorType.ID, "Wales");
         if(getText("dataTrafficArea[enforcementArea]", SelectorType.ID).contains("Wales")) {
@@ -71,10 +71,10 @@ public class GrantApplication extends BasePage {
             selectValueFromDropDownByIndex("dataTrafficArea[enforcementArea]", SelectorType.ID,1);
         }
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Review and declarations");
+        waitAndClickByLinkText("Review and declarations");
         waitAndClick("declarations[declarationConfirmation]", SelectorType.ID);
         UniversalActions.clickSaveAndReturn();
-        clickByLinkText("Grant application");
+        waitAndClickByLinkText("Grant application");
         waitForTextToBePresent("Grant application");
         waitAndClick("//*[@value='grant_authority_tc']", SelectorType.XPATH);
         waitAndClick("form-actions[continue-to-grant]", SelectorType.ID);
@@ -83,7 +83,7 @@ public class GrantApplication extends BasePage {
     }
 
     private void payGrantFees() {
-        clickByLinkText("Fees");
+        waitAndClickByLinkText("Fees");
         waitAndClick("checkall", SelectorType.ID);
         waitAndClick("pay", SelectorType.ID);
         world.feeAndPaymentJourney.payFee(null, "card");

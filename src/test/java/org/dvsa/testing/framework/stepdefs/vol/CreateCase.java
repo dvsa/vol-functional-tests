@@ -39,7 +39,7 @@ public class CreateCase extends BasePage {
     @And("i add a new public inquiry")
     public void iAddANewPublicInquiry() {
         click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
-        clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
+        waitAndClickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
         world.internalUIJourney.createPublicInquiry();
     }
 

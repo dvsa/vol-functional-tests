@@ -57,7 +57,7 @@ public class PrepTestsStepDefs extends BasePage {
 
     @When("I navigate to an existing licence {string}")
     public void navigateToExistingLicence(String licenceNumber) {
-        clickByLinkText(licenceNumber);
+        waitAndClickByLinkText(licenceNumber);
     }
 
     @Then("that new transport manager is showing in the list")

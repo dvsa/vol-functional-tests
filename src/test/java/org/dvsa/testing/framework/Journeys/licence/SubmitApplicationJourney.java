@@ -38,11 +38,11 @@ public class SubmitApplicationJourney extends BasePage {
                     String applicationId = applications.get(applications.size() - 1).getText().split(" ")[0];
 
                     if (applications.get(applications.size() - 1).getText().contains("Not Yet Submitted")) {
-                        clickByLinkText(applicationId);
+                        waitAndClickByLinkText(applicationId);
                         waitAndClick("Cancel application", SelectorType.LINKTEXT);
                         UniversalActions.clickSubmit();
                     } else if (applications.get(applications.size() - 1).getText().contains("Under Consideration")) {
-                        clickByLinkText(applicationId);
+                        waitAndClickByLinkText(applicationId);
                         waitAndClick("Withdraw application", SelectorType.LINKTEXT);
                         UniversalActions.clickSubmit();
                     }

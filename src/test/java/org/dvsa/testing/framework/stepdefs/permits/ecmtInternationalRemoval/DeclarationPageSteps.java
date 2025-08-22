@@ -65,8 +65,8 @@ public class DeclarationPageSteps extends BasePage {
     @Then("I'm viewing my saved ECMT International application in internal")
     public void iAmViewingMySavedECMTInternationalApplication() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
-        clickByLinkText("IRHP Permits");
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        waitAndClickByLinkText("IRHP Permits");
+        waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     @Then("I am continuing on the on-going ECMT removal application")
