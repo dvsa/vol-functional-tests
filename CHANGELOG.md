@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.7](https://github.com/dvsa/vol-functional-tests/compare/v4.12.6...v4.12.7) (2025-08-22)
+
+
+### Bug Fixes
+
+* temp remove tests ([6314893](https://github.com/dvsa/vol-functional-tests/commit/63148938ea334d7a7f951e69d6107300534219dc))
+* temp remove tests ([2eb729a](https://github.com/dvsa/vol-functional-tests/commit/2eb729a7b4e582dcfe4d355854dd9c120f3ee185))
+
 ## [4.12.6](https://github.com/dvsa/vol-functional-tests/compare/v4.12.5...v4.12.6) (2025-08-22)
 
 
