@@ -90,7 +90,8 @@ public class SubmitApplicationJourney extends BasePage {
         UniversalActions.clickSaveAndContinue();
 
         //transport manager
-        clickById("add");
+        waitAndClick("add", SelectorType.ID);
+        waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         clickContinue();
 
@@ -112,7 +113,7 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
-        clickById("application[safetyConfirmation]");
+        waitAndClick("application[safetyConfirmation]", SelectorType.ID);
         UniversalActions.clickSaveAndContinue();
         //Financial History
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application");
