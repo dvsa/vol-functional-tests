@@ -113,7 +113,7 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
-        waitAndClick("application[safetyConfirmation]", SelectorType.ID);
+        clickAllCheckboxes();
         UniversalActions.clickSaveAndContinue();
         //Financial History
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application");
