@@ -153,7 +153,8 @@ public class DirectorJourney extends BasePage {
             findSelectAllRadioButtonsByValue("N");
         } else {
             findSelectAllRadioButtonsByValue("Y");
-            enterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
+            waitForTextToBePresent("Additional information");
+            waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
         }
     }
 
