@@ -38,6 +38,7 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a new director should be added to my licence$")
     public void aNewDirectorShouldBeAddedToMyLicence() {
+        waitForTextToBePresent("Director has been added");
         directorJourney.assertDirectorCount(2);
         List<WebElement> directors = findElements(directorJourney.directorLinks, SelectorType.XPATH);
         assertTrue(directorJourney.isDirectorPresentInDirectorTable(directors, directorJourney.getDirectorName()));

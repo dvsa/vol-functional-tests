@@ -113,8 +113,22 @@ public class SurrenderLogic extends BasePage {
     public void iAmOnTheOperatorLicencePage() throws IllegalBrowserException, IOException {
         UniversalActions.clickSubmit();
         world.surrenderJourney.addDiscInformation();
-        waitForTextToBePresent("In your possession");
-        assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
+        int retryCount = 0;
+        int maxRetries = 1;
+        while (retryCount < maxRetries) {
+            try {
+                waitForTextToBePresent("In your possession");
+                assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
+                return;
+            } catch (AssertionError e) {
+                retryCount++;
+                if (retryCount < maxRetries) {
+                    refreshPage();
+                } else {
+                    throw e;
+                }
+            }
+        }
     }
 
     @And("user is taken to the operator licence page on clicking continue application")
@@ -130,6 +144,7 @@ public class SurrenderLogic extends BasePage {
             world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourney.addOperatorLicenceDetails();
+            waitForTextToBePresent("Where is your UK licence for the community documentation?");
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
         } else {
             throw new InvalidArgumentException("Only a goods standard international licence has community pages");

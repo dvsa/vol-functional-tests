@@ -574,8 +574,22 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void replaceText(String selector, SelectorType selectorType, String text) {
-        findElement(selector, selectorType).clear();
-        waitAndEnterText(selector, selectorType, text);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                WebElement element = findElement(selector, selectorType);
+                element.clear();
+                waitAndEnterText(selector, selectorType, text);
+                return;
+            } catch (NoSuchElementException e) {
+                LOGGER.warn("NoSuchElementException encountered during replaceText. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered during replaceText. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to replace text after " + maxRetries + " attempts.");
     }
 
     public static int returnTableRows(@NotNull String selector, @NotNull SelectorType selectorType) {
