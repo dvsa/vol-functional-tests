@@ -79,7 +79,7 @@ public class ContinuationJourney extends BasePage {
     public void completeContinuationFinancesPage() {
         if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]", "");
-            enterText("averageBalance", SelectorType.ID, necessaryIncome);
+            waitAndEnterText("averageBalance", SelectorType.ID, necessaryIncome);
             findSelectAllRadioButtonsByValue("N");
             click("submit", SelectorType.ID);
         }

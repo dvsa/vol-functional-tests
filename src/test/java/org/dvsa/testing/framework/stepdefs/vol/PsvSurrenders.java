@@ -69,7 +69,7 @@ public class PsvSurrenders extends BasePage {
         click("//a[contains(text(),'Change')][1]", SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");
         findElement("addressTown", SelectorType.ID, 5).clear();
-        enterText("addressTown", SelectorType.ID, world.surrenderJourney.getUpdatedTown());
+        waitAndEnterText("addressTown", SelectorType.ID, world.surrenderJourney.getUpdatedTown());
         UniversalActions.clickSaveAndReturn();
         waitForTitleToBePresent("Review your contact information");
     }
