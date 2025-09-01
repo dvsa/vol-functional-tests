@@ -196,9 +196,11 @@ public class SelfServeNavigation extends BasePage {
         UniversalActions.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
-
-        if (isTitlePresent("Vehicle declarations", 30)) {
-            UniversalActions.clickSaveAndContinue();
+        if (isTitlePresent("Vehicles size", 30)) {
+            world.psvJourney.selectVehicleSize("nine_and_above");
+            world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
+            world.psvJourney.completeLimousinesVehicles("Yes");
+            click("overview-item__safety", SelectorType.ID);
         }
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
