@@ -118,6 +118,10 @@ public abstract class BasePage extends DriverUtils {
         new Actions(getDriver()).moveToElement(field).sendKeys(field, text).perform();
     }
 
+    public String getNoButtonId() {
+        WebElement noButton = Browser.navigate().findElement(By.xpath("//*[@id=\"responsibilities\"]//input[@value='N']"));
+        return noButton.getAttribute("id");
+    }
     protected static void scrollAndEnterField(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String text) {
         scrollAndEnterField(selector, selectorType, text, false);
     }

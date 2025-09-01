@@ -91,7 +91,8 @@ public class TMDetails extends BasePage {
 
     @When("I click the no radio button for the {string} question")
     public void iClickTheNoRadioButtonForTheQuestion(String arg0) {
-        waitAndClick("//*[@id=\"responsibilities\"]//input[@value='N']", SelectorType.XPATH);
+        String noButtonId = getNoButtonId();
+        clickById(noButtonId);
     }
 
     @Then("the guidance text should be displayed")
