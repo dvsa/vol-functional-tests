@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.13](https://github.com/dvsa/vol-functional-tests/compare/v4.12.12...v4.12.13) (2025-09-01)
+
+
+### Bug Fixes
+
+* PSV Gov Signin test ([a4d77a2](https://github.com/dvsa/vol-functional-tests/commit/a4d77a264cf530760d2f7c1525ced35a9ada9087))
+
 ## [4.12.12](https://github.com/dvsa/vol-functional-tests/compare/v4.12.11...v4.12.12) (2025-09-01)
 
 
