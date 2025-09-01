@@ -106,8 +106,8 @@ public class DirectorJourney extends BasePage {
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
         directorLastName = faker.generateLastName();
-        enterText(firstNameField, SelectorType.XPATH, directorFirstName);
-        enterText(lastNameField, SelectorType.XPATH, directorLastName);
+        waitAndEnterText(firstNameField, SelectorType.XPATH, directorFirstName);
+        waitAndEnterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         enterDateFieldsByPartialId("dob", dates);
     }

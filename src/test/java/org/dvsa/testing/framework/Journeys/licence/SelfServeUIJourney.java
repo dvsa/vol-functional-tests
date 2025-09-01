@@ -34,13 +34,13 @@ public class SelfServeUIJourney extends BasePage {
 
     public void addNewOperator() {
         if (isElementPresent("//h1[text()='Create an account                ']", SelectorType.XPATH)) {
-            enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-            enterText("forename", SelectorType.ID, faker.generateFirstName());
-            enterText("familyName", SelectorType.ID, faker.generateLastName());
-            enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-            enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+            waitAndEnterText("forename", SelectorType.ID, faker.generateFirstName());
+            waitAndEnterText("familyName", SelectorType.ID, faker.generateLastName());
+            waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+            waitAndEnterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
             findSelectAllRadioButtonsByValue("N");
-            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+            waitAndEnterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
             click("termsAgreed", SelectorType.ID);
             UniversalActions.clickSubmit();
@@ -51,7 +51,7 @@ public class SelfServeUIJourney extends BasePage {
 
     public void existingAppOrLicence() {
         findSelectAllRadioButtonsByValue("Y");
-        enterText("fields[licenceContent][licenceNumber]", SelectorType.ID, "ob1057273");
+        waitAndEnterText("fields[licenceContent][licenceNumber]", SelectorType.ID, "ob1057273");
         UniversalActions.clickSubmit();
     }
 
@@ -75,7 +75,7 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeConsultantAccountDetails() {
-        enterText("username", SelectorType.ID, world.DataGenerator.getConsultantUser());
+        waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getConsultantUser());
         enterText("forename", SelectorType.ID, world.DataGenerator.getConsultantForeName());
         enterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());

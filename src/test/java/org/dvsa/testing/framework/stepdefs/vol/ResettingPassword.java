@@ -23,7 +23,7 @@ public class ResettingPassword extends BasePage {
     public void iResetMyPassword() {
         waitAndClickByLinkText("Sign out");
         world.selfServeUIJourney.resettingExternalPassword();
-        enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
+        waitAndEnterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
         waitAndClick("auth.forgot-password.button", SelectorType.ID);
         while (isTextPresent("Failed")) {click(nameAttribute("input","submit"), SelectorType.CSS);
         }
@@ -32,7 +32,7 @@ public class ResettingPassword extends BasePage {
     @Given("i try resetting my password")
     public void iTryResettingMyPassword() {
         world.selfServeUIJourney.resettingExternalPassword();
-        enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName().concat(Str.randomWord(4)));
+        waitAndEnterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName().concat(Str.randomWord(4)));
         click(nameAttribute("input","submit"), SelectorType.CSS);
     }
 

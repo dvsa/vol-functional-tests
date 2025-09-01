@@ -186,7 +186,7 @@ public class SelfServeNavigation extends BasePage {
         javaScriptExecutor(jScript);
 
         if (System.getProperty("platform") == null) {
-            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
+            waitAndEnterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
         } else {
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());

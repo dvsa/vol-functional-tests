@@ -197,7 +197,7 @@ public class ValidLicenceChanges extends BasePage {
         waitForTextToBePresent("Licence discs");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
-        enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
+        waitAndEnterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
         UniversalActions.clickSubmit();
     }
 
@@ -216,10 +216,10 @@ public class ValidLicenceChanges extends BasePage {
         replaceText("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
         click("//*[@id='licence[safetyInsVaries]']", SelectorType.XPATH);
         click("//*[contains(@value,'tach_external')]", SelectorType.XPATH);
-        enterText("//*[@id='licence[tachographInsName]']", SelectorType.XPATH, externalAnalysisBureau);
+        waitAndEnterText("//*[@id='licence[tachographInsName]']", SelectorType.XPATH, externalAnalysisBureau);
         click("//*[@id='add']", SelectorType.XPATH);
         click("//*[contains(text(),'An owner or employee')]", SelectorType.XPATH);
-        enterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
+        waitAndEnterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
         waitAndClickByLinkText("Enter the address yourself");
         world.selfServeUIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         UniversalActions.clickSubmit();

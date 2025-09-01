@@ -42,12 +42,10 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
       | add-previous-licence           | Add licences                  | Add Details of revoked, curtailed or suspended licences |
 
 
-    ##  Why are we using functional tests to test validation
+    Scenario: validation checks when no radio button has been selected
+      When the users attempts to save without entering any data
+       Then a validation message should be displayed
 
-#  Scenario: validation checks when no radio button has been selected
-#    When the users attempts to save without entering any data
-#    Then a validation message should be displayed
-#
-##  Scenario: validation checks on guidance message
-#    When I click the no radio button for the "owner/director" question
-##    Then the guidance text should be displayed
+   Scenario: validation checks on guidance message
+    When I click the no radio button for the "owner/director" question
+     Then the guidance text should be displayed

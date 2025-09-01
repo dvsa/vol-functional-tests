@@ -68,7 +68,7 @@ public class TaskAllocation extends BasePage {
 
     public void addTask() {
         generateCompany();
-        enterText("search", SelectorType.NAME,   world.applicationDetails.getLicenceNumber());
+        waitAndEnterText("search", SelectorType.NAME,   world.applicationDetails.getLicenceNumber());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalNavigation.getLicence();
         waitAndClick("Processing", SelectorType.LINKTEXT);
@@ -77,7 +77,7 @@ public class TaskAllocation extends BasePage {
         HashMap<String, String> currentDate = world.publicHolidayJourney.date.getDateHashMap(0, 0, 1);
         enterDateFieldsByPartialId("details[actionDate]", currentDate);
         selectValueFromDropDown("category", SelectorType.ID, "Licensing");
-        enterText("details[description]", SelectorType.ID, description);
+        waitAndEnterText("details[description]", SelectorType.ID, description);
         selectSystemTeam();
         waitForElementToBeClickable("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "General Task");

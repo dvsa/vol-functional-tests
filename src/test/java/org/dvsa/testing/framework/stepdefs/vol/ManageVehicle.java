@@ -354,7 +354,7 @@ public class ManageVehicle extends BasePage {
         } else{
             vehicleRegistrationMark = vrm;
         }
-        enterText("vehicleSearch[search-value]", SelectorType.NAME, vehicleRegistrationMark);
+        waitAndEnterText("vehicleSearch[search-value]", SelectorType.NAME, vehicleRegistrationMark);
         click("vehicleSearch[submit]", SelectorType.NAME);
     }
 }

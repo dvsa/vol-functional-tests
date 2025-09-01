@@ -108,7 +108,7 @@ public class InternalSearch extends BasePage {
     public void iEnterAndSearchForACompanyNumber() {
         String companyNumber = "12345678";
         waitForTextToBePresent("Business details");
-        enterText("operator-details[companyNumber][company_number]", SelectorType.ID, companyNumber);
+        waitAndEnterText("operator-details[companyNumber][company_number]", SelectorType.ID, companyNumber);
         clickById("operator-details[companyNumber][submit_lookup_company]");
     }
 

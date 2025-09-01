@@ -66,7 +66,7 @@ public class TransportManagerJourney extends BasePage {
         findSelectAllRadioButtonsByValue("Y");
 
         //Add Home Address
-        enterText("postcodeInput1", SelectorType.ID, postCode);
+        waitAndEnterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
         waitAndSelectByIndex("//*[@id='selectAddress1']",SelectorType.XPATH, 1);
 
