@@ -1,7 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.batch.AwsBatch;
+import activesupport.aws.batch.JobDefinition;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.system.Properties;
+import activesupport.system.out.Output;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,6 +16,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,9 +37,10 @@ public class BatchProcess extends BasePage {
     }
 
     @And("the last TM letter job is run")
-    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.LAST_TM_LETTER.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+    public void theLastTMLetterJobIsRun() throws Exception {
+        assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
     }
+
     @Then("i should receive a duplicate vehicle email")
     public void iShouldReceiveADuplicateVehicleEmail() {
 //        For this scenario to work, we need the test pipeline to have access to the read replica DB, due to the fact
@@ -45,13 +50,9 @@ public class BatchProcess extends BasePage {
 
     @When("i add a new bus registration with a past date")
     public void iAddANewBusRegistrationWithAPastDate() {
-        world.internalUIJourney.manualBusRegistration(0,0,1);
+        world.internalUIJourney.manualBusRegistration(0, 0, 1);
     }
 
-    @And("i trigger the expire-bus-registration batch job")
-    public void iTriggerTheExpireBusRegistrationBatchJob() throws IOException, InterruptedException {
-        assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.EXPIRE_BUS_REGISTRATION.toString(),SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
-    }
 
     @Then("the registration should be marked as expired")
     public void theRegistrationShouldBeMarkedAsExpired() throws InterruptedException {
@@ -68,5 +69,10 @@ public class BatchProcess extends BasePage {
     @When("i trigger the ebsr process queue")
     public void iTriggerTheEBSRProcessQueue() throws IOException, InterruptedException {
         assertTrue(GenericUtils.jenkinsProcessQueue(env, BatchCommands.EBSR_QUEUE.toString(), "", SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
+    }
+
+    @And("i trigger the expire-bus-registration batch job")
+    public void iTriggerTheExpireBusRegistrationBatchJob() throws Exception {
+        assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
     }
 }

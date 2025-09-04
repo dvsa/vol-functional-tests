@@ -1,8 +1,10 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
 import activesupport.MissingRequiredArgument;
-import activesupport.driver.Browser;
+import activesupport.aws.batch.AwsBatch;
+import activesupport.aws.batch.JobDefinition;
 import activesupport.number.Int;
+import activesupport.system.out.Output;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
@@ -348,6 +350,41 @@ public class GenericUtils extends BasePage {
         //you can assert against the status code here == 201
         return (statusCode == 201);
     }
+
+    public boolean triggerAwsBatchJob(String jobDefinition) throws Exception {
+        HashMap<String, String> parameters = new HashMap<>();
+        String env = System.getProperty("env", "default").toLowerCase();
+        parameters.put("ENVIRONMENT_NAME", env);
+        try {
+            String jobName = jobDefinition + "-" + System.currentTimeMillis();
+            String jobId = AwsBatch.submitJob(
+                    AwsBatch.JobQueue.DEFAULT,
+                    JobDefinition.valueOf(jobDefinition),
+                    parameters,
+                    jobName
+            );
+            Output.printColoredLog("[INFO] AWS Batch job triggered successfully. Job ID: " + jobId);
+            String jobStatus;
+            long timeout = System.currentTimeMillis() + 100000;
+            do {
+                jobStatus = String.valueOf(AwsBatch.getJobStatus(jobId));
+                Output.printColoredLog("[INFO] Job " + jobId + " status: " + jobStatus);
+                if ("FAILED".equalsIgnoreCase(jobStatus)) {
+                    throw new RuntimeException("Job failed. Status: " + jobStatus);
+                }
+                Thread.sleep(5000);
+            } while (!"SUCCEEDED".equalsIgnoreCase(jobStatus) && System.currentTimeMillis() < timeout);
+
+            if (!"SUCCEEDED".equalsIgnoreCase(jobStatus)) {
+                throw new RuntimeException("Job did not complete successfully within the timeout period.");
+            }
+            return true;
+        } catch (Exception e) {
+            Output.printColoredLog("[ERROR] Failed to trigger AWS Batch job: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     public static boolean jenkinsProcessQueue(EnvironmentType env, String includedTypes, String excludedTypes, String username, String password) throws IOException, InterruptedException {
         var node = URLEncoder.encode("api&&" + env + "&&olcs", StandardCharsets.UTF_8);
