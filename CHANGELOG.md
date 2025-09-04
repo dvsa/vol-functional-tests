@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.14](https://github.com/dvsa/vol-functional-tests/compare/v4.12.13...v4.12.14) (2025-09-04)
+
+
+### Bug Fixes
+
+* failure check ([169acc3](https://github.com/dvsa/vol-functional-tests/commit/169acc3889f107c1b01f652790242b849ec520e5))
+* last tm/expire bus test fix ([428d173](https://github.com/dvsa/vol-functional-tests/commit/428d173a8f731b8dd174ece2fd6c646a733186f9))
+* last tm/expire bus test fix ([9dce51d](https://github.com/dvsa/vol-functional-tests/commit/9dce51df21ceb9d2b7cd5ca2066775f68259de99))
+
 ## [4.12.13](https://github.com/dvsa/vol-functional-tests/compare/v4.12.12...v4.12.13) (2025-09-01)
 
 
