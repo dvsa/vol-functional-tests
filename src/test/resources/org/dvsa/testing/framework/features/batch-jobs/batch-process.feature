@@ -9,7 +9,7 @@ Feature: Batch process
     And the duplicate letter job is run
     Then i should receive a duplicate vehicle email
 
-  @batch-expired-bus @int_regression @FullRegression
+  @batch-expired-bus @int_regression @FullRegression @batch_smoke
   Scenario: Expire Bus Registration
     Given as a "admin" I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal as "admin"

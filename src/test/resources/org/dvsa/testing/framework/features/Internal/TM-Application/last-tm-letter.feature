@@ -1,3 +1,4 @@
+@batch_smoke
 @LAST-TM-LETTER
 @int_regression
 @FullRegression
