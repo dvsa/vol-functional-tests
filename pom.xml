@@ -5,15 +5,14 @@
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 
-    <version>4.12.16-SNAPSHOT</version>
+    <version>4.12.8-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
         <active-support.version>2.7.27</active-support.version>
-        <api-calls.version>3.0.13</api-calls.version>
-
+        <api-calls.version>3.0.11</api-calls.version>
         <uri-constructor.version>2.3.0</uri-constructor.version>
 
         <axe-scanner-version>2.11.0</axe-scanner-version>
@@ -53,16 +52,6 @@
                 <version>7.20.1</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-codec-http2</artifactId>
-                <version>4.1.125.Final</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-codec-http</artifactId>
-                <version>4.1.125.Final</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -268,8 +257,6 @@
             </plugin>
         </plugins>
     </build>
-
-
 
     <!--  Nexus Configuration  -->
     <distributionManagement>
