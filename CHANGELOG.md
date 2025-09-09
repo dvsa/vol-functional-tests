@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.16](https://github.com/dvsa/vol-functional-tests/compare/v4.12.15...v4.12.16) (2025-09-09)
+
+
+### Bug Fixes
+
+* add api new version and test fix ([726b8aa](https://github.com/dvsa/vol-functional-tests/commit/726b8aa82d666faef41014f16ff5fecb8a81ee6d))
+* add api new version and test fix ([2738942](https://github.com/dvsa/vol-functional-tests/commit/2738942047dc10d53f2a4233a962de9e67771903))
+* test fix ([c77048f](https://github.com/dvsa/vol-functional-tests/commit/c77048fcc23c685d76125b8da8d912641f049980))
+
 ## [4.12.15](https://github.com/dvsa/vol-functional-tests/compare/v4.12.14...v4.12.15) (2025-09-05)
 
 
