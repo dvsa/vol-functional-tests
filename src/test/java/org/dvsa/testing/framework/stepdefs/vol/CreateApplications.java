@@ -54,8 +54,6 @@ public class CreateApplications extends BasePage {
     public void iPayForMyApplication() {
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
-        waitForTextToBePresent("Confirm your payment");
-        waitAndClick("confirm", SelectorType.ID);
     }
 
     @And("i pay my second application with my saved card details")
