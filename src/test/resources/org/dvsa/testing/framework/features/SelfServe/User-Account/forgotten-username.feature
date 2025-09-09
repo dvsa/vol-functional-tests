@@ -1,5 +1,5 @@
 @forgotten_username
-#@ss_regression
+@ss_regression
 @FullRegression
 
   Feature: User that has forgotten their username sends request

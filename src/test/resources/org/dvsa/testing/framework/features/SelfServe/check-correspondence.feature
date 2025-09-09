@@ -1,5 +1,5 @@
 @SS-CHECK-DOCUMENTS
-#@ss_regression
+@ss_regression
 @FullRegression
 @printAndSign
 Feature: Check correspondence
