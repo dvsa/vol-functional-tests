@@ -42,7 +42,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void createConversation() {
-        click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='fields[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("form-actions[submit]");
