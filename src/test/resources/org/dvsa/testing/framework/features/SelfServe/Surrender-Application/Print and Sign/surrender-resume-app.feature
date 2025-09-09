@@ -2,7 +2,7 @@
 @Surrenders-resume
 Feature: User should be able to continue where they left off
 
-#@ss_regression @FullRegression
+  @ss_regression @FullRegression
   Scenario Outline: Update correspondence address and resume surrender journey
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     And i have started a surrender
@@ -56,7 +56,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
-#@ss_regression@FullRegression
+  @ss_regression @FullRegression
   Scenario Outline: Leave operator licence page and return back to operator licence page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -69,7 +69,7 @@ Feature: User should be able to continue where they left off
       | OperatorType | LicenceType            |
       | public       | standard_national      |
 
-#@ss_regression @FullRegression
+  @ss_regression @FullRegression
   Scenario:  Leave community licence page and return back to community licence page
     Given i have a valid "goods" "standard_international" licence
     When i have started a surrender

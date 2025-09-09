@@ -1,4 +1,4 @@
-#@ss_regression
+@ss_regression
 @SS-PASSWORD-RESET
 @FullRegression
 @printAndSign

@@ -1,5 +1,5 @@
 @ss-pay-app
-#@ss_regression@FullRegression
+@ss_regression @FullRegression
 Feature: Self Serve Apply for licence
 
   @application_fees @printAndSign
