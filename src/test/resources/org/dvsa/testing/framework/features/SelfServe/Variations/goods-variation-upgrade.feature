@@ -1,4 +1,4 @@
-@ss_regression
+#@ss_regression
 @SS-GOODS-VAR-UPGRADE
 @FullRegression
 

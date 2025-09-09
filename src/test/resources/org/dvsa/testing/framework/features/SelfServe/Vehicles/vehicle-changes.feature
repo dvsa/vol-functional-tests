@@ -1,4 +1,4 @@
-@ss_regression
+#@ss_regression
 @FullRegression
 @printAndSign
 @vehicle-management
