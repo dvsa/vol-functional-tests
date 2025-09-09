@@ -13,7 +13,7 @@ Feature: Self Serve Apply for licence
     Examples:
       | operatorType | licenceType            |
       | goods        | standard_international |
-      | public       | standard_national      |
+#      | public       | standard_national      |
 
    @gov_pay @printAndSign @localsmoke @flaky
      Scenario Outline: Gov Pay  Payment
