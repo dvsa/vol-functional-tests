@@ -1,6 +1,17 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.17](https://github.com/dvsa/vol-functional-tests/compare/v4.12.16...v4.12.17) (2025-09-09)
+
+
+### Bug Fixes
+
+* comment example ([e02dd94](https://github.com/dvsa/vol-functional-tests/commit/e02dd94b3966d2fb9acf3c738746526c2508368d))
+* pay app test fix ([dc1cceb](https://github.com/dvsa/vol-functional-tests/commit/dc1cceb7338ff9dd218cd6b2d6f0bb45d401b02d))
+* pay app test fix ([ec67fbb](https://github.com/dvsa/vol-functional-tests/commit/ec67fbb74142138b32809f531ad61905f4c94d89))
+* pay app test fix ([ebbaa3a](https://github.com/dvsa/vol-functional-tests/commit/ebbaa3a710ac41ac03e07d7af66c86eddfb72d2c))
+* remove flakey tag ([6746d52](https://github.com/dvsa/vol-functional-tests/commit/6746d52bf2d4d85d08c66f46e8da3ea1efd30c71))
+
 ## [4.12.16](https://github.com/dvsa/vol-functional-tests/compare/v4.12.15...v4.12.16) (2025-09-09)
 
 
