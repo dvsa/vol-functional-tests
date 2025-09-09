@@ -42,7 +42,7 @@ public class MessagingJourney extends BasePage {
     }
 
     public void createConversation() {
-        click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='fields[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("form-actions[submit]");
@@ -92,6 +92,7 @@ public class MessagingJourney extends BasePage {
 
     public void openMessageStatusCheck() {
         waitAndClickByLinkText("Messages");
+        refreshPage();
         String actualText = getText("//*[@class='govuk-tag govuk-tag--blue']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("OPEN"));
     }

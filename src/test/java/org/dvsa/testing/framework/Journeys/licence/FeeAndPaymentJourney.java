@@ -151,6 +151,8 @@ public class FeeAndPaymentJourney extends BasePage {
             waitAndEnterText("address-postcode", SelectorType.ID, "NG2 1AW");
             waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
             waitAndClick("submit-card-details", SelectorType.ID);
+            waitForTitleToBePresent("Confirm your payment");
+            waitAndClick("confirm", SelectorType.ID);
         }
         assertFalse(isElementPresent("h1.govuk-heading-l.system-error", SelectorType.CSS),
                 "Technical problems error message is displayed.");
