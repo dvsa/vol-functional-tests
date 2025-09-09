@@ -23,11 +23,9 @@ Feature: Self Serve Apply for licence
 #     And i choose to print and sign
 #     When i pay for my application
 #     Then the application should be submitted
-
-
-    Examples:
-      | operatorType | licenceType            |
-      | goods        | standard_international |
+#    Examples:
+#      | operatorType | licenceType            |
+#      | goods        | standard_international |
 
    @NI_application @smoke @smoke
    Scenario Outline: Create and pay NI application fees
