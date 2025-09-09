@@ -1,5 +1,5 @@
 @OLCS-24464
-@ss_regression
+#@ss_regression
 @FullRegression
 @printAndSign
 

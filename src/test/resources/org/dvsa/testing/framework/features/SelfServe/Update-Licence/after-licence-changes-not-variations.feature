@@ -1,5 +1,5 @@
 @SS-changes-not-variation
-@ss_regression
+#@ss_regression
 @FullRegression
 @printAndSign
 
