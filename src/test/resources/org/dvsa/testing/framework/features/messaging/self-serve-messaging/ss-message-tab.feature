@@ -15,11 +15,6 @@
     When i submit and pay for the application
     Then the messages tab is displayed on the dashboard
 
-  @messageTab-validLicence
-  Scenario: Check display of messages tab with Valid licence
-   Given i have a valid "public" "restricted" licence
-   Then the messages tab is displayed on the dashboard
-
    @messaging-disable
     Scenario: Viewing dashboard with Messaging disabled
      Given i have a valid "public" "restricted" licence

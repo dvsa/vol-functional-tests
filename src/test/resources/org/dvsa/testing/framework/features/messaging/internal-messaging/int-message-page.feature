@@ -15,14 +15,6 @@ Feature: Viewing the messages tab as an internal user for various licence types 
       | goods    | standard_national |
       | goods    | restricted        |
 
-
-  @int-message-page-display
-  Scenario: Check display of messages tab from a valid licence
-    Given i have a valid "goods" "restricted" licence
-    And i create an admin and url search for my licence
-    When i click the messages heading
-    Then the internal messages page is displayed correctly
-
   @int-message-new-conversation
   Scenario: Create a new conversation from caseworker
     Given i have a valid "goods" "restricted" licence
