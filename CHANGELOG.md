@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.21](https://github.com/dvsa/vol-functional-tests/compare/v4.12.20...v4.12.21) (2025-09-12)
+
+
+### Bug Fixes
+
+* bump INT regression timeout to 90mins for iuweb/ssweb ([1101c61](https://github.com/dvsa/vol-functional-tests/commit/1101c61f18c8d0b6386d4aa2a364b64e448fda1c))
+* bump INT regression timeout to 90mins for iuweb/ssweb ([9b34bed](https://github.com/dvsa/vol-functional-tests/commit/9b34bed50dd8b83dd2d14f7f906e881bf7f84242))
+
 ## [4.12.20](https://github.com/dvsa/vol-functional-tests/compare/v4.12.19...v4.12.20) (2025-09-12)
 
 
