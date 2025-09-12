@@ -31,7 +31,7 @@ on:
         type: number
         required: false
         description: "Timeout in minutes for the AWS Batch job"
-        default: 60
+        default: 90
 
 jobs:
   call-e2etest:
