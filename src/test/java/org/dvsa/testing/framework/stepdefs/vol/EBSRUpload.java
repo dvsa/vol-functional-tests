@@ -10,11 +10,13 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
@@ -71,30 +73,42 @@ public class EBSRUpload extends BasePage {
         assertNotNull(trafficArea);
     }
 
-    @And("Documents are generated")
-    public void documentsAreGenerated() throws IllegalBrowserException, IOException {
-        String licenceNumber = world.applicationDetails.getLicenceNumber();
 
-        waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
-        if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
-        }
+@And("Documents are generated")
+public void documentsAreGenerated() throws IllegalBrowserException, IOException {
+    String licenceNumber = world.applicationDetails.getLicenceNumber();
 
-        if (!world.configuration.env.toString().equals("local")) {
-            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(240));
-            try {
-                boolean filesGenerated = wait.until(driver -> {
-                    refreshPageWithJavascript(); // Refresh the page
-                    return findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() >= 2;
-                });
+    waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
 
-                assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
-                        webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
-            } catch (TimeoutException e) {
-                throw new NotFoundException("Files not generated.");
-            }
+    if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
+        waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
+    }
+
+    if (!world.configuration.env.toString().equals("local")) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(240)); // 4 minutes
+
+        try {
+            boolean allDocsGenerated = wait.until(driver -> {
+                refreshPageWithJavascript();
+
+                List<WebElement> generatedFiles = findElements("//*[@class='field file-upload']", SelectorType.XPATH);
+                if (generatedFiles.size() < 2) {
+                    return false;
+                }
+
+                boolean hasDVSA = generatedFiles.stream().anyMatch(el -> el.getText().contains("DVSA Record PDF"));
+                boolean hasMap = generatedFiles.stream().anyMatch(el -> el.getText().contains("Route Track Map PDF (Auto Scale)"));
+
+                return hasDVSA && hasMap;
+            });
+
+            assertTrue(allDocsGenerated, "All required documents were not generated.");
+        } catch (TimeoutException e) {
+            throw new NotFoundException("One or more documents were not generated in the expected time.");
         }
     }
+}
+
 
     @Then("all Service Details fields should be editable")
     public void allServiceDetailsFieldsShouldBeEditable() {
