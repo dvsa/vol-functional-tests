@@ -155,7 +155,7 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException, InterruptedException {
         refreshPageWithJavascript();
         String ebsrFileName;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
@@ -185,6 +185,7 @@ public class BusRegistrationJourney extends BasePage {
         }
         UniversalActions.clickSubmit();
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
+        Thread.sleep(1000);
     }
 
     public void internalSiteEditBusReg() {
