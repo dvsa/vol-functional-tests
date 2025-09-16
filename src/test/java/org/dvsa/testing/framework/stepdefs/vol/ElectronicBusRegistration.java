@@ -23,11 +23,7 @@ public class ElectronicBusRegistration extends BasePage {
     @When("I upload an ebsr file with {string} days notice")
     public void iUploadAnEBSRFileWithDaysNotice(String days) throws IOException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        try {
-            world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
     }
 
     @Then("I should be able to view to bus registration details")

@@ -20,10 +20,7 @@ import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -155,15 +152,17 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException, InterruptedException {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
         refreshPageWithJavascript();
         String ebsrFileName;
-        // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
+
+        // Set the EBSR file name based on environment
         if (world.configuration.env.equals(EnvironmentType.PREPRODUCTION)) {
             ebsrFileName = existingLicenceNumber.concat("EBSR.zip");
         } else {
             ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         }
+
         String existingXmlContent = GenericUtils.readXML();
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
@@ -176,16 +175,18 @@ public class BusRegistrationJourney extends BasePage {
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
 
+        String fullFilePath = System.getProperty("user.dir").concat("/" + zipFilePath);
         if (System.getProperty("platform") == null) {
-            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/" + zipFilePath));
+            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, fullFilePath);
         } else {
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(System.getProperty("user.dir").concat("/" + zipFilePath));
+            addFile.sendKeys(fullFilePath);
         }
+
         UniversalActions.clickSubmit();
+        waitForPageLoadComplete();
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
-        Thread.sleep(1000);
     }
 
     public void internalSiteEditBusReg() {
@@ -203,5 +204,13 @@ public class BusRegistrationJourney extends BasePage {
         dates = world.globalMethods.date.getDateHashMap(0, 0, 2);
         enterDateFieldsByPartialId("endDate", dates);
         UniversalActions.clickSubmit();
+    }
+
+    public static void waitForPageLoadComplete() {
+        new WebDriverWait(getDriver(), Duration.ofSeconds(30)).until(
+                webDriver -> ((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState")
+                        .equals("complete")
+        );
     }
 }
