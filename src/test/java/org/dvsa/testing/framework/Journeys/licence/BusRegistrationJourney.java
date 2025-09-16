@@ -207,7 +207,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public static void waitForPageLoadComplete() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(30)).until(
+        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(
                 webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState")
                         .equals("complete")
