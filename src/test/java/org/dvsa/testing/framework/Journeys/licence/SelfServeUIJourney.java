@@ -85,7 +85,7 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeOperatorAccountDetails() {
-        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+       waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
         enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());

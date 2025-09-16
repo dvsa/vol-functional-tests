@@ -59,11 +59,12 @@ public class ContinuationJourney extends BasePage {
                 world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
             }
         }
-
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
-        completeContinuationConditionsAndUndertakingsPage();
+        if (!world.createApplication.getLicenceType().equalsIgnoreCase(LicenceType.STANDARD_NATIONAL.asString())) {
+            completeContinuationConditionsAndUndertakingsPage();
+        }
         completeContinuationFinancesPage();
         completeContinuationsSignPage();
         completeContinuationPayOrSubmit();
@@ -110,7 +111,6 @@ public class ContinuationJourney extends BasePage {
             waitAndClick("submitAndPay", SelectorType.ID);
             UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
-            waitAndClick("confirm", SelectorType.ID);
         } else {
             waitForTextToBePresent("Declaration");
             click("submit", SelectorType.ID);

@@ -28,18 +28,25 @@ public class TestRunConfiguration {
 
     @After
     public void takeScreenShotAfterFailure(Scenario scenario) {
-        attach(scenario);
-        Collection<String> tags = scenario.getSourceTagNames();
-        for (String tag : tags) {
-            if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
-                if (isLinkPresent("Sign out", 10)) {
-                    waitAndClick("Sign out", SelectorType.LINKTEXT);
+        try {
+            attach(scenario);
+            Collection<String> tags = scenario.getSourceTagNames();
+            for (String tag : tags) {
+                if (Browser.isBrowserOpen() && tag.contains("readOnly")) {
+                    if (isLinkPresent("Sign out", 10)) {
+                        waitAndClick("Sign out", SelectorType.LINKTEXT);
+                    }
                 }
             }
-        }
-        if (Browser.isBrowserOpen()) {
-            Browser.getDriver().quit();
-            Browser.removeLocalDriverThread();
+        } finally {
+            try {
+                if (Browser.isBrowserOpen()) {
+                    Browser.getDriver().quit();
+                    Browser.removeLocalDriverThread();
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred while trying to quit the browser: " + e.getMessage());
+            }
         }
     }
 
