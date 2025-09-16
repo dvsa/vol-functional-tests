@@ -1,6 +1,25 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.22](https://github.com/dvsa/vol-functional-tests/compare/v4.12.21...v4.12.22) (2025-09-16)
+
+
+### Bug Fixes
+
+* continue ([3300960](https://github.com/dvsa/vol-functional-tests/commit/3300960509be4650bd8aef99f2ba8d95562f3724))
+* ebsr test fix ([8481fcc](https://github.com/dvsa/vol-functional-tests/commit/8481fcc5cc07071600dfcb246be5aa654088cccf))
+* ebsr test fix ([5cb045e](https://github.com/dvsa/vol-functional-tests/commit/5cb045e8240717eb21d46a48c3e86ca8c8c2fc80))
+* ebsr test fix ([12d8e04](https://github.com/dvsa/vol-functional-tests/commit/12d8e040d56be38f17c85afa0e0f64c46b62149d))
+* ebsr test fix ([fbaa721](https://github.com/dvsa/vol-functional-tests/commit/fbaa721fa5f4231a51a28ac17a77b9875f18ee9f))
+* ebsr test fix ([e46ec69](https://github.com/dvsa/vol-functional-tests/commit/e46ec6941a9ac4eb802d446e0cda8b364f40d852))
+* internal fix ([60dd556](https://github.com/dvsa/vol-functional-tests/commit/60dd5565db9f02b8ba10aa1f377cedba85183354))
+* reduce time ([0a0fade](https://github.com/dvsa/vol-functional-tests/commit/0a0fadea41c0551e9f45775433142922d525464c))
+* reduce time ([06620d5](https://github.com/dvsa/vol-functional-tests/commit/06620d53a402fdb693fb6f812a0bcfc6236706d1))
+* remove thread sleep and add page load method ([063f5e1](https://github.com/dvsa/vol-functional-tests/commit/063f5e1b55b6bb008985681d8529c344cd861e57))
+* remove thread sleep and add page load method ([69f38fb](https://github.com/dvsa/vol-functional-tests/commit/69f38fbc66b411b9a17d4292cb1c9ab726c4e466))
+* test fixes ([5da6e17](https://github.com/dvsa/vol-functional-tests/commit/5da6e177c3196dd5a1a194eb79627f4b74495595))
+* test fixes ([86b3062](https://github.com/dvsa/vol-functional-tests/commit/86b3062d33550838fcdb0d13cf2e0e70424796d4))
+
 ## [4.12.21](https://github.com/dvsa/vol-functional-tests/compare/v4.12.20...v4.12.21) (2025-09-12)
 
 
