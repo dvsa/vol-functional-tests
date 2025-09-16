@@ -70,7 +70,7 @@ public class SubmissionsJourney extends BasePage {
 
     public void addTransportManagerComments() {
         clickByXPath("//form[@name='transport-managers-section-attachments']/following-sibling::a[1]");
-        waitAndEnterText("fields[comment]_ifr", SelectorType.ID, "-" + world.DataGenerator.getRandomWord());
+        writeCommentInContentEditableField(world.DataGenerator.getRandomWord());
         UniversalActions.clickSubmit();
     }
 

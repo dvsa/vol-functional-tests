@@ -561,6 +561,16 @@ public abstract class BasePage extends DriverUtils {
         throw new RuntimeException("Failed to enter text after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
+    public void writeCommentInContentEditableField(String comment) {
+        String contentEditableXPath = "//div[@contenteditable='true']";
+        String jsScript = "arguments[0].innerText = arguments[1];";
+        WebElement contentEditableField = findElement(contentEditableXPath, SelectorType.XPATH);
+        javaScriptExecutor(jsScript, contentEditableField, comment);
+    }
+
+    public static Object javaScriptExecutor(String jsScript, Object... args) {
+        return ((JavascriptExecutor) getDriver()).executeScript(jsScript, args);
+    }
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {
         return Boolean.parseBoolean(findElement(field, selectorType).getAttribute("disabled"));
     }

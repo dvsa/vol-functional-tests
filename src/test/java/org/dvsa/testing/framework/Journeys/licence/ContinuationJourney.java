@@ -62,7 +62,9 @@ public class ContinuationJourney extends BasePage {
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
-        completeContinuationConditionsAndUndertakingsPage();
+        if (!world.createApplication.getLicenceType().equalsIgnoreCase(LicenceType.STANDARD_NATIONAL.asString())) {
+            completeContinuationConditionsAndUndertakingsPage();
+        }
         completeContinuationFinancesPage();
         completeContinuationsSignPage();
         completeContinuationPayOrSubmit();
