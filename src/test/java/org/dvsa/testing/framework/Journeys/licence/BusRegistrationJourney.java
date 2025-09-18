@@ -184,8 +184,8 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(fullFilePath);
         }
 
-        waitForPageLoadComplete();
         UniversalActions.clickSubmit();
+        waitForPageLoadComplete();
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
     }
 
@@ -207,7 +207,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public static void waitForPageLoadComplete() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(5)).until(
+        new WebDriverWait(getDriver(), Duration.ofSeconds(10)).until(
                 webDriver -> ((JavascriptExecutor) webDriver)
                         .executeScript("return document.readyState")
                         .equals("complete")
