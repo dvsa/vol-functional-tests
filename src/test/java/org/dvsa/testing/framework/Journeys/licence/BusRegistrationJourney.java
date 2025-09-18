@@ -184,8 +184,8 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(fullFilePath);
         }
 
-        UniversalActions.clickSubmit();
         waitForPageLoadComplete();
+        UniversalActions.clickSubmit();
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
     }
 
