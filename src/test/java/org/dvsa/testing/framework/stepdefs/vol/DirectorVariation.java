@@ -52,7 +52,7 @@ public class DirectorVariation extends BasePage {
 
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion(String answer) {
-        directorJourney.answerConvictionsAndPenalties(answer);
+       world.directorJourney.answerConvictionsAndPenalties(answer);
         UniversalActions.clickSaveAndContinue();
     }
 
@@ -64,13 +64,13 @@ public class DirectorVariation extends BasePage {
 
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
-        directorJourney.answerFinancialHistory(answer);
+        world.directorJourney.answerFinancialHistory(answer);
         UniversalActions.clickSaveAndContinue();
     }
 
     @And("^i enter \"([^\"]*)\" to licence history question$")
     public void iEnterToLicenceHistoryQuestion(String answer) {
-        directorJourney.completeLicenceHistory(answer);
+        world.directorJourney.completeLicenceHistory(answer);
     }
 
     @Then("^a snapshot should be created in internal$")
@@ -81,7 +81,7 @@ public class DirectorVariation extends BasePage {
 
     @Given("^i add a director$")
     public void iAddADirector() throws IllegalBrowserException, IOException {
-        directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(false);
+        world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(false);
     }
 
     @Then("^i should have multiple directors on my application$")
