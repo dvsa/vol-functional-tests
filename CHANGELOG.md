@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.24](https://github.com/dvsa/vol-functional-tests/compare/v4.12.23...v4.12.24) (2025-09-19)
+
+
+### Bug Fixes
+
+* amend tests to assert on validation errors ([3976186](https://github.com/dvsa/vol-functional-tests/commit/3976186c15a3cd3b9d7413c58b8842e7853aaf41))
+* amend tests to assert on validation errors ([c6b3bbc](https://github.com/dvsa/vol-functional-tests/commit/c6b3bbca57603cb92ea9b4c5ca8466926c584a23))
+
 ## [4.12.23](https://github.com/dvsa/vol-functional-tests/compare/v4.12.22...v4.12.23) (2025-09-18)
 
 
