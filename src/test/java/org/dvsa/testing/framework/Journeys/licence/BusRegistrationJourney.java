@@ -136,7 +136,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() throws IllegalBrowserException, IOException, InterruptedException {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMinutes(2));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMinutes(3));
         try {
             boolean isSuccessful = wait.until(driver -> {
                 refreshPageWithJavascript();
@@ -184,8 +184,14 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(fullFilePath);
         }
 
-        UniversalActions.clickSubmit();
-        waitForPageLoadComplete();
+        waitForElementToBeClickable("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
     }
 
