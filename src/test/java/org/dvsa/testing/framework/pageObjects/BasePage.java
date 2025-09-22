@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
-    public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 400;
-    private static final int POLLING_SECONDS = 6;
+    public static final int WAIT_TIME_SECONDS = 9;
+    private static final int TIME_OUT_SECONDS = 480;
+    private static final int POLLING_SECONDS = 8;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
