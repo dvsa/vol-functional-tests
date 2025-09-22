@@ -184,7 +184,6 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(fullFilePath);
         }
 
-
         waitForElementToBeClickable("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
         try {
