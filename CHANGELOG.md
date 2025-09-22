@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.26](https://github.com/dvsa/vol-functional-tests/compare/v4.12.25...v4.12.26) (2025-09-22)
+
+
+### Bug Fixes
+
+* wait ([21f26c8](https://github.com/dvsa/vol-functional-tests/commit/21f26c8aaaf038781de1d2d0f27bcfd99f6566ac))
+
 ## [4.12.25](https://github.com/dvsa/vol-functional-tests/compare/v4.12.24...v4.12.25) (2025-09-22)
 
 
