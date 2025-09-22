@@ -184,8 +184,15 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(fullFilePath);
         }
 
-        UniversalActions.clickSubmit();
-        waitForPageLoadComplete();
+
+        waitForElementToBeClickable("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         GenericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
     }
 
