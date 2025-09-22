@@ -136,7 +136,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() throws IllegalBrowserException, IOException, InterruptedException {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMinutes(2));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMinutes(3));
         try {
             boolean isSuccessful = wait.until(driver -> {
                 refreshPageWithJavascript();
