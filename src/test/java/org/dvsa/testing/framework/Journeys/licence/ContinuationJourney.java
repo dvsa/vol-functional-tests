@@ -60,7 +60,7 @@ public class ContinuationJourney extends BasePage {
             }
         }
         clickContinueLicenceOnSelfServe();
-        click("submit", SelectorType.ID);
+        waitAndClick("submit", SelectorType.ID);
         completeContinuationsReviewPage();
         if (!world.createApplication.getLicenceType().equalsIgnoreCase(LicenceType.STANDARD_NATIONAL.asString())) {
             completeContinuationConditionsAndUndertakingsPage();
@@ -82,7 +82,7 @@ public class ContinuationJourney extends BasePage {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]", "");
             waitAndEnterText("averageBalance", SelectorType.ID, necessaryIncome);
             findSelectAllRadioButtonsByValue("N");
-            click("submit", SelectorType.ID);
+            waitAndClick("submit", SelectorType.ID);
         }
     }
 
@@ -113,7 +113,7 @@ public class ContinuationJourney extends BasePage {
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             waitForTextToBePresent("Declaration");
-            click("submit", SelectorType.ID);
+            waitAndClick("submit", SelectorType.ID);
         }
         waitForTextToBePresent("Your licence has been continued");
     }
@@ -121,12 +121,12 @@ public class ContinuationJourney extends BasePage {
     public void completeContinuationsReviewPage() {
         clickAllCheckboxes();
         findSelectAllRadioButtonsByValue("Y");
-        click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+        waitAndClick("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
     }
 
     public void completeContinuationsSignPage() {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            click("content[signatureOptions]", SelectorType.ID);
+            waitAndClick("content[signatureOptions]", SelectorType.ID);
             waitAndClick("sign", SelectorType.ID);
             world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();

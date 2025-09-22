@@ -59,11 +59,11 @@ public class OperatingCentreJourney extends BasePage {
             world.psvJourney.completeVehicleDeclarationsPage();
         }
         waitAndClickByLinkText("Review and declarations");
-        click(confirmDeclaration, SelectorType.XPATH);
+        waitAndClick(confirmDeclaration, SelectorType.XPATH);
         if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority)) {
-            click(submitApplication, SelectorType.XPATH);
+            waitAndClick(submitApplication, SelectorType.XPATH);
         } else {
-            click(submitAndPayForApplication, SelectorType.XPATH);
+            waitAndClick(submitAndPayForApplication, SelectorType.XPATH);
             waitAndClick(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
         }

@@ -44,8 +44,8 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("i navigate to the admin publications page")
     public void iNavigateToTheAdminPublicationsPage() {
-        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-        click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
     }
 
     @When("i generate {int} publications and check their docman link")
@@ -77,7 +77,7 @@ public class PublicationsRelatedSteps extends BasePage {
                     missingLinks++;
                 }
 
-                click("//*[contains(text(),'Close')]", SelectorType.XPATH);
+                waitAndClick("//*[contains(text(),'Close')]", SelectorType.XPATH);
 
                 waitForElementToBeClickable(radioButtonsColumn, SelectorType.XPATH);
                 radioButtons.get(i + 1).click();
@@ -131,7 +131,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
                 waitAndSelectValueFromDropDown("//*[@name='pubDate[month]']", SelectorType.XPATH, month);
                 waitAndSelectValueFromDropDown("//*[@name='pubDate[year]']", SelectorType.XPATH, year);
-                click("//*[@id='filter']", SelectorType.XPATH);
+                waitAndClick("//*[@id='filter']", SelectorType.XPATH);
 
                 // Increasing table if possible
                 show50ResultsAndUpdateWebElementsList(publicationNumberColumn);
@@ -156,7 +156,7 @@ public class PublicationsRelatedSteps extends BasePage {
                         waitAndClickByLinkText(Integer.toString(pageNumber));
                     }
                 }
-                click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
+                waitAndClick("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
                 waitForTextToBePresent("Generate");
             } else {
                 noOfDifferentLicences++;
@@ -169,7 +169,7 @@ public class PublicationsRelatedSteps extends BasePage {
     public void theCorrespondingPublicationIsGeneratedAndPublished() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PUBLICATIONS);
-        click(fiftyResultsPerPageLink, SelectorType.XPATH);
+        waitAndClick(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
         String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
@@ -177,10 +177,10 @@ public class PublicationsRelatedSteps extends BasePage {
         waitAndClick(radioButton, SelectorType.XPATH);
         waitAndClick("generate", SelectorType.ID);
         waitForTextToBePresent("Publication was generated, a new publication was also created");
-        click(fiftyResultsPerPageLink, SelectorType.XPATH);
+        waitAndClick(fiftyResultsPerPageLink, SelectorType.XPATH);
         String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
-        click(matchingRadioButton, SelectorType.XPATH);
-        click("publish", SelectorType.ID);
+        waitAndClick(matchingRadioButton, SelectorType.XPATH);
+        waitAndClick("publish", SelectorType.ID);
         waitForTextToBePresent("Update successful");
     }
 

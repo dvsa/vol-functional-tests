@@ -72,7 +72,7 @@ public class Continuations extends BasePage {
             userPermissions[i] = userPermissionElements.get(i).getText();
         }
         world.continuationJourney.clickContinueLicenceOnSelfServe();
-        click("submit", SelectorType.ID);
+        waitAndClick("submit", SelectorType.ID);
         clickAllCheckboxes();
         assertTrue(isTextPresent("User access"));
         userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
@@ -103,7 +103,7 @@ public class Continuations extends BasePage {
     public void theContinuationConditionsAndUndertakingPageAndSnapshotShouldDisplayTheRightText() throws FileNotFoundException, HttpException {
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         world.continuationJourney.clickContinueLicenceOnSelfServe();
-        click("submit", SelectorType.ID);
+        waitAndClick("submit", SelectorType.ID);
         world.continuationJourney.completeContinuationsReviewPage();
         if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             if (world.licenceCreation.isPSVLicence() &&
@@ -113,7 +113,7 @@ public class Continuations extends BasePage {
                     world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
                 }
                 clickAllCheckboxes();
-                click("submit", SelectorType.ID);
+                waitAndClick("submit", SelectorType.ID);
             }
         }
         world.continuationJourney.completeContinuationFinancesPage();
@@ -130,7 +130,7 @@ public class Continuations extends BasePage {
     @Then("the correct checks should display on the continuation review details page and continuation snapshot")
     public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() throws HttpException {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
-        click("submit", SelectorType.ID);
+        waitAndClick("submit", SelectorType.ID);
         world.continuationJourney.checkContinuationReviewSections();
         world.continuationJourney.completeContinuationsReviewPage();
         world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();

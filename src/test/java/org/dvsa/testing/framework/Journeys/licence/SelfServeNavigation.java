@@ -200,7 +200,7 @@ public class SelfServeNavigation extends BasePage {
             world.psvJourney.selectVehicleSize("nine_and_above");
             world.psvJourney.completeVehiclesWith9SeatsOrMorePage();
             world.psvJourney.completeLimousinesVehicles("Yes");
-            click("overview-item__safety", SelectorType.ID);
+            waitAndClick("overview-item__safety", SelectorType.ID);
         }
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
