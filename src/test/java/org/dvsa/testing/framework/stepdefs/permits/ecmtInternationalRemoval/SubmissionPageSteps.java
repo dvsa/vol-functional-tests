@@ -143,6 +143,7 @@ public class SubmissionPageSteps extends BasePermitPage {
 
     @When("I attach a file to the submission")
     public void iAttachAFileToTheSubmission() {
+        waitForUrlToContain("/submission/details/", 5);
         world.submissionsJourney.attachFile();
     }
 
