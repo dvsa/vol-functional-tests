@@ -79,7 +79,7 @@ public class CreateApplications extends BasePage {
         }
 
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        UniversalActions.ClickPayAndSubmit();
+        UniversalActions.clickPayAndSubmit();
         waitForTextToBePresent("Would you like to use a stored card?");
         selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
         UniversalActions.clickPay();

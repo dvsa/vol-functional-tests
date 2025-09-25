@@ -33,9 +33,9 @@ public class OperatingCentreJourney extends BasePage {
 
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
-    String submitAndPayForApplication = "//button[@id='submitAndPay']";
+    String submitAndPayForApplication = "//*[@id='submitAndPay']";
 
-    String payNow = "//button[@id='form-actions[pay]']";
+    String payNow = "//*[@id='form-actions[pay]']";
     public String psvCertifiedDocsField = "//*[@id=\"totCommunityLicences\"]";
     public String trafficAreaDropdown = "//*[@id='trafficArea']";
 
@@ -59,12 +59,12 @@ public class OperatingCentreJourney extends BasePage {
             world.psvJourney.completeVehicleDeclarationsPage();
         }
         waitAndClickByLinkText("Review and declarations");
-        waitAndClick(confirmDeclaration, SelectorType.XPATH);
+        clickByXPath("//*[@id='declarationsAndUndertakings[declarationConfirmation]']");
+        waitAndClick("//*[@id='submitAndPay']", SelectorType.XPATH);
         if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority)) {
             waitAndClick(submitApplication, SelectorType.XPATH);
         } else {
-            waitAndClick(submitAndPayForApplication, SelectorType.XPATH);
-            waitAndClick(payNow, SelectorType.XPATH);
+            UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         }
     }

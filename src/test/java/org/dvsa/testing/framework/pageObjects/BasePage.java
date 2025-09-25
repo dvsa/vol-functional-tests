@@ -525,16 +525,28 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForElementToBePresent(@NotNull String selector) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class)
-                .ignoring(TimeoutException.class)
-                .ignoring(ElementNotInteractableException.class);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
 
-        wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
+                wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
+            }
+        }
+        throw new RuntimeException("Failed to wait for element to be present after " + maxRetries + " attempts.");
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
