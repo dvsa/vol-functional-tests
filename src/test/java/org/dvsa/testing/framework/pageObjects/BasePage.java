@@ -402,6 +402,28 @@ public abstract class BasePage extends DriverUtils {
         return getText(selector, selectorType);
     }
 
+    public static String waitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class);
+
+                WebElement element = wait.until(ExpectedConditions.visibilityOf(findElement(selector, selectorType)));
+                return element.getText();
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
+            }
+        }
+        throw new RuntimeException("Failed to retrieve text after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
+    }
+
     public static void untilUrlMatches(String needle, long duration, ChronoUnit unit) {
         new FluentWait<>(getDriver())
                 .pollingEvery(Duration.of(500, unit))

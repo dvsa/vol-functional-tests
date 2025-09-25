@@ -157,7 +157,7 @@ public class SubmissionPageSteps extends BasePermitPage {
     public void iAddAndAssignASubmission() {
         world.internalNavigation.getLicence();
         world.submissionsJourney.createAndSubmitSubmission();
-        internalUsername = getElementValueByText("//li[@class='user-menu__item']", SelectorType.XPATH).trim().replace(":","");
+        internalUsername = waitAndGetElementValueByText("//li[@class='user-menu__item']", SelectorType.XPATH).trim().replace(":","");
         world.submissionsJourney.checkTCDcDropDown();
     }
 
