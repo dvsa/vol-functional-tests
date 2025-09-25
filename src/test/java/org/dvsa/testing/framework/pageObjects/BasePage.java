@@ -584,7 +584,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void enterText(@NotNull String selector, @NotNull int intValue, @NotNull SelectorType selectorType) {
-        enterText(selector, selectorType, String.valueOf(intValue));
+        waitAndEnterText(selector, selectorType, String.valueOf(intValue));
     }
 
     public void replaceText(String selector, SelectorType selectorType, String text) {
@@ -756,7 +756,7 @@ public abstract class BasePage extends DriverUtils {
         if (jScript != null) {
             javaScriptExecutor(jScript);
         }
-        enterText(inputBoxSelector, selectorType, file);
+        waitAndEnterText(inputBoxSelector, selectorType, file);
     }
 
     public static void untilNotInDOM(@NotNull String selector, int seconds) {

@@ -128,9 +128,9 @@ public class OperatingCentreJourney extends BasePage {
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         waitAndClick(enterAddressManually,  SelectorType.LINKTEXT);
         world.selfServeUIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
+        waitAndEnterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
-            enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+            waitAndEnterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
             waitAndClick(uploadAdvertLater, SelectorType.XPATH);
         }
         clickById(confirmOffStreetParkingCheckbox);
@@ -167,7 +167,7 @@ public class OperatingCentreJourney extends BasePage {
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         waitAndClick(enterAddressManually, SelectorType.LINKTEXT);
         world.selfServeUIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        enterText(operatingCentreVehicleField, SelectorType.XPATH, numberOfVehicles);
+        waitAndEnterText(operatingCentreVehicleField, SelectorType.XPATH, numberOfVehicles);
         clickById(confirmOffStreetParkingCheckbox);
         UniversalActions.clickSubmit();
     }
