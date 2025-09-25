@@ -118,4 +118,13 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         UniversalActions.clickSubmit();
     }
 
+    public void addSLAExceptions(){
+        waitAndClick("addCasePiSlaException", SelectorType.ID);
+        waitForTextToBePresent("Add SLA Exception");
+        waitAndClick("slaException", SelectorType.ID);
+        selectRandomValueFromDropDown("slaException", SelectorType.ID);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        assert (isTextPresent("SLA Description"));
+    }
+
 }

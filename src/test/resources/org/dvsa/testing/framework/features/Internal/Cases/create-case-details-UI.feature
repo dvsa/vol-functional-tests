@@ -17,6 +17,7 @@ Feature: Public enquiry added and published and deletion of case notes
     And i add a new public inquiry
     And i add and publish a hearing
     Then the public inquiry should be published
+    And i add sla exception
 
 
   Scenario: Delete case note
