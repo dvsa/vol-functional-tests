@@ -221,18 +221,18 @@ public class GovSignInJourney extends BasePage {
         String dateOfBirthDay = "08";
         String dateOfBirthMonth = "07";
         String dateOfBirthYear = "1965";
-        enterText("dateOfBirth-day", SelectorType.NAME, dateOfBirthDay);
-        enterText("dateOfBirth-month", SelectorType.NAME, dateOfBirthMonth);
-        enterText("dateOfBirth-year", SelectorType.NAME, dateOfBirthYear);
+        waitAndEnterText("dateOfBirth-day", SelectorType.NAME, dateOfBirthDay);
+        waitAndEnterText("dateOfBirth-month", SelectorType.NAME, dateOfBirthMonth);
+        waitAndEnterText("dateOfBirth-year", SelectorType.NAME, dateOfBirthYear);
     }
 
     public void enterExpiryDate() {
         String expiryDay = "01";
         String expiryMonth = "01";
         String expiryYear = "2030";
-        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, expiryDay);
-        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, expiryMonth);
-        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, expiryYear);
+        waitAndEnterText("//*[@id='expiryDate-day']", SelectorType.XPATH, expiryDay);
+        waitAndEnterText("//*[@id='expiryDate-month']", SelectorType.XPATH, expiryMonth);
+        waitAndEnterText("//*[@id='expiryDate-year']", SelectorType.XPATH, expiryYear);
     }
 
     public void cycleThroughSignInJourney() {

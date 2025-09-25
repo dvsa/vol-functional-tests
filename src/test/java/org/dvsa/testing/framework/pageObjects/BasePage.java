@@ -584,7 +584,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void enterText(@NotNull String selector, @NotNull int intValue, @NotNull SelectorType selectorType) {
-        enterText(selector, selectorType, String.valueOf(intValue));
+        waitAndEnterText(selector, selectorType, String.valueOf(intValue));
     }
 
     public void replaceText(String selector, SelectorType selectorType, String text) {
@@ -711,6 +711,11 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
+    public static void waitForUrlToContain(String substring, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.urlContains(substring));
+    }
+
     public void enterDateFieldsByPartialId(String regex, HashMap<String, String> hashMapDate) {
         replaceText(regex.concat("_day"), SelectorType.ID, hashMapDate.get("day"));
         replaceText(regex.concat("_month"), SelectorType.ID, hashMapDate.get("month"));
@@ -751,7 +756,7 @@ public abstract class BasePage extends DriverUtils {
         if (jScript != null) {
             javaScriptExecutor(jScript);
         }
-        enterText(inputBoxSelector, selectorType, file);
+        waitAndEnterText(inputBoxSelector, selectorType, file);
     }
 
     public static void untilNotInDOM(@NotNull String selector, int seconds) {

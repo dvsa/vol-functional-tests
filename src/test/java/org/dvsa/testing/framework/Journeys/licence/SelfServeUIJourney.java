@@ -76,21 +76,21 @@ public class SelfServeUIJourney extends BasePage {
 
     public void completeConsultantAccountDetails() {
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getConsultantUser());
-        enterText("forename", SelectorType.ID, world.DataGenerator.getConsultantForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
-        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
-        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
+        waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getConsultantForeName());
+        waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
+        waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
+        waitAndEnterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
         click("termsAgreed", SelectorType.ID);
         UniversalActions.clickSubmit();
     }
 
     public void completeOperatorAccountDetails() {
        waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
-        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+        waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
         waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         if (isElementPresent("termsAgreed", SelectorType.ID)){
             click("termsAgreed", SelectorType.ID);
@@ -251,8 +251,8 @@ public class SelfServeUIJourney extends BasePage {
     public void addAVehicleToAnApplication(String vrm, String weight){
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");
-        enterText(VRMField, SelectorType.XPATH, vrm);
-        enterText(weightField, SelectorType.XPATH, weight);
+        waitAndEnterText(VRMField, SelectorType.XPATH, vrm);
+        waitAndEnterText(weightField, SelectorType.XPATH, weight);
         UniversalActions.clickSubmit();
     }
 
