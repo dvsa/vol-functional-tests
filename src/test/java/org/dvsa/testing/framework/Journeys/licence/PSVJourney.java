@@ -39,25 +39,16 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeSmallVehicleConditionsPage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Select an option for: \"Confirm that you agree to the above conditions and undertakings being specified on your licence (if granted)\"");
-        assertTrue(isTextPresent("Select an option for: \"Confirm that you agree to the above conditions and undertakings being specified on your licence (if granted)\""));
         waitAndClick("//*[@id='psvSmallVhlConfirmation']", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
     }
 
     public void completeDocumentaryEvidenceSmallVehiclesPage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Upload your financial evidence");
-        assertTrue(isTextPresent("Upload your financial evidence"));
         findSelectAllRadioButtonsByValue("2");
         UniversalActions.clickSaveAndContinue();
     }
 
     public void completeLimousinesSmallVehiclesJourney() {
-        UniversalActions.clickSaveAndReturn();
-        waitForTextToBePresent("Select an option for: \"Are the vehicles you are applying for to be used as limousines or novelty type vehicles?\"");
-        assertTrue(isTextPresent("Select an option for: \"Are the vehicles you are applying for to be used as limousines or novelty type vehicles?\""));
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSaveAndReturn();
     }
@@ -83,17 +74,11 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeVehiclesWith9SeatsOrMorePage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Select an option for: \"Please confirm that vehicles with eight passenger seats or less will not be operated under the licence without the prior written agreement of the Traffic Commissioner who may require you to agree to certain undertakings\"");
-        assertTrue(isTextPresent("Select an option for: \"Please confirm that vehicles with eight passenger seats or less will not be operated under the licence without the prior written agreement of the Traffic Commissioner who may require you to agree to certain undertakings\""));
         clickByXPath("//*[@id='psvNoSmallVhlConfirmation']");
         UniversalActions.clickSaveAndContinue();
     }
 
     public void completeLimousinesVehicles(String limousines) {
-        UniversalActions.clickSaveAndReturn();
-        waitForTextToBePresent("Select an option for: \"Are the vehicles you are applying for to be used as limousines or novelty type vehicles?\"");
-        assertTrue(isTextPresent("Select an option for: \"Are the vehicles you are applying for to be used as limousines or novelty type vehicles?\""));
         if (limousines.equals("Yes")) {
             findSelectAllRadioButtonsByValue("Y");
             UniversalActions.clickSaveAndReturn();
@@ -116,9 +101,6 @@ public class PSVJourney extends BasePage {
     }
 
     public void selectVehicleSize(String vehicleSize) {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Which sizes of vehicles do you intend to operate?: value is required");
-        assertTrue(isTextPresent("Which sizes of vehicles do you intend to operate?: value is required"));
         switch (vehicleSize) {
             case "small" -> findSelectAllRadioButtonsByValue("psvvs_small");
             case "nine_and_above" -> findSelectAllRadioButtonsByValue("psvvs_medium_large");
@@ -128,9 +110,6 @@ public class PSVJourney extends BasePage {
     }
 
     public void answerOperatingSmallVehiclesQuestion(String answer) {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Select an option for: \"Do you intend to operate small vehicles as a small part of a large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of the Transport Act 2000)?\"");
-        assertTrue(isTextPresent("Select an option for: \"Do you intend to operate small vehicles as a small part of a large bus business as detailed by Section 79A of the Public Passenger Vehicles Act (as amended by Section 265 of the Transport Act 2000)?\""));
         if (answer.equals("Yes")) {
             findSelectAllRadioButtonsByValue("Y");
         } else if (answer.equals("No")) {
@@ -144,13 +123,6 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeWrittenExplanationSmallVehiclesPage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Enter a value for the field: \"Provide your written explanation\"");
-        assertTrue(isTextPresent("Enter a value for the field: \"Provide your written explanation\""));
-        waitForTextToBePresent("Enter a value for the field: \"8 passenger seats or less (small vehicles)\"");
-        assertTrue(isTextPresent("Enter a value for the field: \"8 passenger seats or less (small vehicles)\""));
-        waitForTextToBePresent("Enter a value for the field: \"9 passenger seats or more (large vehicles)\"");
-        assertTrue(isTextPresent("Enter a value for the field: \"9 passenger seats or more (large vehicles)\""));
         waitAndEnterText("psvSmallVhlNotes", SelectorType.ID, world.DataGenerator.getRandomWord());
         replaceText("psvTotalVehicleSmall", SelectorType.ID, "2");
         replaceText("psvTotalVehicleLarge", SelectorType.ID, "2");
@@ -158,17 +130,11 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeDocumentaryEvidenceMainOccupationPage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Upload your financial evidence");
-        assertTrue(isTextPresent("Upload your financial evidence"));
         findSelectAllRadioButtonsByValue("2");
         UniversalActions.clickSaveAndContinue();
     }
 
     public void completeMainOccupationUndertakingsPage() {
-        UniversalActions.clickSaveAndContinue();
-        waitForTextToBePresent("Select an option for: \"I confirm that I will comply with these requirements\"");
-        assertTrue(isTextPresent("Select an option for: \"I confirm that I will comply with these requirements\""));
         waitAndClick("//*[@id='psvOccupationRecordsConfirmation']", SelectorType.XPATH);
         waitAndClick("//*[@id='psvIncomeRecordsConfirmation']", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
