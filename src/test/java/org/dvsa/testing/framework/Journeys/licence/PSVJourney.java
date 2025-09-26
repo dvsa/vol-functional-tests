@@ -63,22 +63,22 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean vehicleSizeStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__vehicles_size']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__vehicles_size']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean smallVehiclesConditionsStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_small_conditions']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_conditions']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean documentaryEvidenceSmallVehiclesStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_documentary_evidence_small']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_documentary_evidence_small']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean limousinesStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_operate_novelty']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_novelty']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
@@ -111,7 +111,7 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean vehicles9SeatsOrMoreStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
@@ -175,22 +175,22 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean smallVehiclesStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_operate_small']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_operate_small']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean writtenExplanationSmallVehiclesStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_small_part_written']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_part_written']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean documentaryEvidenceMainOccupationStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_documentary_evidence_large']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_documentary_evidence_large']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
     public boolean mainOccupationUndertakingsStatus(String status) {
-        String sectionStatus = getText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 }
