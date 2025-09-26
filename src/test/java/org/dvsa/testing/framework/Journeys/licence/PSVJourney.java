@@ -39,7 +39,7 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeSmallVehicleConditionsPage() {
-        waitAndClick("//*[@id='psvSmallVhlConfirmation']", SelectorType.XPATH);
+        clickByXPath("//*[@id='psvSmallVhlConfirmation']");
         UniversalActions.clickSaveAndContinue();
     }
 
