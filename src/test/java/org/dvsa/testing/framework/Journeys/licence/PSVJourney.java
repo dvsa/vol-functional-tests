@@ -190,7 +190,7 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean mainOccupationUndertakingsStatus(String status) {
-        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 }
