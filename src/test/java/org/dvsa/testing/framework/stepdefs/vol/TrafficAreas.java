@@ -83,7 +83,7 @@ public class TrafficAreas extends BasePage {
         clickByXPath("//input[@value='lcat_gv']");
         clickByXPath("//input[@value='ltyp_si']");
         clickByXPath("//input[@value='app_veh_type_lgv']");
-        click("lgv-declaration-confirmation", SelectorType.ID);
+        clickByXPath("//*[@id='lgv-declaration-confirmation']");
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Apply for a new licence");
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
@@ -131,6 +131,7 @@ public class TrafficAreas extends BasePage {
         enterText("totAuthLgvVehicles", SelectorType.ID, "5");
         enterText("totCommunityLicences", SelectorType.ID, "5");
         UniversalActions.clickSaveAndContinue();
+        waitForUrlToContain("/operating-centres/", 2);
         waitForElementToBePresent("//p[@role='alert']");
         assertTrue(isTextPresent("You already have a Goods application or licence within the North West of England traffic area"));
     }
@@ -205,8 +206,8 @@ public class TrafficAreas extends BasePage {
     }
 
     private void enterAndSelectCorrespondenceAddressWithPostcodeSearch(String postcode) {
-        enterText(correspondenceAddressSearchField, SelectorType.XPATH, postcode);
-        click(correspondenceAddressSearchButton, SelectorType.XPATH);
+        waitAndEnterText(correspondenceAddressSearchField, SelectorType.XPATH, postcode);
+        waitAndClick(correspondenceAddressSearchButton, SelectorType.XPATH);
         waitForElementToBePresent(correspondenceAddressSearchDropdown);
         selectValueFromDropDownByIndex(correspondenceAddressSearchDropdown, SelectorType.XPATH, 1);
         waitForElementToBeClickable(correspondenceAddressLine1, SelectorType.XPATH);

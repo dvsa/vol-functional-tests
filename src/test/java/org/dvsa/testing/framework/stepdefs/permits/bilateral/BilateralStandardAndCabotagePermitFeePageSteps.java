@@ -47,7 +47,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage {
 
     @Then("the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table")
     public void theApplicationOnTheBilateralAndCabotageFeePageAreDisplayedCorrectlyInFeePageTable() {
-        assertTrue(true,BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
+        assertTrue(true,BasePermitPage.waitAndGetElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
 
         // Application reference check
         String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
@@ -78,15 +78,15 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage {
         boolean isStandardMultipleJourneyPermit = NumberOfPermitsPageJourney.getLabel().contentEquals("Standard multiple journey permit");
         int expectedTotal = isStandardMultipleJourneyPermit ? numberOfPermits * 50 : numberOfPermits * 8;
         assertEquals(actualTotal, expectedTotal);
-        assertTrue(true, String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH).contains(PermitUsagePage.getJourney())));
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
+        assertTrue(true, String.valueOf(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH).contains(PermitUsagePage.getJourney())));
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
     }
 
     @Then("the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table when cabotage is selected")
     public void theApplicationDetailsOnTheBilateralStandardAndCabotage() {
-        assertTrue(true, BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
+        assertTrue(true, BasePermitPage.waitAndGetElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
 
         // Application reference check
         String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
@@ -122,14 +122,14 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage {
             assertEquals(String.valueOf(totalpermits), String.valueOf(actualNumberOfPermits));
 
             // Fee breakdown check
-            assertTrue(true, String.valueOf(getElementValueByText("//tbody/tr[1]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getStandardLabel())));
-            assertEquals(getElementValueByText("//tbody/tr[1]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
-            assertEquals(getElementValueByText("//tbody/tr[1]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getStandardValue());
-            assertEquals(getElementValueByText("//tbody/tr[1]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalStandardValue);
-            assertTrue(true, String.valueOf(getElementValueByText("//tbody/tr[2]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getCabotageLabel())));
-            assertEquals(getElementValueByText("//tbody/tr[2]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
-            assertEquals(getElementValueByText("//tbody/tr[2]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getCabotageValue());
-            assertEquals(getElementValueByText("//tbody/tr[2]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalCabotageValue);
+            assertTrue(true, String.valueOf(waitAndGetElementValueByText("//tbody/tr[1]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getStandardLabel())));
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[1]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[1]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getStandardValue());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[1]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalStandardValue);
+            assertTrue(true, String.valueOf(waitAndGetElementValueByText("//tbody/tr[2]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getCabotageLabel())));
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[2]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[2]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getCabotageValue());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr[2]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalCabotageValue);
         }
         // if the journey is any other than Standard Multiple then total fee is number of permits * 8
         else {
@@ -146,10 +146,10 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage {
             assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
             // fee breakdown check
-            assertTrue(true, String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH).contains(PermitUsagePage.getJourney())));
-            assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
-            assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
-            assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
+            assertTrue(true, String.valueOf(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH).contains(PermitUsagePage.getJourney())));
+            assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
+            assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
         }
     }
 }

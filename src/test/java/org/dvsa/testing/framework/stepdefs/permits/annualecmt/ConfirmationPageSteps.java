@@ -35,7 +35,7 @@ public class ConfirmationPageSteps extends BasePage {
     @Then("the reference number on the annual ECMT submitted page  is as expected")
     public void theReferenceNumberOnTheAnnualECMT() {
         SubmittedPage.untilOnPage();
-        String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        String actualReference = waitAndGetElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
         assertTrue(actualReference.contains(world.applicationDetails.getLicenceNumber()));
     }
     @Then("all advisory texts on Annual ECMT submitted page is displayed correctly")

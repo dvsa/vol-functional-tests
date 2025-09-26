@@ -65,7 +65,7 @@ public class ValidPermitsPageSteps extends BasePage {
     @Then("the user is in the annual ECMT list page")
     public void theUserIsInTheAnnualECMTListPage() {
         assertTrue(isPath("/permits/valid/\\d+"));
-        String title = BasePage.getElementValueByText("h1.govuk-heading-l", SelectorType.CSS).trim();
+        String title = BasePage.waitAndGetElementValueByText("h1.govuk-heading-l", SelectorType.CSS).trim();
         assertEquals("Annual ECMT", title);
     }
 
@@ -83,7 +83,7 @@ public class ValidPermitsPageSteps extends BasePage {
     @Then("the ECMT application licence number is displayed above the page heading")
     public void theECMTApplicationLicenceNumberIsDisplayedAboveThePageHeading() {
         String expectedReference = world.applicationDetails.getLicenceNumber();
-        String actual = BasePermitPage.getElementValueByText("//span[@class='govuk-caption-xl']", SelectorType.XPATH);
+        String actual = BasePermitPage.waitAndGetElementValueByText("//span[@class='govuk-caption-xl']", SelectorType.XPATH);
         assertEquals(expectedReference, actual);
     }
 

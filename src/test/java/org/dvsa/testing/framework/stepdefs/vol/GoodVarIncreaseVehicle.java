@@ -57,7 +57,7 @@ public class GoodVarIncreaseVehicle extends BasePage {
         waitAndClickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH,"All");
         waitForTextToBePresent("Grant Fee for application");
-        assertTrue(getElementValueByText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH).equalsIgnoreCase("PAID"));
+        assertTrue(waitAndGetElementValueByText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH).equalsIgnoreCase("PAID"));
     }
 
     @And("a selfserve user creates a variation and adds an operating centre")

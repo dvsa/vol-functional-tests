@@ -62,7 +62,6 @@ public class TMDetails extends BasePage {
 
     @When("I click on the {string} button")
     public void iClickOnTheButton(String button) {
-        scrollToBottom();
         findSelectAllRadioButtonsByValue("Y");
         waitAndClick(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
     }

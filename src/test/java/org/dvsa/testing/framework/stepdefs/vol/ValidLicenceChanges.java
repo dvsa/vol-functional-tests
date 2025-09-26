@@ -189,7 +189,6 @@ public class ValidLicenceChanges extends BasePage {
             UniversalActions.refreshPageWithJavascript();
             waitForTextToBePresent("Licence discs");
             waitAndClick("//button[contains(@name,'table[action][void]')]", SelectorType.XPATH);
-            waitForTextToBePresent("Are you sure you would like to void these discs?");
             UniversalActions.clickSubmit();
             waitForElementToBeClickable("//button[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }

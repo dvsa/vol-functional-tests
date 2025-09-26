@@ -48,7 +48,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
 
     @Then("I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted")
     public void iAmNavigatedBackToThePermitsDashboard() {
-        assertEquals(getElementValueByText("//span[@class='status grey']", SelectorType.XPATH), "NOT YET SUBMITTED");
+        assertEquals(waitAndGetElementValueByText("//span[@class='status grey']", SelectorType.XPATH), "NOT YET SUBMITTED");
         HomePage.PermitsTab.selectFirstOngoingApplication();
     }
 

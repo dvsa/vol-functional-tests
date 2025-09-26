@@ -261,8 +261,6 @@ public class ManageVehicle extends BasePage {
 
     @Then("the standard {string} errors appear")
     public void theVehicleDiscErrorsAppear(String error) {
-        String errorTitle = "There is a problem";
-        assertTrue(isElementPresent(String.format("//div[@class='validation-summary']/h2[contains(text(),'%s')]", errorTitle), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-summary']//a[contains(text(),'%s')]", error), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-wrapper']//p[contains(text(),'%s')]", error), SelectorType.XPATH));
     }

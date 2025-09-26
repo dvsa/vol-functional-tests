@@ -53,7 +53,7 @@ public class InternalSearchJourney extends BasePage {
     }
 
     public void registeredVRMDisplay() {
-        String vrm = BasePage.getElementValueByText("//*[@id='application_vehicle-safety_vehicle-psv']//table/tbody/tr[1]/td[1]/button", SelectorType.XPATH);
+        String vrm = BasePage.waitAndGetElementValueByText("//*[@id='application_vehicle-safety_vehicle-psv']//table/tbody/tr[1]/td[1]/button", SelectorType.XPATH);
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Vehicle");
         replaceText("//*[@name='search']", SelectorType.XPATH, vrm);
         click("//*[@name='submit']", SelectorType.XPATH);

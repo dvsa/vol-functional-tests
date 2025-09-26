@@ -29,7 +29,7 @@ public class FeePageSteps extends BasePermitPage {
         world.permitFeePage.untilOnPage();
 
         // Checking Fee Summary section contents are displayed correctly
-        assertTrue(true,BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
+        assertTrue(true,BasePermitPage.waitAndGetElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));
 
         // Application reference check
         String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
@@ -58,9 +58,9 @@ public class FeePageSteps extends BasePermitPage {
         assertEquals(actualTotal, expectedTotal);
 
         //Fee breakdown check
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH), "Standard single journey");
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
-        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH), "Standard single journey");
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
+        assertEquals(waitAndGetElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotal);
     }
 
     @When("I submit and pay the Bilateral fee")

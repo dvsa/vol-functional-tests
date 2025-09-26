@@ -296,5 +296,6 @@ public class InternalApplication extends BasePage {
     @And("the application fee has been paid")
     public void theApplicationFeeHasBeenPaid() {
         world.internalUIJourney.payFee();
+        refreshPageWithJavascript();
     }
 }

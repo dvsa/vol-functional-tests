@@ -116,7 +116,7 @@ public class SurrenderJourney extends BasePage {
         world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
         checkSignInConfirmation();
         refreshPageWithJavascript();
-        assertTrue(getElementValueByText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH).equalsIgnoreCase("SURRENDER UNDER CONSIDERATION"));
+        assertTrue(waitAndGetElementValueByText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH).equalsIgnoreCase("SURRENDER UNDER CONSIDERATION"));
     }
 
     public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, IOException {

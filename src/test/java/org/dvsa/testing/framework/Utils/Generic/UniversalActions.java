@@ -64,7 +64,7 @@ public class UniversalActions extends BasePage {
 
     public static void clickPay() {waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);}
 
-    public static void ClickPayAndSubmit() {waitAndClick( "//*[@id='submitAndPay']", SelectorType.XPATH);}
+    public static void clickPayAndSubmit() {waitAndClick( "//*[@id='submitAndPay']", SelectorType.XPATH);}
 
     public static void clickHome() {
         refreshPage();
