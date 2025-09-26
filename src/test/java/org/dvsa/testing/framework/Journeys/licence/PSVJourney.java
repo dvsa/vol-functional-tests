@@ -136,7 +136,7 @@ public class PSVJourney extends BasePage {
 
     public void completeMainOccupationUndertakingsPage() {
         clickByXPath("//*[@id='psvOccupationRecordsConfirmation']");
-        clickByXPath("//*[@id='psvIncomeRecordsConfirmation']')");
+        clickByXPath("//*[@id='psvIncomeRecordsConfirmation']");
         UniversalActions.clickSaveAndContinue();
     }
 
