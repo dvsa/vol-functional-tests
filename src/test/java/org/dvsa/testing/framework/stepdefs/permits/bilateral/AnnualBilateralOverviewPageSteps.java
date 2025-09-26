@@ -34,7 +34,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage  {
 
     @Then("the status of answers questions for individual countries as complete")
     public void theStatusOfAnswersQuestionsForIndividualCountriesAsComplete() {
-        String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
+        String s1 = BasePage.waitAndGetElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
         assertEquals(s1, "COMPLETED");
     }
 
@@ -77,7 +77,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage  {
         assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
         world.annualBilateralJourney.completePeriodTypePage(typeOfMoroccoJourney);
         NumberOfPermitsPage.untilOnPage();
-        assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+        assertEquals(waitAndGetElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
         NumberOfPermitsPageJourney.hasPageHeading();
         BasePermitPage.saveAndContinue();
         NumberOfPermitsPageJourney.hasBilateralErrorMessage();

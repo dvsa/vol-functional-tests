@@ -152,7 +152,7 @@ public class InternalUIJourney extends BasePage {
     public void checkLicenceStatus(String expectedStatus) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        String actualStatus = getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
+        String actualStatus = waitAndGetElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
         assertEquals(expectedStatus.toUpperCase(), actualStatus.toUpperCase());
     }
 

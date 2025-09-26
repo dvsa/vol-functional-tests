@@ -398,11 +398,11 @@ public abstract class BasePage extends DriverUtils {
         until(ElementCondition.absenceOfElement(selector, selectorType));
     }
 
-    public static String getElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
+    public static String waitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
         return getText(selector, selectorType);
     }
 
-    public static String waitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
+    public static String waitAndwaitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
