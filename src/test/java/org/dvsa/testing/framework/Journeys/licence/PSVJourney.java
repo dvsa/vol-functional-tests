@@ -111,7 +111,7 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean vehicles9SeatsOrMoreStatus(String status) {
-        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
@@ -175,7 +175,7 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean smallVehiclesStatus(String status) {
-        String sectionStatus = waitAndGetText()getText("//*[@id='overview-item__psv_operate_small']", SelectorType.XPATH);
+        String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_small']", SelectorType.XPATH);
         return sectionStatus.contains(status);
     }
 
