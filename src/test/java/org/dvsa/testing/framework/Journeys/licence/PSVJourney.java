@@ -84,13 +84,13 @@ public class PSVJourney extends BasePage {
             UniversalActions.clickSaveAndReturn();
             waitForTextToBePresent("Check box to continue");
             assertTrue(isTextPresent("Check box to continue"));
-            click("//*[@id='lva-vehicles-declarations-novelty']/fieldset[1]/div[4]/div/label", SelectorType.XPATH);
+            clickByXPath("//*[@id='lva-vehicles-declarations-novelty']/fieldset[1]/div[4]/div/label");
         } else if (limousines.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
             UniversalActions.clickSaveAndReturn();
             waitForTextToBePresent("Check box to continue");
             assertTrue(isTextPresent("Check box to continue"));
-            waitAndClick("//*[@id='limousinesNoveltyVehicles[psvNoLimousineConfirmation]']", SelectorType.XPATH);
+           clickByXPath("//*[@id='limousinesNoveltyVehicles[psvNoLimousineConfirmation]']");
         }
         UniversalActions.clickSaveAndReturn();
     }
@@ -135,8 +135,8 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeMainOccupationUndertakingsPage() {
-        waitAndClick("//*[@id='psvOccupationRecordsConfirmation']", SelectorType.XPATH);
-        waitAndClick("//*[@id='psvIncomeRecordsConfirmation']", SelectorType.XPATH);
+        clickByXPath("//*[@id='psvOccupationRecordsConfirmation']");
+        clickByXPath("//*[@id='psvIncomeRecordsConfirmation']')");
         UniversalActions.clickSaveAndContinue();
     }
 
