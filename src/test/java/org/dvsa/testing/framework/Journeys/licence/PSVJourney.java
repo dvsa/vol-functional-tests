@@ -110,6 +110,7 @@ public class PSVJourney extends BasePage {
 
     public void selectVehicleSize(String vehicleSize) {
         UniversalActions.clickSaveAndContinue();
+        waitForTextToBePresent("Which sizes of vehicles do you intend to operate?: value is required");
         assertTrue(isTextPresent("Which sizes of vehicles do you intend to operate?: value is required"));
         switch (vehicleSize) {
             case "small" -> findSelectAllRadioButtonsByValue("psvvs_small");

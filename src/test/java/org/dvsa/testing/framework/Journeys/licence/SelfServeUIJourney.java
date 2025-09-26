@@ -178,7 +178,6 @@ public class SelfServeUIJourney extends BasePage {
         waitAndClickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         UniversalActions.clickSubmit();
-        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
