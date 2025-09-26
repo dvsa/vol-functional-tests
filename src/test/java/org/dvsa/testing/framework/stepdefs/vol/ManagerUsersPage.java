@@ -49,7 +49,7 @@ public class ManagerUsersPage extends BasePage {
 
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
-        assertEquals("2 Current users", getText("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH));
+        assertEquals("2 Current users", waitAndGetText("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH));
     }
 
     @Given("i have an internal admin user")
