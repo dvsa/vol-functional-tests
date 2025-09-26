@@ -86,7 +86,7 @@ public class PSVJourney extends BasePage {
         UniversalActions.clickSaveAndContinue();
         waitForTextToBePresent("Select an option for: \"Please confirm that vehicles with eight passenger seats or less will not be operated under the licence without the prior written agreement of the Traffic Commissioner who may require you to agree to certain undertakings\"");
         assertTrue(isTextPresent("Select an option for: \"Please confirm that vehicles with eight passenger seats or less will not be operated under the licence without the prior written agreement of the Traffic Commissioner who may require you to agree to certain undertakings\""));
-        waitAndClick("//*[@id='psvNoSmallVhlConfirmation']", SelectorType.XPATH);
+        clickByXPath("//*[@id='psvNoSmallVhlConfirmation']");
         UniversalActions.clickSaveAndContinue();
     }
 
