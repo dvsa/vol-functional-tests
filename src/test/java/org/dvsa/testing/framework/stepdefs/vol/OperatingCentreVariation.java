@@ -48,7 +48,6 @@ public class OperatingCentreVariation extends BasePage {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         world.internalUIJourney.caseWorkerCompleteOverview();
         waitForTextToBePresent("The overview page has been saved");
-        world.internalUIJourney.grantApplicationUnderDelegatedAuthority();
     }
 
     @And("complete the financial evidence page")

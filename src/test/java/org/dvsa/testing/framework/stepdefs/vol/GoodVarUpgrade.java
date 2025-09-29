@@ -26,13 +26,14 @@ public class GoodVarUpgrade extends BasePage {
     @When("i upgrade my licence type to Standard National")
     public void iUpgradeMyLicenceTypeToStandardNational() {
         world.generalVariationJourney.beginUpgradeVariation();
+       // waitForElementNotToBePresent("");
         click(world.typeOfLicenceJourney.standardNational, SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
     }
 
     @Then("correct statuses are shown by the correct seven sections")
     public void correctStatusesAreShownByTheCorrectSevenSections() {
-        String typeOfLicenceStatus = getText("//a[@id='overview-item__type_of_licence']//strong[1]", SelectorType.XPATH);
+        String typeOfLicenceStatus = waitAndGetText("//a[@id='overview-item__type_of_licence']//strong[1]", SelectorType.XPATH);
         assertTrue(typeOfLicenceStatus.equalsIgnoreCase("UPDATED"));
         String addressesStatus = getText("//a[@id='overview-item__addresses']//strong[1]", SelectorType.XPATH);
         assertTrue(addressesStatus.equalsIgnoreCase("REQUIRES ATTENTION"));
