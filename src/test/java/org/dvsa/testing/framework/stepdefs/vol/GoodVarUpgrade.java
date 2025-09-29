@@ -53,7 +53,6 @@ public class GoodVarUpgrade extends BasePage {
         UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
         UniversalActions.clickSaveAndReturn();
-        UniversalActions.clickHome();
         world.selfServeUIJourney.completeFinancialEvidencePage();
         refreshPage();
         UniversalActions.clickHome();
