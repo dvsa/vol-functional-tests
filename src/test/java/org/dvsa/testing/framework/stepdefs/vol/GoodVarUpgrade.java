@@ -26,7 +26,6 @@ public class GoodVarUpgrade extends BasePage {
     @When("i upgrade my licence type to Standard National")
     public void iUpgradeMyLicenceTypeToStandardNational() {
         world.generalVariationJourney.beginUpgradeVariation();
-       // waitForElementNotToBePresent("");
         click(world.typeOfLicenceJourney.standardNational, SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
     }
