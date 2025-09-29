@@ -45,7 +45,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i create and submit and grant an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) throws HttpException {
         world.operatingCentreJourney.submitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
-        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         world.internalUIJourney.caseWorkerCompleteOverview();
         waitForTextToBePresent("The overview page has been saved");
         world.internalUIJourney.grantApplicationUnderDelegatedAuthority();

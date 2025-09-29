@@ -224,7 +224,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void caseWorkerCompleteOverview() {
-        click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
+        waitAndClick("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
         UniversalActions.clickSaveAndReturn();
     }
