@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.29](https://github.com/dvsa/vol-functional-tests/compare/v4.12.28...v4.12.29) (2025-09-30)
+
+
+### Bug Fixes
+
+* click by xpath ([155cbc9](https://github.com/dvsa/vol-functional-tests/commit/155cbc9f679cbaa83de59753da4954e1c2a4c471))
+
 ## [4.12.28](https://github.com/dvsa/vol-functional-tests/compare/v4.12.27...v4.12.28) (2025-09-30)
 
 
