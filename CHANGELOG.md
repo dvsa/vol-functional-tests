@@ -1,6 +1,20 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.12.28](https://github.com/dvsa/vol-functional-tests/compare/v4.12.27...v4.12.28) (2025-09-30)
+
+
+### Bug Fixes
+
+* fix ([3260cfa](https://github.com/dvsa/vol-functional-tests/commit/3260cfa96760c3f4dd5767cdddaf2e65fdd5e20d))
+* remove assertions ([e0bc8b8](https://github.com/dvsa/vol-functional-tests/commit/e0bc8b80a1718c8bef92bbe6f69b2bd155a86147))
+* test fixes ([afb46b2](https://github.com/dvsa/vol-functional-tests/commit/afb46b2a0ad7c0a37ea7c96f3b890f49c377f814))
+* test fixes ([5feb02e](https://github.com/dvsa/vol-functional-tests/commit/5feb02e085bfc852816aabac92e678561b8c016d))
+* waits ([1dacd93](https://github.com/dvsa/vol-functional-tests/commit/1dacd93cf354c7fef12abf98038321d59dd458fa))
+* waits ([5a4da16](https://github.com/dvsa/vol-functional-tests/commit/5a4da1632082f623403525725e7055b64b500005))
+* waits ([45f4f95](https://github.com/dvsa/vol-functional-tests/commit/45f4f9522b78f72228b0877b6f740e6290c142d9))
+* xpaths ([21d35c9](https://github.com/dvsa/vol-functional-tests/commit/21d35c9564bd90527f7df0da673b93bcb1d9027a))
+
 ## [4.12.27](https://github.com/dvsa/vol-functional-tests/compare/v4.12.26...v4.12.27) (2025-09-25)
 
 
