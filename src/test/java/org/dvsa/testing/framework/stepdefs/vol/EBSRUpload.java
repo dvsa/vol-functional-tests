@@ -117,6 +117,7 @@ public class EBSRUpload extends BasePage {
     @And("the edited Bus Registration details should be saved")
     public void theEditedBusRegistrationDetailsShouldBeSaved() {
         world.selfServeNavigation.navigateToBusRegExternal();
+        waitForUrlToContain("search/find-registered-local-bus-services/details/", 3);
         assertTrue(isTextPresent("1234"));
     }
 }
