@@ -83,13 +83,11 @@ public class PSVJourney extends BasePage {
             findSelectAllRadioButtonsByValue("Y");
             UniversalActions.clickSaveAndReturn();
             waitForTextToBePresent("Check box to continue");
-            assertTrue(isTextPresent("Check box to continue"));
             clickByXPath("//*[@id='lva-vehicles-declarations-novelty']/fieldset[1]/div[4]/div/label");
         } else if (limousines.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
             UniversalActions.clickSaveAndReturn();
             waitForTextToBePresent("Check box to continue");
-            assertTrue(isTextPresent("Check box to continue"));
            clickByXPath("//*[@id='limousinesNoveltyVehicles[psvNoLimousineConfirmation]']");
         }
         UniversalActions.clickSaveAndReturn();
