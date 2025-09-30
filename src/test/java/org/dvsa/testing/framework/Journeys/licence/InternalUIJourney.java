@@ -152,7 +152,7 @@ public class InternalUIJourney extends BasePage {
     public void checkLicenceStatus(String expectedStatus) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        String actualStatus = getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
+        String actualStatus = waitAndGetElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH);
         assertEquals(expectedStatus.toUpperCase(), actualStatus.toUpperCase());
     }
 
@@ -224,7 +224,7 @@ public class InternalUIJourney extends BasePage {
     }
 
     public void caseWorkerCompleteOverview() {
-        click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
+        waitAndClick("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
         UniversalActions.clickSaveAndReturn();
     }

@@ -51,7 +51,7 @@ public class RemoveTM extends BasePage {
     @Then("a pop up message should be displayed")
     public void aPopUpMessageShouldBeDisplayed() {
         waitForTextToBePresent(alertHeaderValue);
-        String alertContent = getElementValueByText("//*[@id=\"pg:lva-licence/transport_managers:index\"]/div[2]/div/div[2]/div/p", SelectorType.XPATH);
+        String alertContent = waitAndGetElementValueByText("//*[@id=\"pg:lva-licence/transport_managers:index\"]/div[2]/div/div[2]/div/p", SelectorType.XPATH);
         assertEquals(alertContent, newAlertValue);
     }
 
@@ -69,7 +69,7 @@ public class RemoveTM extends BasePage {
             assertTrue(isTextPresent(applicationVariationTMAlertContent));
         }
         if (Browser.navigate().getCurrentUrl().contains("ssap1")) {
-            String alertContent = getElementValueByText("//div[@class='modal__content']/p", SelectorType.XPATH);
+            String alertContent = waitAndGetElementValueByText("//div[@class='modal__content']/p", SelectorType.XPATH);
             assertEquals(alertContent, oldAlertValue);
         }
         if (tmCount > 1) {

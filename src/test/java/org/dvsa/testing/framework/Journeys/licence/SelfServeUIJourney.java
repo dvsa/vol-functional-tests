@@ -126,13 +126,9 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
-            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
-        } else {
             waitAndClickByLinkText("Financial evidence");
-        }
-        click("//input[@id='uploadLaterRadio']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+            clickByXPath("//*[@id='uploadLaterRadio']");
+            UniversalActions.clickSaveAndReturn();
     }
 
     public void signDeclaration() {
@@ -178,7 +174,7 @@ public class SelfServeUIJourney extends BasePage {
         waitAndClickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         UniversalActions.clickSubmit();
-        refreshPageWithJavascript();
+        waitForElementNotToBePresent("//*[@id=\"form-actions[submit]\"]");
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }

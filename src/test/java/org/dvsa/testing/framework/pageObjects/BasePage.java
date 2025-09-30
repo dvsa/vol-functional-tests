@@ -398,8 +398,30 @@ public abstract class BasePage extends DriverUtils {
         until(ElementCondition.absenceOfElement(selector, selectorType));
     }
 
-    public static String getElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
+    public static String waitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
         return getText(selector, selectorType);
+    }
+
+    public static String waitAndwaitAndGetElementValueByText(@NotNull String selector, @NotNull SelectorType selectorType) {
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class);
+
+                WebElement element = wait.until(ExpectedConditions.visibilityOf(findElement(selector, selectorType)));
+                return element.getText();
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
+            }
+        }
+        throw new RuntimeException("Failed to retrieve text after " + maxRetries + " attempts due to StaleElementReferenceException or WebDriverException.");
     }
 
     public static void untilUrlMatches(String needle, long duration, ChronoUnit unit) {
@@ -525,16 +547,28 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForElementToBePresent(@NotNull String selector) {
-        var wait = new FluentWait<>(getDriver())
-                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class)
-                .ignoring(TimeoutException.class)
-                .ignoring(ElementNotInteractableException.class);
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
 
-        wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
+                wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            } catch (WebDriverException e) {
+                LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
+            }
+        }
+        throw new RuntimeException("Failed to wait for element to be present after " + maxRetries + " attempts.");
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {

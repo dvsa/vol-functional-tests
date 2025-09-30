@@ -89,13 +89,13 @@ public class BasePermitJourney extends BasePermitPage {
     }
 
     public void assertHeadingPresentInSubmissionPanel() {
-        assertEquals("Application submitted", BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH));
+        assertEquals("Application submitted", BasePage.waitAndGetElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH));
     }
 
     public void assertReferenceNumberPresentInPanelBody() {
-        String referenceNumber = BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        String referenceNumber = BasePage.waitAndGetElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
         assertTrue(referenceNumber.contains("Your reference number"));
-        String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
+        String actualReferenceNumber = BasePage.waitAndGetElementValueByText("//div/strong", SelectorType.XPATH);
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
 }

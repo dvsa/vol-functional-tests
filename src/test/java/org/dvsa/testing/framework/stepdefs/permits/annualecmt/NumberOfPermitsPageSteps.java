@@ -54,6 +54,6 @@ public class NumberOfPermitsPageSteps extends BasePage {
     @Then("I am taken to the payment successful page")
     public void iAmTakenToThePaymentSuccessfulPage() {
         isPath("//fees/receipt/");
-        assertEquals(BasePage.getElementValueByText("//h1[@class='js-title']", SelectorType.XPATH), "Payment successful");
+        assertEquals(BasePage.waitAndGetElementValueByText("//h1[@class='js-title']", SelectorType.XPATH), "Payment successful");
     }
 }

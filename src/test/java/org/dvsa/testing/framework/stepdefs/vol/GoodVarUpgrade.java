@@ -32,7 +32,7 @@ public class GoodVarUpgrade extends BasePage {
 
     @Then("correct statuses are shown by the correct seven sections")
     public void correctStatusesAreShownByTheCorrectSevenSections() {
-        String typeOfLicenceStatus = getText("//a[@id='overview-item__type_of_licence']//strong[1]", SelectorType.XPATH);
+        String typeOfLicenceStatus = waitAndGetText("//a[@id='overview-item__type_of_licence']//strong[1]", SelectorType.XPATH);
         assertTrue(typeOfLicenceStatus.equalsIgnoreCase("UPDATED"));
         String addressesStatus = getText("//a[@id='overview-item__addresses']//strong[1]", SelectorType.XPATH);
         assertTrue(addressesStatus.equalsIgnoreCase("REQUIRES ATTENTION"));
@@ -53,7 +53,6 @@ public class GoodVarUpgrade extends BasePage {
         UniversalActions.clickHome();
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
         UniversalActions.clickSaveAndReturn();
-        UniversalActions.clickHome();
         world.selfServeUIJourney.completeFinancialEvidencePage();
         refreshPage();
         UniversalActions.clickHome();

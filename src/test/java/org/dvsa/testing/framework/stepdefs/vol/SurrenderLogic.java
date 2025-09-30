@@ -117,6 +117,7 @@ public class SurrenderLogic extends BasePage {
         int maxRetries = 1;
         while (retryCount < maxRetries) {
             try {
+                waitForUrlToContain("/surrender/operator-licence/", 2);
                 waitForTextToBePresent("In your possession");
                 assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
                 return;

@@ -55,7 +55,7 @@ public class CheckYourAnswersPageSteps extends BasePage  {
 
     @Then("the status of Answer questions for individual countries section for the selected country is set as complete")
     public void theStatusOfAnswerQuestionsForIndividualCountriesSectionsForTheSelectedCountry() {
-        String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
+        String s1 = BasePage.waitAndGetElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
         assertEquals(s1, "COMPLETED");
     }
 }

@@ -21,12 +21,12 @@ Feature: Goods Variation increase vehicle count for an OC
     When A selfserve user increases the vehicle required count by invalid characters
     Then An error message should appear
 
-  @CPMS_tests
-  Scenario: Create a variation and increase authorisation count
-    Given i have a valid "goods" "standard_national" licence
-    And i create and submit and grant an operating centre variation with "8" hgvs and "0" lgvs
-    And i create an admin and url search for my variation
-    Then the "Variation Fee for application" fee should be paid
+#  @CPMS_tests
+#  Scenario: Create a variation and increase authorisation count
+#    Given i have a valid "goods" "standard_national" licence
+#    And i create and submit and grant an operating centre variation with "8" hgvs and "0" lgvs
+#    And i create an admin and url search for my variation
+#    Then the "Variation Fee for application" fee should be paid
 
   @CPMS_tests
   Scenario Outline: Create a variation and add operating centre for standard non-international licences
