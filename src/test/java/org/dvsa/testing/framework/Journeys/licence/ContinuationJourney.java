@@ -126,7 +126,7 @@ public class ContinuationJourney extends BasePage {
 
     public void completeContinuationsSignPage() {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            waitAndClick("content[signatureOptions]", SelectorType.ID);
+            clickByXPath("//input[@name='content[signatureOptions]']");
             waitAndClick("sign", SelectorType.ID);
             world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();
