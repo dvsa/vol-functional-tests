@@ -84,7 +84,7 @@ public class InternalSearch extends BasePage {
 
     @And("i create an admin and url search for my variation")
     public void iCreateAnAdminAndUrlSearchForMyVariation() throws HttpException {
-        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
+        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
     }
 
     @And("i url search for my licence")
