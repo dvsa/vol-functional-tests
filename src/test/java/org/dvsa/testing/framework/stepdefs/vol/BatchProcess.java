@@ -62,7 +62,7 @@ public class BatchProcess extends BasePage {
             isElementDisplayed = isElementPresent("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH);
             refreshPage();
         } while (!isElementDisplayed && System.currentTimeMillis() < kickOut);
-        String actualText = getText("//strong[text()='Expired']", SelectorType.XPATH);
+        String actualText = waitAndGetText("//strong[text()='Expired']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("Expired"));
     }
 
@@ -73,6 +73,6 @@ public class BatchProcess extends BasePage {
 
     @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws Exception {
-        assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
+        assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.EXPIRE_BUS_REGISTRATION.name()));
     }
 }
