@@ -81,13 +81,9 @@ public class PSVJourney extends BasePage {
     public void completeLimousinesVehicles(String limousines) {
         if (limousines.equals("Yes")) {
             findSelectAllRadioButtonsByValue("Y");
-            UniversalActions.clickSaveAndReturn();
-            waitForTextToBePresent("Check box to continue");
-            clickByXPath("//*[@id='lva-vehicles-declarations-novelty']/fieldset[1]/div[4]/div/label");
+            clickByXPath("//*[@id='limousinesNoveltyVehicles[psvOnlyLimousinesConfirmation]']");
         } else if (limousines.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
-            UniversalActions.clickSaveAndReturn();
-            waitForTextToBePresent("Check box to continue");
            clickByXPath("//*[@id='limousinesNoveltyVehicles[psvNoLimousineConfirmation]']");
         }
         UniversalActions.clickSaveAndReturn();
