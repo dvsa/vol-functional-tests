@@ -140,13 +140,11 @@ public class DirectorJourney extends BasePage {
 
     public void answerConvictionsAndPenalties(String convictionsAndPenaltiesAnswer) {
         if (convictionsAndPenaltiesAnswer.equals("No")) {
-            refreshPage();
             waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
-            findSelectAllRadioButtonsByValue("N");
+            clickByXPath("//input[@name='data[question]' and @value='N']");
         } else {
-            refreshPage();
             waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
-            findSelectAllRadioButtonsByValue("Y");
+            clickByXPath("//input[@name='data[question]' and @value='Y']");
             waitForElementToBeClickable("add", SelectorType.ID);
             waitAndClick("add", SelectorType.ID);
             world.convictionsAndPenaltiesJourney.addPreviousConviction();
