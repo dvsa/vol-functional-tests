@@ -1,6 +1,7 @@
 @LAST-TM-LETTER
 @int_regression
 @FullRegression
+ @batch
 
 Feature: Last TM letter sent
 
