@@ -750,6 +750,16 @@ public abstract class BasePage extends DriverUtils {
         wait.until(ExpectedConditions.urlContains(substring));
     }
 
+    protected static boolean ifUrlContains(String substring) {
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(1))
+                    .until(driver -> driver.getCurrentUrl().contains(substring));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void enterDateFieldsByPartialId(String regex, HashMap<String, String> hashMapDate) {
         replaceText(regex.concat("_day"), SelectorType.ID, hashMapDate.get("day"));
         replaceText(regex.concat("_month"), SelectorType.ID, hashMapDate.get("month"));
