@@ -83,7 +83,9 @@ public class SubmitApplicationJourney extends BasePage {
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", "0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
+        if (isElementPresent("trafficArea", SelectorType.ID)) {
+            waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
+        }
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);

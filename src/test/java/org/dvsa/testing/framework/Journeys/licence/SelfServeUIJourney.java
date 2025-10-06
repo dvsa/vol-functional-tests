@@ -222,7 +222,11 @@ public class SelfServeUIJourney extends BasePage {
         address.forEach((key, value) ->
                 replaceText(String.format("//*[contains(@name,'%s[%s]')]", typeOfAddress, key), SelectorType.XPATH, value)
         );
-        replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcodeMatchingTrafficArea);
+        if (ifUrlContains("preview")) {
+            replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, "LL55 1BN");
+        }
+        else {
+        replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcodeMatchingTrafficArea);}
     }
 
     public void checkAddressDetails(HashMap<String, String> address, String postcode, String typeOfAddress) {
