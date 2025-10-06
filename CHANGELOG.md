@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.13.0](https://github.com/dvsa/vol-functional-tests/compare/v4.12.31...v4.13.0) (2025-10-06)
+
+
+### Features
+
+* use new active support ([086d908](https://github.com/dvsa/vol-functional-tests/commit/086d908d1c80b8eafe0ba8badf0f27940907c45d))
+* use new active support ([28ed872](https://github.com/dvsa/vol-functional-tests/commit/28ed8722926dd94cfbdbb1781abfd928724912bf))
+
 ## [4.12.31](https://github.com/dvsa/vol-functional-tests/compare/v4.12.30...v4.12.31) (2025-10-03)
 
 
