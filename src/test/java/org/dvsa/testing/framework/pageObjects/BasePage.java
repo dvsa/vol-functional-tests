@@ -759,6 +759,7 @@ public abstract class BasePage extends DriverUtils {
             return false;
         }
     }
+
     public void enterDateFieldsByPartialId(String regex, HashMap<String, String> hashMapDate) {
         replaceText(regex.concat("_day"), SelectorType.ID, hashMapDate.get("day"));
         replaceText(regex.concat("_month"), SelectorType.ID, hashMapDate.get("month"));
