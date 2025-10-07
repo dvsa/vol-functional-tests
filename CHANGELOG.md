@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.0](https://github.com/dvsa/vol-functional-tests/compare/v4.13.2...v4.14.0) (2025-10-07)
+
+
+### Features
+
+* add workflow ([98537c5](https://github.com/dvsa/vol-functional-tests/commit/98537c5bd441dce76b62866e34df2b028523b847))
+* automated batch job testing ([03ddbe3](https://github.com/dvsa/vol-functional-tests/commit/03ddbe3ea9604cb6be11c5c9c93bdd8defd3c93f))
+* concurrent batch job testing ([fdbffdc](https://github.com/dvsa/vol-functional-tests/commit/fdbffdc6310b7e56e0974208a7258b6e88979393))
+* inital commit ([76fab63](https://github.com/dvsa/vol-functional-tests/commit/76fab631005a478b923c8658f74aeb0739ffd376))
+
 ## [4.13.2](https://github.com/dvsa/vol-functional-tests/compare/v4.13.1...v4.13.2) (2025-10-07)
 
 
