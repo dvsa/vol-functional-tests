@@ -6,6 +6,7 @@ import activesupport.aws.s3.SecretsManager;
 import activesupport.system.Properties;
 import activesupport.system.out.Output;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
@@ -18,12 +19,15 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BatchProcess extends BasePage {
 
     private final World world;
+
+    public String jobId;
+
+    AwsBatch awsBatch = new AwsBatch();
 
     public BatchProcess(World world) {
         this.world = world;
@@ -38,7 +42,7 @@ public class BatchProcess extends BasePage {
 
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws Exception {
-        assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
+        assertTrue(awsBatch.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
     }
 
     @Then("i should receive a duplicate vehicle email")
@@ -74,5 +78,18 @@ public class BatchProcess extends BasePage {
     @And("i trigger the expire-bus-registration batch job")
     public void iTriggerTheExpireBusRegistrationBatchJob() throws Exception {
         assertTrue(world.genericUtils.triggerAwsBatchJob(JobDefinition.EXPIRE_BUS_REGISTRATION.name()));
+    }
+
+    @Given("I trigger the Last TM letter batch job")
+    public void iTriggerTheLastTMLetterBatchJob() throws Exception {
+        jobId = awsBatch.triggerAwsBatchJobWithId(JobDefinition.LAST_TM_LETTER.name());
+        assertNotNull(jobId, "Job ID should not be null.");
+    }
+
+    @Then("that should should be successful")
+    public void thatShouldShouldBeSuccessful() throws Exception {
+        assertNotNull(jobId, "Job ID should not be null before checking status."); // Ensure jobId is set
+        String jobStatus = String.valueOf(awsBatch.getJobStatus(jobId));
+        assertEquals("SUCCEEDED", jobStatus, "The batch job should have succeeded.");
     }
 }
