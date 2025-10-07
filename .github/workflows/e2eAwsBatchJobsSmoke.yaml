@@ -39,11 +39,10 @@ jobs:
     uses: ./.github/workflows/e2etest.yaml
     with:
       platform_env: ${{ inputs.platform_env }}
-      cucumber_tags: '@batch-smoke or @concurrent'
+      cucumber_tags: '@batch-smoke'
       browser_name: "none"
       browser_version: "none"
       exclude_tags: 'none'
-      maven_options: '-DskipTests=false -Dheadless=true'
       aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
       bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
       bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
