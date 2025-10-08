@@ -1,8 +1,7 @@
 @sign-surrender
-@smoke
 @ss_regression
 @FullRegression
-@smoke
+#@smoke
 Feature: Sign surrender
 
   Background:
