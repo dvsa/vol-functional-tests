@@ -645,21 +645,21 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void findSelectAllRadioButtonsByValue(String value) {
-        int maxRetries = 3;
-        for (int attempt = 0; attempt < maxRetries; attempt++) {
-            try {
+//        int maxRetries = 3;
+//        for (int attempt = 0; attempt < maxRetries; attempt++) {
+//            try {
                 var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
                 radioButtons.stream()
                         .filter(x -> x.getAttribute("value").equals(value))
                         .filter(isChecked -> !isChecked.isSelected())
                         .forEach(WebElement::click);
                 return;
-            } catch (StaleElementReferenceException e) {
-                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
-                getDriver().navigate().refresh();
-            }
-        }
-        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
+//            } catch (StaleElementReferenceException e) {
+//                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+//                getDriver().navigate().refresh();
+//            }
+//        }
+//        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     public void refreshUntilSuccessfulOrTimeout() {
