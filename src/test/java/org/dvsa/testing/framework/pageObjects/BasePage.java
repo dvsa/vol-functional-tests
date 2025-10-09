@@ -649,17 +649,36 @@ public abstract class BasePage extends DriverUtils {
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
                 var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
-                radioButtons.stream()
-                        .filter(x -> x.getAttribute("value").equals(value))
-                        .filter(isChecked -> !isChecked.isSelected())
-                        .forEach(WebElement::click);
+
+                List<WebElement> toClick = radioButtons.stream()
+                        .filter(x -> value.equals(x.getAttribute("value")))
+                        .filter(x -> !x.isSelected())
+                        .toList();
+
+                if (toClick.isEmpty()) {
+                    LOGGER.info("No unselected radio buttons with value '" + value + "' found");
+                    return;
+                }
+
+                for (WebElement button : toClick) {
+                    try {
+                        button.click();
+                    } catch (ElementClickInterceptedException e) {
+                        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", button);
+                    }
+                }
+
+                LOGGER.info("Clicked " + toClick.size() + " radio button(s)");
                 return;
+
             } catch (StaleElementReferenceException e) {
-                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
-                getDriver().navigate().refresh();
+                LOGGER.warn("StaleElementReferenceException encountered. Retry " + (attempt + 1));
+                if (attempt < maxRetries - 1) {
+                    try { Thread.sleep(500); } catch (InterruptedException ignored) {}
+                }
             }
         }
-        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
+        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts");
     }
 
     public void refreshUntilSuccessfulOrTimeout() {
