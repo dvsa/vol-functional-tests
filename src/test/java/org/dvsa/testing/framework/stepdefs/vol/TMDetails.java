@@ -85,8 +85,8 @@ public class TMDetails extends BasePage {
 
     @Then("a validation message should be displayed")
     public void aValidationMessageShouldBeDisplayed() {
-        waitForElementToBePresent("validationSummary");
-        assertTrue(isElementPresent("validationSummary", SelectorType.ID));
+        waitForElementToBePresent("//*[@id='validationSummary']");
+        assertTrue(isElementPresent("//*[@id='validationSummary']", SelectorType.XPATH));
     }
 
     @When("I click the no radio button for the {string} question")
