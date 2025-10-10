@@ -20,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,8 +28,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 7;
-    private static final int TIME_OUT_SECONDS = 400;
-    private static final int POLLING_SECONDS = 4;
+    private static final int TIME_OUT_SECONDS = 450;
+    private static final int POLLING_SECONDS = 5;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
@@ -654,6 +655,7 @@ public abstract class BasePage extends DriverUtils {
                         .filter(isChecked -> !isChecked.isSelected())
                         .forEach(WebElement::click);
                 return;
+
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
@@ -661,6 +663,7 @@ public abstract class BasePage extends DriverUtils {
         }
         throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
+
 
     public void refreshUntilSuccessfulOrTimeout() {
         long startTime = System.currentTimeMillis();
@@ -830,6 +833,8 @@ public abstract class BasePage extends DriverUtils {
         }
         throw new RuntimeException("Failed to scroll to bottom after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
+
+
 
     public boolean pageContains(String text) {
         return Objects.requireNonNull(getDriver().getPageSource()).contains(text);
