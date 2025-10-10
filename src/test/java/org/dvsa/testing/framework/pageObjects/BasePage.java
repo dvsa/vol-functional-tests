@@ -20,6 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -649,37 +650,27 @@ public abstract class BasePage extends DriverUtils {
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
                 var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
+                for (WebElement radioButton : radioButtons) {
+                    if (radioButton.getAttribute("value").equals(value) && !radioButton.isSelected()) {
+                        radioButton.click();
 
-                List<WebElement> toClick = radioButtons.stream()
-                        .filter(x -> value.equals(x.getAttribute("value")))
-                        .filter(x -> !x.isSelected())
-                        .toList();
+                        if (!radioButton.isSelected()) {
+                            LOGGER.warn("Radio button was not selected after click attempt");
+                            throw new RuntimeException("Failed to select radio button with value: " + value);
+                        }
 
-                if (toClick.isEmpty()) {
-                    LOGGER.info("No unselected radio buttons with value '" + value + "' found");
-                    return;
-                }
-
-                for (WebElement button : toClick) {
-                    try {
-                        button.click();
-                    } catch (ElementClickInterceptedException e) {
-                        ((JavascriptExecutor) getDriver()).executeScript("arguments[0].click();", button);
+                        LOGGER.info("Successfully clicked and verified radio button with value: " + value);
                     }
                 }
-
-                LOGGER.info("Clicked " + toClick.size() + " radio button(s)");
                 return;
-
             } catch (StaleElementReferenceException e) {
-                LOGGER.warn("StaleElementReferenceException encountered. Retry " + (attempt + 1));
-                if (attempt < maxRetries - 1) {
-                    try { Thread.sleep(500); } catch (InterruptedException ignored) {}
-                }
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
             }
         }
         throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts");
     }
+
 
     public void refreshUntilSuccessfulOrTimeout() {
         long startTime = System.currentTimeMillis();
