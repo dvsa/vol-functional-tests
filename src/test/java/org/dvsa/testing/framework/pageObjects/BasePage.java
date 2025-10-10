@@ -650,25 +650,18 @@ public abstract class BasePage extends DriverUtils {
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
                 var radioButtons = findElements("//*[@type='radio']", SelectorType.XPATH);
-                for (WebElement radioButton : radioButtons) {
-                    if (radioButton.getAttribute("value").equals(value) && !radioButton.isSelected()) {
-                        radioButton.click();
-
-                        if (!radioButton.isSelected()) {
-                            LOGGER.warn("Radio button was not selected after click attempt");
-                            throw new RuntimeException("Failed to select radio button with value: " + value);
-                        }
-
-                        LOGGER.info("Successfully clicked and verified radio button with value: " + value);
-                    }
-                }
+                radioButtons.stream()
+                        .filter(x -> x.getAttribute("value").equals(value))
+                        .filter(isChecked -> !isChecked.isSelected())
+                        .forEach(WebElement::click);
                 return;
+
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
             }
         }
-        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts");
+        throw new RuntimeException("Failed to select radio buttons after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
 
@@ -840,6 +833,8 @@ public abstract class BasePage extends DriverUtils {
         }
         throw new RuntimeException("Failed to scroll to bottom after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
+
+
 
     public boolean pageContains(String text) {
         return Objects.requireNonNull(getDriver().getPageSource()).contains(text);
