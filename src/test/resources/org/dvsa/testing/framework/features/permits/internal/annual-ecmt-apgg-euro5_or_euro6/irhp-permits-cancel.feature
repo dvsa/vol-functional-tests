@@ -1,4 +1,4 @@
-@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression  @INTERNAL  @ECMTAPGGINTERNAL @OLCS-25288
+@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression  @INTERNAL  @ECMTAPGGINTERNAL @OLCS-25288 @int_regression
 Feature: Internal admin Cancels ECMT APGG Euro5 or Euro 6 permit Application
 
   Background:

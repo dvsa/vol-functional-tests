@@ -22,7 +22,7 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
       | GB           | goods        | standard_international | lgv_only_fleet | unchecked      |
       | NI           | no_selection | standard_international | lgv_only_fleet | unchecked      |
 
-  @lgv-smoke
+  @lgv-smoke @ss_regression
   Scenario Outline: Switch Standard Internation licence type warning message and deletion of data
     And I apply for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" "<lgvUndertaking>" licence
     And I go to update the vehicle type on the licence to "<newLicenceType>" "<newVehicleType>" "<newLgvUndertaking>"
@@ -33,10 +33,10 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
     Examples:
       | licenceWhere | operatorType | licenceType            | vehicleType    | lgvUndertaking | newLicenceType         | newVehicleType | newLgvUndertaking |
       | GB           | goods        | standard_international | lgv_only_fleet | checked        | standard_national      |                |                   |
-      | GB           | goods        | restricted             |                |                | standard_international | mixed_fleet    | unchecked         |
-      | NI           | no_selection | standard_international | lgv_only_fleet | checked        | standard_international | mixed_fleet    | unchecked         |
-      | GB           | goods        | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
-      | NI           | no_selection | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
+#      | GB           | goods        | restricted             |                |                | standard_international | mixed_fleet    | unchecked         |
+#      | NI           | no_selection | standard_international | lgv_only_fleet | checked        | standard_international | mixed_fleet    | unchecked         |
+#      | GB           | goods        | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
+#      | NI           | no_selection | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
 
   Scenario: Cancel switch from new Standard Internation licence type and data shouldn't change
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence

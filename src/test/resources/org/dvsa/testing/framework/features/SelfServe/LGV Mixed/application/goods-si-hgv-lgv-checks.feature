@@ -1,4 +1,4 @@
-@lgv
+@lgv @int_regression
 @lgv-smoke
 
 Feature: Goods SI and non Goods SI display the correct authorities on the internal interim pages
