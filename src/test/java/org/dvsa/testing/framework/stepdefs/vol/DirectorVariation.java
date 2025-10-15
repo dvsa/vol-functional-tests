@@ -70,7 +70,6 @@ public class DirectorVariation extends BasePage {
 
     @And("^i enter \"([^\"]*)\" to licence history question$")
     public void iEnterToLicenceHistoryQuestion(String answer) {
-        waitForUrlToContain("/licence-history/", 4);
         world.directorJourney.completeLicenceHistory(answer);
     }
 
