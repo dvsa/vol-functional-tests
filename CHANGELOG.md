@@ -1,6 +1,23 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.1](https://github.com/dvsa/vol-functional-tests/compare/v4.14.0...v4.14.1) (2025-10-15)
+
+
+### Bug Fixes
+
+* added wait ([9975da7](https://github.com/dvsa/vol-functional-tests/commit/9975da7b563645aac2d89a5f11f1913752af3b14))
+* added wait ([6352bb6](https://github.com/dvsa/vol-functional-tests/commit/6352bb6dc621c9ac965467278f5a0439dd07996c))
+* reduce wait time ([b2ac98e](https://github.com/dvsa/vol-functional-tests/commit/b2ac98e91149adb28368c8544d668f3677fafba3))
+* reduce wait time ([ebd2975](https://github.com/dvsa/vol-functional-tests/commit/ebd297549fd643c37ff7cfdf5bb033cb7c9f7076))
+* reduce wait time ([d273518](https://github.com/dvsa/vol-functional-tests/commit/d273518aa43edeb79a1c893f9260712aa2dd3253))
+* remove wait ([919287b](https://github.com/dvsa/vol-functional-tests/commit/919287b93d57461bb65eae0a5f5d42dc624c43c5))
+* robust clickAll ([7cae39a](https://github.com/dvsa/vol-functional-tests/commit/7cae39aacf105b2f38da0017550e798e7078c958))
+* use xpath ([f6dfdb5](https://github.com/dvsa/vol-functional-tests/commit/f6dfdb55b9f58512d3014d32aaf121634b0aed07))
+* verify button has clicked ([c152994](https://github.com/dvsa/vol-functional-tests/commit/c1529946f32b258cbf841c9067450690dad6b0b3))
+* wait ([b1104e8](https://github.com/dvsa/vol-functional-tests/commit/b1104e8f8f29460eb63c98fb3fa3f5d90ad29ef4))
+* waitforpageload ([32178a3](https://github.com/dvsa/vol-functional-tests/commit/32178a36da6f9c1c4b5b3c27af3c9244e299cfcc))
+
 ## [4.14.0](https://github.com/dvsa/vol-functional-tests/compare/v4.13.2...v4.14.0) (2025-10-07)
 
 
