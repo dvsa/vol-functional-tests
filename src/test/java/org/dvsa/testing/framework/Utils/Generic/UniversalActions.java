@@ -29,7 +29,10 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSaveAndContinue() {
+        LOGGER.info("Clicking Save and Continue");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForPageLoad();
+        LOGGER.info("Page load completed");
     }
 
     public static void clickSubmit() {
