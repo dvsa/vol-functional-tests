@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
+import activesupport.string.Str;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -65,6 +66,8 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         world.directorJourney.answerFinancialHistory(answer);
+        waitForTextToBePresent("Additional information");
+        waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
         UniversalActions.clickSaveAndContinue();
     }
 

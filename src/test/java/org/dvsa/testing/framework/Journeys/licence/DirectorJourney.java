@@ -142,7 +142,7 @@ public class DirectorJourney extends BasePage {
         if (convictionsAndPenaltiesAnswer.equals("No")) {
             waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
             clickByXPath("//input[@name='data[question]' and @value='N']");
-        } else {
+        } else if (convictionsAndPenaltiesAnswer.equals("Yes")) {
             waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
             clickByXPath("//input[@name='data[question]' and @value='Y']");
             waitForElementToBeClickable("add", SelectorType.ID);
@@ -150,14 +150,11 @@ public class DirectorJourney extends BasePage {
             world.convictionsAndPenaltiesJourney.addPreviousConviction();
         }
     }
-
     public void answerFinancialHistory(String answerToFinancialQuestions) {
         if (answerToFinancialQuestions.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
-        } else {
+        } else if (answerToFinancialQuestions.equals("Yes")) {
             findSelectAllRadioButtonsByValue("Y");
-            waitForTextToBePresent("Additional information");
-            waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
         }
     }
 

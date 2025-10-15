@@ -62,6 +62,7 @@ public class TMDetails extends BasePage {
 
     @When("I click on the {string} button")
     public void iClickOnTheButton(String button) {
+        refreshPage();
         findSelectAllRadioButtonsByValue("Y");
         waitAndClick(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
     }
@@ -85,8 +86,8 @@ public class TMDetails extends BasePage {
 
     @Then("a validation message should be displayed")
     public void aValidationMessageShouldBeDisplayed() {
-        waitForElementToBePresent("validationSummary");
-        assertTrue(isElementPresent("validationSummary", SelectorType.ID));
+        waitForElementToBePresent("//*[@id='validationSummary']");
+        assertTrue(isElementPresent("//*[@id='validationSummary']", SelectorType.XPATH));
     }
 
     @When("I click the no radio button for the {string} question")
