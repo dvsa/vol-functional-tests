@@ -198,4 +198,10 @@ public class CreateCase extends BasePage {
     public void iAddANote() {
         world.convictionsAndPenaltiesJourney.addANote();
     }
+
+    @And("i add sla exception")
+    public void iAddSlaException() {
+        world.convictionsAndPenaltiesJourney.addSLAExceptions();
+
+    }
 }
