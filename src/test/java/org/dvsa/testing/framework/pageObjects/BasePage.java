@@ -730,7 +730,7 @@ public abstract class BasePage extends DriverUtils {
         return findElement(selector, selectorType).getAttribute("value");
     }
 
-    public void waitForPageLoad() {
+    public static void waitForPageLoad() {
         var wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
