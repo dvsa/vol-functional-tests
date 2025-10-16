@@ -13,7 +13,7 @@ Feature: ECMT International Removal Cancel application Page
     When I click the back link
     Then I should be on the overview page
 
-  @OLCS-24814 @r222gremovalsfix  @OLCS-27781  @OLCS-28352
+  @OLCS-24814 @r222gremovalsfix  @OLCS-27781  @OLCS-28352 @ss_regression
   Scenario: Cancel Application page details are displayed correctly
     Then I am navigated to the cancel application page
     And the licence number is displayed correctly

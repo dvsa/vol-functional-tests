@@ -1,4 +1,4 @@
-@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression @int_regression
 Feature: Internal Case Worker submits an ECMT APGG Euro5 or Euro 6 with cross trade Permit application
 
   Background:

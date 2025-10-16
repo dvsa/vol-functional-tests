@@ -6,6 +6,7 @@ Feature: LGV Only interims are applicable and only display LGV Only related info
     Given I have a "GB" lgv only application
     And I submit the application with an interim
 
+  @int_regression
   Scenario: Can see only LGV Authority on Interim requested licence screen
     When i view the application interim on internal
     Then only the LGV related details are displayed on the interim

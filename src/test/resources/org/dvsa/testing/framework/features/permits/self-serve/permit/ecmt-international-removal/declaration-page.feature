@@ -38,7 +38,7 @@ Feature: ECMT International Declaration Page
     And I accept and continue
     Then I am on the ECMT removal application submitted page
 
-  @EXTERNAL @OLCS-24980 @olcs-27502 @olcs-27581 @OLCS-27781
+  @EXTERNAL @OLCS-24980 @olcs-27502 @olcs-27581 @OLCS-27781 @ss_regression
   Scenario: When fees is paid Declaration page confirmation navigates to submission page
     And I click the back link
     Then I should be on the overview page

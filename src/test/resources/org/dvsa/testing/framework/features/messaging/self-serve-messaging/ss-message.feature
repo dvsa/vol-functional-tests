@@ -16,7 +16,7 @@ Feature: External users can view the messaging tab, as well as create new messag
       | consultant  | goods     | restricted    |
       | admin       | goods     | restricted    |
 
-  @ss-message-replyMessage @ss-message-count-check
+  @ss-message-replyMessage @ss-message-count-check @ss_regression
   Scenario Outline: Operator reply for case worker message
     Given as a "<user_type>" I have a valid "<Operator>" "<licence_type>" licence
     And i create an admin and url search for my licence
