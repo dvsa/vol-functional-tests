@@ -53,6 +53,7 @@ public class DirectorVariation extends BasePage {
 
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion(String answer) {
+        waitForPageLoad();
        world.directorJourney.answerConvictionsAndPenalties(answer);
         UniversalActions.clickSaveAndContinue();
     }
