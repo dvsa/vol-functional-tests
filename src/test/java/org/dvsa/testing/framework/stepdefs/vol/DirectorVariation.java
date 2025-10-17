@@ -66,8 +66,9 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         world.directorJourney.answerFinancialHistory(answer);
-        waitForTextToBePresent("Additional information");
-        waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
+        if (answer.equalsIgnoreCase("Yes") && isElementVisible("//*[@id='data[insolvencyDetails]']", SelectorType.XPATH.ordinal())) {
+            waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
+        }
         UniversalActions.clickSaveAndContinue();
     }
 
