@@ -112,22 +112,6 @@ public class DirectorJourney extends BasePage {
         enterDateFieldsByPartialId("dob", dates);
     }
 
-
-    public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
-        findSelectAllRadioButtonsByValue(financialHistoryAnswers);
-        UniversalActions.clickSaveAndContinue();
-    }
-
-    public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
-        findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
-        UniversalActions.clickSaveAndContinue();
-    }
-
-    public void completeLicenceHistory(String licenceHistoryAnswers) {
-        findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
-        UniversalActions.clickSaveAndContinue();
-    }
-
     public void removeDirector() {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
@@ -139,6 +123,8 @@ public class DirectorJourney extends BasePage {
     }
 
     public void answerConvictionsAndPenalties(String convictionsAndPenaltiesAnswer) {
+        waitForTextToBePresent(convictionsAndPenaltiesTitle);
+
         if (convictionsAndPenaltiesAnswer.equals("No")) {
             waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
             clickByXPath("//input[@name='data[question]' and @value='N']");
@@ -150,12 +136,53 @@ public class DirectorJourney extends BasePage {
             world.convictionsAndPenaltiesJourney.addPreviousConviction();
         }
     }
+
     public void answerFinancialHistory(String answerToFinancialQuestions) {
+        waitForTextToBePresent(financialHistoryTitle);
+
         if (answerToFinancialQuestions.equals("No")) {
+            waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
             findSelectAllRadioButtonsByValue("N");
         } else if (answerToFinancialQuestions.equals("Yes")) {
+            waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
             findSelectAllRadioButtonsByValue("Y");
         }
+    }
+
+    public void completeLicenceHistory(String licenceHistoryAnswers) {
+        waitForTextToBePresent(licenceHistoryTitle);
+        if (licenceHistoryAnswers.equals("N")) {
+            waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("N");
+        } else if (licenceHistoryAnswers.equals("Y")) {
+            waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("Y");
+        }
+    }
+
+    public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
+        waitForTextToBePresent(financialHistoryTitle);
+
+        if (financialHistoryAnswers.equals("N")) {
+            waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("N");
+        } else if (financialHistoryAnswers.equals("Y")) {
+            waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("Y");
+        }
+        UniversalActions.clickSaveAndContinue();
+    }
+
+    public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
+        waitForTextToBePresent(convictionsAndPenaltiesTitle);
+        if (convictionsAndPenaltiesAnswers.equals("N")) {
+            waitForElementToBeClickable("input[type='radio'][value='N']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("N");
+        } else if (convictionsAndPenaltiesAnswers.equals("Y")) {
+            waitForElementToBeClickable("input[type='radio'][value='Y']", SelectorType.CSS);
+            findSelectAllRadioButtonsByValue("Y");
+        }
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void assertTaskCheckBoxSelected() {
