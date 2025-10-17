@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.4](https://github.com/dvsa/vol-functional-tests/compare/v4.14.3...v4.14.4) (2025-10-17)
+
+
+### Bug Fixes
+
+* enter addresses on TM details without lookup ([f3ce38e](https://github.com/dvsa/vol-functional-tests/commit/f3ce38eec92a184b8f087154ffdb52c45947b3d1))
+
 ## [4.14.3](https://github.com/dvsa/vol-functional-tests/compare/v4.14.2...v4.14.3) (2025-10-16)
 
 
