@@ -53,7 +53,6 @@ public class DirectorVariation extends BasePage {
 
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion(String answer) {
-        waitForPageLoad();
        world.directorJourney.answerConvictionsAndPenalties(answer);
         UniversalActions.clickSaveAndContinue();
     }
@@ -67,7 +66,8 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         world.directorJourney.answerFinancialHistory(answer);
-        if (answer.equalsIgnoreCase("Yes") && isElementVisible("//*[@id='data[insolvencyDetails]']", SelectorType.XPATH.ordinal())) {
+        if (answer.equalsIgnoreCase("Yes")) {
+            waitForElementToBePresent(world.directorJourney.additionalInformation);
             waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
         }
         UniversalActions.clickSaveAndContinue();
@@ -76,6 +76,7 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to licence history question$")
     public void iEnterToLicenceHistoryQuestion(String answer) {
         world.directorJourney.completeLicenceHistory(answer);
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("^a snapshot should be created in internal$")
