@@ -178,16 +178,14 @@ public class TransportManagerJourney extends BasePage {
             waitAndEnterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         }
         waitAndEnterText("birthPlace", SelectorType.ID, "Nottingham");
-        waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
-        clickByName("homeAddress[searchPostcode][search]");
-        waitForElementToBeClickable("//*[@name='homeAddress[searchPostcode][search]']", SelectorType.XPATH);
-        waitForElementToBePresent("//*[@name='homeAddress[searchPostcode][addresses]']");
-        selectValueFromDropDownByIndex("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
-        waitAndEnterText("postcodeInput2", SelectorType.ID, "NG23HX");
-        waitAndClick("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
-        waitForElementToBeClickable("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
-        waitForElementToBePresent("//*[@name='workAddress[searchPostcode][addresses]']");
-        selectValueFromDropDownByIndex("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
+        waitAndClick("//*[@id=\"lva-transport-manager-details\"]/div/fieldset[2]/fieldset/div[3]/p[2]/a",SelectorType.XPATH);
+        waitAndEnterText("homeAddress[addressLine1]", SelectorType.NAME, "1 Test Street");
+        waitAndEnterText("homeAddress[town]", SelectorType.NAME, "Nottingham");
+        waitAndEnterText("homeAddress[postcode]", SelectorType.NAME, "NG2 3HX");
+        waitAndClick("//*[@id=\"lva-transport-manager-details\"]/div/fieldset[3]/fieldset/div[3]/p[2]/a",SelectorType.XPATH);
+        waitAndEnterText("workAddress[addressLine1]", SelectorType.NAME, "2 Test Street");
+        waitAndEnterText("workAddress[town]", SelectorType.NAME, "Leeds");
+        waitAndEnterText("workAddress[postcode]", SelectorType.NAME, "LS9 6NF");
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.ID, hours);
