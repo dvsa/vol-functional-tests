@@ -66,14 +66,17 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         world.directorJourney.answerFinancialHistory(answer);
-        waitForTextToBePresent("Additional information");
-        waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
+        if (answer.equalsIgnoreCase("Yes")) {
+            waitForElementToBePresent(world.directorJourney.additionalInformation);
+            waitAndEnterText(world.directorJourney.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
+        }
         UniversalActions.clickSaveAndContinue();
     }
 
     @And("^i enter \"([^\"]*)\" to licence history question$")
     public void iEnterToLicenceHistoryQuestion(String answer) {
         world.directorJourney.completeLicenceHistory(answer);
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("^a snapshot should be created in internal$")
