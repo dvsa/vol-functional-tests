@@ -70,7 +70,7 @@ public class TMDetails extends BasePage {
     @Then("I should see the {string} page")
     public void iShouldSeeThePage(String page) {
         waitForPageLoad();
-        waitForUrlToContain(page, 10);
+        waitForUrlToContain(page, 5);
         assertTrue(Browser.navigate().getCurrentUrl().contains(page));
     }
 
