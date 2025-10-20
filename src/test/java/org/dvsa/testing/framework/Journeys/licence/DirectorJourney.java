@@ -71,7 +71,7 @@ public class DirectorJourney extends BasePage {
     }
 
     public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties(boolean scanOrNot) throws IllegalBrowserException, IOException {
-        click(addButton, SelectorType.XPATH);
+        waitAndClick(addButton, SelectorType.XPATH);
         if (isTitlePresent(directorDetailsTitle, 5)) {
             addPersonDetails();
         } else if (isTitlePresent(directorVariationDetailsTitle, 5)) {
