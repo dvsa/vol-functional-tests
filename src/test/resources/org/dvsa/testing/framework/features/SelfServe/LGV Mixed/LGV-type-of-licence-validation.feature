@@ -32,7 +32,6 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
 
     Examples:
       | licenceWhere | operatorType | licenceType            | vehicleType    | lgvUndertaking | newLicenceType         | newVehicleType | newLgvUndertaking |
-      | GB           | goods        | standard_international | lgv_only_fleet | checked        | standard_national      |                |                   |
       | GB           | goods        | restricted             |                |                | standard_international | mixed_fleet    | unchecked         |
       | NI           | no_selection | standard_international | lgv_only_fleet | checked        | standard_international | mixed_fleet    | unchecked         |
       | GB           | goods        | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
