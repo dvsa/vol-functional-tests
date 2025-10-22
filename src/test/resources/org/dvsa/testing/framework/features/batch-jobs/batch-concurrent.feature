@@ -7,4 +7,5 @@ Feature: AWS Batch - Concurrent Execution
     And I submit the "DUPLICATE_VEHICLE_WARNING" batch job
     And I submit the "EXPIRE_BUS_REGISTRATION" batch job
     And I submit the "PROCESS_QUEUE" batch job
+    And I submit the "PERMITS_RESET_TEST_DATA" batch job
     Then all submitted batch jobs should succeed
