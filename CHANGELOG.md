@@ -1,6 +1,39 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.8](https://github.com/dvsa/vol-functional-tests/compare/v4.14.7...v4.14.8) (2025-10-22)
+
+
+### Bug Fixes
+
+* active support ([aaa8d38](https://github.com/dvsa/vol-functional-tests/commit/aaa8d38c67f27060beec32ee6092b1225923f83f))
+* add permits test data batch ([8a240de](https://github.com/dvsa/vol-functional-tests/commit/8a240de41868cfd4cb9c698fe0b6c9319b084df7))
+* add permits test data batch ([9832f0b](https://github.com/dvsa/vol-functional-tests/commit/9832f0bba2c6a35bfaed2a132bafa65a88fb1c34))
+* add permits test data batch ([43eac47](https://github.com/dvsa/vol-functional-tests/commit/43eac47966cfaa44a1dccd78f0f70006ed21e734))
+* add ss and int tags part of regression ([da5be32](https://github.com/dvsa/vol-functional-tests/commit/da5be322d133deb679d608391c3305e6f6dea8ce))
+* added wait ([4b758ef](https://github.com/dvsa/vol-functional-tests/commit/4b758ef2323d0cb4ff022f65f929f41d97ba56b7))
+* added wait ([770be39](https://github.com/dvsa/vol-functional-tests/commit/770be3903fc1cc2690af43277ec91a9970250911))
+* director ([734a8bb](https://github.com/dvsa/vol-functional-tests/commit/734a8bb7495d0a0c0c5b4c1e7bdbdb51e613e624))
+* director ([364fddb](https://github.com/dvsa/vol-functional-tests/commit/364fddb8f16f2f74723cd63e009aac4db1c768a4))
+* enter addresses on TM details without lookup ([fedbfca](https://github.com/dvsa/vol-functional-tests/commit/fedbfca07fca6a813d1cfa9bb47020c016dd3de8))
+* ex remove ([8e80039](https://github.com/dvsa/vol-functional-tests/commit/8e800396a794df56a1359331c66ca2f622f6b6af))
+* mailpit ([dbdb86b](https://github.com/dvsa/vol-functional-tests/commit/dbdb86b8767ff3afc30f381f44e80700b58a470f))
+* pass perc % ([a26b7d9](https://github.com/dvsa/vol-functional-tests/commit/a26b7d923a3343f802b05970c48f501b77699900))
+* permit test fix ([17ff2a1](https://github.com/dvsa/vol-functional-tests/commit/17ff2a169820ff4bd6d1ce22a8109d4cce821cf1))
+* reduce wait time ([049a559](https://github.com/dvsa/vol-functional-tests/commit/049a5592cbb7a699ebcd52e3b9ffb5d02d33ed38))
+* reduce wait time ([9d76e56](https://github.com/dvsa/vol-functional-tests/commit/9d76e565cf79627cd8d91103b2f86bf776af1cdc))
+* remove wait ([597975c](https://github.com/dvsa/vol-functional-tests/commit/597975c9e85db1268b7b983b76e1d03cf55902c3))
+* robust clickAll ([e8ac094](https://github.com/dvsa/vol-functional-tests/commit/e8ac094c4c0f124a16be312cd0e275fcdb1f5d9b))
+* use xpath ([db0c622](https://github.com/dvsa/vol-functional-tests/commit/db0c6224b17d51ab468e2d9c9daedfec19205fff))
+* verify button has clicked ([59aa11d](https://github.com/dvsa/vol-functional-tests/commit/59aa11d7e13e9ecf303345776fd67a3ff36660bc))
+* wait ([6d66c7b](https://github.com/dvsa/vol-functional-tests/commit/6d66c7bee4e03e625bf075078544de775d45978b))
+* wait ([2ba2871](https://github.com/dvsa/vol-functional-tests/commit/2ba2871d4dcf3dbe998d8917429d3801c73f5b75))
+* wait ([b70d5d5](https://github.com/dvsa/vol-functional-tests/commit/b70d5d5972ccec0728b501dd2403127bf658219c))
+* wait ([f3de528](https://github.com/dvsa/vol-functional-tests/commit/f3de528f7fba6fc7bfa1eabdaa46abf40e98dc68))
+* wait ([10ffd58](https://github.com/dvsa/vol-functional-tests/commit/10ffd58926d78798f17f7bf84b3aec3f613a539d))
+* waitforpageload ([3fd7727](https://github.com/dvsa/vol-functional-tests/commit/3fd7727f1b4fa962ef853407fae5f06ecf1e766f))
+* waits ([a192a6f](https://github.com/dvsa/vol-functional-tests/commit/a192a6feb3a836ebf710c7b8e2b3022832c3e5b5))
+
 ## [4.14.7](https://github.com/dvsa/vol-functional-tests/compare/v4.14.6...v4.14.7) (2025-10-20)
 
 
