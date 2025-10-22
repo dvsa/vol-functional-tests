@@ -32,11 +32,20 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
 
     Examples:
       | licenceWhere | operatorType | licenceType            | vehicleType    | lgvUndertaking | newLicenceType         | newVehicleType | newLgvUndertaking |
-      | GB           | goods        | standard_international | lgv_only_fleet | checked        | standard_national      |                |                   |
       | GB           | goods        | restricted             |                |                | standard_international | mixed_fleet    | unchecked         |
       | NI           | no_selection | standard_international | lgv_only_fleet | checked        | standard_international | mixed_fleet    | unchecked         |
       | GB           | goods        | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
       | NI           | no_selection | standard_international | mixed_fleet    | unchecked      | standard_international | lgv_only_fleet | checked           |
+
+
+  @ss_regression
+  Scenario: Switch Standard Internation licence type warning message and deletion of data for GB licence
+    And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence
+    And I go to update the vehicle type on the licence to "standard_national" "" ""
+    And A change licence type warning message is displayed
+    When I confirm the warning message
+    Then each section on the application overview page has the correct status for the "" licence
+
 
   Scenario: Cancel switch from new Standard Internation licence type and data shouldn't change
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence

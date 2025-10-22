@@ -5,6 +5,7 @@ Feature: Financial evidence calculations for lgv only variations
   Background:
     Given I create a new external user
 
+  @ss_regression
   Scenario: LGV only variation financial evidence check
     And I have a valid "GB" lgv only licence in traffic area "1"
     When I create an lgv only authorisation variation with "8"
@@ -18,6 +19,7 @@ Feature: Financial evidence calculations for lgv only variations
     Then the financial evidence value should be as expected for "0" hgvs and "8" lgvs
     And the same financial evidence value is displayed on internal
 
+  @ss_regression
   Scenario: When increasing authorisation I am prompted for financial evidence
     And I have a valid "GB" lgv only licence in traffic area "1"
     When I create an lgv only authorisation variation with "8"

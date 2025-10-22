@@ -2,6 +2,7 @@
 @lgv-smoke
 Feature: Publications are generated correctly upon creating an lgv increase variation
 
+  @ss_regression
   Scenario: A submitted LGV Only variation creates a publication correctly on internal
     Given I have a valid "GB" lgv only licence
     And i create and submit an lgv authorisation variation with 5 more LGVs

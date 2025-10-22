@@ -22,7 +22,7 @@ Feature: Viewing the messages tab as an internal user for various licence types 
     When i click the messages heading
     And i create a new conversation to operator and archive the conversation
 
-  @int-message-count-check @int-message-reply
+  @int-message-count-check @int-message-reply @int_regression
   Scenario: Check notification count on internal application
     Given i have a valid "goods" "restricted" licence
     And i have logged in to self serve as "admin"

@@ -34,6 +34,7 @@ public class SelectALicencePage extends BasePermitPage {
     }
 
     public static void clickLicence(@NotNull String licenceNumber) {
+        waitForTextToBePresent("Select a licence you would like your permit to be applied to");
         scrollAndClick(String.format("//*[contains(text(), '%s')]/../input[@type='radio']", licenceNumber), SelectorType.XPATH);
     }
 
