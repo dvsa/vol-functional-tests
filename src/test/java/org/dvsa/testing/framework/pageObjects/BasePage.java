@@ -163,7 +163,17 @@ public abstract class BasePage extends DriverUtils {
 
 
     protected static void clickByXPath(@NotNull String selector) {
-        findElement(selector, SelectorType.XPATH).click();
+        int maxRetries = 3;
+        for (int attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                findElement(selector, SelectorType.XPATH).click();
+                return;
+            } catch (StaleElementReferenceException e) {
+                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+                getDriver().navigate().refresh();
+            }
+        }
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
     }
 
     protected static void clickById(@NotNull String selector) {
