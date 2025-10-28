@@ -53,6 +53,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("complete the financial evidence page")
     public void completeTheFinancialEvidenceAndReviewAndDeclarationShouldDisplayPayAndSubmit() {
+        waitAndClick("//*[@data-heading='Application reference']", SelectorType.XPATH);
         world.selfServeUIJourney.completeFinancialEvidencePage();
     }
 
