@@ -1,6 +1,17 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.11](https://github.com/dvsa/vol-functional-tests/compare/v4.14.10...v4.14.11) (2025-10-28)
+
+
+### Bug Fixes
+
+* headless edge ([00afdbb](https://github.com/dvsa/vol-functional-tests/commit/00afdbbb930b5b431d9870d9a96b0aa124fdb580))
+* headless edge ([c9817f1](https://github.com/dvsa/vol-functional-tests/commit/c9817f1a4d52f116fde2e5615d2e005b603d3cfa))
+* navigate to fin evidence ([70adcd1](https://github.com/dvsa/vol-functional-tests/commit/70adcd1a4bce0a6eea074fb17baaa3a463a3ee18))
+* navigate to fin evidence ([f89edff](https://github.com/dvsa/vol-functional-tests/commit/f89edff0ebbca405baff72e42a0a640d72eb404d))
+* time out ([d6be087](https://github.com/dvsa/vol-functional-tests/commit/d6be0872cbee435fa41a54f5c4f790354948a183))
+
 ## [4.14.10](https://github.com/dvsa/vol-functional-tests/compare/v4.14.9...v4.14.10) (2025-10-23)
 
 
