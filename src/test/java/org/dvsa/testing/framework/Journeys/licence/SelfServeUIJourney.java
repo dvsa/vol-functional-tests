@@ -126,7 +126,6 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-            waitAndClickByLinkText("Financial evidence");
             clickByXPath("//*[@id='uploadLaterRadio']");
             UniversalActions.clickSaveAndReturn();
     }
