@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.13](https://github.com/dvsa/vol-functional-tests/compare/v4.14.12...v4.14.13) (2025-10-30)
+
+
+### Bug Fixes
+
+* reduce browsers ([0eb338c](https://github.com/dvsa/vol-functional-tests/commit/0eb338cdc937b35f1d7159e41df964383c325248))
+* reduce browsers ([7adf793](https://github.com/dvsa/vol-functional-tests/commit/7adf7939ba6cb7c0f912439397c44c46b205bc80))
+
 ## [4.14.12](https://github.com/dvsa/vol-functional-tests/compare/v4.14.11...v4.14.12) (2025-10-30)
 
 
