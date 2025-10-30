@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.12](https://github.com/dvsa/vol-functional-tests/compare/v4.14.11...v4.14.12) (2025-10-30)
+
+
+### Bug Fixes
+
+* close browser ([0cdf24c](https://github.com/dvsa/vol-functional-tests/commit/0cdf24c6fa8e241b44198272540c20475a5887d9))
+* close browser ([b4d5f8d](https://github.com/dvsa/vol-functional-tests/commit/b4d5f8d46bdd9ed1c350cef7dbef3f8e18f5b675))
+* disable parallel running ([b9d0ae2](https://github.com/dvsa/vol-functional-tests/commit/b9d0ae2787c2c1a919b625d7daba2f36c440164f))
+* reduce concurrency ([220a30c](https://github.com/dvsa/vol-functional-tests/commit/220a30c7e5f89adfa92de888b93cd87dc4b2599b))
+
 ## [4.14.11](https://github.com/dvsa/vol-functional-tests/compare/v4.14.10...v4.14.11) (2025-10-28)
 
 
