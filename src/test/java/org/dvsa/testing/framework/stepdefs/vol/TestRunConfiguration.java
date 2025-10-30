@@ -41,8 +41,7 @@ public class TestRunConfiguration {
         } finally {
             try {
                 if (Browser.isBrowserOpen()) {
-                    Browser.getDriver().quit();
-                    Browser.removeLocalDriverThread();
+                    Browser.closeBrowser();
                 }
             } catch (Exception e) {
                 System.out.println("An error occurred while trying to quit the browser: " + e.getMessage());
