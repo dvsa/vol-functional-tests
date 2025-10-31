@@ -16,6 +16,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 
+import static org.dvsa.testing.framework.pageObjects.BasePage.waitForTextToBePresent;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,6 +56,7 @@ public class TrailersCertificateOfRoadWorthinessE2E {
     public void iCheckContentAndCompleteCertificateOfCompliance() {
         CertificateOfComplianceNumberPage.untilOnPage();
         String heading = CertificateOfComplianceNumberPage.getPageHeading();
+        waitForTextToBePresent(heading);
         assertEquals("Enter the trailer Certificate of Compliance number (optional)", heading);
         BasePermitPageJourney.hasReferenceOnPage();
         CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");

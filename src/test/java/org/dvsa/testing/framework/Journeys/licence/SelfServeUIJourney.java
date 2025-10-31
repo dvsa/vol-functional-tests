@@ -126,8 +126,9 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-            clickByXPath("//*[@id='uploadLaterRadio']");
-            UniversalActions.clickSaveAndReturn();
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        clickByXPath("//*[@id='uploadLaterRadio']");
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void signDeclaration() {

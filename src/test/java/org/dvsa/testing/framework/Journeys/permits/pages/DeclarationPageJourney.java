@@ -13,6 +13,7 @@ public class DeclarationPageJourney extends BasePermitJourney {
     }
     public static void hasPageHeading() {
         String heading = DeclarationPage.getPageHeading();
+        waitForTextToBePresent(heading);
         assertEquals("Declaration", heading);
     }
 
