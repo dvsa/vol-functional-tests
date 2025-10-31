@@ -55,7 +55,6 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private void completeApplicationAfterUpdatingAuthorities(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         world.selfServeUIJourney.completeFinancialEvidencePage();
         if (world.licenceCreation.isPSVLicence()) {
             world.psvJourney.completeVehicleDeclarationsPage();
