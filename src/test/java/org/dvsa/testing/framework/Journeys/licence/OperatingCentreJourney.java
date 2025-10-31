@@ -4,6 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 

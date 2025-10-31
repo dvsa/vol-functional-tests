@@ -23,7 +23,12 @@ public class BasePermitPage extends BasePage {
 
 
     public static String getPageHeading() {
-        return getText(PAGE_HEADING, SelectorType.XPATH).trim();
+        try {
+            return getText(PAGE_HEADING, SelectorType.XPATH).trim();
+        } catch (org.openqa.selenium.StaleElementReferenceException e) {
+            refreshPage();
+            return getText(PAGE_HEADING, SelectorType.XPATH).trim();
+        }
     }
 
     public static String getPanelHeading() {

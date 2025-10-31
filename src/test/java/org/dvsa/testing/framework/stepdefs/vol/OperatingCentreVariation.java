@@ -53,7 +53,6 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("complete the financial evidence page")
     public void completeTheFinancialEvidenceAndReviewAndDeclarationShouldDisplayPayAndSubmit() throws HttpException {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         world.selfServeUIJourney.completeFinancialEvidencePage();
     }
 
