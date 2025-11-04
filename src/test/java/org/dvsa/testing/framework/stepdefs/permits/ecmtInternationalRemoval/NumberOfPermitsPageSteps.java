@@ -97,7 +97,7 @@ public class NumberOfPermitsPageSteps extends BasePage {
                 OverviewSection.NumberOfPermits.toString()
         );
 
-        String status = getText(sectionStatusXPath, SelectorType.XPATH).trim();
+        String status = BasePage.getText(sectionStatusXPath, SelectorType.XPATH).trim();
         assertEquals(PermitStatus.COMPLETED.toString(), status,
                 "Number of permits section is not marked as COMPLETED on overview page");
     }
@@ -119,16 +119,6 @@ public class NumberOfPermitsPageSteps extends BasePage {
         assertTrue(NumberOfPermitsPage.isFeeTextPresent());
     }
 
-    @Then("I should get the number of permits page error message")
-    public void iShouldGetTheNumberOfPermitsPageErrorMessage() {
-        assertTrue(NumberOfPermitsPage.isEnterNumberErrorPresent());
-    }
-
-    @Then("I should get the maximum number of permits exceeded page error message")
-    public void iShouldGetTheMaximumNumberOfPermitsExceededPageErrorMessage() {
-        assertTrue(NumberOfPermitsPage.isMaximumExceededErrorPresent());
-    }
-
     @And("I enter number of permits more than the authorised vehicles and click save and continue")
     public void iEnterNumberOfPermitsMoreThanTheAuthorisedVehiclesAndClickSaveAndContinue() {
         NumberOfPermitsPage.enterInvalidNumber();
@@ -144,10 +134,5 @@ public class NumberOfPermitsPageSteps extends BasePage {
     @And("I enter valid number of permits on the removals number of permits page")
     public void iEnterValidNumberOfPermitsOnTheRemovalsNumberOfPermitsPage() {
         NumberOfPermitsPage.enterRandomValidNumber();
-    }
-
-    @And("I save and return to overview")
-    public void iSaveAndReturnToOverview() {
-        UniversalActions.clickSaveAndReturn();
     }
 }

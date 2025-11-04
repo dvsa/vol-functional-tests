@@ -44,10 +44,12 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
     public void thereShouldBeNoSelectedLicences() {
         assertFalse(SelectALicencePage.hasSelectedLicence());
     }
-    @And("I save and continue")
-    public void iSaveAndContinue() {
-        BasePermitPage.saveAndContinue();
-    }
+
+//    @And("I save and continue")
+//    public void iSaveAndContinue() {
+//        BasePermitPage.saveAndContinue();
+//    }
+
     @Then("I should be taken to the permits dashboard")
     public void iShouldBeTakenToThePermitsDashboard() {
         assertTrue(isPath(HomePage.PermitsTab.RESOURCE));
