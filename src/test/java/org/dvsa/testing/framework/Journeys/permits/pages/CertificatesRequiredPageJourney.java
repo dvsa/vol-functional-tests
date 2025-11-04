@@ -10,6 +10,7 @@ public class CertificatesRequiredPageJourney extends BasePermitJourney {
         super(world);
     }
     public static void completePage() {
+        waitForPageLoad();
         CertificatesRequiredPage.confirmCertificateRequired();
         saveAndContinue();
     }

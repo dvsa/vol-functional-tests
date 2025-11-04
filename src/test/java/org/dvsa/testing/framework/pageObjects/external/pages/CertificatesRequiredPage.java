@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
@@ -14,14 +15,13 @@ public class CertificatesRequiredPage extends BasePermitPage {
     }
 
     public static void confirmCertificateRequired() {
-        if (checkboxNotConfirmed())
+           waitForElementToBeClickable(certificateRequiredConfirmation, SelectorType.XPATH);
             scrollAndClick(certificateRequiredConfirmation, SelectorType.XPATH);
-    }
+        }
 
     public static boolean checkboxNotConfirmed() {
-        return !isElementPresent( certificateRequiredConfirmation+ "/ancestor::label[contains(@class, 'selected')]", SelectorType.XPATH);
+        return !isElementPresent(certificateRequiredConfirmation + "/ancestor::label[contains(@class, 'selected')]", SelectorType.XPATH);
     }
-
     public static String  getAdvisoryText() {
         return getText("//p[@class='govuk-body']", SelectorType.XPATH);
     }
