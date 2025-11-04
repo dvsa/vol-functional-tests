@@ -2,19 +2,23 @@ package org.dvsa.testing.framework.pageObjects.external.pages;
 
 import activesupport.number.Int;
 import activesupport.string.Str;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class NumberOfPermitsPage extends BasePermitPage {
-
-    //TODO: Move these to bilaterals when fixing the journeys.
+public class NumberOfPermitsPage extends BasePage {
 
     public final static String FIELD = "(//*[contains(@class, 'field')]//input[@type='number'])";
 
     public static void untilOnPage() {
         untilElementIsPresent("//h1[contains(text(),'How many permits do you')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
+    }
+
+    public static String getPageHeading() {
+        return getText("//h1[contains(text(),'How many permits do you')]", SelectorType.XPATH).trim();
     }
 
     public static String getPermitLabel() {
@@ -31,12 +35,12 @@ public class NumberOfPermitsPage extends BasePermitPage {
 
     public static boolean isAdvisoryTextPresent() {
         return isTextPresent("There is a £10 non-refundable application fee per permit.") &&
-        isTextPresent("If your application is successful, you will need to pay an additional");
+                isTextPresent("If your application is successful, you will need to pay an additional");
     }
 
     public static boolean isTurkeyAndUkraineBilateralStandardSingleInformationPresent() {
         return isElementPresent("//label[contains(text(),'Standard single journey permit')]", SelectorType.XPATH) &&
-        isElementPresent("//p[@class='hint']", SelectorType.XPATH);
+                isElementPresent("//p[@class='hint']", SelectorType.XPATH);
     }
 
     public static String getBilateralErrorMessage() {
@@ -45,7 +49,22 @@ public class NumberOfPermitsPage extends BasePermitPage {
 
     public static boolean isFeeTextPresent() {
         return isElementPresent("//div[@class='govuk-inset-text']", SelectorType.XPATH) &&
-        isElementPresent("//strong[contains(text(),'£18')]", SelectorType.XPATH);
+                isElementPresent("//strong[contains(text(),'£18')]", SelectorType.XPATH);
+    }
+
+    public static void enterNumberOfPermits(int numberOfPermits) {
+        scrollAndEnterField("//input[@type='text']", SelectorType.XPATH, String.valueOf(numberOfPermits), false);
+    }
+
+    public static void enterRandomValidNumber() {
+        int maxVehicles = getMaximumAuthorisedVehicles();
+        int randomNumber = Int.random(1, maxVehicles);
+        enterNumberOfPermits(randomNumber);
+    }
+
+    public static void enterInvalidNumber() {
+        int maxVehicles = getMaximumAuthorisedVehicles();
+        enterNumberOfPermits(maxVehicles + 1);
     }
 
     public static void enterAuthorisedVehicles() {
@@ -77,6 +96,14 @@ public class NumberOfPermitsPage extends BasePermitPage {
         return isElementPresent("//a[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
     }
 
+    public static boolean isEnterNumberErrorPresent() {
+        return isElementPresent("//a[contains(text(),'Enter')]", SelectorType.XPATH);
+    }
+
+    public static boolean isMaximumExceededErrorPresent() {
+        return isElementPresent("//a[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
+    }
+
     public static void enterEuro5OrEuro6permitsValue() {
         if (numberOfRadioButtons() > 1) {
             euro5OrEuro6Select();
@@ -92,6 +119,4 @@ public class NumberOfPermitsPage extends BasePermitPage {
     public static void euro5OrEuro6Select() {
         scrollAndClick("//input[@type='radio']", SelectorType.XPATH);
     }
-
-    //TODO: Possibly look at splitting this into Bilaterals and others.
 }

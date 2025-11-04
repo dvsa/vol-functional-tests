@@ -29,10 +29,12 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSaveAndContinue() {
-        LOGGER.info("Clicking Save and Continue");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForPageLoad();
-        LOGGER.info("Page load completed");
+        try {
+            waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to click using form-actions[saveAndContinue], attempting submitbutton ID");
+            waitAndClick("//button[@id='submitbutton']", SelectorType.XPATH);
+        }
     }
 
     public static void clickSubmit() {
@@ -48,8 +50,14 @@ public class UniversalActions extends BasePage {
     }
 
     public static void clickSaveAndReturn() {
-        waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+        try {
+            waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to click using form-actions[save], attempting save-return-button XPath");
+            waitAndClick("//button[@id='save-return-button']", SelectorType.XPATH);
+        }
     }
+
 
     public static void clickSave() {waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);}
 
