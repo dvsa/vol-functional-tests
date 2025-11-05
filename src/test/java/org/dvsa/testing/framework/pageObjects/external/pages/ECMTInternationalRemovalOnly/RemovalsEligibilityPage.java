@@ -3,12 +3,18 @@ package org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalR
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
+import java.util.concurrent.TimeUnit;
+
 public class RemovalsEligibilityPage extends BasePermitPage {
 
     public static void confirmCheckbox() {
         if (notConfirmed()) {
             scrollAndClick("//input[@id='qaElement']", SelectorType.XPATH);
         }
+    }
+
+    public static void untilOnPage() {
+        untilElementIsPresent("//h1[contains(text(), 'Removal permits can only be used for removal operations using specialised equipment and staff')]", SelectorType.XPATH, 6L, TimeUnit.SECONDS);
     }
 
     private static boolean notConfirmed() {
