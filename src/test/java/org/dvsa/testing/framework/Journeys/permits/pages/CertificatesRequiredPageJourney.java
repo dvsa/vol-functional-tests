@@ -12,7 +12,7 @@ public class CertificatesRequiredPageJourney extends BasePermitJourney {
         super(world);
     }
     public static void completePage() {
-        waitForPageLoad();
+        CertificatesRequiredPage.untilOnPage();
         waitForElementToBeClickable("//input[@id='qaElement']", SelectorType.XPATH);
         clickByXPath("//input[@id='qaElement']");
         UniversalActions.clickSaveAndContinue();
