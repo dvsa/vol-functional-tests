@@ -10,6 +10,7 @@ public class PermitStartDatePageJourney extends BasePermitJourney {
         super(world);
     }
     public static void completePage() {
+        PermitStartDatePage.untilOnPage();
         PermitStartDatePage.permitDate();
         saveAndContinue();
     }

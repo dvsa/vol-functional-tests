@@ -2,9 +2,11 @@ package org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalR
 
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
+import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 
 public class PermitStartDatePage extends BasePermitPage {
@@ -12,6 +14,10 @@ public class PermitStartDatePage extends BasePermitPage {
     public static Dates date = new Dates(new LocalDateCalendar());
     static LinkedHashMap<String, String> currentDate = date.getDateHashMap(0, 0, 0);
     static LinkedHashMap<String, String> monthsAheadDate = date.getDateHashMap(0, 6, 0);
+
+    public static void untilOnPage() {
+        untilUrlMatches("permits/application/\\d+/permit-start-date/", Duration.LONG, ChronoUnit.SECONDS);
+    }
 
     public static void permitDate() {
         enterDay(currentDate);
