@@ -16,7 +16,7 @@ public class CertificatesRequiredPageJourney extends BasePermitJourney {
     public static void completePage() {
         CertificatesRequiredPage.untilOnPage();
         CertificatesRequiredPage.confirmCertificateRequired();
-        BasePage.waitForElementToBePresent("//fieldset[@data-group='qa[fieldset36]']//input[@id='qaElement' and @type='checkbox']");
+        BasePage.waitForElementToBePresent("//input[contains(@id,'_day')]");
         saveAndContinue();
         BasePage.waitForElementToBePresent("//input[contains(@id,'_day')]");
         BasePage.waitForElementNotToBePresent("//h1[contains(text(), 'Mandatory certificates')]");
