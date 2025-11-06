@@ -230,6 +230,8 @@
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                     <threadCount>8</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different
