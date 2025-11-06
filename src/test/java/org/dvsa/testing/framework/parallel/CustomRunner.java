@@ -30,12 +30,12 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getMinimumRunnable() {
-        return FIXED_PARALLELISM  - 3;
+        return FIXED_PARALLELISM;
     }
 
     @Override
     public int getMaxPoolSize() {
-        return FIXED_PARALLELISM + 10;
+        return FIXED_PARALLELISM;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getKeepAliveSeconds() {
-        return 60;
+        return 100;
     }
 }
