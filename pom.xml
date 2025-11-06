@@ -11,7 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.13.0</maven.compiler.version>
 
-        <active-support.version>2.10.8</active-support.version>
+        <active-support.version>2.10.9</active-support.version>
         <api-calls.version>3.0.13</api-calls.version>
         <uri-constructor.version>2.3.0</uri-constructor.version>
 
@@ -226,10 +226,12 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
-                    <forkCount>3</forkCount>
+                    <forkCount>5</forkCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
-                    <threadCount>3</threadCount>
+                    <threadCount>8</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
                         <!-- Work around. Surefire does not include enough
                              information to disambiguate between different

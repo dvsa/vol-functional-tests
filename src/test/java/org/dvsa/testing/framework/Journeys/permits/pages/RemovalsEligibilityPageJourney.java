@@ -10,6 +10,7 @@ public class RemovalsEligibilityPageJourney extends BasePermitJourney {
         super(world);
     }
     public static void completePage() {
+        RemovalsEligibilityPage.untilOnPage();
         RemovalsEligibilityPage.confirmCheckbox();
         saveAndContinue();
     }
