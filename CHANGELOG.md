@@ -1,6 +1,33 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.20](https://github.com/dvsa/vol-functional-tests/compare/v4.14.19...v4.14.20) (2025-11-06)
+
+
+### Bug Fixes
+
+* as ([acd89fb](https://github.com/dvsa/vol-functional-tests/commit/acd89fb4fcde1fc22f80ca2075a918a2a47e8140))
+* chrome ([9a7280e](https://github.com/dvsa/vol-functional-tests/commit/9a7280e4895c5c10349e1185c53489762c962ab8))
+* forks/browsers ([c5ab65e](https://github.com/dvsa/vol-functional-tests/commit/c5ab65e225f7ed57a73b83664d7e0d2ff7be29c9))
+* forks/browsers ([0eae9b7](https://github.com/dvsa/vol-functional-tests/commit/0eae9b706eeec91e78bb087e73f90814afee7abc))
+* forks/browsers ([49696fe](https://github.com/dvsa/vol-functional-tests/commit/49696fee847f2ca502500bbf359c05846937a7ea))
+* forks/browsers ([3a18e54](https://github.com/dvsa/vol-functional-tests/commit/3a18e54ba22afd0f5bf1deeba1bf6e9644b92ebc))
+* forks/browsers ([d9d5e0f](https://github.com/dvsa/vol-functional-tests/commit/d9d5e0f914a045c61f0c7d597208d2196bc5b565))
+* forks/browsers ([37022ac](https://github.com/dvsa/vol-functional-tests/commit/37022acf0b8e4faca667e36b48707e1abfdd80e3))
+* forks/browsers ([f4177e7](https://github.com/dvsa/vol-functional-tests/commit/f4177e798e0451e4cd9d0383e2669c8f827461e3))
+* forks/browsers ([41907b4](https://github.com/dvsa/vol-functional-tests/commit/41907b4651ea31e82796265b4ce0de751a5e8446))
+* forks/browsers ([f6ebac2](https://github.com/dvsa/vol-functional-tests/commit/f6ebac2acbca5cce949fcb11d96a7486e0040196))
+* forks/browsers ([7ccd1ed](https://github.com/dvsa/vol-functional-tests/commit/7ccd1edcb3e191613d5b649958b261689df2d7c8))
+* forks/browsers ([b9b7c5f](https://github.com/dvsa/vol-functional-tests/commit/b9b7c5f81f900ff8194b39a9c4abff93e68e50e1))
+* forks/browsers ([a9faf3c](https://github.com/dvsa/vol-functional-tests/commit/a9faf3c83640d22c3f59d47517e8acc7a4be09c3))
+* forks/browsers ([16d3f41](https://github.com/dvsa/vol-functional-tests/commit/16d3f41e6d8a7facd1ddd1625ab249637bf0e9f5))
+* forks/browsers ([34442e9](https://github.com/dvsa/vol-functional-tests/commit/34442e9bc77bbcce82de50b7f0ff54daaf5d43d5))
+* mandate ([9b1e57d](https://github.com/dvsa/vol-functional-tests/commit/9b1e57d5eb52f562919a9ea1e1c3b13be9feaa45))
+* mandate ([dea0ab5](https://github.com/dvsa/vol-functional-tests/commit/dea0ab5659bf0f515a5103c693dd508cd8650ac6))
+* refresh ([ee04b6e](https://github.com/dvsa/vol-functional-tests/commit/ee04b6e9b4cc87535985e1397f223c3dd5c8cd71))
+* remove integration test phase ([172dba3](https://github.com/dvsa/vol-functional-tests/commit/172dba350d2d42f17ddc233f21a7358af715ab4a))
+* wait ([52c9d02](https://github.com/dvsa/vol-functional-tests/commit/52c9d0271b708adcd0ebc58f2969eda4a798d1a2))
+
 ## [4.14.19](https://github.com/dvsa/vol-functional-tests/compare/v4.14.18...v4.14.19) (2025-11-04)
 
 
