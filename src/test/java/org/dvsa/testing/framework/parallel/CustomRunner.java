@@ -7,7 +7,7 @@ import org.junit.platform.engine.support.hierarchical.ParallelExecutionConfigura
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Predicate;
 public class CustomRunner implements ParallelExecutionConfiguration, ParallelExecutionConfigurationStrategy  {
-    private static final int FIXED_PARALLELISM = 33;
+    private static final int FIXED_PARALLELISM = 25;
 
     static {
         System.out.println("THREADS: " + FIXED_PARALLELISM);
