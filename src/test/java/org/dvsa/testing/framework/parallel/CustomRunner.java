@@ -7,7 +7,7 @@ import org.junit.platform.engine.support.hierarchical.ParallelExecutionConfigura
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Predicate;
 public class CustomRunner implements ParallelExecutionConfiguration, ParallelExecutionConfigurationStrategy  {
-    private static final int FIXED_PARALLELISM = 7;
+    private static final int FIXED_PARALLELISM = 33;
 
     static {
         System.out.println("THREADS: " + FIXED_PARALLELISM);
@@ -30,12 +30,12 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getMinimumRunnable() {
-        return FIXED_PARALLELISM;
+        return FIXED_PARALLELISM  - 3;
     }
 
     @Override
     public int getMaxPoolSize() {
-        return FIXED_PARALLELISM;
+        return FIXED_PARALLELISM + 10;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class CustomRunner implements ParallelExecutionConfiguration, ParallelExe
 
     @Override
     public int getKeepAliveSeconds() {
-        return 100;
+        return 60;
     }
 }
