@@ -226,10 +226,10 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
                     </argLine>
-                    <forkCount>5</forkCount>
+                    <forkCount>3</forkCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
-                    <threadCount>8</threadCount>
+                    <threadCount>3</threadCount>
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
