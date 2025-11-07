@@ -20,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -166,8 +167,11 @@ public class SubmissionPageSteps extends BasePermitPage {
     public void theTCDCDropDownListDoesNotContainTheCurrentUser() {
         WebElement dropDownElement = Browser.navigate().findElement(By.xpath("//*[@id=\"presidingTcUser_chosen\"]"));
         List<WebElement> options = dropDownElement.findElements(By.xpath(".//ul[@class='chosen-results']/li"));
+        List<String> optionTexts = new ArrayList<>();
         for (WebElement option : options) {
-            String userName = option.getText();
+            optionTexts.add(option.getText());
+        }
+        for (String userName : optionTexts) {
             assertNotEquals(userName, internalUsername);
         }
     }
