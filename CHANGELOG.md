@@ -1,6 +1,20 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.21](https://github.com/dvsa/vol-functional-tests/compare/v4.14.20...v4.14.21) (2025-11-10)
+
+
+### Bug Fixes
+
+* change dropdown value ([d16460a](https://github.com/dvsa/vol-functional-tests/commit/d16460a210ce9e3aad53fbb911215c32798bd1dd))
+* if ([0ad17db](https://github.com/dvsa/vol-functional-tests/commit/0ad17dbd9ab56dcf6990a5f2b01f52ffdc085d3a))
+* internal fixes ([e9ebef0](https://github.com/dvsa/vol-functional-tests/commit/e9ebef0f25590253a52c63a9310e5600739acb68))
+* internal test fix ([0132e5f](https://github.com/dvsa/vol-functional-tests/commit/0132e5f3238942808f17dae9c0552bac524103c3))
+* postcode validation ([a2ef346](https://github.com/dvsa/vol-functional-tests/commit/a2ef346e4473764317e0ba794ec4f66cf73c5148))
+* postcode validation ([ddaa60f](https://github.com/dvsa/vol-functional-tests/commit/ddaa60f72857174d1c61818cfd67a521e0117c37))
+* use array ([aa2bdfc](https://github.com/dvsa/vol-functional-tests/commit/aa2bdfc8f9bbd22c36d58cc8ff1d2a59b9a78ffa))
+* wait ([c1dc11a](https://github.com/dvsa/vol-functional-tests/commit/c1dc11a6f934a866784a720cbca0152aa94ac57c))
+
 ## [4.14.20](https://github.com/dvsa/vol-functional-tests/compare/v4.14.19...v4.14.20) (2025-11-06)
 
 
