@@ -161,6 +161,13 @@ public abstract class BasePage extends DriverUtils {
         findElement(selector, SelectorType.LINKTEXT).click();
     }
 
+    public void enterTextIntoSearchBox(String text) {
+        String selector = "//div[@class='chosen-search']/input[@type='text' and @autocomplete='off']";
+        waitForElementToBePresent(selector);
+        WebElement searchBox = findElement(selector, SelectorType.XPATH);
+        searchBox.clear();
+        searchBox.sendKeys(text);
+    }
 
     protected static void clickByXPath(@NotNull String selector) {
         int maxRetries = 3;

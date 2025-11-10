@@ -38,6 +38,7 @@ public class AddEditReassignTasks extends BasePage {
         String name = world.taskAllocationRulesJourney.getOwnerName();
         String[] nameArray = name.split(" (?=[^ ]*$)");
         String reassignedName = String.format("%s, %s",nameArray[1],nameArray[0]);
+        waitForUrlToContain("/processing/tasks/", 5);
         assertTrue(isTextPresent(reassignedName));
     }
 

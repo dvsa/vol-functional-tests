@@ -42,9 +42,9 @@ public class TaskAllocationRulesJourney extends BasePage {
     }
 
     public void selectDropDownValues() {
-        selectValueFromDropDownByIndex("details[team]", SelectorType.NAME, 2);
+        selectValueFromDropDownByIndex("details[team]", SelectorType.NAME, 1);
         waitForElementToBeClickable("details[user]", SelectorType.NAME);
-        waitAndSelectByIndex("details[user]", SelectorType.NAME, 1);
+        waitAndSelectByIndex("details[user]", SelectorType.NAME, 2);
         setOwnerName(getSelectedTextFromDropDown("//select[@name='details[user]']", SelectorType.XPATH));
         UniversalActions.clickSubmit();
         waitAndClick("50", SelectorType.LINKTEXT);
