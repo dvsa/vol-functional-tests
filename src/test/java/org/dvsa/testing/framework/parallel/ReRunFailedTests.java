@@ -8,10 +8,9 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeEngines("cucumber")
-@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "classpath:org/dvsa/testing/framework/features")
+@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "target/rerun.txt")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "org.dvsa.testing.framework")
-@ConfigurationParameter(key = Constants.EXECUTION_DRY_RUN_PROPERTY_NAME, value = "false")
-@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, pretty, junit:target/results-summary/summary.xml, summary, rerun:target/rerun.txt")
+@ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, pretty, summary")
 
-public class RunCucumberTests {
+public class ReRunFailedTests {
 }
