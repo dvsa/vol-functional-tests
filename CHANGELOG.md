@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.14.22](https://github.com/dvsa/vol-functional-tests/compare/v4.14.21...v4.14.22) (2025-11-17)
+
+
+### Bug Fixes
+
+* 2.11.0 ([e3ce1a7](https://github.com/dvsa/vol-functional-tests/commit/e3ce1a75cc2ee1f6574b2ff3ef97b0a2009a7623))
+* element exception ([6722d17](https://github.com/dvsa/vol-functional-tests/commit/6722d173164e42271abddc502d18db29f4d8e1d4))
+* local mailpit ([8861603](https://github.com/dvsa/vol-functional-tests/commit/8861603c6216d2715cf5963845cb5f4ac6e78f22))
+* mailpit ([0067650](https://github.com/dvsa/vol-functional-tests/commit/0067650e5249f4a90796ecb7d8db64443c4b4e9f))
+
 ## [4.14.21](https://github.com/dvsa/vol-functional-tests/compare/v4.14.20...v4.14.21) (2025-11-10)
 
 
