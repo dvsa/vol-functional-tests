@@ -74,6 +74,7 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeVehiclesWith9SeatsOrMorePage() {
+        waitForElementToBePresent("//*[@id='psvNoSmallVhlConfirmation']");
         clickByXPath("//*[@id='psvNoSmallVhlConfirmation']");
         UniversalActions.clickSaveAndContinue();
     }

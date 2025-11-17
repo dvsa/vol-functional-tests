@@ -71,7 +71,7 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         var quotedPrintableCodec = new QuotedPrintableCodec();
         var password = switch (world.configuration.env.toString()) {
-            case "local" -> throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
+           // case "local" -> throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
             default -> quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
         };
 
