@@ -175,12 +175,12 @@ public abstract class BasePage extends DriverUtils {
             try {
                 findElement(selector, SelectorType.XPATH).click();
                 return;
-            } catch (StaleElementReferenceException e) {
-                LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
+            } catch (StaleElementReferenceException | ElementNotInteractableException e) {
+                LOGGER.warn(e.getClass().getSimpleName() + " encountered. Attempting retry " + (attempt + 1));
                 getDriver().navigate().refresh();
             }
         }
-        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException.");
+        throw new RuntimeException("Failed to click element after " + maxRetries + " attempts due to StaleElementReferenceException or ElementNotInteractableException.");
     }
 
     protected static void clickById(@NotNull String selector) {
