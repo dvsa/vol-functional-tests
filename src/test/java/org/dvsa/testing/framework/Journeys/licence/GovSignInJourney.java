@@ -25,8 +25,9 @@ public class GovSignInJourney extends BasePage {
     Random random = new Random();
 
     public void navigateToGovUkSignIn() {
-        waitForTextToBePresent("Declaration information");
-        waitAndClick("sign", SelectorType.ID);
+        if (isTextPresent("Declaration information")) {
+                waitAndClick("sign", SelectorType.ID);
+            }
         String userName = SecretsManager.getSecretValue("basicAuthUserName");
         String passWord = SecretsManager.getSecretValue("basicAuthPassword");
         try {
