@@ -3,10 +3,13 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.dates.Dates;
+import activesupport.system.Properties;
 import apiCalls.enums.*;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.joda.time.LocalDate;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.apache.commons.codec.DecoderException;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -17,6 +20,9 @@ public class APIJourney {
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
     private final ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+
+    public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
     private final Lock writeLock = rwLock.writeLock();
 
     public APIJourney(World world) throws MissingRequiredArgument {
@@ -140,6 +146,7 @@ public class APIJourney {
         }
     }
 
+
     public void registerAndGetUserDetails(String userType) throws HttpException {
         writeLock.lock();
         try {
@@ -157,8 +164,20 @@ public class APIJourney {
             } else {
                 world.registerUser.registerUser();
                 world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-                world.userDetails.getUserDetails(UserType.EXTERNAL.asString(), world.registerUser.getUserId(), world.registerUser.getUserName(), SecretsManager.getSecretValue("internalNewPassword"));
+                String password;
+                if (env.toString().equalsIgnoreCase("local")) {
+                    password = world.globalMethods.getDecodedTempPassword(world.registerUser.getEmailAddress());
+                } else {
+                    password = SecretsManager.getSecretValue("internalNewPassword");
+                }
+
+                world.userDetails.getUserDetails(UserType.EXTERNAL.asString(),
+                        world.registerUser.getUserId(),
+                        world.registerUser.getUserName(),
+                        password);
             }
+        } catch (DecoderException e) {
+            throw new RuntimeException(e);
         } finally {
             writeLock.unlock();
         }

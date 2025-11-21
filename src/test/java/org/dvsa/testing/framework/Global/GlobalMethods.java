@@ -67,13 +67,8 @@ public class GlobalMethods extends BasePage {
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
-        // TODO: Setup way to store new passwords after they are set and once they are set default to them?
-        // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-        var quotedPrintableCodec = new QuotedPrintableCodec();
-        var password = switch (world.configuration.env.toString()) {
-           // case "local" -> throw new IllegalStateException("getTempPasswordFromMailhog method is missing");
-            default -> quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        };
+        // Retrieve the decoded temporary password using the getDecodedTempPassword method
+        var password = getDecodedTempPassword(emailAddress);
 
         if (password == null) {
             throw new IllegalArgumentException("Retrieved password is null");
@@ -112,4 +107,11 @@ public class GlobalMethods extends BasePage {
     public void submit() {
         click(submitButton, SelectorType.CSS);
     }
-}
+
+    public String getDecodedTempPassword(String emailAddress) throws DecoderException {
+        var quotedPrintableCodec = new QuotedPrintableCodec();
+        return switch (world.configuration.env.toString()) {
+            default -> quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+        };
+    }
+};
