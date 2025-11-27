@@ -21,9 +21,16 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
+import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
+import static org.openqa.selenium.By.linkText;
+import static org.openqa.selenium.By.xpath;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -242,6 +249,29 @@ public class SelfServeNavigation extends BasePage {
                 password = SecretsManager.getSecretValue("prepEnvPassword");
             }
             world.globalMethods.signIn(user, password);
+        }
+    }
+
+    public void navigateToOperatorReports() {
+        refreshPage();
+        clickByXPath("//*[@id=\"main-content\"]/div[2]/div[2]/div/div[2]/ul/li[4]/a");
+        try {
+            Set<String> windowHandles = getDriver().getWindowHandles();
+        for (String handle : windowHandles) {
+            getDriver().switchTo().window(handle);
+            if (getDriver().getCurrentUrl().contains("edh")) {
+                break;
+            }
+        }
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlContains("edh"));
+    }
+        finally {
+            String url = getCurrentUrl();
+            String username = SecretsManager.getSecretValue("topsUsername");
+            String password = SecretsManager.getSecretValue("topsPassword");
+            String urlCreds = url.replace("https://", "https://" + username + ":" + password + "@");
+            navigate().get(urlCreds);
         }
     }
 }

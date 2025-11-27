@@ -10,14 +10,19 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SelfServeNavigation;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServeUIJourney extends BasePage {
@@ -26,6 +31,7 @@ public class SelfServeUIJourney extends BasePage {
     private final World world;
     private String VRMField = "//*[@name='data[vrm]']";
     private String weightField = "//*[@name='data[platedWeight]']";
+    private String volOperatorName;
 
     public SelfServeUIJourney(World world) {
         this.world = world;
@@ -265,5 +271,29 @@ public class SelfServeUIJourney extends BasePage {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]", SelectorType.XPATH);
         waitAndClick("action-button", SelectorType.ID);
+    }
+
+    public void noteOperatorNameOnDashboardPage() {
+        volOperatorName = getText("/html/body/div[3]/ul/li/b", SelectorType.XPATH);
+        System.out.println("Noted operator name: " + volOperatorName);
+    }
+
+    public String getVolOperatorName() {
+        return volOperatorName;
+    }
+
+    public void verifyOperatorNameOnOperatorReportsPage() {
+        System.out.println(getCurrentUrl());
+        refreshPageWithJavascript();
+        System.out.println(getCurrentUrl());
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.urlContains("index.html"));
+        }
+        catch (Exception e) {
+            System.out.println("Timed out waiting for Operator Reports Service page to load.");
+        }
+        String topsOperatorName = getText("//*[@id=\"operator_name\"]", SelectorType.XPATH);;
+        assertEquals(topsOperatorName, volOperatorName);
     }
 }
