@@ -254,7 +254,7 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToOperatorReports() {
         refreshPage();
-        clickByXPath("//*[@id=\"main-content\"]/div[2]/div[2]/div/div[2]/ul/li[4]/a");
+        waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
         try {
             Set<String> windowHandles = getDriver().getWindowHandles();
         for (String handle : windowHandles) {
