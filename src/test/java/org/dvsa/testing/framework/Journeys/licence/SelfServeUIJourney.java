@@ -284,6 +284,7 @@ public class SelfServeUIJourney extends BasePage {
 
     public void verifyOperatorNameOnOperatorReportsPage() {
         String topsOperatorName = getText("//*[@id=\"operator_name\"]", SelectorType.XPATH);;
+        waitForElementToBePresent(volOperatorName);
         assertEquals(topsOperatorName, volOperatorName);
     }
 }
