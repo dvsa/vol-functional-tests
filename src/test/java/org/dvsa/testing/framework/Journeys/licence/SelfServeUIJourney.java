@@ -5,7 +5,6 @@ import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
