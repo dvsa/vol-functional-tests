@@ -62,29 +62,41 @@ fi
 # Echo the command to be captured in logs
 echo "Now running [ mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=_hidden_ -Dtag.name=\"(not ${exclude_tags})\" -Dcucumber.filter.tags=${cucumberTags} ] .."
 
-if [ $? -eq 0 ]; then
-  # First run - main tests
-  echo "Starting initial test execution..."
+# Check for failures and retry if needed
+if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
+  echo "Failed scenarios detected. Starting retry execution..."
+  echo "Retrying scenarios from: $(cat target/rerun.txt)"
 
-  if [ -z "${mavenOptions}" ]; then
-    mvn --batch-mode clean verify $mavenOptions -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dtest=RunCucumberTests
-  else
-    mvn --batch-mode clean verify -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dcucumber.options="-- io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" -Dtest=RunCucumberTests
-  fi
 
-  # Check for failures and retry if needed
-  if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
-    echo "Failed scenarios detected. Starting retry execution..."
-    echo "Retrying scenarios from: $(cat target/rerun.txt)"
+  echo "=== DEBUG INFO ==="
+  echo "Contents of rerun.txt:"
+  cat target/rerun.txt
+  echo "==================="
+  echo "Looking for ReRunFailedCucumberTests class:"
+  find . -name "*ReRunFailedCucumberTests*" -type f
+  echo "==================="
 
-    # Run retry without clean to preserve rerun.txt
-    mvn --batch-mode test -fae -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dtest=ReRunFailedCucumberTests
+  echo "Executing retry command..."
+  mvn --batch-mode test -fae -X \
+    -Dwdm.proxy=${proxyHost}:${proxyPort} \
+    -Dhttps.proxyHost=${proxyHost} \
+    -Dhttps.proxyPort=${proxyPort} \
+    -Dhttp.proxyHost=${proxyHost} \
+    -Dhttp.proxyPort=${proxyPort} \
+    -Dhttp.nonProxyHosts=${noProxyJava} \
+    -Denv=${platformEnv} \
+    -Dbrowser=${browserName} \
+    -DbrowserVersion=${browserVersion} \
+    -Dplatform=${platform} \
+    -DgridURL=${gridURL} \
+    -Dtag.name="(not ${exclude_tags})" \
+    -Dtest=ReRunFailedCucumberTests \
+    -Dsurefire.failIfNoSpecifiedTests=false
 
-    echo "Retry execution completed."
-  else
-    echo "No failed scenarios detected. Skipping retry."
-  fi
-
+  echo "Retry execution completed with exit code: $?"
+else
+  echo "No failed scenarios detected. Skipping retry."
+fi
   mvn allure:report
   # create the report zip file
   mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
