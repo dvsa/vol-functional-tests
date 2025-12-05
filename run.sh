@@ -69,6 +69,7 @@ else
 fi
 
 # Check for failures and retry if needed
+# Check for failures and retry if needed
 if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
   echo "Failed scenarios detected. Starting retry execution..."
   echo "Retrying scenarios from: $(cat target/rerun.txt)"
@@ -82,7 +83,7 @@ if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
   echo "==================="
 
   echo "Executing retry command..."
-  mvn --batch-mode test -fae -X \
+  mvn --batch-mode test -fae \
     -Dwdm.proxy=${proxyHost}:${proxyPort} \
     -Dhttps.proxyHost=${proxyHost} \
     -Dhttps.proxyPort=${proxyPort} \
@@ -102,6 +103,26 @@ if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
 else
   echo "No failed scenarios detected. Skipping retry."
 fi
+
+# Ensure summary.xml exists for workflow
+echo "=== SUMMARY FILE CHECK ==="
+if [ -f "target/results-summary/summary.xml" ]; then
+  echo "Summary file found:"
+  ls -la target/results-summary/summary.xml
+else
+  echo "WARNING: summary.xml not found!"
+  echo "Available files in target/results-summary/:"
+  ls -la target/results-summary/ || echo "Directory doesn't exist"
+fi
+echo "=========================="
+
+# Generate reports and upload
+mvn allure:report
+mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
+zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
+cd target
+aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
+aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 
 # Generate reports and upload
 mvn allure:report
