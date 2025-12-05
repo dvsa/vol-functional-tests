@@ -21,6 +21,7 @@
 # - noProxyJava
 # - mavenOptions
 
+
 # check if all the environment variables are set
 check_environment_variables() {
   # List of required environment variables
@@ -61,73 +62,20 @@ fi
 # Echo the command to be captured in logs
 echo "Now running [ mvn --batch-mode clean verify $mavenOptions -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=_hidden_ -Dtag.name=\"(not ${exclude_tags})\" -Dcucumber.filter.tags=${cucumberTags} ] .."
 
-# Execute main tests
-if [ -z "${mavenOptions}" ]; then
-  mvn --batch-mode clean verify $mavenOptions -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags}
+if [ $? -eq 0 ]; then
+  if [ -z "${mavenOptions}" ]; then
+    mvn --batch-mode clean verify  $mavenOptions -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags}
+  else
+    mvn --batch-mode clean verify -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dcucumber.options="-- io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+  fi
+
+  mvn allure:report
+  # create the report zip file
+  mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
+  zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
+  cd target
+  aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
+  aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
-  mvn --batch-mode clean verify -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dcucumber.options="-- io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+  echo "Maven command failed!"
 fi
-
-# Check for failures and retry if needed
-# Check for failures and retry if needed
-if [ -f "target/rerun.txt" ] && [ -s "target/rerun.txt" ]; then
-  echo "Failed scenarios detected. Starting retry execution..."
-  echo "Retrying scenarios from: $(cat target/rerun.txt)"
-
-  echo "=== DEBUG INFO ==="
-  echo "Contents of rerun.txt:"
-  cat target/rerun.txt
-  echo "==================="
-  echo "Looking for ReRunFailedCucumberTests class:"
-  find . -name "*ReRunFailedCucumberTests*" -type f
-  echo "==================="
-
-  echo "Executing retry command..."
-  mvn --batch-mode test -fae \
-    -Dwdm.proxy=${proxyHost}:${proxyPort} \
-    -Dhttps.proxyHost=${proxyHost} \
-    -Dhttps.proxyPort=${proxyPort} \
-    -Dhttp.proxyHost=${proxyHost} \
-    -Dhttp.proxyPort=${proxyPort} \
-    -Dhttp.nonProxyHosts=${noProxyJava} \
-    -Denv=${platformEnv} \
-    -Dbrowser=${browserName} \
-    -DbrowserVersion=${browserVersion} \
-    -Dplatform=${platform} \
-    -DgridURL=${gridURL} \
-    -Dtag.name="(not ${exclude_tags})" \
-    -Dtest=ReRunFailedCucumberTests \
-    -Dsurefire.failIfNoSpecifiedTests=false
-
-  echo "Retry execution completed with exit code: $?"
-else
-  echo "No failed scenarios detected. Skipping retry."
-fi
-
-# Ensure summary.xml exists for workflow
-echo "=== SUMMARY FILE CHECK ==="
-if [ -f "target/results-summary/summary.xml" ]; then
-  echo "Summary file found:"
-  ls -la target/results-summary/summary.xml
-else
-  echo "WARNING: summary.xml not found!"
-  echo "Available files in target/results-summary/:"
-  ls -la target/results-summary/ || echo "Directory doesn't exist"
-fi
-echo "=========================="
-
-# Generate reports and upload
-mvn allure:report
-mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
-zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
-cd target
-aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
-aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
-
-# Generate reports and upload
-mvn allure:report
-mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
-zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
-cd target
-aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
-aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
