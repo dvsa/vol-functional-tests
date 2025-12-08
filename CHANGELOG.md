@@ -1,6 +1,24 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.15.0](https://github.com/dvsa/vol-functional-tests/compare/v4.14.22...v4.15.0) (2025-12-08)
+
+
+### Features
+
+* local setup ([f03c411](https://github.com/dvsa/vol-functional-tests/commit/f03c411b491a203b9309d97c890b78161b6ebb60))
+* refactor for local docker setup ([7fba964](https://github.com/dvsa/vol-functional-tests/commit/7fba964de5efb623840461d4ce1dfece8ebfaf40))
+
+
+### Bug Fixes
+
+* local setup ([bee0c7b](https://github.com/dvsa/vol-functional-tests/commit/bee0c7b6ffabab5cbbd81a6bb8c02fb197aded75))
+* PSV limo page wait ([a33afcd](https://github.com/dvsa/vol-functional-tests/commit/a33afcdec852005a07ef2de9a2da47fd5c5731cf))
+* reinstate tests ([57e91d8](https://github.com/dvsa/vol-functional-tests/commit/57e91d8d38777657441f0cab5aaa3e810894682b))
+* reinstate tests ([29a23fd](https://github.com/dvsa/vol-functional-tests/commit/29a23fd6fc7ebfd6d92a4444465def0f173387f0))
+* remove if ([d7c8f09](https://github.com/dvsa/vol-functional-tests/commit/d7c8f0914c5c237e5d8be9d723bff74e84e99839))
+* remove if ([eaa3c45](https://github.com/dvsa/vol-functional-tests/commit/eaa3c45e03a1f4b8e7339b381559c4f8c3973e9f))
+
 ## [4.14.22](https://github.com/dvsa/vol-functional-tests/compare/v4.14.21...v4.14.22) (2025-11-17)
 
 
