@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.aws.s3.SecretsManager;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
@@ -74,5 +75,21 @@ public class SelfServeNavigation extends BasePage {
         if(!isTextPresent(SelfServeNavBar.SIGN_OUT.toString())) {
             world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
         }
+    }
+
+    @When("I click the DVSA Operator Reports link")
+    public void iClickTheDVSAOperatorReportsLink() {
+        world.selfServeNavigation.navigateToOperatorReports();
+
+    }
+
+    @Then("the operator name should be displayed on the Operator Reports Service page")
+    public void theOperatorNameShouldBeDisplayedOnTheOperatorReportsServicePage() {
+        world.selfServeUIJourney.verifyOperatorNameOnOperatorReportsPage();
+    }
+
+    @When("I note the operator name on the Dashboard page")
+    public void iNoteTheOperatorNameOnTheDashboardPage() {
+        world.selfServeUIJourney.noteOperatorNameOnDashboardPage();
     }
 }
