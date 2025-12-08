@@ -80,6 +80,7 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeLimousinesVehicles(String limousines) {
+        waitForTitleToBePresent("Limousines and novelty vehicles");
         if (limousines.equals("Yes")) {
             findSelectAllRadioButtonsByValue("Y");
             clickByXPath("//*[@id='limousinesNoveltyVehicles[psvOnlyLimousinesConfirmation]']");
