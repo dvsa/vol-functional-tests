@@ -101,6 +101,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit4</artifactId>
+            <version>${maven-surefire-plugin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
             <scope>test</scope>
@@ -136,6 +142,12 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${slf4j-log4j12.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -180,6 +192,11 @@
             <version>${api-calls.version}</version>
         </dependency>
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
@@ -219,9 +236,13 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <includes>
-                        <include>**/**.java</include>
+                        <include>**/RunCucumberTests.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/ReRunFailedCucumberTests.java</exclude>
+                    </excludes>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Xmx${jvmMemory}m
@@ -233,9 +254,6 @@
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
-                        <!-- Work around. Surefire does not include enough
-                             information to disambiguate between different
-                             examples and scenarios. -->
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
@@ -247,8 +265,16 @@
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
                     </dependency>
+                    <!-- Add JUnit 4 dependency for retry profile -->
+                    <dependency>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                        <version>4.13.2</version>
+                    </dependency>
                 </dependencies>
             </plugin>
+
+
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
@@ -270,8 +296,39 @@
     </build>
 
 
+    <profiles>
+        <profile>
+            <id>retry-failed</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.5.2</version>
+                        <configuration>
+                            <includes>
+                                <include>**/ReRunFailedCucumberTests.java</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <useManifestOnlyJar>false</useManifestOnlyJar>
+                            <dependenciesToScan>
+                                <dependency>io.cucumber:cucumber-junit</dependency>
+                            </dependenciesToScan>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit4</artifactId>
+                                <version>3.5.2</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-    <!--  Nexus Configuration  -->
+
     <distributionManagement>
         <repository>
             <id>github</id>
