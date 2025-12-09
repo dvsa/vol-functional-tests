@@ -21,7 +21,6 @@
 # - noProxyJava
 # - mavenOptions
 
-
 # check if all the environment variables are set
 check_environment_variables() {
   # List of required environment variables
@@ -69,15 +68,7 @@ if [ $? -eq 0 ]; then
     mvn --batch-mode clean verify -fae -U -Dwdm.proxy=${proxyHost}:${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttp.nonProxyHosts=${noProxyJava} -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dtag.name="(not ${exclude_tags})" -Dcucumber.filter.tags=${cucumberTags} -Dcucumber.options="-- io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
   fi
 
-  if [ -s "target/rerun.txt" ]; then
-    echo "Found failed tests, attempting retry..."
-    mvn test -Pretry-failed -Denv=${platformEnv} -Dbrowser=${browserName} -DbrowserVersion=${browserVersion} -Dplatform=${platform} -DgridURL=${gridURL} -Dmaven.test.failure.ignore=true
-    rm -f target/rerun.txt
-  fi
 
-  mvn allure:report
-  # create the report zip file
-  mv allure.zip ./allure_attempt_${resultsBuildNumber}.zip
   zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive

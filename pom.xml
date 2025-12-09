@@ -241,7 +241,7 @@
                         <include>**/RunCucumberTests.java</include>
                     </includes>
                     <excludes>
-                        <exclude>**/ReRunFailedCucumberTests.java</exclude>
+<!--                        <exclude>**/ReRunFailedCucumberTests.java</exclude>-->
                     </excludes>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -254,6 +254,9 @@
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
+                        <!-- Work around. Surefire does not include enough
+                             information to disambiguate between different
+                             examples and scenarios. -->
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
@@ -265,16 +268,35 @@
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
                     </dependency>
-                    <!-- Add JUnit 4 dependency for retry profile -->
-                    <dependency>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                        <version>4.13.2</version>
-                    </dependency>
                 </dependencies>
             </plugin>
-
-
+            <!-- Automatic retry execution plugin -->
+            <!-- Automatic retry execution plugin -->
+            <!-- Automatic retry execution plugin -->
+            <!-- Automatic retry execution plugin -->
+            <!-- Automatic retry execution plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>automatic-retry-execution</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <exec executable="/bin/bash" failonerror="false">
+                                    <arg value="-c"/>
+                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2>/dev/null; then echo 'Extracting failed feature files...'; grep -r '\.feature:' ${project.build.directory}/surefire-reports/ | grep -o '[^/]*\.feature' | while read feature; do find src/test/resources/org/dvsa/testing/framework/features -name '$feature' -type f; done | sort -u | head -5 > ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed features:'; cat ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; else echo 'Could not extract failed features, using direct path'; echo 'src/test/resources/org/dvsa/testing/framework/features/SelfServe/Licence-Application/Gov-sign-in/application-sign-digitally.feature' > ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; fi; else echo 'No test failures detected'; fi"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
@@ -285,7 +307,6 @@
                 <executions>
                     <execution>
                         <id>generate-test-report</id>
-                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -294,7 +315,6 @@
             </plugin>
         </plugins>
     </build>
-
 
     <profiles>
         <profile>
@@ -311,6 +331,7 @@
                             </includes>
                             <testFailureIgnore>true</testFailureIgnore>
                             <useManifestOnlyJar>false</useManifestOnlyJar>
+                            <!-- Force JUnit 4 provider -->
                             <dependenciesToScan>
                                 <dependency>io.cucumber:cucumber-junit</dependency>
                             </dependenciesToScan>
@@ -328,7 +349,7 @@
         </profile>
     </profiles>
 
-
+    <!--  Nexus Configuration  -->
     <distributionManagement>
         <repository>
             <id>github</id>

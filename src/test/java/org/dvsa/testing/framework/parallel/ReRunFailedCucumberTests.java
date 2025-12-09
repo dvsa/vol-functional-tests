@@ -12,8 +12,7 @@ import org.junit.runner.RunWith;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "pretty",
                 "html:target/cucumber-reports/retry-html",
-                "json:target/cucumber-reports/retry-json/Cucumber.json",
-                "junit:target/cucumber-reports/retry-junit/Cucumber.xml"
+                "json:target/cucumber-reports/retry-json/Cucumber.json"
         }
 )
 public class ReRunFailedCucumberTests {
