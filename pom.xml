@@ -290,7 +290,7 @@
                             <target>
                                 <exec executable="/bin/bash" failonerror="false">
                                     <arg value="-c"/>
-                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2>/dev/null; then echo 'Extracting failed feature files...'; grep -r '\.feature:' ${project.build.directory}/surefire-reports/ | grep -o '[^/]*\.feature' | while read feature; do find src/test/resources/org/dvsa/testing/framework/features -name '$feature' -type f; done | sort -u | head -5 > ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed features:'; cat ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; else echo 'Could not extract failed features, using direct path'; echo 'src/test/resources/org/dvsa/testing/framework/features/SelfServe/Licence-Application/Gov-sign-in/application-sign-digitally.feature' > ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; fi; else echo 'No test failures detected'; fi"/>
+                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2>/dev/null; then echo 'Extracting failed feature files...'; grep -r '\.feature:' ${project.build.directory}/surefire-reports/ | grep -o '[^/]*\.feature' | while read feature; do find src/test/resources/org/dvsa/testing/framework/features -name '$feature' -type f; done | sort -u | head -5 > ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed features:'; cat ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -DbrowserVersion='${browserVersion}' -Dplatform='${platform}' -DgridURL='${gridURL}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; else echo 'Could not extract failed features, using direct path'; echo 'src/test/resources/org/dvsa/testing/framework/features/SelfServe/Licence-Application/Gov-sign-in/application-sign-digitally.feature' > ${project.build.directory}/rerun.txt; mvn test -Pretry-failed -Denv='${env}' -Dbrowser='${browser}' -DbrowserVersion='${browserVersion}' -Dplatform='${platform}' -DgridURL='${gridURL}' -Dmaven.test.failure.ignore=true; rm -f ${project.build.directory}/rerun.txt; fi; else echo 'No test failures detected'; fi"/>
                                 </exec>
                             </target>
                         </configuration>
@@ -304,14 +304,6 @@
                 <configuration>
                     <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-test-report</id>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
