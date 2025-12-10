@@ -286,6 +286,9 @@
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
+                        <!-- Work around. Surefire does not include enough
+                             information to disambiguate between different
+                             examples and scenarios. -->
                         <configurationParameters>
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
