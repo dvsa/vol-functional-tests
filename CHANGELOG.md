@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.15.1](https://github.com/dvsa/vol-functional-tests/compare/v4.15.0...v4.15.1) (2025-12-10)
+
+
+### Bug Fixes
+
+* ci ([9413211](https://github.com/dvsa/vol-functional-tests/commit/94132113b6dd380784992870c894ebed0afada29))
+* PSV limo page wait ([7491583](https://github.com/dvsa/vol-functional-tests/commit/7491583389dfaabac271477e36d58408485d8918))
+
 ## [4.15.0](https://github.com/dvsa/vol-functional-tests/compare/v4.14.22...v4.15.0) (2025-12-08)
 
 

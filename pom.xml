@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 
-    <version>4.15.1-SNAPSHOT</version>
+    <version>4.15.1</version>
 
     <properties>
         <!-- Build Configuration -->
@@ -320,7 +318,7 @@
                             <target>
                                 <exec executable="/bin/bash" failonerror="false">
                                     <arg value="-c"/>
-                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2>/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -r 'file:///' ${project.build.directory}/surefire-reports/ | grep -o 'src/test/resources/[^)]*\.feature' | sed 's/%20/ /g' | sort -u > ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Method 1 SUCCESS! Created rerun.txt with failed features (no line numbers):'; cat ${project.build.directory}/rerun.txt; echo ''; echo 'Testing with debug - contents in quotes:'; echo '&quot;'$(cat ${project.build.directory}/rerun.txt)'&quot;'; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true; else echo 'Method 1 failed, no scenarios extracted'; fi; rm -f ${project.build.directory}/rerun.txt; else echo 'No test failures detected'; fi"/>
+                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2&gt;/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -r 'file:///' ${project.build.directory}/surefire-reports/ | grep -o 'src/test/resources/[^)]*\.feature' | sed 's/%20/ /g' | sort -u &gt; ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Method 1 SUCCESS! Created rerun.txt with failed features (no line numbers):'; cat ${project.build.directory}/rerun.txt; echo ''; echo 'Testing with debug - contents in quotes:'; echo '&quot;'$(cat ${project.build.directory}/rerun.txt)'&quot;'; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true; else echo 'Method 1 failed, no scenarios extracted'; fi; rm -f ${project.build.directory}/rerun.txt; else echo 'No test failures detected'; fi"/>
                                 </exec>
                             </target>
                         </configuration>
