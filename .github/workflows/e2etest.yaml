@@ -269,7 +269,7 @@ jobs:
         with:
           file-path: ./target/results-summary/summary.xml
           fail-on-test-failures: true
-          pass-percentage: 80
+          pass-percentage: 90
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:
