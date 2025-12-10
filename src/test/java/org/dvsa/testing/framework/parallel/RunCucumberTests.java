@@ -12,7 +12,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasspathResource("org/dvsa/testing/framework")
 @ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "src/test/resources/org/dvsa/testing/framework/features")
 @ConfigurationParameter(key = Constants.GLUE_PROPERTY_NAME, value = "org.dvsa.testing.framework")
-@ConfigurationParameter(key = Constants.EXECUTION_DRY_RUN_PROPERTY_NAME,  value = "false")
+@ConfigurationParameter(key = Constants.EXECUTION_DRY_RUN_PROPERTY_NAME, value = "false")
 @ConfigurationParameter(key = Constants.PLUGIN_PROPERTY_NAME, value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm, pretty, junit:target/results-summary/summary.xml")
 
 public class RunCucumberTests {
