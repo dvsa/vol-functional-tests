@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CertificatesRequiredPage extends BasePermitPage {
 
-    private static String certificateRequiredConfirmation = "//input[@id='qaElement']";
+    private static String certificateRequiredConfirmation = "//*[@id='qaElement']";
 
     public static void untilOnPage() {
         untilElementIsPresent("//h1[contains(text(), 'Mandatory certificates')]", SelectorType.XPATH, 6L, TimeUnit.SECONDS);
@@ -16,7 +16,7 @@ public class CertificatesRequiredPage extends BasePermitPage {
 
     public static void confirmCertificateRequired() {
            waitForElementToBeClickable(certificateRequiredConfirmation, SelectorType.XPATH);
-            waitAndClick(certificateRequiredConfirmation, SelectorType.XPATH);
+           clickByXPath(certificateRequiredConfirmation);
         }
 
     public static boolean checkboxNotConfirmed() {
