@@ -16,7 +16,7 @@ public class CertificatesRequiredPage extends BasePermitPage {
 
     public static void confirmCertificateRequired() {
            waitForElementToBeClickable(certificateRequiredConfirmation, SelectorType.XPATH);
-            waitAndClick(certificateRequiredConfirmation, SelectorType.XPATH);
+            clickByXPath(certificateRequiredConfirmation);
         }
 
     public static boolean checkboxNotConfirmed() {
