@@ -45,7 +45,7 @@
         <httpclient.version>4.5.14</httpclient.version>
 
         <!-- Network Dependencies -->
-        <netty.version>4.1.125.Final</netty.version>
+        <netty.version>4.1.129.Final</netty.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
