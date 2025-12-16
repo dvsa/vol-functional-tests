@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.16.0](https://github.com/dvsa/vol-functional-tests/compare/v4.15.2...v4.16.0) (2025-12-16)
+
+
+### Features
+
+* reduce sessions ([bef1178](https://github.com/dvsa/vol-functional-tests/commit/bef1178f4598033b9d9fbc99fa25a69cbf540fe8))
+
 ## [4.15.2](https://github.com/dvsa/vol-functional-tests/compare/v4.15.1...v4.15.2) (2025-12-16)
 
 
