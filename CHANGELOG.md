@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.15.2](https://github.com/dvsa/vol-functional-tests/compare/v4.15.1...v4.15.2) (2025-12-16)
+
+
+### Bug Fixes
+
+* bump up netty ([ee7e3d5](https://github.com/dvsa/vol-functional-tests/commit/ee7e3d5f34eb5e77927d1abc219ea2897748199c))
+* bump up netty ([5c72869](https://github.com/dvsa/vol-functional-tests/commit/5c728699ef95b9bdd51e1830b436f0c7e4819775))
+
 ## [4.15.1](https://github.com/dvsa/vol-functional-tests/compare/v4.15.0...v4.15.1) (2025-12-10)
 
 
