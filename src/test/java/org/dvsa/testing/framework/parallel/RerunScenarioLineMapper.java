@@ -19,7 +19,7 @@ public class RerunScenarioLineMapper {
         for (String entry : rerunEntries) {
             if (!entry.contains(":")) continue;
             String[] parts = entry.split(":(?=[0-9]+$)");
-            String featurePath = parts[0];
+            String featurePath = parts[0].replace("%20", " ");
             int failedLine = Integer.parseInt(parts[1]);
             List<String> lines = Files.readAllLines(Paths.get(featurePath));
             int scenarioLine = findScenarioLine(lines, failedLine);
