@@ -43,9 +43,15 @@
         <zt-zip.version>1.15</zt-zip.version>
         <lorem.version>2.1</lorem.version>
         <httpclient.version>4.5.14</httpclient.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
+        <dom4j.version>2.1.4</dom4j.version>
+        <ion-java.version>1.11.11</ion-java.version>
 
         <!-- Network Dependencies -->
         <netty.version>4.1.129.Final</netty.version>
+
+        <!-- Testing Framework - WebDriverManager -->
+        <webdrivermanager.version>5.5.3</webdrivermanager.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
@@ -124,6 +130,14 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testing Framework - WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -242,6 +256,21 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazon.ion</groupId>
+            <artifactId>ion-java</artifactId>
+            <version>${ion-java.version}</version>
         </dependency>
     </dependencies>
 
