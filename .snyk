@@ -24,4 +24,16 @@ ignore:
         expires: 2026-12-31T23:59:59.000Z
         created: 2024-05-09T15:46:16.322Z
 
+  SNYK-JAVA-DOM4J-174153:
+    - '*':
+        reason: No direct upgrade or patch available for transitive dependency
+        expires: 2026-12-31T23:59:59.000Z
+        created: 2025-12-19T00:00:00.000Z
+
+  SNYK-JAVA-DOM4J-2812975:
+    - '*':
+        reason: No direct upgrade or patch available for transitive dependency
+        expires: 2026-12-31T23:59:59.000Z
+        created: 2025-12-19T00:00:00.000Z
+
 patch: {}
