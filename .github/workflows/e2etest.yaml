@@ -259,16 +259,16 @@ jobs:
         with:
           name: e2e-${{ needs.create-job-name.outputs.job_name }}
 
-#      - name: Merge JUnit XML reports
-#        uses: joshuaavalon/junit-merge-action@v2
-#        with:
-#          pattern: |
-#            target/surefire-reports/*.xml
-#          output: target/results-summary/summary.xml
 
       - name: Console Output Report
         run: |
           echo "Allure report is available at s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
+
+      - name: Install junit-report-merger
+        run: npm install -g junit-report-merger
+
+      - name: Merge JUnit XML reports
+        run: junit-report-merger -d target/surefire-reports -o target/results-summary/summary.xml
 
       - name: Get Summary
         id: get-summary
