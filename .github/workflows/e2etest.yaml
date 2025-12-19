@@ -264,7 +264,6 @@ jobs:
         with:
           pattern: |
             target/surefire-reports/*.xml
-            target/surefire-reports/reruncucumber.xml
           output: target/results-summary/summary.xml
 
       - name: Console Output Report
