@@ -51,7 +51,7 @@
         <netty.version>4.1.129.Final</netty.version>
 
         <!-- Testing Framework - WebDriverManager -->
-        <webdrivermanager.version>5.5.3</webdrivermanager.version>
+        <webdrivermanager.version>6.1.0</webdrivermanager.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
