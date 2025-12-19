@@ -259,12 +259,12 @@ jobs:
         with:
           name: e2e-${{ needs.create-job-name.outputs.job_name }}
 
-      - name: Merge JUnit XML reports
-        uses: joshuaavalon/junit-merge-action@v2
-        with:
-          pattern: |
-            target/surefire-reports/*.xml
-          output: target/results-summary/summary.xml
+#      - name: Merge JUnit XML reports
+#        uses: joshuaavalon/junit-merge-action@v2
+#        with:
+#          pattern: |
+#            target/surefire-reports/*.xml
+#          output: target/results-summary/summary.xml
 
       - name: Console Output Report
         run: |
