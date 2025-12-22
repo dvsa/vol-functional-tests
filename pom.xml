@@ -31,7 +31,7 @@
         <aspectj.version>1.9.21</aspectj.version>
 
         <!-- Logging -->
-        <log4j.version>2.22.0</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
 
         <!-- Utilities -->
         <commons-lang3.version>3.18.0</commons-lang3.version>
