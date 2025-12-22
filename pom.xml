@@ -353,7 +353,7 @@
                                       fork="true"
                                       classpath="${project.build.testOutputDirectory}">
                                     <arg value="${project.build.directory}/surefire-reports"/>
-                                    <arg value="${project.build.directory}/surefire-reports/deduped-summary.xml"/>
+                                    <arg value="${project.build.directory}/surefire-reports/summary.xml"/>
                                 </java>
                             </target>
                         </configuration>
