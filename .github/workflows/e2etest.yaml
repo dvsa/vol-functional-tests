@@ -268,7 +268,7 @@ jobs:
         run: npm install -g junit-report-merger
 
       - name: Merge JUnit XML reports
-        run: junit-report-merger -d target/surefire-reports -o target/results-summary/summary.xml
+        run: junit-report-merger  target/surefire-reports -o target/results-summary/summary.xml
 
       - name: Get Summary
         id: get-summary
