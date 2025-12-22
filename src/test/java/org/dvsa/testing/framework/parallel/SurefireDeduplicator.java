@@ -19,13 +19,14 @@ public class SurefireDeduplicator {
         String outputFile = args[1];
 
         Map<String, Element> testCaseMap = new LinkedHashMap<>();
-        int failures = 0, errors = 0, skipped = 0;
+        Map<String, String> testCaseStatus = new HashMap<>();
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
         List<Path> xmlFiles = Files.list(Paths.get(inputDir))
                 .filter(p -> p.toString().endsWith(".xml"))
+                .sorted((a, b) -> a.getFileName().toString().contains("rerun") ? 1 : -1)
                 .toList();
 
         for (Path xmlPath : xmlFiles) {
@@ -37,6 +38,20 @@ public class SurefireDeduplicator {
                 String classname = tc.getAttribute("classname");
                 String key = classname + "::" + name;
                 testCaseMap.put(key, (Element) tc.cloneNode(true));
+                // Determine status: error > failure > skipped > passed
+                if (tc.getElementsByTagName("error").getLength() > 0) testCaseStatus.put(key, "error");
+                else if (tc.getElementsByTagName("failure").getLength() > 0) testCaseStatus.put(key, "failure");
+                else if (tc.getElementsByTagName("skipped").getLength() > 0) testCaseStatus.put(key, "skipped");
+                else testCaseStatus.put(key, "passed");
+            }
+        }
+
+        int failures = 0, errors = 0, skipped = 0;
+        for (String status : testCaseStatus.values()) {
+            switch (status) {
+                case "error": errors++; break;
+                case "failure": failures++; break;
+                case "skipped": skipped++; break;
             }
         }
 
@@ -47,9 +62,6 @@ public class SurefireDeduplicator {
         for (Element tc : testCaseMap.values()) {
             Node imported = summaryDoc.importNode(tc, true);
             testsuite.appendChild(imported);
-            if (tc.getElementsByTagName("failure").getLength() > 0) failures++;
-            else if (tc.getElementsByTagName("error").getLength() > 0) errors++;
-            else if (tc.getElementsByTagName("skipped").getLength() > 0) skipped++;
         }
 
         testsuite.setAttribute("tests", String.valueOf(testCaseMap.size()));
