@@ -17,7 +17,7 @@ public class DeduplicateJUnit {
         // Map to hold the latest testcase for each (classname, name)
         Map<String, Element> deduplicatedTestcases = new LinkedHashMap<>();
 
-        // Get all XML files sorted by last modified time
+        // Get all XML files in the directory, sorted by last modified time (oldest first)
         List<Path> xmlFiles = new ArrayList<>();
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(inputDir), "*.xml")) {
             for (Path entry : stream) {
@@ -35,7 +35,7 @@ public class DeduplicateJUnit {
             for (int i = 0; i < testcaseNodes.getLength(); i++) {
                 Element testcase = (Element) testcaseNodes.item(i);
                 String key = testcase.getAttribute("classname") + "#" + testcase.getAttribute("name");
-                // Import node to a new document later
+                // Overwrite with the latest occurrence (rerun will take precedence)
                 deduplicatedTestcases.put(key, testcase);
             }
         }
