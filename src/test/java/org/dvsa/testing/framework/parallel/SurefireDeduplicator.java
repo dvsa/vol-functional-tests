@@ -20,14 +20,14 @@ public class SurefireDeduplicator {
         String inputDir = args[0];
         String outputFile = args[1];
         
-        Map<String, Element> testCaseMap = new LinkedHashMap<>();
-        Map<String, String> testCaseStatus = new HashMap<>();
+        Map<String, TestCaseInfo> testCaseMap = new LinkedHashMap<>();
         
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         
         List<Path> xmlFiles = Files.list(Paths.get(inputDir))
                 .filter(p -> p.toString().endsWith(".xml"))
+                .filter(p -> !p.getFileName().toString().equals("summary.xml"))
                 .sorted((a, b) -> {
                     String fileA = a.getFileName().toString();
                     String fileB = b.getFileName().toString();
@@ -66,22 +66,20 @@ public class SurefireDeduplicator {
                     currentStatus = "passed";
                 }
                 
-                boolean shouldUpdate = !testCaseMap.containsKey(key) || isRerunFile;
+                TestCaseInfo existing = testCaseMap.get(key);
                 
-                if (shouldUpdate) {
-                    testCaseMap.put(key, (Element) tc.cloneNode(true));
-                    testCaseStatus.put(key, currentStatus);
-                    
-                    if (isRerunFile) {
-                        System.out.println("  Updated: " + name + " -> " + currentStatus);
-                    }
+                if (existing == null) {
+                    testCaseMap.put(key, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, isRerunFile));
+                } else if (isRerunFile) {
+                    System.out.println("  Updating " + name + ": " + existing.status + " -> " + currentStatus);
+                    testCaseMap.put(key, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, isRerunFile));
                 }
             }
         }
         
         int failures = 0, errors = 0, skipped = 0, passed = 0;
-        for (String status : testCaseStatus.values()) {
-            switch (status) {
+        for (TestCaseInfo info : testCaseMap.values()) {
+            switch (info.status) {
                 case "error": errors++; break;
                 case "failure": failures++; break;
                 case "skipped": skipped++; break;
@@ -100,8 +98,8 @@ public class SurefireDeduplicator {
         Element testsuite = summaryDoc.createElement("testsuite");
         summaryDoc.appendChild(testsuite);
         
-        for (Element tc : testCaseMap.values()) {
-            Node imported = summaryDoc.importNode(tc, true);
+        for (TestCaseInfo info : testCaseMap.values()) {
+            Node imported = summaryDoc.importNode(info.element, true);
             testsuite.appendChild(imported);
         }
         
@@ -120,5 +118,17 @@ public class SurefireDeduplicator {
         transformer.transform(new DOMSource(summaryDoc), new StreamResult(new File(outputFile)));
         
         System.out.println("\nDeduplicated Surefire summary written to: " + outputFile);
+    }
+    
+    private static class TestCaseInfo {
+        final Element element;
+        final String status;
+        final boolean fromRerun;
+        
+        TestCaseInfo(Element element, String status, boolean fromRerun) {
+            this.element = element;
+            this.status = status;
+            this.fromRerun = fromRerun;
+        }
     }
 }
