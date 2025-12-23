@@ -349,6 +349,13 @@
                                     <arg value="-c"/>
                                     <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2&gt;/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -o 'file:///[^:]*\.feature:[0-9]*' ${project.build.directory}/surefire-reports/*.xml | sed 's|file://||' | sed 's|.*/src/|src/|' | sort -u &gt; ${project.build.directory}/rerun_raw.txt; java -cp ${project.build.testOutputDirectory} org.dvsa.testing.framework.parallel.RerunScenarioLineMapper ${project.build.directory}/rerun_raw.txt ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed scenarios (scenario start lines):'; cat ${project.build.directory}/rerun.txt; echo ''; echo 'Testing with debug - contents in quotes:'; echo '&quot;'$(cat ${project.build.directory}/rerun.txt)'&quot;'; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true; else echo 'No failed scenarios extracted'; fi; rm -f ${project.build.directory}/rerun.txt ${project.build.directory}/rerun_raw.txt; else echo 'No test failures detected'; fi"/>
                                 </exec>
+                                <java classname="org.dvsa.testing.framework.parallel.SurefireDeduplicator"
+                                      fork="true"
+                                      classpath="${project.build.testOutputDirectory}">
+                                    <arg value="${project.build.directory}/surefire-reports"/>
+                                    <arg value="${project.build.directory}/surefire-reports/summary.xml"/>
+                                    <arg value="--exclude-skipped"/>
+                                </java>
                             </target>
                         </configuration>
                     </execution>
