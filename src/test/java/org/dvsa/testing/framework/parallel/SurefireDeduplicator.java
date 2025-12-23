@@ -81,8 +81,29 @@ public class SurefireDeduplicator {
                         System.out.println("      Rerun: " + key);
                         System.out.println("      Status: " + existing.status + " -> " + currentStatus);
 
-                        testCaseMap.put(matchKey, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, true));
-                        rerunToInitialKeyMap.put(key, matchKey);
+                        Element updatedElement = (Element) existing.element.cloneNode(true);
+                        NodeList errorNodes = updatedElement.getElementsByTagName("error");
+                        while (errorNodes.getLength() > 0) {
+                            errorNodes.item(0).getParentNode().removeChild(errorNodes.item(0));
+                        }
+                        NodeList failureNodes = updatedElement.getElementsByTagName("failure");
+                        while (failureNodes.getLength() > 0) {
+                            failureNodes.item(0).getParentNode().removeChild(failureNodes.item(0));
+                        }
+                        NodeList skippedNodes = updatedElement.getElementsByTagName("skipped");
+                        while (skippedNodes.getLength() > 0) {
+                            skippedNodes.item(0).getParentNode().removeChild(skippedNodes.item(0));
+                        }
+
+                        if (currentStatus.equals("error") || currentStatus.equals("failure")) {
+                            NodeList rerunErrors = tc.getElementsByTagName(currentStatus);
+                            if (rerunErrors.getLength() > 0) {
+                                Node importedError = updatedElement.getOwnerDocument().importNode(rerunErrors.item(0), true);
+                                updatedElement.appendChild(importedError);
+                            }
+                        }
+
+                        testCaseMap.put(matchKey, new TestCaseInfo(updatedElement, currentStatus, true));
                     } else {
                         System.out.println("  Adding new rerun test: " + name + " [" + currentStatus + "]");
                         testCaseMap.put(key, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, true));
