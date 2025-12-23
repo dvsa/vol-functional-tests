@@ -1,6 +1,27 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.16.1](https://github.com/dvsa/vol-functional-tests/compare/v4.16.0...v4.16.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* all failed scenarios ([952350d](https://github.com/dvsa/vol-functional-tests/commit/952350d58f30ae89d11953e0bc66355ae78e2de2))
+* allure merge ([fbc4d5b](https://github.com/dvsa/vol-functional-tests/commit/fbc4d5ba9b547a508f6d00471550c87663a2bc70))
+* allure merge ([3dfb4b1](https://github.com/dvsa/vol-functional-tests/commit/3dfb4b1cfce4bedb0caff003e5436bbeafd27aab))
+* allure merge ([bb6037b](https://github.com/dvsa/vol-functional-tests/commit/bb6037b781434763b262fb15e39ea48c9cb697ea))
+* deduplicator ([a1477fd](https://github.com/dvsa/vol-functional-tests/commit/a1477fdef6d9d39196d61e50f9919804e8c5c9cf))
+* deduplicator ([c8cb7bf](https://github.com/dvsa/vol-functional-tests/commit/c8cb7bff40934fd1b686d5b91f5f40ab5e25dded))
+* dep cleanup ([62d8fce](https://github.com/dvsa/vol-functional-tests/commit/62d8fce4e16dce2a83e8c03aff1fd2952f654485))
+* dep cleanup ([af5872c](https://github.com/dvsa/vol-functional-tests/commit/af5872cabce09cc5b40f1c8d6bd72507ac2ffabe))
+* dep cleanup ([38e0383](https://github.com/dvsa/vol-functional-tests/commit/38e03834e0df2f696b3701ca63269b5b2cbcdc40))
+* dep cleanup ([2436b61](https://github.com/dvsa/vol-functional-tests/commit/2436b61c666c80d20f1af85ecdd65418189865d9))
+* feature path ([041c4b7](https://github.com/dvsa/vol-functional-tests/commit/041c4b793ef863d394b0b219255d2e8fc759a394))
+* matching logic ([44e7d45](https://github.com/dvsa/vol-functional-tests/commit/44e7d45a88572efdc264bd3cd014e401b79e585a))
+* regen report' ([a4da266](https://github.com/dvsa/vol-functional-tests/commit/a4da266726906968739929becb0886ae45abac9f))
+* reRunLineMapper ([5101884](https://github.com/dvsa/vol-functional-tests/commit/5101884a10f2bbbe5e5926c9cedece956fed7c83))
+* snyk ([1592aa6](https://github.com/dvsa/vol-functional-tests/commit/1592aa638251998132ea8e44f6ddbd68f9feee87))
+
 ## [4.16.0](https://github.com/dvsa/vol-functional-tests/compare/v4.15.2...v4.16.0) (2025-12-16)
 
 
