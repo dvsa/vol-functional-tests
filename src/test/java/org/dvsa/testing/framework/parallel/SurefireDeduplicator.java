@@ -23,6 +23,7 @@ public class SurefireDeduplicator {
         boolean excludeSkipped = args.length > 2 && args[2].equalsIgnoreCase("--exclude-skipped");
 
         Map<String, TestCaseInfo> testCaseMap = new LinkedHashMap<>();
+        Map<String, String> rerunToInitialKeyMap = new HashMap<>();
         Map<String, List<String>> classnameIndex = new HashMap<>();
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -79,7 +80,9 @@ public class SurefireDeduplicator {
                         System.out.println("      Initial: " + matchKey);
                         System.out.println("      Rerun: " + key);
                         System.out.println("      Status: " + existing.status + " -> " + currentStatus);
+
                         testCaseMap.put(matchKey, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, true));
+                        rerunToInitialKeyMap.put(key, matchKey);
                     } else {
                         System.out.println("  Adding new rerun test: " + name + " [" + currentStatus + "]");
                         testCaseMap.put(key, new TestCaseInfo((Element) tc.cloneNode(true), currentStatus, true));
@@ -92,6 +95,27 @@ public class SurefireDeduplicator {
             }
             System.out.println();
         }
+
+        System.out.println("==============================================");
+        System.out.println("Checking for duplicate entries...");
+        System.out.println("==============================================");
+
+        Set<String> keysToRemove = new HashSet<>();
+        for (Map.Entry<String, String> entry : rerunToInitialKeyMap.entrySet()) {
+            String rerunKey = entry.getKey();
+            String initialKey = entry.getValue();
+
+            if (testCaseMap.containsKey(rerunKey) && !rerunKey.equals(initialKey)) {
+                System.out.println("Removing duplicate rerun entry: " + rerunKey);
+                keysToRemove.add(rerunKey);
+            }
+        }
+
+        for (String key : keysToRemove) {
+            testCaseMap.remove(key);
+        }
+
+        System.out.println("Removed " + keysToRemove.size() + " duplicate entries\n");
 
         System.out.println("==============================================");
         System.out.println("Final Test Case Breakdown:");
