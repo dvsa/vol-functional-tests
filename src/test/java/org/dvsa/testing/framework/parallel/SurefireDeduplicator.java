@@ -81,26 +81,21 @@ public class SurefireDeduplicator {
                         System.out.println("      Rerun: " + key);
                         System.out.println("      Status: " + existing.status + " -> " + currentStatus);
 
-                        Element updatedElement = (Element) existing.element.cloneNode(true);
-                        NodeList errorNodes = updatedElement.getElementsByTagName("error");
-                        while (errorNodes.getLength() > 0) {
-                            errorNodes.item(0).getParentNode().removeChild(errorNodes.item(0));
-                        }
-                        NodeList failureNodes = updatedElement.getElementsByTagName("failure");
-                        while (failureNodes.getLength() > 0) {
-                            failureNodes.item(0).getParentNode().removeChild(failureNodes.item(0));
-                        }
-                        NodeList skippedNodes = updatedElement.getElementsByTagName("skipped");
-                        while (skippedNodes.getLength() > 0) {
-                            skippedNodes.item(0).getParentNode().removeChild(skippedNodes.item(0));
-                        }
-
-                        if (currentStatus.equals("error") || currentStatus.equals("failure")) {
-                            NodeList rerunErrors = tc.getElementsByTagName(currentStatus);
-                            if (rerunErrors.getLength() > 0) {
-                                Node importedError = updatedElement.getOwnerDocument().importNode(rerunErrors.item(0), true);
-                                updatedElement.appendChild(importedError);
+                        Element updatedElement;
+                        if (currentStatus.equals("passed")) {
+                            updatedElement = (Element) existing.element.cloneNode(false);
+                            NodeList children = existing.element.getChildNodes();
+                            for (int j = 0; j < children.getLength(); j++) {
+                                Node child = children.item(j);
+                                String nodeName = child.getNodeName();
+                                if (!nodeName.equals("error") && !nodeName.equals("failure") && !nodeName.equals("skipped")) {
+                                    updatedElement.appendChild(child.cloneNode(true));
+                                }
                             }
+                        } else {
+                            updatedElement = (Element) tc.cloneNode(true);
+                            updatedElement.setAttribute("name", existing.element.getAttribute("name"));
+                            updatedElement.setAttribute("classname", existing.element.getAttribute("classname"));
                         }
 
                         testCaseMap.put(matchKey, new TestCaseInfo(updatedElement, currentStatus, true));
