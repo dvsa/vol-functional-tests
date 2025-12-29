@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.16.2](https://github.com/dvsa/vol-functional-tests/compare/v4.16.1...v4.16.2) (2025-12-29)
+
+
+### Bug Fixes
+
+* duplicates ([f7a22d7](https://github.com/dvsa/vol-functional-tests/commit/f7a22d7b15f6f2d29175d0075f7f33593eefbfa5))
+* track rerun to inital map ([3ad601a](https://github.com/dvsa/vol-functional-tests/commit/3ad601a06d20f924528087219fe9c7f0b0b9d326))
+* track rerun to inital map ([84df67f](https://github.com/dvsa/vol-functional-tests/commit/84df67f8f101499be8b8d92b98f63dbe8cbd2f14))
+
 ## [4.16.1](https://github.com/dvsa/vol-functional-tests/compare/v4.16.0...v4.16.1) (2025-12-23)
 
 
