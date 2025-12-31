@@ -10,14 +10,19 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SelfServeNavigation;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServeUIJourney extends BasePage {
@@ -26,6 +31,7 @@ public class SelfServeUIJourney extends BasePage {
     private final World world;
     private String VRMField = "//*[@name='data[vrm]']";
     private String weightField = "//*[@name='data[platedWeight]']";
+    private String volOperatorName;
 
     public SelfServeUIJourney(World world) {
         this.world = world;
@@ -265,5 +271,20 @@ public class SelfServeUIJourney extends BasePage {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]", SelectorType.XPATH);
         waitAndClick("action-button", SelectorType.ID);
+    }
+
+    public void noteOperatorNameOnDashboardPage() {
+        volOperatorName = getText("/html/body/div[3]/ul/li/b", SelectorType.XPATH);
+    }
+
+    public String getVolOperatorName() {
+        return volOperatorName;
+    }
+
+    public void verifyOperatorNameOnOperatorReportsPage() {
+        waitForTextToBePresent("Driver & Vehicle Standards Agency Operator Reports");
+        String topsOperatorName = getText("//*[@id=\"operator_name\"]", SelectorType.XPATH);;
+        waitForTextToBePresent(topsOperatorName);
+        assertEquals(topsOperatorName, volOperatorName);
     }
 }

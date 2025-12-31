@@ -20,10 +20,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
+import java.net.URL;
 import java.time.Duration;
+import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
+import static org.openqa.selenium.By.linkText;
+import static org.openqa.selenium.By.xpath;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -99,7 +107,7 @@ public class SelfServeNavigation extends BasePage {
                 }
             }
             case "variation" -> {
-                  UniversalActions.clickHome();
+                UniversalActions.clickHome();
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = waitAndGetText(overviewStatus, SelectorType.XPATH);
                 waitAndClickByLinkText(world.updateLicence.getVariationApplicationId());
@@ -110,7 +118,8 @@ public class SelfServeNavigation extends BasePage {
             }
         }
         switch (page.toString()) {
-            case "View" -> {}
+            case "View" -> {
+            }
             case "Vehicles" -> waitAndClickByLinkText("Vehicles");
             //Once DVLA integration has been switched on, this needs updating
 //                waitForTitleToBePresent("Vehicle details");
@@ -128,7 +137,7 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToNavBarPage(SelfServeNavBar page) {
         switch (page.toString()) {
             case "Home" -> {
-                  UniversalActions.clickHome();
+                UniversalActions.clickHome();
                 waitForTextToBePresent("Licences");
             }
             case "Sign out" -> {
@@ -242,6 +251,35 @@ public class SelfServeNavigation extends BasePage {
                 password = SecretsManager.getSecretValue("prepEnvPassword");
             }
             world.globalMethods.signIn(user, password);
+        }
+    }
+
+    public void navigateToOperatorReports() {
+        refreshPage();
+        String volUrl = getDriver().getCurrentUrl();
+        waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
+        try {
+            Set<String> windowHandles = getDriver().getWindowHandles();
+            for (String handle : windowHandles) {
+                getDriver().switchTo().window(handle);
+                if (getDriver().getCurrentUrl().contains("edh")) {
+                    break;
+                }
+            }
+            String originalUrl = getDriver().getCurrentUrl();
+            String userName = SecretsManager.getSecretValue("topsUsername");
+            String passWord = SecretsManager.getSecretValue("topsPassword");
+            String authUrl = "https://" + userName + ":" + passWord + "@operator-reports.develop.edh.dvsacloud.uk/index.html";
+            String prepAuthUrl = "https://" + userName + ":" + passWord + "@operator-reports-preprod.dvsa.gov.uk/index.html";
+            if (volUrl.contains("preview")) {
+                Browser.navigate().get(prepAuthUrl);
+            }
+            else {
+                Browser.navigate().get(authUrl);
+            }
+            Browser.navigate().get(originalUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
