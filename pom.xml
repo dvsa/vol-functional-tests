@@ -5,36 +5,60 @@
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 
-    <version>4.14.23-SNAPSHOT</version>
+    <version>4.16.3-SNAPSHOT</version>
 
     <properties>
+        <!-- Build Configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.version>3.13.0</maven.compiler.version>
-
-        <active-support.version>2.11.0</active-support.version>
-        <api-calls.version>3.2.1</api-calls.version>
-        <uri-constructor.version>2.3.0</uri-constructor.version>
-
-        <axe-scanner-version>2.11.0</axe-scanner-version>
-        <allure-cucumber7-jvm.version>2.29.0</allure-cucumber7-jvm.version>
-        <allure-report.version>2.29.0</allure-report.version>
-
-        <slf4j.version>2.22.0</slf4j.version>
-        <slf4j-log4j12.version>2.22.0</slf4j-log4j12.version>
-        <commons-lang3.version>3.18.0</commons-lang3.version>
-        <assertj-core-version>3.26.3</assertj-core-version>
-        <hamcrest-version>1.3</hamcrest-version>
-
-        <aspectj.version>1.9.21</aspectj.version>
-        <build.helper.plugin.version>3.2.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
-        <apache-commons.version>1.12.0</apache-commons.version>
-        <jsoup.version>1.18.3</jsoup.version>
-        <gson.version>2.11.0</gson.version>
-        <zt-zip.version>1.15</zt-zip.version>
         <java.version>17</java.version>
         <maven.compiler.release>17</maven.compiler.release>
         <jvmMemory>4000</jvmMemory>
+
+        <!-- DVSA Internal Libraries -->
+        <active-support.version>2.11.0</active-support.version>
+        <api-calls.version>3.2.1</api-calls.version>
+        <uri-constructor.version>2.3.0</uri-constructor.version>
+        <axe-scanner.version>2.11.0</axe-scanner.version>
+
+        <!-- Testing Framework - Cucumber & JUnit -->
+        <cucumber.version>7.20.1</cucumber.version>
+        <junit.version>5.11.4</junit.version>
+        <junit4.version>4.13.2</junit4.version>
+
+        <!-- Reporting - Allure -->
+        <allure-cucumber7-jvm.version>2.29.0</allure-cucumber7-jvm.version>
+        <allure-report.version>2.29.0</allure-report.version>
+        <aspectj.version>1.9.21</aspectj.version>
+
+        <!-- Logging -->
+        <log4j.version>2.25.3</log4j.version>
+
+        <!-- Utilities -->
+        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <commons-csv.version>1.12.0</commons-csv.version>
+        <assertj-core.version>3.26.3</assertj-core.version>
+        <hamcrest.version>1.3</hamcrest.version>
+        <jsoup.version>1.18.3</jsoup.version>
+        <gson.version>2.11.0</gson.version>
+        <zt-zip.version>1.15</zt-zip.version>
+        <lorem.version>2.1</lorem.version>
+        <httpclient.version>4.5.14</httpclient.version>
+        <snakeyaml.version>2.2</snakeyaml.version>
+        <dom4j.version>2.1.4</dom4j.version>
+        <ion-java.version>1.11.11</ion-java.version>
+
+        <!-- Network Dependencies -->
+        <netty.version>4.1.129.Final</netty.version>
+
+        <!-- Testing Framework - WebDriverManager -->
+        <webdrivermanager.version>6.1.0</webdrivermanager.version>
+
+        <!-- Maven Plugins -->
+        <maven.compiler.version>3.13.0</maven.compiler.version>
+        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <allure-maven-plugin.version>2.12.0</allure-maven-plugin.version>
+        <build.helper.plugin.version>3.2.0</build.helper.plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -42,26 +66,26 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.11.4</version>
+                <version>${junit.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-bom</artifactId>
-                <version>7.20.1</version>
+                <version>${cucumber.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-codec-http2</artifactId>
-                <version>4.1.125.Final</version>
+                <version>${netty.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-codec-http</artifactId>
-                <version>4.1.125.Final</version>
+                <version>${netty.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -80,11 +104,14 @@
     </repositories>
 
     <dependencies>
+        <!-- HTML Parsing -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>${jsoup.version}</version>
         </dependency>
+
+        <!-- Cucumber Testing Framework -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -96,15 +123,44 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Testing Framework - WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit -->
+        <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit4.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.surefire</groupId>
+            <artifactId>surefire-junit4</artifactId>
+            <version>${maven-surefire-plugin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Allure Reporting -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber7-jvm</artifactId>
@@ -116,6 +172,8 @@
             <artifactId>allure-attachments</artifactId>
             <version>${allure-report.version}</version>
         </dependency>
+
+        <!-- DVSA Internal Libraries -->
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
@@ -130,33 +188,7 @@
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>accessibility-library</artifactId>
-            <version>${axe-scanner-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${slf4j-log4j12.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest-version}</version>
+            <version>${axe-scanner.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -164,20 +196,51 @@
             <version>${uri-constructor.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.zeroturnaround</groupId>
-            <artifactId>zt-zip</artifactId>
-            <version>${zt-zip.version}</version>
-            <type>jar</type>
+            <groupId>org.dvsa.testing.framework</groupId>
+            <artifactId>vol-api-calls</artifactId>
+            <version>${api-calls.version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!-- Assertions -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>${hamcrest.version}</version>
+        </dependency>
+
+        <!-- Utilities -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
-            <version>${apache-commons.version}</version>
+            <version>${commons-csv.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.dvsa.testing.framework</groupId>
-            <artifactId>vol-api-calls</artifactId>
-            <version>${api-calls.version}</version>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-zip</artifactId>
+            <version>${zt-zip.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -187,14 +250,30 @@
         <dependency>
             <groupId>com.thedeanda</groupId>
             <artifactId>lorem</artifactId>
-            <version>2.1</version>
+            <version>${lorem.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.14</version>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazon.ion</groupId>
+            <artifactId>ion-java</artifactId>
+            <version>${ion-java.version}</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -202,10 +281,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -219,8 +299,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <includes>
-                        <include>**/**.java</include>
+                        <include>**/RunCucumberTests.java</include>
                     </includes>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -249,29 +330,80 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <!-- Automatic retry execution plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven-antrun-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>retry-failed-tests</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <exec executable="/bin/bash" failonerror="false">
+                                    <arg value="-c"/>
+                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2&gt;/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -roh 'file://[^)]*\.feature:[0-9]*' ${project.build.directory}/surefire-reports/*.xml | sed 's|file://||' | sed 's|^/app/||' | sort -u &gt; ${project.build.directory}/rerun_raw.txt; if [ -s ${project.build.directory}/rerun_raw.txt ]; then echo 'Found failed scenario references:'; cat ${project.build.directory}/rerun_raw.txt; java -cp ${project.build.testOutputDirectory} org.dvsa.testing.framework.parallel.RerunScenarioLineMapper ${project.build.directory}/rerun_raw.txt ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed scenarios (scenario start lines):'; cat ${project.build.directory}/rerun.txt; echo ''; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true; else echo 'No failed scenarios mapped'; fi; else echo 'No failed scenario references found in XML'; fi; rm -f ${project.build.directory}/rerun.txt ${project.build.directory}/rerun_raw.txt; else echo 'No test failures detected'; fi"/>
+                                </exec>
+                                <mkdir dir="${project.build.directory}/results-summary"/>
+                                <java classname="org.dvsa.testing.framework.parallel.SurefireDeduplicator" fork="true" classpath="${project.build.testOutputDirectory}">
+                                    <arg value="${project.build.directory}/surefire-reports"/>
+                                    <arg value="${project.build.directory}/results-summary/summary.xml"/>
+                                    <arg value="--exclude-skipped"/>
+                                </java>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.12.0</version>
+                <version>${allure-maven-plugin.version}</version>
                 <configuration>
                     <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>generate-test-report</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>retry-failed</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <includes>
+                                <include>**/ReRunFailedCucumberTests.java</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
+                            <useManifestOnlyJar>false</useManifestOnlyJar>
+                            <dependenciesToScan>
+                                <dependency>io.cucumber:cucumber-junit</dependency>
+                            </dependenciesToScan>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.surefire</groupId>
+                                <artifactId>surefire-junit4</artifactId>
+                                <version>${maven-surefire-plugin.version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-
-    <!--  Nexus Configuration  -->
     <distributionManagement>
         <repository>
             <id>github</id>

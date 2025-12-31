@@ -1,6 +1,77 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.16.2](https://github.com/dvsa/vol-functional-tests/compare/v4.16.1...v4.16.2) (2025-12-29)
+
+
+### Bug Fixes
+
+* duplicates ([f7a22d7](https://github.com/dvsa/vol-functional-tests/commit/f7a22d7b15f6f2d29175d0075f7f33593eefbfa5))
+* track rerun to inital map ([3ad601a](https://github.com/dvsa/vol-functional-tests/commit/3ad601a06d20f924528087219fe9c7f0b0b9d326))
+* track rerun to inital map ([84df67f](https://github.com/dvsa/vol-functional-tests/commit/84df67f8f101499be8b8d92b98f63dbe8cbd2f14))
+
+## [4.16.1](https://github.com/dvsa/vol-functional-tests/compare/v4.16.0...v4.16.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* all failed scenarios ([952350d](https://github.com/dvsa/vol-functional-tests/commit/952350d58f30ae89d11953e0bc66355ae78e2de2))
+* allure merge ([fbc4d5b](https://github.com/dvsa/vol-functional-tests/commit/fbc4d5ba9b547a508f6d00471550c87663a2bc70))
+* allure merge ([3dfb4b1](https://github.com/dvsa/vol-functional-tests/commit/3dfb4b1cfce4bedb0caff003e5436bbeafd27aab))
+* allure merge ([bb6037b](https://github.com/dvsa/vol-functional-tests/commit/bb6037b781434763b262fb15e39ea48c9cb697ea))
+* deduplicator ([a1477fd](https://github.com/dvsa/vol-functional-tests/commit/a1477fdef6d9d39196d61e50f9919804e8c5c9cf))
+* deduplicator ([c8cb7bf](https://github.com/dvsa/vol-functional-tests/commit/c8cb7bff40934fd1b686d5b91f5f40ab5e25dded))
+* dep cleanup ([62d8fce](https://github.com/dvsa/vol-functional-tests/commit/62d8fce4e16dce2a83e8c03aff1fd2952f654485))
+* dep cleanup ([af5872c](https://github.com/dvsa/vol-functional-tests/commit/af5872cabce09cc5b40f1c8d6bd72507ac2ffabe))
+* dep cleanup ([38e0383](https://github.com/dvsa/vol-functional-tests/commit/38e03834e0df2f696b3701ca63269b5b2cbcdc40))
+* dep cleanup ([2436b61](https://github.com/dvsa/vol-functional-tests/commit/2436b61c666c80d20f1af85ecdd65418189865d9))
+* feature path ([041c4b7](https://github.com/dvsa/vol-functional-tests/commit/041c4b793ef863d394b0b219255d2e8fc759a394))
+* matching logic ([44e7d45](https://github.com/dvsa/vol-functional-tests/commit/44e7d45a88572efdc264bd3cd014e401b79e585a))
+* regen report' ([a4da266](https://github.com/dvsa/vol-functional-tests/commit/a4da266726906968739929becb0886ae45abac9f))
+* reRunLineMapper ([5101884](https://github.com/dvsa/vol-functional-tests/commit/5101884a10f2bbbe5e5926c9cedece956fed7c83))
+* snyk ([1592aa6](https://github.com/dvsa/vol-functional-tests/commit/1592aa638251998132ea8e44f6ddbd68f9feee87))
+
+## [4.16.0](https://github.com/dvsa/vol-functional-tests/compare/v4.15.2...v4.16.0) (2025-12-16)
+
+
+### Features
+
+* reduce sessions ([bef1178](https://github.com/dvsa/vol-functional-tests/commit/bef1178f4598033b9d9fbc99fa25a69cbf540fe8))
+
+## [4.15.2](https://github.com/dvsa/vol-functional-tests/compare/v4.15.1...v4.15.2) (2025-12-16)
+
+
+### Bug Fixes
+
+* bump up netty ([ee7e3d5](https://github.com/dvsa/vol-functional-tests/commit/ee7e3d5f34eb5e77927d1abc219ea2897748199c))
+* bump up netty ([5c72869](https://github.com/dvsa/vol-functional-tests/commit/5c728699ef95b9bdd51e1830b436f0c7e4819775))
+
+## [4.15.1](https://github.com/dvsa/vol-functional-tests/compare/v4.15.0...v4.15.1) (2025-12-10)
+
+
+### Bug Fixes
+
+* ci ([9413211](https://github.com/dvsa/vol-functional-tests/commit/94132113b6dd380784992870c894ebed0afada29))
+* PSV limo page wait ([7491583](https://github.com/dvsa/vol-functional-tests/commit/7491583389dfaabac271477e36d58408485d8918))
+
+## [4.15.0](https://github.com/dvsa/vol-functional-tests/compare/v4.14.22...v4.15.0) (2025-12-08)
+
+
+### Features
+
+* local setup ([f03c411](https://github.com/dvsa/vol-functional-tests/commit/f03c411b491a203b9309d97c890b78161b6ebb60))
+* refactor for local docker setup ([7fba964](https://github.com/dvsa/vol-functional-tests/commit/7fba964de5efb623840461d4ce1dfece8ebfaf40))
+
+
+### Bug Fixes
+
+* local setup ([bee0c7b](https://github.com/dvsa/vol-functional-tests/commit/bee0c7b6ffabab5cbbd81a6bb8c02fb197aded75))
+* PSV limo page wait ([a33afcd](https://github.com/dvsa/vol-functional-tests/commit/a33afcdec852005a07ef2de9a2da47fd5c5731cf))
+* reinstate tests ([57e91d8](https://github.com/dvsa/vol-functional-tests/commit/57e91d8d38777657441f0cab5aaa3e810894682b))
+* reinstate tests ([29a23fd](https://github.com/dvsa/vol-functional-tests/commit/29a23fd6fc7ebfd6d92a4444465def0f173387f0))
+* remove if ([d7c8f09](https://github.com/dvsa/vol-functional-tests/commit/d7c8f0914c5c237e5d8be9d723bff74e84e99839))
+* remove if ([eaa3c45](https://github.com/dvsa/vol-functional-tests/commit/eaa3c45e03a1f4b8e7339b381559c4f8c3973e9f))
+
 ## [4.14.22](https://github.com/dvsa/vol-functional-tests/compare/v4.14.21...v4.14.22) (2025-11-17)
 
 
