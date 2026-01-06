@@ -15,10 +15,10 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.11.1</active-support.version>
-        <api-calls.version>3.2.1</api-calls.version>
+        <active-support.version>2.11.2</active-support.version>
+        <api-calls.version>3.2.2</api-calls.version>
         <uri-constructor.version>2.3.0</uri-constructor.version>
-        <axe-scanner.version>2.11.0</axe-scanner.version>
+        <axe-scanner.version>2.11.2</axe-scanner.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
@@ -85,6 +85,11 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-codec-http</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-common</artifactId>
                 <version>${netty.version}</version>
             </dependency>
         </dependencies>
