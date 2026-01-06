@@ -20,7 +20,7 @@
         <uri-constructor.version>2.3.0</uri-constructor.version>
         <axe-scanner.version>2.11.2</axe-scanner.version>
 
-        <!-- Testing Framework - Cucumber & JUnmvn clean install -DskipTestsit -->
+        <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
         <junit.version>5.11.4</junit.version>
         <junit4.version>4.13.2</junit4.version>
