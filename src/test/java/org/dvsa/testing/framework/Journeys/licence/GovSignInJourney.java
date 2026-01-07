@@ -150,7 +150,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-        if (isTextPresent("You have already proved your identity")) {
+        if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
 
@@ -159,7 +159,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-        if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 2) &&
                 isTextPresent("Choose a way to prove your identity")) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
@@ -171,7 +171,7 @@ public class GovSignInJourney extends BasePage {
             return;
         }
 
-        if (isTitlePresent("You've signed in to GOV.UK One Login", 1)) {
+        if (isTitlePresent("You've signed in to GOV.UK One Login", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
@@ -203,7 +203,7 @@ public class GovSignInJourney extends BasePage {
             goThroughVerificationSteps();
         }
 
-        if (isTitlePresent("Returning you to Vehicle Operator Licence", 1) &&
+        if (isTitlePresent("Returning you to Vehicle Operator Licence", 2) &&
                 isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
@@ -234,6 +234,9 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='journey']");
         clickById("submitButton");
+        clickByXPath("//*[@id='select-device-choice']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        goThroughVerificationSteps();
     }
 
     public void goThroughVerificationSteps() {
