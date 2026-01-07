@@ -2,20 +2,29 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
 
 
 public class GovSignInJourney extends BasePage {
+
+    private static final Logger LOGGER = LogManager.getLogger(GovSignInJourney.class);
+    private static final String USER_POOL_KEY = "SIGN-IN-USER-POOL";
+    private static List<Map<String, String>> userPool = null;
 
     private final World world;
 
@@ -24,10 +33,64 @@ public class GovSignInJourney extends BasePage {
     }
     Random random = new Random();
 
+
+    private static synchronized void initializeUserPool() {
+        if (userPool == null) {
+            userPool = new ArrayList<>();
+            try {
+                String usersJson = SecretsManager.getSecretValue(USER_POOL_KEY);
+
+                if (usersJson != null && !usersJson.isEmpty()) {
+                    JsonArray usersArray = JsonParser.parseString(usersJson).getAsJsonArray();
+
+                    for (JsonElement userElement : usersArray) {
+                        JsonObject userObj = userElement.getAsJsonObject();
+                        Map<String, String> user = new HashMap<>();
+                        user.put("username", userObj.get("username").getAsString());
+                        user.put("password", userObj.get("password").getAsString());
+                        user.put("authKey", userObj.get("authKey").getAsString());
+                        userPool.add(user);
+                    }
+
+                    LOGGER.info("Initialized GOV.UK One Login user pool with " + userPool.size() + " users");
+                }
+            } catch (Exception e) {
+                LOGGER.warn("Could not load user pool from secrets manager, will use default credentials: " + e.getMessage());
+            }
+        }
+    }
+
+
+    private Map<String, String> getUserCredentials() {
+        initializeUserPool();
+
+        if (userPool == null || userPool.isEmpty()) {
+            LOGGER.debug("No user pool configured, using default credentials");
+            Map<String, String> defaultUser = new HashMap<>();
+            defaultUser.put("username", SecretsManager.getSecretValue("signInUsername"));
+            defaultUser.put("password", SecretsManager.getSecretValue("signInPassword"));
+            defaultUser.put("authKey", SecretsManager.getSecretValue("AUTH_KEY"));
+            return defaultUser;
+        }
+
+        long threadId = Thread.currentThread().getId();
+        int userIndex = (int) (threadId % userPool.size());
+        Map<String, String> user = userPool.get(userIndex);
+
+        LOGGER.info("Thread " + threadId + " using user: " + user.get("username") +
+                " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
+
+        return user;
+    }
+
     public void navigateToGovUkSignIn() {
         if (isTextPresent("Declaration information")) {
+            if (isElementPresent("sign-in-button", SelectorType.ID)) {
+                waitAndClick("sign-in-button", SelectorType.ID);
+            } else if (isElementPresent("sign", SelectorType.ID)) {
                 waitAndClick("sign", SelectorType.ID);
             }
+        }
         String userName = SecretsManager.getSecretValue("basicAuthUserName");
         String passWord = SecretsManager.getSecretValue("basicAuthPassword");
         try {
@@ -40,9 +103,10 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
-        String AUTH_KEY = SecretsManager.getSecretValue("AUTH_KEY");
-        String signInUsername = SecretsManager.getSecretValue("signInUsername");
-        String signInPassword = SecretsManager.getSecretValue("signInPassword");
+        Map<String, String> credentials = getUserCredentials();
+        String signInUsername = credentials.get("username");
+        String signInPassword = credentials.get("password");
+        String AUTH_KEY = credentials.get("authKey");
         String authCode = getTOTPCode(AUTH_KEY);
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
@@ -107,7 +171,7 @@ public class GovSignInJourney extends BasePage {
             return;
         }
 
-        if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
+        if (isTitlePresent("You've signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
@@ -146,7 +210,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() throws InterruptedException {
-        String signInPassword = SecretsManager.getSecretValue("signInPassword");
+        Map<String, String> credentials = getUserCredentials();
+        String signInPassword = credentials.get("password");
+
         if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
@@ -168,9 +234,6 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='journey']");
         clickById("submitButton");
-        clickByXPath("//*[@id='select-device-choice']");
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        goThroughVerificationSteps();
     }
 
     public void goThroughVerificationSteps() {
