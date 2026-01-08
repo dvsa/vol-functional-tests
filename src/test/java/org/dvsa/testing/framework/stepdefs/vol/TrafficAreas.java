@@ -91,8 +91,12 @@ public class TrafficAreas extends BasePage {
         waitAndClickByLinkText("Business type");
         UniversalActions.clickSaveAndContinue();
         UniversalActions.clickSaveAndContinue();
-        enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
-        enterPhoneAndEmail();
+        waitAndClickByLinkText("Enter the address yourself");
+        waitAndEnterText("addressLine1", SelectorType.ID,"1 Test Street");
+        waitAndEnterText("addressTown", SelectorType.ID, "Nottingham");
+        waitAndEnterText("postcode", SelectorType.ID, "M11 1DF");
+        waitAndEnterText("phone_primary", SelectorType.ID, "01158410220");
+        waitAndEnterText("email", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         UniversalActions.clickSaveAndContinue();
     }
 
@@ -130,6 +134,7 @@ public class TrafficAreas extends BasePage {
     public void aLicenceAlreadyExistsInThisTrafficAreaErrorAppearsWhenICompleteThePage() {
         enterText("totAuthLgvVehicles", SelectorType.ID, "5");
         enterText("totCommunityLicences", SelectorType.ID, "5");
+        selectValueFromDropDown("trafficArea", SelectorType.ID, "North West of England");
         UniversalActions.clickSaveAndContinue();
         waitForUrlToContain("/operating-centres/", 2);
         waitForElementToBePresent("//p[@role='alert']");

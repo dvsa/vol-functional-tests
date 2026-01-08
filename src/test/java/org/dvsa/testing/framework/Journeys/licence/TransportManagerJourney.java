@@ -190,6 +190,8 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursThu]", SelectorType.ID, hours);
+        selectValueFromDropDown("homeAddress[countryCode]", SelectorType.ID, "United Kingdom");
+        selectValueFromDropDown("workAddress[countryCode]", SelectorType.ID, "United Kingdom");
         UniversalActions.clickSubmit();
         waitForTextToBePresent("Check your answers");
         UniversalActions.clickSubmit();
