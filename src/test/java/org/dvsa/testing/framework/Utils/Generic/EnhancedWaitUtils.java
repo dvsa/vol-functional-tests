@@ -47,10 +47,10 @@ public class EnhancedWaitUtils extends BasePage {
             }
         });
 
+        WebDriverWait shortWait = new WebDriverWait(getDriver(), Duration.ofMillis(300));
         try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            shortWait.until(driver -> false);
+        } catch (TimeoutException e) {
         }
     }
 
@@ -104,10 +104,10 @@ public class EnhancedWaitUtils extends BasePage {
             } catch (ElementClickInterceptedException | StaleElementReferenceException e) {
                 lastException = e;
                 if (attempt < maxAttempts) {
+                    WebDriverWait retryWait = new WebDriverWait(getDriver(), Duration.ofSeconds(attempt));
                     try {
-                        Thread.sleep(1000 * attempt);
-                    } catch (InterruptedException ie) {
-                        Thread.currentThread().interrupt();
+                        retryWait.until(driver -> false);
+                    } catch (TimeoutException te) {
                     }
                 }
             }
@@ -176,9 +176,22 @@ public class EnhancedWaitUtils extends BasePage {
             ((JavascriptExecutor) getDriver())
                     .executeScript("arguments[0].scrollIntoView({block: 'center', behavior: 'smooth'});", element);
 
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofMillis(500));
+            wait.until(driver -> {
+                try {
+                    Point elementLocation = element.getLocation();
+                    Dimension windowSize = driver.manage().window().getSize();
+                    long scrollY = (Long) ((JavascriptExecutor) driver).executeScript("return window.pageYOffset;");
+
+                    return elementLocation.getY() >= scrollY &&
+                            elementLocation.getY() <= scrollY + windowSize.getHeight();
+                } catch (Exception e) {
+                    return true;
+                }
+            });
+        } catch (Exception e) {
+            ((JavascriptExecutor) getDriver())
+                    .executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
         }
     }
 
