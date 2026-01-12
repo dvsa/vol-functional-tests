@@ -14,6 +14,7 @@ public class HomePageJourney extends BasePermitJourney {
 
 
     public static void selectPermitTab() {
+        refreshPage();
         HomePage.selectTab(Tab.PERMITS);
     }
 

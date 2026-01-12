@@ -19,7 +19,7 @@ public class PermitFeePage extends BasePermitPage {
         this.world = world;
     }
 
-    public void untilOnPage() {
+    public static void untilOnPage() {
         untilUrlMatches("/permits/application/\\d+/fee/", Duration.LONG, ChronoUnit.SECONDS);
     }
 
