@@ -1,8 +1,10 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.Utils.Generic.EnhancedWaitUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,18 +13,23 @@ public class CertificatesRequiredPage extends BasePermitPage {
     private static String certificateRequiredConfirmation = "//input[@id='qaElement']";
 
     public static void untilOnPage() {
+        EnhancedWaitUtils.waitForPageReady();
         untilElementIsPresent("//h1[contains(text(), 'Mandatory certificates')]", SelectorType.XPATH, 6L, TimeUnit.SECONDS);
     }
 
     public static void confirmCertificateRequired() {
-           waitForElementToBeClickable(certificateRequiredConfirmation, SelectorType.XPATH);
-            waitAndClick(certificateRequiredConfirmation, SelectorType.XPATH);
-        }
+        untilOnPage();
+        EnhancedWaitUtils.waitForPageReady();
+        waitForElementToBeClickable(certificateRequiredConfirmation, SelectorType.XPATH);
+        clickByXPath(certificateRequiredConfirmation);
+        UniversalActions.clickSaveAndContinue();
+    }
 
     public static boolean checkboxNotConfirmed() {
         return !isElementPresent(certificateRequiredConfirmation + "/ancestor::label[contains(@class, 'selected')]", SelectorType.XPATH);
     }
-    public static String  getAdvisoryText() {
+
+    public static String getAdvisoryText() {
         return getText("//p[@class='govuk-body']", SelectorType.XPATH);
     }
 
@@ -32,6 +39,22 @@ public class CertificatesRequiredPage extends BasePermitPage {
 
     public static boolean isComplianceAndRoadworthinessFontIsBold() {
         return isElementPresent("//b[contains(text(),'Certificate of Compliance')]", SelectorType.XPATH)
-        && isElementPresent("//b[contains(text(),'Certificate of Roadworthiness')]", SelectorType.XPATH);
+                && isElementPresent("//b[contains(text(),'Certificate of Roadworthiness')]", SelectorType.XPATH);
+    }
+
+    public static String getReferenceFromPage() {
+        return BasePermitPage.getReferenceFromPage();
+    }
+
+    public static String getErrorText() {
+        return BasePermitPage.getErrorText();
+    }
+
+    public static void saveAndContinue() {
+        BasePermitPage.saveAndContinue();
+    }
+
+    public static String getPageHeading() {
+        return BasePermitPage.getPageHeading();
     }
 }
