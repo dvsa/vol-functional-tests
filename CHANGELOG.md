@@ -1,6 +1,21 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.16.4](https://github.com/dvsa/vol-functional-tests/compare/v4.16.3...v4.16.4) (2026-01-12)
+
+
+### Bug Fixes
+
+* address service test fix ([9cd66f9](https://github.com/dvsa/vol-functional-tests/commit/9cd66f939a5e20f54ba8e8515e7ec81446ced08f))
+* drop down country' ([04e8eee](https://github.com/dvsa/vol-functional-tests/commit/04e8eee0def2bd9ebb0961c040e2376e52752475))
+* ecmt ([cbe5f11](https://github.com/dvsa/vol-functional-tests/commit/cbe5f11c36cd461e52887fbdbfe519f6d220c0ed))
+* ecmt ([626911c](https://github.com/dvsa/vol-functional-tests/commit/626911c97b6023f6e2951f9c0928b8b10704132d))
+* increase pass % back up to 100, add another runner ([a3429ed](https://github.com/dvsa/vol-functional-tests/commit/a3429ed921911bc2d6db73996e15519cefacd2a9))
+* increase pass % back up to 100, add another runner ([0940bf0](https://github.com/dvsa/vol-functional-tests/commit/0940bf089708ca445fe6793cf54fe8a609885239))
+* remove thread.sleep, refactor ([ae61e59](https://github.com/dvsa/vol-functional-tests/commit/ae61e5913f782916e697a99be0896aec969661c3))
+* user pool ([8bff09e](https://github.com/dvsa/vol-functional-tests/commit/8bff09ec84339876e3484e60a8de9ca7f3b4c7c4))
+* waits ([d1e1552](https://github.com/dvsa/vol-functional-tests/commit/d1e1552701964e20ca1e1847399235a8e9bf30c8))
+
 ## [4.16.3](https://github.com/dvsa/vol-functional-tests/compare/v4.16.2...v4.16.3) (2026-01-06)
 
 
