@@ -266,6 +266,7 @@ jobs:
       - name: Get Summary
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.8
+        if: ${{ inputs.cucumber_tags != '@accessibility' }}
         with:
           file-path: ./target/results-summary/summary.xml
           fail-on-test-failures: true
