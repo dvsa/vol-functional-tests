@@ -266,10 +266,9 @@ jobs:
       - name: Get Summary
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.8
-        if: ${{ inputs.cucumber_tags != '@accessibility' }}
         with:
           file-path: ./target/results-summary/summary.xml
-          fail-on-test-failures: true
+          fail-on-test-failures: ${{ inputs.cucumber_tags != '@accessibility' }}
           pass-percentage: 90
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
