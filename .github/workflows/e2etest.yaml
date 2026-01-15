@@ -21,6 +21,11 @@ on:
       maven_options:
         type: string
         required: false
+      fail_on_test_failures:
+          type: boolean
+          required: false
+          description: "If to fail the workflow upon test failures"
+          default: true
       batch_timeout_minutes:
         type: number
         required: false
@@ -268,8 +273,8 @@ jobs:
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.8
         with:
           file-path: ./target/results-summary/summary.xml
-          fail-on-test-failures: ${{ inputs.cucumber_tags != '@accessibility' }}
-          pass-percentage: 90
+          fail-on-test-failures: ${{ inputs.fail_on_test_failures }}
+          pass-percentage: 100
           report-path: "https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/site/allure-maven-plugin/index.html"
 
   job-succeeded:

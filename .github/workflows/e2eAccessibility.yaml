@@ -43,6 +43,7 @@ jobs:
       browser_name: "chrome"
       browser_version: "latest"
       exclude_tags: "none"
+      fail_on_test_failures: false
       aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
       bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
       bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
