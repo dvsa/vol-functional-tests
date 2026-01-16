@@ -1,0 +1,52 @@
+name: E2E Accessibility Tests
+
+on:
+  workflow_call:
+    inputs:
+      platform_env:
+        description: "Environment to deploy"
+        type: string
+        required: true
+      aws_role:
+        description: 'AWS IAM Role ARN to assume'
+        required: false
+        type: string
+      bucket_name:
+        description: 'Bucket for test report'
+        required: true
+        type: string
+      bucket_key:
+        description: 'Bucket key for report'
+        required: true
+        type: string
+      batch_job_queue:
+        description: 'AWS Batch Job Queue'
+        required: true
+        type: string
+      batch_job_definition:
+        description: 'AWS Batch Job Definition'
+        required: true
+        type: string
+      batch_timeout_minutes:
+        type: number
+        required: false
+        description: "Timeout in minutes for the AWS Batch job"
+        default: 90
+
+jobs:
+  call-accessibility-test:
+    name: Call Accessibility Test Workflow
+    uses: ./.github/workflows/e2etest.yaml
+    with:
+      platform_env: ${{ inputs.platform_env }}
+      cucumber_tags: "@accessibility"
+      browser_name: "chrome"
+      browser_version: "latest"
+      exclude_tags: "none"
+      maven_options: "-Dtest.failure.ignore=true"
+      aws_role: ${{ inputs.aws_role || vars.ACCOUNT_NONPROD_TEST_OIDC_ROLE }}
+      bucket_name: ${{ inputs.bucket_name || vars.ACCOUNT_NONPROD_S3_REPORT_BUCKET }}
+      bucket_key: ${{ inputs.bucket_key || vars.S3_REPORT_BUCKET_KEY }}
+      batch_job_queue: ${{ inputs.batch_job_queue || vars.ACCOUNT_NONPROD_BATCH_JOB_QUEUE }}
+      batch_job_definition: ${{ inputs.batch_job_definition || vars.ACCOUNT_NONPROD_BATCH_JOB_DEFINITION }}
+      batch_timeout_minutes: ${{ inputs.batch_timeout_minutes }}

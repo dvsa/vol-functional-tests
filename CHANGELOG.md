@@ -1,6 +1,37 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.17.0](https://github.com/dvsa/vol-functional-tests/compare/v4.16.4...v4.17.0) (2026-01-16)
+
+
+### Features
+
+* reinstate axe ([40297b3](https://github.com/dvsa/vol-functional-tests/commit/40297b30f8e38dcff34c83ac1374d42fed6d54f4))
+* reinstate axe ([c6f1885](https://github.com/dvsa/vol-functional-tests/commit/c6f1885e087ca2365016e98eedfff8b2c16108d1))
+* workflows ([c2c5c2c](https://github.com/dvsa/vol-functional-tests/commit/c2c5c2c600eb2c9abfc4aa2fde0d55333dcec407))
+* workflows ([cd34d4c](https://github.com/dvsa/vol-functional-tests/commit/cd34d4cd8d09db9624bd3d71910b8a25f2e6c546))
+* workflows ([b996ad5](https://github.com/dvsa/vol-functional-tests/commit/b996ad583715c64121467c616b92794722d2ca06))
+
+
+### Bug Fixes
+
+* maven ([263780a](https://github.com/dvsa/vol-functional-tests/commit/263780a189e7eb886975a2fac86bc33f18a3426b))
+
+## [4.16.4](https://github.com/dvsa/vol-functional-tests/compare/v4.16.3...v4.16.4) (2026-01-12)
+
+
+### Bug Fixes
+
+* address service test fix ([9cd66f9](https://github.com/dvsa/vol-functional-tests/commit/9cd66f939a5e20f54ba8e8515e7ec81446ced08f))
+* drop down country' ([04e8eee](https://github.com/dvsa/vol-functional-tests/commit/04e8eee0def2bd9ebb0961c040e2376e52752475))
+* ecmt ([cbe5f11](https://github.com/dvsa/vol-functional-tests/commit/cbe5f11c36cd461e52887fbdbfe519f6d220c0ed))
+* ecmt ([626911c](https://github.com/dvsa/vol-functional-tests/commit/626911c97b6023f6e2951f9c0928b8b10704132d))
+* increase pass % back up to 100, add another runner ([a3429ed](https://github.com/dvsa/vol-functional-tests/commit/a3429ed921911bc2d6db73996e15519cefacd2a9))
+* increase pass % back up to 100, add another runner ([0940bf0](https://github.com/dvsa/vol-functional-tests/commit/0940bf089708ca445fe6793cf54fe8a609885239))
+* remove thread.sleep, refactor ([ae61e59](https://github.com/dvsa/vol-functional-tests/commit/ae61e5913f782916e697a99be0896aec969661c3))
+* user pool ([8bff09e](https://github.com/dvsa/vol-functional-tests/commit/8bff09ec84339876e3484e60a8de9ca7f3b4c7c4))
+* waits ([d1e1552](https://github.com/dvsa/vol-functional-tests/commit/d1e1552701964e20ca1e1847399235a8e9bf30c8))
+
 ## [4.16.3](https://github.com/dvsa/vol-functional-tests/compare/v4.16.2...v4.16.3) (2026-01-06)
 
 

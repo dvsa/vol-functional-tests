@@ -5,7 +5,7 @@
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
 
-    <version>4.16.4-SNAPSHOT</version>
+    <version>4.17.1-SNAPSHOT</version>
 
     <properties>
         <!-- Build Configuration -->
@@ -18,7 +18,7 @@
         <active-support.version>2.11.2</active-support.version>
         <api-calls.version>3.2.2</api-calls.version>
         <uri-constructor.version>2.3.0</uri-constructor.version>
-        <axe-scanner.version>2.11.2</axe-scanner.version>
+        <axe-scanner.version>2.11.3</axe-scanner.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
