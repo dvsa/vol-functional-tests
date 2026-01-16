@@ -270,6 +270,7 @@ jobs:
 
       - name: Get Summary
         id: get-summary
+        continue-on-error:  ${{ inputs.fail_on_test_failures }}
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.8
         with:
           file-path: ./target/results-summary/summary.xml
