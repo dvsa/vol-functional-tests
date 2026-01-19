@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.17.1](https://github.com/dvsa/vol-functional-tests/compare/v4.17.0...v4.17.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* colour assertion ([997b453](https://github.com/dvsa/vol-functional-tests/commit/997b453d2ea96ef8cbb32f70dd53461acb24e5f4))
+* colour assertion ([0554a5a](https://github.com/dvsa/vol-functional-tests/commit/0554a5aff3f8de1bfa7cdc38d47ae87afb65a97f))
+* licence type ([0e3f06e](https://github.com/dvsa/vol-functional-tests/commit/0e3f06ea03cfe908f4ecf284f9afcac597e3a9b1))
+
 ## [4.17.0](https://github.com/dvsa/vol-functional-tests/compare/v4.16.4...v4.17.0) (2026-01-16)
 
 
