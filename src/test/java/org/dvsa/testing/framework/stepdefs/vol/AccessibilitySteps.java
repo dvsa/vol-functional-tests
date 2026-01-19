@@ -38,12 +38,10 @@ public class AccessibilitySteps extends BasePage {
 
     @Then("the colour of the {string} section should be grey")
     public void theColourOfTheDirectorsSectionShouldBeGrey(String sectionTitle) {
-        Color buttonColour = Color.fromString(
-                findElement(String.format("//*[contains(text(),'%s')]", sectionTitle), SelectorType.XPATH)
-                        .getCssValue("color"));
-        assertEquals(Color.fromString("grey"), buttonColour);
-    }
+        Color buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]", sectionTitle), SelectorType.XPATH).getCssValue("color"));
+        assertEquals(Color.fromString("rgba(80, 90, 95, 1)"), buttonColour);
 
+    }
     @Then("the colour of the {string} section should be purple")
     public void theColourOfTheBusinessTypeSectionShouldBePurple(String sectionTitle) {
         String buttonColour = Color.fromString(

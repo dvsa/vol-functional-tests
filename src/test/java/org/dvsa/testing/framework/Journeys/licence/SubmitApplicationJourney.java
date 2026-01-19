@@ -136,10 +136,11 @@ public class SubmitApplicationJourney extends BasePage {
     private void chooseLicenceType(String licenceType) {
         waitForTitleToBePresent("Type of licence");
         String radioBtnDisabled = getAttribute("//*[@id='type-of-licence[operator-location]']", SelectorType.XPATH, "disabled");
-        if (!radioBtnDisabled.equals("true")) {
+        if (!"true".equals(radioBtnDisabled)) {
             waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
         }
         waitAndClick("//*[contains(text(),'" + licenceType + "')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Goods vehicles')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
