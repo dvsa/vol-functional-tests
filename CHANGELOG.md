@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.18.1](https://github.com/dvsa/vol-functional-tests/compare/v4.18.0...v4.18.1) (2026-01-22)
+
+
+### Bug Fixes
+
+* temporary pass rate reduction ([e0a0c4c](https://github.com/dvsa/vol-functional-tests/commit/e0a0c4ceb75dc0c2ea465010dec778fcf9ab6c1c))
+
 ## [4.18.0](https://github.com/dvsa/vol-functional-tests/compare/v4.17.1...v4.18.0) (2026-01-22)
 
 
