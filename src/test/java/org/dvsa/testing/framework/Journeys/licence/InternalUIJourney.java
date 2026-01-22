@@ -376,5 +376,12 @@ public class InternalUIJourney extends BasePage {
         waitForElementToBePresent("//a[@class='govuk-link']");
         click("//a[@class='govuk-link']", SelectorType.XPATH);
     }
+
+    public void enterAddress(String Street, String Town, String PostCode) {
+        waitAndClickByLinkText("Enter the address yourself");
+        waitAndEnterText("addressLine1", SelectorType.ID, Street);
+        waitAndEnterText("addressTown", SelectorType.ID, Town);
+        waitAndEnterText("postcode", SelectorType.ID, PostCode);
+    }
 }
 

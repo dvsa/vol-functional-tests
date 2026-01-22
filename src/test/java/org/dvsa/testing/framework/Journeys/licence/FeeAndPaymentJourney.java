@@ -42,7 +42,7 @@ public class FeeAndPaymentJourney extends BasePage {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference")) {
-                    world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                    world.internalUIJourney.enterAddress("Wollaton Steet", "Nottingham", "NG1 5FW");
                     waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCashCustomerRef");
                     clickPayAndConfirm(paymentMethod);
