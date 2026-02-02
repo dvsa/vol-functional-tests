@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -7,6 +8,10 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
+import scanner.AXEScanner;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,20 +46,24 @@ public class MessagingJourney extends BasePage {
         assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
     }
 
-    public void createConversation() {
+    public void createConversation() throws IllegalBrowserException, IOException {
         waitAndClick("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='fields[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("form-actions[submit]");
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
     }
 
-    public void replyForMessage() {
+    public void replyForMessage() throws IllegalBrowserException, IOException {
         if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH).equals("NEW MESSAGE"))
             ;
         waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[inputs][reply]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
     }
 
     public void archiveTheConversation() {
@@ -90,10 +99,12 @@ public class MessagingJourney extends BasePage {
         click("//*[@id='main-content']//tbody/tr[1]/td[1]/a", SelectorType.XPATH);
     }
 
-    public void openMessageStatusCheck() {
+    public void openMessageStatusCheck() throws IllegalBrowserException, IOException {
         waitAndClickByLinkText("Messages");
         refreshPage();
         String actualText = getText("//*[@class='govuk-tag govuk-tag--blue']", SelectorType.XPATH);
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
         assertTrue(actualText.equalsIgnoreCase("OPEN"));
     }
 
@@ -117,12 +128,14 @@ public class MessagingJourney extends BasePage {
         assertTrue(HomePage.isTabPresent(Tab.MESSAGES));
     }
 
-    public void disableMessaging() {
+    public void disableMessaging() throws IllegalBrowserException, IOException {
         waitAndClickByLinkText("Messages");
         waitAndClickByLinkText("Disable Messaging");
         waitAndClick("close", SelectorType.ID);
         waitForTextToBePresent("Messaging will be disabled for this operator");
         click("close", SelectorType.ID);
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
         waitForTextToBePresent("Messaging has been disabled for this operator");
     }
 
@@ -144,11 +157,14 @@ public class MessagingJourney extends BasePage {
         clickById("send");
     }
 
-    public void replyToOperator() {
+    public void replyToOperator() throws IllegalBrowserException, IOException {
         waitAndClick("//*[@id='main']//td/a", SelectorType.XPATH);
         click("//*[contains(text(),'Send a reply')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
+
     }
 
     public void replyOperatorErrorMessage() {

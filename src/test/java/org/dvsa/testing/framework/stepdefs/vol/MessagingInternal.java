@@ -1,10 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
 
 public class MessagingInternal extends BasePage {
     private static final String CategoryErrorMessage = "Select a Category";
@@ -37,13 +40,13 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("i create a new conversation to operator")
-    public void iCreateANewConversationToOperator() {
+    public void iCreateANewConversationToOperator() throws IllegalBrowserException, IOException {
         world.messagingJourney.createConversation();
         world.messagingJourney.openMessageStatusCheck();
     }
 
     @And("i create a new conversation to operator and archive the conversation")
-    public void iCreateANewConversationToEndAndArchiveTheConversation() {
+    public void iCreateANewConversationToEndAndArchiveTheConversation() throws IllegalBrowserException, IOException {
         world.messagingJourney.createConversation();
         world.messagingJourney.archiveTheConversation();
     }
@@ -54,7 +57,7 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("the internal user disables messaging")
-    public void theInternalUserDisablesMessaging() {
+    public void theInternalUserDisablesMessaging() throws IllegalBrowserException, IOException {
         world.messagingJourney.disableMessaging();
     }
 
@@ -70,7 +73,7 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("i reply for the operators message")
-    public void iReplyForTheOperatorsMessage() {
+    public void iReplyForTheOperatorsMessage() throws IllegalBrowserException, IOException {
         world.messagingJourney.replyToOperator();
     }
 

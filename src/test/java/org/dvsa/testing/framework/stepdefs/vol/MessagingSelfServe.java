@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,7 +32,7 @@ public class MessagingSelfServe extends BasePage {
     }
 
     @And("i redirect to the message tab to respond to the case worker's message")
-    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
+    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() throws IllegalBrowserException, IOException {
         world.messagingInternal.iClickTheMessagesHeading();
         world.messagingJourney.replyForMessage();
     }
@@ -41,7 +44,7 @@ public class MessagingSelfServe extends BasePage {
     }
 
     @And("i have opened a new message, which will appear as open")
-    public void iHaveOpenedANewMessageWhichWillAppearAsOpen() {
+    public void iHaveOpenedANewMessageWhichWillAppearAsOpen() throws IllegalBrowserException, IOException {
         world.messagingJourney.openMessageStatusCheck();
     }
 
