@@ -40,13 +40,13 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("i create a new conversation to operator")
-    public void iCreateANewConversationToOperator() throws IllegalBrowserException, IOException {
+    public void iCreateANewConversationToOperator() {
         world.messagingJourney.createConversation();
         world.messagingJourney.openMessageStatusCheck();
     }
 
     @And("i create a new conversation to operator and archive the conversation")
-    public void iCreateANewConversationToEndAndArchiveTheConversation() throws IllegalBrowserException, IOException {
+    public void iCreateANewConversationToEndAndArchiveTheConversation() {
         world.messagingJourney.createConversation();
         world.messagingJourney.archiveTheConversation();
     }
@@ -57,7 +57,7 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("the internal user disables messaging")
-    public void theInternalUserDisablesMessaging() throws IllegalBrowserException, IOException {
+    public void theInternalUserDisablesMessaging() {
         world.messagingJourney.disableMessaging();
     }
 
@@ -73,13 +73,15 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("i reply for the operators message")
-    public void iReplyForTheOperatorsMessage() throws IllegalBrowserException, IOException {
+    public void iReplyForTheOperatorsMessage() {
         world.messagingJourney.replyToOperator();
+        world.messagingJourney.sendMessage();
     }
 
     @And("i reply to operator without a text to validate an error message")
     public void iReplyToOperatorWithoutATextToValidateAnErrorMessage() {
         world.messagingJourney.replyOperatorErrorMessage();
+        world.messagingJourney.sendMessage();
         assert (isTextPresent(TextFieldErrorMessage));
     }
 }
