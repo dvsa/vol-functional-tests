@@ -4,12 +4,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.*;
 import java.net.MalformedURLException;
 
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -60,6 +60,9 @@ public class GovSignIn extends BasePage {
     @Then("the application should be digitally signed")
     public void theApplicationShouldBeDigitallySigned() throws MalformedURLException, InterruptedException {
         world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
         assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
