@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -7,7 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-
+import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -33,6 +34,9 @@ public class MessagingJourney extends BasePage {
         assertTrue(isTextPresent("Messages"));
     }
 
+    public void sendMessage(){
+    clickById("send");
+    }
 
     public void internalMessagePageDisplay() {
         assertTrue(isTextPresent("Conversations"));
@@ -54,7 +58,6 @@ public class MessagingJourney extends BasePage {
         waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[inputs][reply]']", SelectorType.XPATH, Str.randomWord(10));
-        clickById("send");
     }
 
     public void archiveTheConversation() {
@@ -76,7 +79,6 @@ public class MessagingJourney extends BasePage {
             selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
         }
         waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, randomWord);
-        clickById("send");
     }
 
     public void checkForNewTask() {
@@ -117,7 +119,7 @@ public class MessagingJourney extends BasePage {
         assertTrue(HomePage.isTabPresent(Tab.MESSAGES));
     }
 
-    public void disableMessaging() {
+    public void disableMessaging()  {
         waitAndClickByLinkText("Messages");
         waitAndClickByLinkText("Disable Messaging");
         waitAndClick("close", SelectorType.ID);
@@ -128,7 +130,6 @@ public class MessagingJourney extends BasePage {
 
     public void submitMessageWithoutSelectingAnyOption() {
         waitAndClickByLinkText("Start a new conversation");
-        clickById("send");
     }
 
     public void submitMessageWithoutOptions() {
@@ -141,20 +142,17 @@ public class MessagingJourney extends BasePage {
             ;
         waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
-        clickById("send");
     }
 
     public void replyToOperator() {
         waitAndClick("//*[@id='main']//td/a", SelectorType.XPATH);
         click("//*[contains(text(),'Send a reply')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
-        clickById("send");
     }
 
     public void replyOperatorErrorMessage() {
         waitAndClick("//*[@id='main']//td/a", SelectorType.XPATH);
         click("//*[contains(text(),'Send a reply')]", SelectorType.XPATH);
-        clickById("send");
     }
 
 }

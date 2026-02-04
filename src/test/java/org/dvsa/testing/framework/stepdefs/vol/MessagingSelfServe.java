@@ -1,11 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -29,9 +33,10 @@ public class MessagingSelfServe extends BasePage {
     }
 
     @And("i redirect to the message tab to respond to the case worker's message")
-    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
+    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() throws IllegalBrowserException, IOException {
         world.messagingInternal.iClickTheMessagesHeading();
         world.messagingJourney.replyForMessage();
+        world.messagingJourney.sendMessage();
     }
 
     @Then("i view the new message that the caseworker has sent")
@@ -41,7 +46,7 @@ public class MessagingSelfServe extends BasePage {
     }
 
     @And("i have opened a new message, which will appear as open")
-    public void iHaveOpenedANewMessageWhichWillAppearAsOpen() {
+    public void iHaveOpenedANewMessageWhichWillAppearAsOpen() throws IllegalBrowserException, IOException {
         world.messagingJourney.openMessageStatusCheck();
     }
 
@@ -70,6 +75,7 @@ public class MessagingSelfServe extends BasePage {
     @Then("i send a new message without selecting a category, licence or application number and text")
     public void iSendANewMessageWithoutSelectingAnyOption() {
         world.messagingJourney.submitMessageWithoutSelectingAnyOption();
+        world.messagingJourney.sendMessage();
     }
 
     @Then("i should get an error message")
@@ -83,7 +89,12 @@ public class MessagingSelfServe extends BasePage {
     public void iSendAReplyWithoutEnteringAMessageInTheTextFieldAndAnErrorMessageWillAppear() {
         world.messagingInternal.iClickTheMessagesHeading();
         world.messagingJourney.replyErrorMessage();
+        world.messagingJourney.sendMessage();
         assertTrue(isTextPresent(TextFieldErrorMessage));
     }
 
+    @And("i click Send message to send a message to the caseworker")
+    public void iClickSendMessageToSendAMessageToTheCaseworker() {
+       world.messagingJourney.sendMessage();
+    }
 }

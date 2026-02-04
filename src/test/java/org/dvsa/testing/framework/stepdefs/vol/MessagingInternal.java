@@ -1,10 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
 
 public class MessagingInternal extends BasePage {
     private static final String CategoryErrorMessage = "Select a Category";
@@ -72,11 +75,13 @@ public class MessagingInternal extends BasePage {
     @And("i reply for the operators message")
     public void iReplyForTheOperatorsMessage() {
         world.messagingJourney.replyToOperator();
+        world.messagingJourney.sendMessage();
     }
 
     @And("i reply to operator without a text to validate an error message")
     public void iReplyToOperatorWithoutATextToValidateAnErrorMessage() {
         world.messagingJourney.replyOperatorErrorMessage();
+        world.messagingJourney.sendMessage();
         assert (isTextPresent(TextFieldErrorMessage));
     }
 }
