@@ -69,6 +69,9 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
