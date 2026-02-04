@@ -1,6 +1,18 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.18.3](https://github.com/dvsa/vol-functional-tests/compare/v4.18.2...v4.18.3) (2026-02-04)
+
+
+### Bug Fixes
+
+* message accessibility test cover ([2d47c54](https://github.com/dvsa/vol-functional-tests/commit/2d47c54a1479f12cc7900d291a3143f3b8f84661))
+* message accessibility test cover ([ab3a878](https://github.com/dvsa/vol-functional-tests/commit/ab3a878319113077f6fbaad38afa6c9ebbbdf453))
+* message accessibility test cover ([2f1e788](https://github.com/dvsa/vol-functional-tests/commit/2f1e7880c56ae0aceffc09e09196dfb3d879dbde))
+* sign in ([01cdf1d](https://github.com/dvsa/vol-functional-tests/commit/01cdf1db8094afd66d85ff17186940e1b4166e05))
+* sign in ([264867c](https://github.com/dvsa/vol-functional-tests/commit/264867cf83eeb94fb6b914bdc154e6356274f3c2))
+* sign in ([9a71f5f](https://github.com/dvsa/vol-functional-tests/commit/9a71f5f5e782f749e37cb4172dd17b580a8225dd))
+
 ## [4.18.2](https://github.com/dvsa/vol-functional-tests/compare/v4.18.1...v4.18.2) (2026-02-03)
 
 
