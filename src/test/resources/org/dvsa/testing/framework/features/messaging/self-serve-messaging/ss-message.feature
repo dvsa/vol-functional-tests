@@ -40,6 +40,7 @@ Feature: External users can view the messaging tab, as well as create new messag
     Then i click on start a new conversation link and select the licence number
     Then colour of the "Send message" button should be green
     And i click Send message to send a message to the caseworker
+    And i scan for accessibility violations
     Then no issues should be present on the page
     Examples:
       | user_type   | Operator  | licence_type  |
