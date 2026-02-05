@@ -83,7 +83,14 @@ public class TmVerifyDifferentOperator extends BasePage {
         scrollToBottom();
         UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
-        if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
+
+        if (Browser.navigate().getCurrentUrl().contains("confirmation") ||
+                isTitlePresent("Transport manager application", 5) ||
+                isElementPresent("//*[@id='submitButton']", SelectorType.XPATH)) {
+            if (isElementPresent("//*[@id='submitButton']", SelectorType.XPATH)) {
+                clickById("submitButton");
+            }
+        } else if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
