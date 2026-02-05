@@ -1,6 +1,6 @@
 @accessibility
 @user-check-accessibility
-Feature: Check that Submissions journey is accessible
+Feature: Check that surrender journey is accessible
 
   Scenario Outline: Scan for accessibility violations
     Given as a "<user_type>" I have a valid "goods" "standard_national" licence
