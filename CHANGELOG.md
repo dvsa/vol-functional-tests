@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.18.5](https://github.com/dvsa/vol-functional-tests/compare/v4.18.4...v4.18.5) (2026-02-05)
+
+
+### Bug Fixes
+
+* accessibility test add for consultant user ([c463e7a](https://github.com/dvsa/vol-functional-tests/commit/c463e7ad8478f0ff9a86319cdd951004e91bfc0c))
+* accessibility test add for consultant user ([b9b3c91](https://github.com/dvsa/vol-functional-tests/commit/b9b3c91c99afe93d2952ef2aef54eed6b2fe6428))
+* change file name and feature ([9a6e651](https://github.com/dvsa/vol-functional-tests/commit/9a6e651a0743db6a9fba1dbe36429f518ba63db9))
+
 ## [4.18.4](https://github.com/dvsa/vol-functional-tests/compare/v4.18.3...v4.18.4) (2026-02-05)
 
 
