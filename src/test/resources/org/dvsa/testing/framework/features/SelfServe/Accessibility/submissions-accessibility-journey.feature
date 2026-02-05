@@ -1,5 +1,5 @@
 @accessibility
-#@ss_regression
+@user-check-accessibility
 Feature: Check that Submissions journey is accessible
 
   Scenario Outline: Scan for accessibility violations
@@ -9,7 +9,9 @@ Feature: Check that Submissions journey is accessible
     Then the licence status should be "Surrendered"
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
+    And i scan for accessibility violations
     Then no issues should be present on the page
     Examples:
       | user_type |
       | admin     |
+      | consultant|
