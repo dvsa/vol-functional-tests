@@ -93,6 +93,8 @@ public class MessagingJourney extends BasePage {
     }
 
     public void openMessageStatusCheck() {
+        waitAndClickByLinkText("Messages");
+        refreshPage();
         String actualText = getText("//*[@class='govuk-tag govuk-tag--blue']", SelectorType.XPATH);
         assertTrue(actualText.equalsIgnoreCase("OPEN"));
     }
