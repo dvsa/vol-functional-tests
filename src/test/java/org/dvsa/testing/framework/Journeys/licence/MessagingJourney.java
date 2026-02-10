@@ -79,6 +79,7 @@ public class MessagingJourney extends BasePage {
             selectValueFromDropDown("//*[@id='form-actions[inputs][appOrLicNo]']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
         }
         waitAndEnterText("//*[@id='form-actions[inputs][messageContent]']", SelectorType.XPATH, randomWord);
+        clickById("send");
     }
 
     public void checkForNewTask() {
