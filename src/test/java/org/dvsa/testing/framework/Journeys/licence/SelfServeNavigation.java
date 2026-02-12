@@ -257,27 +257,48 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToOperatorReports() {
         refreshPage();
         String volUrl = getDriver().getCurrentUrl();
+        String originalWindowHandle = getDriver().getWindowHandle(); // Store original window
+
         waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
+
         try {
+            Thread.sleep(3000);
+
             Set<String> windowHandles = getDriver().getWindowHandles();
+            String operatorReportsWindow = null;
+
             for (String handle : windowHandles) {
                 getDriver().switchTo().window(handle);
-                if (getDriver().getCurrentUrl().contains("edh")) {
+                String currentUrl = getDriver().getCurrentUrl();
+                System.out.println("Checking window: " + currentUrl);
+
+                if (currentUrl.contains("edh")) {
+                    operatorReportsWindow = handle;
                     break;
                 }
             }
-            String originalUrl = getDriver().getCurrentUrl();
-            String userName = SecretsManager.getSecretValue("topsUsername");
-            String passWord = SecretsManager.getSecretValue("topsPassword");
-            String authUrl = "https://" + userName + ":" + passWord + "@operator-reports.develop.edh.dvsacloud.uk/index.html";
-            String prepAuthUrl = "https://" + userName + ":" + passWord + "@operator-reports-preprod.dvsa.gov.uk/index.html";
-            if (volUrl.contains("preview")) {
-                Browser.navigate().get(prepAuthUrl);
+
+            if (operatorReportsWindow != null) {
+                getDriver().switchTo().window(operatorReportsWindow);
+                String originalUrl = getDriver().getCurrentUrl();
+
+                String userName = SecretsManager.getSecretValue("topsUsername");
+                String passWord = SecretsManager.getSecretValue("topsPassword");
+                String authUrl = "https://" + userName + ":" + passWord + "@operator-reports.develop.edh.dvsacloud.uk/index.html";
+                String prepAuthUrl = "https://" + userName + ":" + passWord + "@operator-reports-preprod.dvsa.gov.uk/index.html";
+
+                if (volUrl.contains("preview")) {
+                    Browser.navigate().get(prepAuthUrl);
+                } else {
+                    Browser.navigate().get(authUrl);
+                }
+
+                Browser.navigate().get(originalUrl);
+
+            } else {
+                System.out.println("Could not find operator reports window");
             }
-            else {
-                Browser.navigate().get(authUrl);
-            }
-            Browser.navigate().get(originalUrl);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
