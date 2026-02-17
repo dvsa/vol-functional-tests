@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import io.cucumber.java.en.Given;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
@@ -8,6 +9,8 @@ import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,7 +25,7 @@ public class ExternalSearchFilter extends BasePage {
         String myURL = org.dvsa.testing.lib.url.webapp.webAppURL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
         Browser.navigate().get(myURL);
         findSelectAllRadioButtonsByValue("licence");
-        enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+        enterText("search", SelectorType.NAME, world.DBUtils.getLicenceDetails().get("Licence number").toString());
 
         long kickOut = System.currentTimeMillis() + 120000;
         boolean licenceFound = false;
@@ -40,7 +43,7 @@ public class ExternalSearchFilter extends BasePage {
     @Then("the Organisation Type filter should be displayed")
     public void theOrganisationTypeFilterShouldBeDisplayed() throws HttpException {
         String opName = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
+        assertEquals(world.DBUtils.getLicenceDetails().get("Organisation").toString().toUpperCase(),opName.toUpperCase());
     }
 
     @Then("the Licence Type filter should be displayed")
@@ -66,5 +69,10 @@ public class ExternalSearchFilter extends BasePage {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         String opType = getText("//*[@id='filter[goodsOrPsvDesc]']/option[2]", SelectorType.XPATH);
         assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
+    }
+
+    @Given("i have existing licence details")
+    public void iHaveExistingLicenceDetails() {
+        world.DBUtils.getLicenceDetails();
     }
 }
