@@ -262,21 +262,19 @@ public class SelfServeNavigation extends BasePage {
         getDriver().switchTo().window(secondTabHandle);
 
         String currentUrl = waitForRedirectToOperatorReports();
-        System.out.println("URL after redirect: " + currentUrl.replaceAll("id_token=[^&]*", "id_token=***"));
 
         String userName = SecretsManager.getSecretValue("topsUsername");
         String passWord = SecretsManager.getSecretValue("topsPassword");
 
         if (currentUrl.contains("operator-reports")) {
             String modifiedUrl = currentUrl.replaceFirst("https://", "https://" + userName + ":" + passWord + "@");
-            System.out.println("Navigating to authenticated URL...");
-
             Browser.navigate().get(modifiedUrl);
 
-            String finalUrl = safeGetCurrentUrl();
-            System.out.println("Final URL: " + finalUrl.replaceAll(":[^:/@]+@", ":***@").replaceAll("id_token=[^&]*", "id_token=***"));
-        } else {
-            System.out.println("Redirect to operator-reports never happened: " + currentUrl);
+            try {
+                Thread.sleep(8000); // Wait for page to fully load in headless
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         getDriver().switchTo().window(originalWindowHandle);
@@ -288,46 +286,29 @@ public class SelfServeNavigation extends BasePage {
                 Thread.sleep(1000);
                 String url = safeGetCurrentUrl();
 
-                if (i % 5 == 0) {
-                    System.out.println("Waiting for redirect (attempt " + i + "): " + url.replaceAll("id_token=[^&]*", "id_token=***"));
-                }
-
                 if (url.contains("operator-reports")) {
-                    System.out.println("Redirect completed after " + i + " seconds!");
                     return url;
                 }
-
-                if (url.contains("topsreport")) {
-                    if (i % 10 == 0) {
-                        System.out.println("Still on topsreport page, waiting for token service...");
-                    }
-                    continue;
-                }
-
-                if (url.equals("about:blank")) {
-                    continue;
-                }
-
             } catch (Exception e) {
-                System.out.println("Error during redirect wait: " + e.getMessage());
+                // Continue waiting
             }
         }
 
-        String finalUrl = safeGetCurrentUrl();
-        System.out.println("Redirect timeout - final URL: " + finalUrl);
-        return finalUrl;
+        return safeGetCurrentUrl();
     }
 
     private String safeGetCurrentUrl() {
-        try {
-            return getDriver().getCurrentUrl();
-        } catch (UnhandledAlertException e) {
+        for (int attempt = 0; attempt < 5; attempt++) {
             try {
-                Thread.sleep(2000);
                 return getDriver().getCurrentUrl();
-            } catch (Exception e2) {
-                return "about:blank";
+            } catch (Exception e) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
+        return "about:blank";
     }
 }
