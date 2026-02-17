@@ -14,9 +14,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -29,7 +27,6 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existin
 import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.xpath;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -256,51 +253,81 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToOperatorReports() {
         refreshPage();
-        String volUrl = getDriver().getCurrentUrl();
-        String originalWindowHandle = getDriver().getWindowHandle(); // Store original window
+        String originalWindowHandle = getDriver().getWindowHandle();
 
         waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
 
+        Set<String> windowHandles = getDriver().getWindowHandles();
+        String secondTabHandle = windowHandles.toArray(new String[0])[1];
+        getDriver().switchTo().window(secondTabHandle);
+
+        String currentUrl = waitForRedirectToOperatorReports();
+        System.out.println("URL after redirect: " + currentUrl.replaceAll("id_token=[^&]*", "id_token=***"));
+
+        String userName = SecretsManager.getSecretValue("topsUsername");
+        String passWord = SecretsManager.getSecretValue("topsPassword");
+
+        if (currentUrl.contains("operator-reports")) {
+            String modifiedUrl = currentUrl.replaceFirst("https://", "https://" + userName + ":" + passWord + "@");
+            System.out.println("Navigating to authenticated URL...");
+
+            Browser.navigate().get(modifiedUrl);
+
+            String finalUrl = safeGetCurrentUrl();
+            System.out.println("Final URL: " + finalUrl.replaceAll(":[^:/@]+@", ":***@").replaceAll("id_token=[^&]*", "id_token=***"));
+        } else {
+            System.out.println("Redirect to operator-reports never happened: " + currentUrl);
+        }
+
+        getDriver().switchTo().window(originalWindowHandle);
+    }
+
+    private String waitForRedirectToOperatorReports() {
+        for (int i = 0; i < 60; i++) {
+            try {
+                Thread.sleep(1000);
+                String url = safeGetCurrentUrl();
+
+                if (i % 5 == 0) {
+                    System.out.println("Waiting for redirect (attempt " + i + "): " + url.replaceAll("id_token=[^&]*", "id_token=***"));
+                }
+
+                if (url.contains("operator-reports")) {
+                    System.out.println("Redirect completed after " + i + " seconds!");
+                    return url;
+                }
+
+                if (url.contains("topsreport")) {
+                    if (i % 10 == 0) {
+                        System.out.println("Still on topsreport page, waiting for token service...");
+                    }
+                    continue;
+                }
+
+                if (url.equals("about:blank")) {
+                    continue;
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error during redirect wait: " + e.getMessage());
+            }
+        }
+
+        String finalUrl = safeGetCurrentUrl();
+        System.out.println("Redirect timeout - final URL: " + finalUrl);
+        return finalUrl;
+    }
+
+    private String safeGetCurrentUrl() {
         try {
-            Thread.sleep(3000);
-
-            Set<String> windowHandles = getDriver().getWindowHandles();
-            String operatorReportsWindow = null;
-
-            for (String handle : windowHandles) {
-                getDriver().switchTo().window(handle);
-                String currentUrl = getDriver().getCurrentUrl();
-                System.out.println("Checking window: " + currentUrl);
-
-                if (currentUrl.contains("edh")) {
-                    operatorReportsWindow = handle;
-                    break;
-                }
+            return getDriver().getCurrentUrl();
+        } catch (UnhandledAlertException e) {
+            try {
+                Thread.sleep(2000);
+                return getDriver().getCurrentUrl();
+            } catch (Exception e2) {
+                return "about:blank";
             }
-
-            if (operatorReportsWindow != null) {
-                getDriver().switchTo().window(operatorReportsWindow);
-                String originalUrl = getDriver().getCurrentUrl();
-
-                String userName = SecretsManager.getSecretValue("topsUsername");
-                String passWord = SecretsManager.getSecretValue("topsPassword");
-                String authUrl = "https://" + userName + ":" + passWord + "@operator-reports.develop.edh.dvsacloud.uk/index.html";
-                String prepAuthUrl = "https://" + userName + ":" + passWord + "@operator-reports-preprod.dvsa.gov.uk/index.html";
-
-                if (volUrl.contains("preview")) {
-                    Browser.navigate().get(prepAuthUrl);
-                } else {
-                    Browser.navigate().get(authUrl);
-                }
-
-                Browser.navigate().get(originalUrl);
-
-            } else {
-                System.out.println("Could not find operator reports window");
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
