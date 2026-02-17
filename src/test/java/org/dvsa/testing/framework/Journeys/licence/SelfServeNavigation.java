@@ -271,13 +271,11 @@ public class SelfServeNavigation extends BasePage {
             Browser.navigate().get(modifiedUrl);
 
             try {
-                Thread.sleep(8000); // Wait for page to fully load in headless
+                Thread.sleep(8000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-
-        getDriver().switchTo().window(originalWindowHandle);
     }
 
     private String waitForRedirectToOperatorReports() {
