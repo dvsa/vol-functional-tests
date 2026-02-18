@@ -276,15 +276,4 @@ public class SelfServeUIJourney extends BasePage {
     public void noteOperatorNameOnDashboardPage() {
         volOperatorName = getText("/html/body/div[3]/ul/li/b", SelectorType.XPATH);
     }
-
-    public String getVolOperatorName() {
-        return volOperatorName;
-    }
-
-    public void verifyOperatorNameOnOperatorReportsPage() {
-        waitForTextToBePresent("Driver & Vehicle Standards Agency Operator Reports");
-        String topsOperatorName = getText("//*[@id=\"operator_name\"]", SelectorType.XPATH);;
-        waitForTextToBePresent(topsOperatorName);
-        assertEquals(topsOperatorName, volOperatorName);
-    }
 }

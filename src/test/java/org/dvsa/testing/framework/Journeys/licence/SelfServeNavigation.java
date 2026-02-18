@@ -14,9 +14,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
@@ -29,7 +27,6 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existin
 import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.xpath;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -256,30 +253,10 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToOperatorReports() {
         refreshPage();
-        String volUrl = getDriver().getCurrentUrl();
+        String originalWindowHandle = getDriver().getWindowHandle();
         waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
-        try {
-            Set<String> windowHandles = getDriver().getWindowHandles();
-            for (String handle : windowHandles) {
-                getDriver().switchTo().window(handle);
-                if (getDriver().getCurrentUrl().contains("edh")) {
-                    break;
-                }
-            }
-            String originalUrl = getDriver().getCurrentUrl();
-            String userName = SecretsManager.getSecretValue("topsUsername");
-            String passWord = SecretsManager.getSecretValue("topsPassword");
-            String authUrl = "https://" + userName + ":" + passWord + "@operator-reports.develop.edh.dvsacloud.uk/index.html";
-            String prepAuthUrl = "https://" + userName + ":" + passWord + "@operator-reports-preprod.dvsa.gov.uk/index.html";
-            if (volUrl.contains("preview")) {
-                Browser.navigate().get(prepAuthUrl);
-            }
-            else {
-                Browser.navigate().get(authUrl);
-            }
-            Browser.navigate().get(originalUrl);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Set<String> windowHandles = getDriver().getWindowHandles();
+        String secondTabHandle = windowHandles.toArray(new String[0])[1];
+        getDriver().switchTo().window(secondTabHandle);
     }
 }
