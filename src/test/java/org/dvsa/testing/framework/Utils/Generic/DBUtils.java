@@ -54,9 +54,9 @@ public class DBUtils {
         String currentDbUrl = getDatabaseUrl(env);
 
         try (Connection con = DriverManager.getConnection(currentDbUrl, dbUsername, dbPassword);
-             PreparedStatement stmt = con.prepareStatement(licenceSql());
+             PreparedStatement stmt = con.prepareStatement(licenceSql(), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
              ResultSet result = stmt.executeQuery()) {
-            while (result.first()) {
+            if (result.first()) {
                 licenceDetails.put("Licence number", result.getString("Licence number"));
                 licenceDetails.put("Organisation", result.getString("Organisation"));
                 licenceDetails.put("Licence type", result.getString("Licence type"));
@@ -87,17 +87,23 @@ public class DBUtils {
         };
     }
 
-        public static String licenceSql() {
-        return  "select l.lic_no as \"Licence number\", ro.description as \"Organisation\", rlt.description as \"Licence type\", rls.description as \"Licence status\", ta.name as \"Traffic Area\", rgp.description as \"Goods or PSV\"" +
-                "from licence l join organisation o on l.organisation_id = o.id" +
-                "join ref_data ro on o.type = ro.id" +
-                "join ref_data rlt on l.licence_type = rlt.id" +
-                "join ref_data rls on l.status = rls.id" +
-                "join traffic_area ta on l.traffic_area_id = ta.id" +
-                "join ref_data rgp on l.goods_or_psv = rgp.id" +
-                "where l.deleted_date is NULL" +
-                "and l.status not in ('lsts_cancelled', 'lsts_not_submitted', 'lsts_unlicenced', 'lsts_withdrawn')" +
-                "and l.created_on > DATE_SUB(SYSDATE(), INTERVAL 1 YEAR;);";
+    public static String licenceSql() {
+        return "SELECT l.lic_no AS \"Licence number\", " +
+                "ro.description AS \"Organisation\", " +
+                "rlt.description AS \"Licence type\", " +
+                "rls.description AS \"Licence status\", " +
+                "ta.name AS \"Traffic Area\", " +
+                "rgp.description AS \"Goods or PSV\" " +
+                "FROM licence l " +
+                "JOIN organisation o ON l.organisation_id = o.id " +
+                "JOIN ref_data ro ON o.type = ro.id " +
+                "JOIN ref_data rlt ON l.licence_type = rlt.id " +
+                "JOIN ref_data rls ON l.status = rls.id " +
+                "JOIN traffic_area ta ON l.traffic_area_id = ta.id " +
+                "JOIN ref_data rgp ON l.goods_or_psv = rgp.id " +
+                "WHERE l.deleted_date IS NULL " +
+                "AND l.status NOT IN ('lsts_cancelled', 'lsts_not_submitted', 'lsts_unlicenced', 'lsts_withdrawn') " +
+                "AND l.created_on > DATE_SUB(SYSDATE(), INTERVAL 1 YEAR);";
     }
 
 

@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -71,6 +72,6 @@ public class ExternalSearchFilter extends BasePage {
 
     @Given("i have existing licence details")
     public void iHaveExistingLicenceDetails() {
-        world.DBUtils.getLicenceDetails();
+        DBUtils.getLicenceDetails();
     }
 }
