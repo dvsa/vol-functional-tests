@@ -58,7 +58,7 @@ public class DBUtils {
              ResultSet result = stmt.executeQuery()) {
             if (result.first()) {
                 licenceDetails.put("Licence number", result.getString("Licence number"));
-                licenceDetails.put("Organisation", result.getString("Organisation"));
+                licenceDetails.put("Organisation type", result.getString("Organisation type"));
                 licenceDetails.put("Licence type", result.getString("Licence type"));
                 licenceDetails.put("Licence status", result.getString("Licence status"));
                 licenceDetails.put("Traffic Area", result.getString("Traffic Area"));
@@ -89,7 +89,7 @@ public class DBUtils {
 
     public static String licenceSql() {
         return "SELECT l.lic_no AS \"Licence number\", " +
-                "ro.description AS \"Organisation\", " +
+                "ro.description AS \"Organisation type\", " +
                 "rlt.description AS \"Licence type\", " +
                 "rls.description AS \"Licence status\", " +
                 "ta.name AS \"Traffic Area\", " +
