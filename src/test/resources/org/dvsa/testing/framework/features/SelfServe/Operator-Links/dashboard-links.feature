@@ -1,6 +1,6 @@
 Feature: Operator can use Self Service links
 
-@tops-report #@ss_regression
+@tops-report @ss_regression
     Scenario: Operator can navigate to DVSA Operator Reports from nonprod
       Given I have a "Goods" "Restricted" licence
       When I note the operator name on the Dashboard page
