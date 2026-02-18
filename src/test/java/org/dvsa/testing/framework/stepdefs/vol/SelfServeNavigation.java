@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -83,13 +84,13 @@ public class SelfServeNavigation extends BasePage {
 
     }
 
-    @Then("the operator name should be displayed on the Operator Reports Service page")
-    public void theOperatorNameShouldBeDisplayedOnTheOperatorReportsServicePage() {
-        world.selfServeUIJourney.verifyOperatorNameOnOperatorReportsPage();
-    }
-
     @When("I note the operator name on the Dashboard page")
     public void iNoteTheOperatorNameOnTheDashboardPage() {
         world.selfServeUIJourney.noteOperatorNameOnDashboardPage();
+    }
+
+    @Then("I am taken to the redirect page for TOPS")
+    public void iAmTakenToTheRedirectPageForTOPS() {
+        assertTrue(isURLPresent("/topsreport", 20));
     }
 }

@@ -105,6 +105,16 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
+    public static boolean isURLPresent(String substring, long timeoutInSeconds) {
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeoutInSeconds));
+            wait.until(ExpectedConditions.urlContains(substring));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
     public static boolean isErrorMessagePresent() {
         String ERROR_MESSAGE_HEADING = "Please correct the following errors";
         String ERROR_CLASS = ".govuk-error-message";

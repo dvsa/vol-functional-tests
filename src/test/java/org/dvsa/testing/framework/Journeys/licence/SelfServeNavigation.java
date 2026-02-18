@@ -254,59 +254,9 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToOperatorReports() {
         refreshPage();
         String originalWindowHandle = getDriver().getWindowHandle();
-
         waitAndClick("//a[@href=\"/dashboard/topsreport\" and contains(@class, \"govuk-link\") and text()=\"Your DVSA Operator Reports\"]", SelectorType.XPATH);
-
         Set<String> windowHandles = getDriver().getWindowHandles();
         String secondTabHandle = windowHandles.toArray(new String[0])[1];
         getDriver().switchTo().window(secondTabHandle);
-
-        String currentUrl = waitForRedirectToOperatorReports();
-
-        String userName = SecretsManager.getSecretValue("topsUsername");
-        String passWord = SecretsManager.getSecretValue("topsPassword");
-
-        if (currentUrl.contains("operator-reports")) {
-            String modifiedUrl = currentUrl.replaceFirst("https://", "https://" + userName + ":" + passWord + "@");
-            Browser.navigate().get(modifiedUrl);
-
-            try {
-                Thread.sleep(8000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    private String waitForRedirectToOperatorReports() {
-        for (int i = 0; i < 60; i++) {
-            try {
-                Thread.sleep(1000);
-                String url = safeGetCurrentUrl();
-
-                if (url.contains("operator-reports")) {
-                    return url;
-                }
-            } catch (Exception e) {
-                // Continue waiting
-            }
-        }
-
-        return safeGetCurrentUrl();
-    }
-
-    private String safeGetCurrentUrl() {
-        for (int attempt = 0; attempt < 5; attempt++) {
-            try {
-                return getDriver().getCurrentUrl();
-            } catch (Exception e) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-        }
-        return "about:blank";
     }
 }
