@@ -1,6 +1,6 @@
 @SS
 @External-Search-Filter
-@ss_regression
+#@ss_regression
 @FullRegression @printAndSign
 Feature: Using filters on External Search
 
