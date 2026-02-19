@@ -1,10 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import io.cucumber.java.en.Given;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -22,14 +24,14 @@ public class ExternalSearchFilter extends BasePage {
         String myURL = org.dvsa.testing.lib.url.webapp.webAppURL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
         Browser.navigate().get(myURL);
         findSelectAllRadioButtonsByValue("licence");
-        enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+        enterText("search", SelectorType.NAME, DBUtils.getLicenceDetails().get("Licence number").toString());
 
         long kickOut = System.currentTimeMillis() + 120000;
         boolean licenceFound = false;
 
         do {
             click(nameAttribute("button", "submit"), SelectorType.CSS);
-            licenceFound = isLinkPresent(world.applicationDetails.getLicenceNumber(), 20);
+            licenceFound = isLinkPresent(DBUtils.getLicenceDetails().get("Licence number").toString(), 20);
         } while (!licenceFound && System.currentTimeMillis() < kickOut);
 
         if (!licenceFound) {
@@ -37,34 +39,39 @@ public class ExternalSearchFilter extends BasePage {
         }
     }
 
+
     @Then("the Organisation Type filter should be displayed")
     public void theOrganisationTypeFilterShouldBeDisplayed() throws HttpException {
-        String opName = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
+        String orgType = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
+        assertEquals(DBUtils.getLicenceDetails().get("Organisation type").toString().toUpperCase(),orgType.toUpperCase());
     }
 
     @Then("the Licence Type filter should be displayed")
     public void theLicenceTypeFilterShouldBeDisplayed() throws HttpException {
-        String opName = getText("//*[@id='filter[orgTypeDesc]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
+        String licType = getText("/html/body/div[3]/main/div[2]/div[1]/form/fieldset[2]/div[2]/select/option[2]", SelectorType.XPATH);
+        assertEquals(DBUtils.getLicenceDetails().get("Licence type").toString().toUpperCase(),licType.toUpperCase());
     }
 
     @Then("the Licence Status filter should be displayed")
     public void theLicenceStatusFilterShouldBeDisplayed() throws HttpException {
         String licStatus = getText("//*[@id='filter[licStatusDesc]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getLicenceStatusDetails(),licStatus);
+        assertEquals(DBUtils.getLicenceDetails().get("Licence status").toString().toUpperCase(),licStatus.toUpperCase());
     }
 
     @Then("the Traffic Area filter should be displayed")
     public void theTrafficAreaFilterShouldBeDisplayed() throws HttpException {
         String trafficArea = getText("//*[@id='filter[licenceTrafficArea]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getLicenceTrafficArea(),trafficArea);
+        assertEquals(DBUtils.getLicenceDetails().get("Traffic Area").toString().toUpperCase(),trafficArea.toUpperCase());
     }
 
     @Then("the Goods or PSV filter should be displayed")
     public void theGoodsOrPSVFilterShouldBeDisplayed() throws HttpException {
-        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
-        String opType = getText("//*[@id='filter[goodsOrPsvDesc]']/option[2]", SelectorType.XPATH);
-        assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
+        String goodsOrPsv = getText("//*[@id='filter[goodsOrPsvDesc]']/option[2]", SelectorType.XPATH);
+        assertEquals(DBUtils.getLicenceDetails().get("Goods or PSV").toString().toUpperCase(),goodsOrPsv.toUpperCase());
+    }
+
+    @Given("i have existing licence details")
+    public void iHaveExistingLicenceDetails() {
+        DBUtils.getLicenceDetails();
     }
 }
