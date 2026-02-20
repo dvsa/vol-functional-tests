@@ -1,4 +1,4 @@
-FROM maven:3.9.6-amazoncorretto-21 as maven
+FROM maven:3.9.6-amazoncorretto-17 as maven
 ENV platform="LINUX"
 ENV gridURL="https://selenium-hub.olcs.dev-dvsacloud.uk/"
 
