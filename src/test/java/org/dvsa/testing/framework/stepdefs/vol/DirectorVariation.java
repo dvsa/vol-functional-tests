@@ -5,7 +5,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.When;;
+import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
