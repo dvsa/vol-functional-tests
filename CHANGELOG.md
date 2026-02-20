@@ -1,6 +1,21 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.20.0](https://github.com/dvsa/vol-functional-tests/compare/v4.19.0...v4.20.0) (2026-02-20)
+
+
+### Features
+
+* compile in 21 ([323d4be](https://github.com/dvsa/vol-functional-tests/commit/323d4be753eedf5837609ccc0b84ed03dc69df63))
+
+
+### Bug Fixes
+
+* assertions now use db ([f3b3485](https://github.com/dvsa/vol-functional-tests/commit/f3b34852fee6a13cebf0dd2bb8ce16230582e433))
+* commented out regression tag to await infra changes ([76a4219](https://github.com/dvsa/vol-functional-tests/commit/76a4219dc1d4b5d2f610423581c7752e81139a20))
+* testing redirect page ([20aaa51](https://github.com/dvsa/vol-functional-tests/commit/20aaa51ddb154500971705c3abdf0cb1d5e1ff1a))
+* windows ([16f08e1](https://github.com/dvsa/vol-functional-tests/commit/16f08e161d0e1a43f169f056c63661fae1afe103))
+
 ## [4.19.0](https://github.com/dvsa/vol-functional-tests/compare/v4.18.6...v4.19.0) (2026-02-17)
 
 
