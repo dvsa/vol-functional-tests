@@ -32,7 +32,6 @@ public class Initialisation {
         world.updateLicence = new UpdateLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
-        world.DBUtils = new DBUtils(world);
         world.formattedStrings = new FormattedStrings(world);
         world.licenceCreation = new LicenceCreation(world);
         world.genericUtils = new GenericUtils(world);
