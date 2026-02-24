@@ -15,9 +15,8 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.13.0</active-support.version>
+        <active-support.version>2.13.1</active-support.version>
         <api-calls.version>3.3.0</api-calls.version>
-        <uri-constructor.version>2.3.0</uri-constructor.version>
         <axe-scanner.version>2.11.3</axe-scanner.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
@@ -30,16 +29,9 @@
         <allure-report.version>2.29.0</allure-report.version>
         <aspectj.version>1.9.21</aspectj.version>
 
-        <!-- Logging -->
-        <log4j.version>2.25.3</log4j.version>
-
-        <!-- Utilities -->
-        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <!-- Utilities (not inherited from active-support) -->
         <commons-csv.version>1.12.0</commons-csv.version>
-        <assertj-core.version>3.27.7</assertj-core.version>
         <hamcrest.version>1.3</hamcrest.version>
-        <jsoup.version>1.18.3</jsoup.version>
-        <gson.version>2.11.0</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
         <lorem.version>2.1</lorem.version>
         <httpclient.version>4.5.14</httpclient.version>
@@ -49,9 +41,6 @@
 
         <!-- Network Dependencies -->
         <netty.version>4.1.129.Final</netty.version>
-
-        <!-- Testing Framework - WebDriverManager -->
-        <webdrivermanager.version>6.1.0</webdrivermanager.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
@@ -104,40 +93,10 @@
     </repositories>
 
     <dependencies>
-        <!-- HTML Parsing -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
-        </dependency>
-
-        <!-- Cucumber Testing Framework -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- Cucumber Testing Framework - cucumber-junit still needed -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Testing Framework - WebDriverManager -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>${webdrivermanager.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -191,34 +150,12 @@
             <version>${axe-scanner.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.dvsa.testing.lib</groupId>
-            <artifactId>vol-uri-constructor</artifactId>
-            <version>${uri-constructor.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.dvsa.testing.framework</groupId>
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
         </dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-
         <!-- Assertions -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -226,11 +163,6 @@
         </dependency>
 
         <!-- Utilities -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
@@ -241,11 +173,6 @@
             <artifactId>zt-zip</artifactId>
             <version>${zt-zip.version}</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.thedeanda</groupId>
@@ -271,11 +198,6 @@
             <groupId>com.amazon.ion</groupId>
             <artifactId>ion-java</artifactId>
             <version>${ion-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>9.5.0</version>
         </dependency>
     </dependencies>
 
