@@ -27,7 +27,6 @@ public class World {
     public Token token;
 
     public Configuration configuration;
-    public DBUtils DBUtils;
     public FormattedStrings formattedStrings;
     public GenericUtils genericUtils;
     public GlobalMethods globalMethods;

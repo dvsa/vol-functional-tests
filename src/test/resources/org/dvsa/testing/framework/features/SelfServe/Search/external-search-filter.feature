@@ -5,8 +5,7 @@
 Feature: Using filters on External Search
 
   Background:
-    Given i have existing licence details
-    And i have searched for a licence
+  Given i have searched for a licence
 
   Scenario: Check lorry and bus operator Organisation Type filter
     Then the Organisation Type filter should be displayed
