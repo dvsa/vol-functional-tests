@@ -82,6 +82,7 @@ public class TaskAllocation extends BasePage {
         waitForTextToBePresent("Task(s) successfully created");
         waitAndClick("date", SelectorType.ID);
         selectValueFromDropDown("date", SelectorType.ID,"All" );
+        waitForTextToBePresent(description);
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
     }
