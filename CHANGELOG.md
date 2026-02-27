@@ -1,6 +1,30 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.20.0](https://github.com/dvsa/vol-functional-tests/compare/v4.19.0...v4.20.0) (2026-02-27)
+
+
+### Features
+
+* compile in 21 ([323d4be](https://github.com/dvsa/vol-functional-tests/commit/323d4be753eedf5837609ccc0b84ed03dc69df63))
+* consume rds util in active support ([698b6f7](https://github.com/dvsa/vol-functional-tests/commit/698b6f77d2cc7483d117ac4859cf6cdcb5755c5c))
+* consume rds util in active support ([aecbce2](https://github.com/dvsa/vol-functional-tests/commit/aecbce28d43820038ae85bd1b859fe2177967b60))
+
+
+### Bug Fixes
+
+* added wait for edit task in internal ([093e8fc](https://github.com/dvsa/vol-functional-tests/commit/093e8fc531b6cdd3c3960a554b7d881a76dd0aea))
+* added wait for edit task in internal ([16ab3d7](https://github.com/dvsa/vol-functional-tests/commit/16ab3d7e9c9132702b66ed7cfe44e95636021c8f))
+* assertions now use db ([f3b3485](https://github.com/dvsa/vol-functional-tests/commit/f3b34852fee6a13cebf0dd2bb8ce16230582e433))
+* bump active support ([c2eb0b4](https://github.com/dvsa/vol-functional-tests/commit/c2eb0b45d64d8228187eaabf373454ce25e02f86))
+* bump active support ([750bec8](https://github.com/dvsa/vol-functional-tests/commit/750bec89ab2dd0941d16da9f0ce087df5e847862))
+* commented out regression tag to await infra changes ([76a4219](https://github.com/dvsa/vol-functional-tests/commit/76a4219dc1d4b5d2f610423581c7752e81139a20))
+* move out deps ([cbf513f](https://github.com/dvsa/vol-functional-tests/commit/cbf513f840fb7bac225b516b5334edd60e384a47))
+* move out deps ([0777f26](https://github.com/dvsa/vol-functional-tests/commit/0777f268c3a747eda710e7472df0888ca7d9f73a))
+* testing redirect page ([20aaa51](https://github.com/dvsa/vol-functional-tests/commit/20aaa51ddb154500971705c3abdf0cb1d5e1ff1a))
+* tm email link ([38b8340](https://github.com/dvsa/vol-functional-tests/commit/38b8340c9f3e633e250fc32a51bd5987bd93bc59))
+* windows ([16f08e1](https://github.com/dvsa/vol-functional-tests/commit/16f08e161d0e1a43f169f056c63661fae1afe103))
+
 ## [4.19.0](https://github.com/dvsa/vol-functional-tests/compare/v4.18.6...v4.19.0) (2026-02-17)
 
 
