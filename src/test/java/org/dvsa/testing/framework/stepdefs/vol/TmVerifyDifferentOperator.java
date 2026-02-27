@@ -43,6 +43,14 @@ public class TmVerifyDifferentOperator extends BasePage {
         boolean applicationOrNot = applicationType.equals("application");
         world.DataGenerator.generateAndAddOperatorUser();
         world.TMJourney.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
+
+        // Store the operator user credentials for later relogin
+        // Update the registerUser to point to the operator user that now has the TM
+        world.registerUser.setUserName(world.DataGenerator.getOperatorUser());
+        // Keep the original email address as that's where TM notifications are sent
+        // world.registerUser.setEmailAddress(world.DataGenerator.getOperatorUserEmail());
+        world.registerUser.setForeName(world.DataGenerator.getOperatorForeName());
+        world.registerUser.setFamilyName(world.DataGenerator.getOperatorFamilyName());
     }
 
     @And("i sign the declaration")
