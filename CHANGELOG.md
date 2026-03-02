@@ -1,6 +1,20 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.21.0](https://github.com/dvsa/vol-functional-tests/compare/v4.20.0...v4.21.0) (2026-03-02)
+
+
+### Features
+
+* up ver to 2.13.2 ([85a8fa4](https://github.com/dvsa/vol-functional-tests/commit/85a8fa44416864fbaa46964a43fdb2c0bf5e1f50))
+* up ver to 2.13.2 ([7a378b2](https://github.com/dvsa/vol-functional-tests/commit/7a378b2a5614928f58ea8acf4f4e8829781c73eb))
+
+
+### Bug Fixes
+
+* amend pass rate and remove address dependent tests ([288733f](https://github.com/dvsa/vol-functional-tests/commit/288733f1b0e2dc810f601f86ea7125cb4d570589))
+* amend pass rate and remove address dependent tests ([18fbeb0](https://github.com/dvsa/vol-functional-tests/commit/18fbeb0b9bc00d89b86399e359a921cbc6ad44a0))
+
 ## [4.20.0](https://github.com/dvsa/vol-functional-tests/compare/v4.19.0...v4.20.0) (2026-02-27)
 
 
