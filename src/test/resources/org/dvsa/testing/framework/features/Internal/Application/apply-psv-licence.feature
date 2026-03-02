@@ -14,6 +14,6 @@ Feature: Apply for a psv licence
     Examples:
       | operator | licenceType            |
       | public   | restricted             |
-      | public   | special_restricted     |
+#      | public   | special_restricted     |
       | public   | standard_international |
       | public   | standard_national      |

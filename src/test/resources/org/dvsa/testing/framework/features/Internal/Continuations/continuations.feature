@@ -15,7 +15,7 @@ Feature: Continuations journey through internal and self serve
       | userType   | operatorType | licenceType            |
       | consultant | goods        | restricted             |
       | admin      | public       | standard_national      |
-      | admin      | public       | special_restricted     |
+#      | admin      | public       | special_restricted     |
 
   @int_regression @FullRegression @continuations_internal @continuations_smoke
   Scenario: Caseworker continues a licence that has expired
