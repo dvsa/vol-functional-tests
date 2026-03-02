@@ -25,14 +25,9 @@ ignore:
         reason: Transitive axe-core dependency, MPL-2.0 acceptable
         expires: 2026-12-31T00:00:00.000Z
         created: 2026-01-05T00:00:00.000Z
-  SNYK-JAVA-ORGASYNCHTTPCLIENT-8447519:
-    - 'org.dvsa.testing.lib:accessibility-library > com.deque.html.axe-core:selenium > org.seleniumhq.selenium:selenium-java > org.seleniumhq.selenium:selenium-remote-driver > org.asynchttpclient:async-http-client':
-        reason: 'vol-axe-lib soon to be depreciated'
-        expires: '2026-05-27T00:00:00.000Z'
-        created: '2026-02-27T00:00:00.000Z'
-  SNYK-JAVA-ORGSELENIUMHQSELENIUM-6062318:
-    - 'org.dvsa.testing.lib:accessibility-library > com.deque.html.axe-core:selenium > org.seleniumhq.selenium:selenium-java > org.seleniumhq.selenium:selenium-ie-driver':
-        reason: 'vol-axe-lib soon to be depreciated'
-        expires: '2026-05-27T00:00:00.000Z'
-        created: '2026-02-27T00:00:00.000Z'
+  snyk:vuln:maven:com.fasterxml.jackson.core:jackson-core:SNYK-JAVA-COMFASTERXMLJACKSONCORE-15365924:
+    - '*':
+        reason: Vulnerability in transitive dependency, acceptable for current usage
+        expires: 2026-12-31T00:00:00.000Z
+        created: 2026-01-05T00:00:00.000Z
 patch: {}
