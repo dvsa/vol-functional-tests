@@ -26,10 +26,6 @@ public class GovSignInJourney extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(GovSignInJourney.class);
     private static final String USER_POOL_KEY = "SIGN-IN-USER-POOL";
     private static List<Map<String, String>> userPool = null;
-    private static Set<Integer> reservedUserIndices = Collections.synchronizedSet(new HashSet<>());
-    private static final AtomicInteger ssRegressionCounter = new AtomicInteger(0);
-    private static final AtomicInteger intRegressionCounter = new AtomicInteger(0);
-    private static final AtomicInteger defaultCounter = new AtomicInteger(0);
 
     private final World world;
 
@@ -78,16 +74,14 @@ public class GovSignInJourney extends BasePage {
             return defaultUser;
         }
 
-        String testType = detectTestType();
-        int userIndex = getNextAvailableUserIndex(testType);
+        long threadId = Thread.currentThread().getId();
+        int userIndex = (int) (threadId % userPool.size());
         Map<String, String> user = userPool.get(userIndex);
 
-        LOGGER.info("Thread " + Thread.currentThread().getId() + " using " + testType + " user: " +
-                user.get("username") + " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
+        LOGGER.info("Thread " + threadId + " using user: " + user.get("username") +
+                " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
 
-                " (range: " + startIndex + "-" + (endIndex-1) + ")");
-
-        return userIndex;
+        return user;
     }
 
 
