@@ -15,6 +15,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
@@ -25,6 +26,10 @@ public class GovSignInJourney extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(GovSignInJourney.class);
     private static final String USER_POOL_KEY = "SIGN-IN-USER-POOL";
     private static List<Map<String, String>> userPool = null;
+    private static Set<Integer> reservedUserIndices = Collections.synchronizedSet(new HashSet<>());
+    private static final AtomicInteger ssRegressionCounter = new AtomicInteger(0);
+    private static final AtomicInteger intRegressionCounter = new AtomicInteger(0);
+    private static final AtomicInteger defaultCounter = new AtomicInteger(0);
 
     private final World world;
 
@@ -73,15 +78,84 @@ public class GovSignInJourney extends BasePage {
             return defaultUser;
         }
 
-        long threadId = Thread.currentThread().getId();
-        int userIndex = (int) (threadId % userPool.size());
+        String testType = detectTestType();
+        int userIndex = getNextAvailableUserIndex(testType);
         Map<String, String> user = userPool.get(userIndex);
 
-        LOGGER.info("Thread " + threadId + " using user: " + user.get("username") +
-                " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
+        LOGGER.info("Thread " + Thread.currentThread().getId() + " using " + testType + " user: " + 
+                user.get("username") + " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
 
         return user;
     }
+
+    /**
+     * Detects which type of test is running based on system properties or thread names
+     */
+    private String detectTestType() {
+        // Check system properties first (set via command line -Dtags=@ss_regression)
+        String tags = System.getProperty("tags");
+        if (tags != null) {
+            if (tags.contains("@ss_regression")) return "ss_regression";
+            if (tags.contains("@int_regression")) return "int_regression";
+        }
+        
+        // Check thread name for tag information
+        String threadName = Thread.currentThread().getName();
+        if (threadName.contains("ss_regression")) return "ss_regression";
+        if (threadName.contains("int_regression")) return "int_regression";
+        
+        // Check for Maven surefire properties
+        String surefireArgs = System.getProperty("maven.test.args", "");
+        if (surefireArgs.contains("@ss_regression")) return "ss_regression";
+        if (surefireArgs.contains("@int_regression")) return "int_regression";
+        
+        return "default";
+    }
+
+    /**
+     * Gets the next available user index based on test type with thread-safe reservation
+     */
+    private synchronized int getNextAvailableUserIndex(String testType) {
+        int startIndex, endIndex;
+        AtomicInteger counter;
+        
+        switch (testType) {
+            case "ss_regression":
+                // Users 1-5 (indices 0-4) for ss_regression
+                startIndex = 0;
+                endIndex = 5;
+                counter = ssRegressionCounter;
+                break;
+            case "int_regression":
+                // Users 6-10 (indices 5-9) for int_regression  
+                startIndex = 5;
+                endIndex = 10;
+                counter = intRegressionCounter;
+                break;
+            default:
+                // All users (indices 0-9) for untagged tests
+                startIndex = 0;
+                endIndex = userPool.size();
+                counter = defaultCounter;
+                break;
+        }
+        
+        endIndex = Math.min(endIndex, userPool.size());
+        int poolSize = endIndex - startIndex;
+        
+        if (poolSize <= 0) {
+            LOGGER.warn("No users available for test type: " + testType + ", falling back to default pool");
+            return 0;
+        }
+        
+        int userIndex = startIndex + (counter.getAndIncrement() % poolSize);
+        
+        LOGGER.debug("Test type: " + testType + " allocated user index: " + userIndex + 
+                " (range: " + startIndex + "-" + (endIndex-1) + ")");
+        
+        return userIndex;
+    }
+
 
     public void navigateToGovUkSignIn() {
         if (isTextPresent("Declaration information")) {

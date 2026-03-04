@@ -77,18 +77,56 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
+        // Handle the "You have already proved your identity" page if it appears
         if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
-        waitForTextToBePresent("What happens next?");
-        if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
-            click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+        
+        // Wait for one of several possible next states after TM completes gov sign-in
+        boolean foundNextStep = false;
+        
+        // Check if we're on "What happens next?" page
+        if (isTextPresent("What happens next?")) {
+            foundNextStep = true;
+            if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
+                click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+            }
         }
+        // Check if we're already on confirmation or transport manager application page
+        else if (Browser.navigate().getCurrentUrl().contains("confirmation") ||
+                isTitlePresent("Transport manager application", 5) ||
+                isElementPresent("//*[@id='submitButton']", SelectorType.XPATH)) {
+            foundNextStep = true;
+            if (isElementPresent("//*[@id='submitButton']", SelectorType.XPATH)) {
+                clickById("submitButton");
+            }
+        }
+        // Check if we need to prove identity again
+        else if (isTitlePresent("Prove your identity with a GOV.UK account", 5)) {
+            foundNextStep = true;
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        
+        // If none of the above, wait a bit longer for "What happens next?" as fallback
+        if (!foundNextStep) {
+            waitForTextToBePresent("What happens next?");
+            if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
+                click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+            }
+        }
+        
+        // TM signs out
         waitAndClickByLinkText("Sign out");
+        
+        // OPERATOR logs back in - use the operator username that was stored 
         world.selfServeNavigation.navigateToLoginPage();
         world.globalMethods.signIn(world.registerUser.getUserName(), SecretsManager.getSecretValue("adminPassword"));
-        Browser.navigate().get(world.genericUtils.getTransportManagerLink());
-        scrollToBottom();
+        
+        // Navigate to Transport Managers page and select the TM to co-sign
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
+        waitAndClickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
 
