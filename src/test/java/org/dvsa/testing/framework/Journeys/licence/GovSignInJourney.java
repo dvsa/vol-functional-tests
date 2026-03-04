@@ -85,72 +85,6 @@ public class GovSignInJourney extends BasePage {
         LOGGER.info("Thread " + Thread.currentThread().getId() + " using " + testType + " user: " +
                 user.get("username") + " (user " + (userIndex + 1) + " of " + userPool.size() + ")");
 
-        return user;
-    }
-
-    /**
-     * Detects which type of test is running based on system properties or thread names
-     */
-    private String detectTestType() {
-        // Check system properties first (set via command line -Dtags=@ss_regression)
-        String tags = System.getProperty("tags");
-        if (tags != null) {
-            if (tags.contains("@ss_regression")) return "ss_regression";
-            if (tags.contains("@int_regression")) return "int_regression";
-        }
-
-        // Check thread name for tag information
-        String threadName = Thread.currentThread().getName();
-        if (threadName.contains("ss_regression")) return "ss_regression";
-        if (threadName.contains("int_regression")) return "int_regression";
-
-        // Check for Maven surefire properties
-        String surefireArgs = System.getProperty("maven.test.args", "");
-        if (surefireArgs.contains("@ss_regression")) return "ss_regression";
-        if (surefireArgs.contains("@int_regression")) return "int_regression";
-
-        return "default";
-    }
-
-    /**
-     * Gets the next available user index based on test type with thread-safe reservation
-     */
-    private synchronized int getNextAvailableUserIndex(String testType) {
-        int startIndex, endIndex;
-        AtomicInteger counter;
-
-        switch (testType) {
-            case "ss_regression":
-                // Users 1-5 (indices 0-4) for ss_regression
-                startIndex = 0;
-                endIndex = 5;
-                counter = ssRegressionCounter;
-                break;
-            case "int_regression":
-                // Users 6-10 (indices 5-9) for int_regression
-                startIndex = 5;
-                endIndex = 10;
-                counter = intRegressionCounter;
-                break;
-            default:
-                // All users (indices 0-9) for untagged tests
-                startIndex = 0;
-                endIndex = userPool.size();
-                counter = defaultCounter;
-                break;
-        }
-
-        endIndex = Math.min(endIndex, userPool.size());
-        int poolSize = endIndex - startIndex;
-
-        if (poolSize <= 0) {
-            LOGGER.warn("No users available for test type: " + testType + ", falling back to default pool");
-            return 0;
-        }
-
-        int userIndex = startIndex + (counter.getAndIncrement() % poolSize);
-
-        LOGGER.debug("Test type: " + testType + " allocated user index: " + userIndex +
                 " (range: " + startIndex + "-" + (endIndex-1) + ")");
 
         return userIndex;
@@ -181,7 +115,14 @@ public class GovSignInJourney extends BasePage {
         String signInUsername = credentials.get("username");
         String signInPassword = credentials.get("password");
         String AUTH_KEY = credentials.get("authKey");
+
+        LOGGER.info("=== GOV SIGN-IN ATTEMPT ===");
+        LOGGER.info("User: {}", signInUsername);
+        LOGGER.info("AuthKey (first 8 chars): {}", AUTH_KEY != null ? AUTH_KEY.substring(0, 8) + "..." : "null");
+
         String authCode = getTOTPCode(AUTH_KEY);
+        LOGGER.info("Generated TOTP Code: {}", authCode);
+        LOGGER.info("Current Time: {}", new Date());
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -191,16 +132,30 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         } else if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
             if (isTextPresent("You have already proved your identity")) {
+                LOGGER.info("User {} already proved identity, clicking submit", signInUsername);
                 waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
             } else {
+                LOGGER.info("Entering credentials for user: {}", signInUsername);
                 waitAndEnterText("email", SelectorType.ID, signInUsername);
                 waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
                 waitAndEnterText("password", SelectorType.ID, signInPassword);
                 waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+
+                LOGGER.info("Entering TOTP code: {} for user: {}", authCode, signInUsername);
                 waitAndEnterText("code", SelectorType.ID, authCode);
                 waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+
+                // Check if TOTP was successful
                 if (isTextPresent("You have already proved your identity")) {
+                    LOGGER.info("✅ TOTP SUCCESS: User {} successfully authenticated with code {}", signInUsername, authCode);
                     waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+                } else if (isTextPresent("The code you entered is not correct") ||
+                          isTextPresent("Enter the 6 digit security code") ||
+                          isTextPresent("Try again")) {
+                    LOGGER.error("❌ TOTP FAILED: User {} failed authentication with code {} and authKey {}...",
+                        signInUsername, authCode, AUTH_KEY.substring(0, 8));
+                    LOGGER.error("Current URL: {}", navigate().getCurrentUrl());
+                    LOGGER.error("Page contains error text - this user's auth key is likely incorrect!");
                 } else {
                     waitAndEnterText("code", SelectorType.ID, authCode);
                     waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
