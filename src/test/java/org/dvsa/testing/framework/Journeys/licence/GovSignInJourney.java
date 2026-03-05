@@ -15,7 +15,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
@@ -84,7 +83,6 @@ public class GovSignInJourney extends BasePage {
         return user;
     }
 
-
     public void navigateToGovUkSignIn() {
         if (isTextPresent("Declaration information")) {
             if (isElementPresent("sign-in-button", SelectorType.ID)) {
@@ -109,14 +107,7 @@ public class GovSignInJourney extends BasePage {
         String signInUsername = credentials.get("username");
         String signInPassword = credentials.get("password");
         String AUTH_KEY = credentials.get("authKey");
-
-        LOGGER.info("=== GOV SIGN-IN ATTEMPT ===");
-        LOGGER.info("User: {}", signInUsername);
-        LOGGER.info("AuthKey (first 8 chars): {}", AUTH_KEY != null ? AUTH_KEY.substring(0, 8) + "..." : "null");
-
         String authCode = getTOTPCode(AUTH_KEY);
-        LOGGER.info("Generated TOTP Code: {}", authCode);
-        LOGGER.info("Current Time: {}", new Date());
 
         if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("updated")) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -126,30 +117,16 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         } else if (Objects.requireNonNull(navigate().getCurrentUrl()).contains("enter-email")) {
             if (isTextPresent("You have already proved your identity")) {
-                LOGGER.info("User {} already proved identity, clicking submit", signInUsername);
                 waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
             } else {
-                LOGGER.info("Entering credentials for user: {}", signInUsername);
                 waitAndEnterText("email", SelectorType.ID, signInUsername);
                 waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
                 waitAndEnterText("password", SelectorType.ID, signInPassword);
                 waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-
-                LOGGER.info("Entering TOTP code: {} for user: {}", authCode, signInUsername);
                 waitAndEnterText("code", SelectorType.ID, authCode);
                 waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-
-                // Check if TOTP was successful
                 if (isTextPresent("You have already proved your identity")) {
-                    LOGGER.info("✅ TOTP SUCCESS: User {} successfully authenticated with code {}", signInUsername, authCode);
                     waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
-                } else if (isTextPresent("The code you entered is not correct") ||
-                          isTextPresent("Enter the 6 digit security code") ||
-                          isTextPresent("Try again")) {
-                    LOGGER.error("❌ TOTP FAILED: User {} failed authentication with code {} and authKey {}...",
-                        signInUsername, authCode, AUTH_KEY.substring(0, 8));
-                    LOGGER.error("Current URL: {}", navigate().getCurrentUrl());
-                    LOGGER.error("Page contains error text - this user's auth key is likely incorrect!");
                 } else {
                     waitAndEnterText("code", SelectorType.ID, authCode);
                     waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
