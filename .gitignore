@@ -148,3 +148,6 @@ mockApiData
 .env 
 .env.local
 .env.conf
+
+# Application configuration files
+application.properties

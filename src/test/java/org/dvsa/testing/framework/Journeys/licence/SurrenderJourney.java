@@ -10,7 +10,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
-import scanner.AXEScanner;
+import org.dvsa.testing.framework.axe.AXEScanner;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -142,7 +142,6 @@ public class SurrenderJourney extends BasePage {
         waitAndClickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
-        // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }

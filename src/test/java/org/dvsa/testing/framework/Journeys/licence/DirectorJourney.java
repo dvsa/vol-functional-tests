@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
@@ -10,11 +11,13 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
-import scanner.AXEScanner;
+import org.dvsa.testing.framework.axe.AXEScanner;
+import org.dvsa.testing.framework.jsoup.SpiderCrawler;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.HashSet;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,8 +89,9 @@ public class DirectorJourney extends BasePage {
         if (isTitlePresent(convictionsAndPenaltiesTitle, 5)) {
             completeConvictionsAndPenalties("N");
         }
-            AXEScanner axeScanner = AccessibilitySteps.scanner;
-            axeScanner.scan(true);
+        AXEScanner scanner = new AXEScanner();
+        scanner.scan(Browser.getDriver());
+        SpiderCrawler.crawler(1, getCurrentUrl(), new HashSet<>(), Browser.getDriver());
         }
 
 

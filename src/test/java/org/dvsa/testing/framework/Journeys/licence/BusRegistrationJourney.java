@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
-import activesupport.aws.s3.SecretsManager;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import apiCalls.enums.EnforcementArea;
@@ -12,19 +11,16 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
-import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.time.Duration;

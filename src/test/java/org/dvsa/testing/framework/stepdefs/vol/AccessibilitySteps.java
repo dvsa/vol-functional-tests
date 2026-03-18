@@ -10,19 +10,20 @@ import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.support.Color;
-import scanner.AXEScanner;
-import scanner.AXEScanner.ScanResult;
+import org.dvsa.testing.framework.axe.AXEScanner;
+import org.dvsa.testing.framework.jsoup.SpiderCrawler;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class AccessibilitySteps extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(AccessibilitySteps.class);
     private final World world;
-
-    public static final AXEScanner scanner = new AXEScanner();
 
     public AccessibilitySteps(World world) {
         this.world = world;
@@ -58,35 +59,21 @@ public class AccessibilitySteps extends BasePage {
         assertEquals("#00703c", buttonColour);
     }
 
-
+    @BeforeAll
     @When("i scan for accessibility violations")
     @Step("Scan page for accessibility violations")
-    public void iScanForAccessibilityViolations() throws IllegalBrowserException {
-        String currentUrl = Browser.navigate().getCurrentUrl();
-        LOGGER.info("Scanning page for accessibility violations: {}", currentUrl);
-        ScanResult result = scanner.scan(true);
-        LOGGER.info("Scan complete - Violations: {}, Incomplete: {}",
-                result.getViolationCount(), result.getIncompleteCount());
+    public static void iScanForAccessibilityViolations() throws IllegalBrowserException {
+        AXEScanner scanner = new AXEScanner();
+        scanner.scan(Browser.getDriver());
+        SpiderCrawler.crawler(1, getCurrentUrl(), new HashSet<>(), Browser.getDriver());
     }
 
-
+    @AfterAll
     @Then("no issues should be present on the page")
     @Step("Verify no accessibility issues")
     public void noIssuesShouldBePresentOnThePage() {
-        scanner.logViolations();
-        scanner.attachToAllure();
-        int totalViolations = scanner.getTotalViolationsCount();
-        int criticalViolations = scanner.getCriticalViolationsCount();
-        if (totalViolations == 0) {
-            LOGGER.info("✓ No accessibility violations found");
-        } else if (criticalViolations == 0) {
-            LOGGER.warn(":warning: Found {} accessibility violation(s) but none are CRITICAL - Test PASSES",
-                    totalViolations);
-        } else {
-            LOGGER.error("✗ Found {} CRITICAL accessibility violation(s) - Test FAILS", criticalViolations);
-            String violationDetails = scanner.getViolationSummary();
-            fail(String.format("Found %d CRITICAL violation(s):\n%s", criticalViolations, violationDetails));
-        }
+        AXEScanner scanner = new AXEScanner();
+        scanner.generateFinalReport();
     }
 }
 

@@ -18,6 +18,7 @@
         <active-support.version>2.14.1</active-support.version>
         <api-calls.version>3.3.2</api-calls.version>
         <axe-scanner.version>2.11.4</axe-scanner.version>
+        <accessibility-ai-core.version>1.0.1</accessibility-ai-core.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
@@ -48,10 +49,20 @@
         <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <allure-maven-plugin.version>2.12.0</allure-maven-plugin.version>
         <build.helper.plugin.version>3.2.0</build.helper.plugin.version>
+        
+        <!-- AWS SDK -->
+        <aws.sdk.version>2.41.26</aws.sdk.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>bom</artifactId>
+                <version>${aws.sdk.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -153,6 +164,37 @@
             <groupId>org.dvsa.testing.framework</groupId>
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dvsa.testing.framework</groupId>
+            <artifactId>accessibility-ai-core</artifactId>
+            <version>${accessibility-ai-core.version}</version>
+        </dependency>
+
+        <!-- AWS SDK for Bedrock AI Analysis -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>bedrockagentruntime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>auth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>regions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>apache-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>sdk-core</artifactId>
         </dependency>
 
         <!-- Assertions -->

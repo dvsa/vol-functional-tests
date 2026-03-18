@@ -1,15 +1,17 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.Injectors.World;
+import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.axe.AXEScanner;
+import org.dvsa.testing.framework.jsoup.SpiderCrawler;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
-import scanner.AXEScanner;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Objects;
 
 public class BusinessDetailsJourney extends BasePage {
@@ -36,8 +38,9 @@ public class BusinessDetailsJourney extends BasePage {
         UniversalActions.clickSaveAndContinue();
         enterCorrespondenceAddress();
         UniversalActions.clickSaveAndContinue();
-        AXEScanner axeScanner = AccessibilitySteps.scanner;
-        axeScanner.scan(true);
+        AXEScanner scanner = new AXEScanner();
+        scanner.scan(Browser.getDriver());
+        SpiderCrawler.crawler(1, getCurrentUrl(), new HashSet<>(), Browser.getDriver());
     }
 
     public void enterCorrespondenceAddress() {
