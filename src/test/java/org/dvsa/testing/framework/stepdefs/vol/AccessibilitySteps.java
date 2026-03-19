@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class AccessibilitySteps extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(AccessibilitySteps.class);
     private final World world;
+
+    public static AXEScanner scanner = new AXEScanner();
 
     public AccessibilitySteps(World world) {
         this.world = world;
@@ -59,21 +62,25 @@ public class AccessibilitySteps extends BasePage {
         assertEquals("#00703c", buttonColour);
     }
 
-    @BeforeAll
+
+
     @When("i scan for accessibility violations")
     @Step("Scan page for accessibility violations")
-    public static void iScanForAccessibilityViolations() throws IllegalBrowserException {
-        AXEScanner scanner = new AXEScanner();
+    public void iScanForAccessibilityViolations() throws IllegalBrowserException {
         scanner.scan(Browser.getDriver());
-        SpiderCrawler.crawler(1, getCurrentUrl(), new HashSet<>(), Browser.getDriver());
     }
 
-    @AfterAll
+@After
+public void axeTearDown() {
+        if(!scanner.getAllViolations().isEmpty()) {
+         scanner.generateFinalReport();
+        }
+}
+
     @Then("no issues should be present on the page")
     @Step("Verify no accessibility issues")
     public void noIssuesShouldBePresentOnThePage() {
-        AXEScanner scanner = new AXEScanner();
-        scanner.generateFinalReport();
+       scanner.getAllViolations().isEmpty();
     }
 }
 
