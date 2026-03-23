@@ -17,3 +17,25 @@ Feature: Grant under consideration application
       | vehicle_type | type_of_licence        | document_type |
       | goods        | standard_international | GV Licence    |
       | public       | standard_national      | PSV Licence   |
+
+Scenario: Validation on Grant Application button for PSV (no advert required)
+    Given I have a "public" "standard_national" application which is under consideration
+    And i create an admin and url search for my application
+    Then I pay the grant fee
+    When I navigate directly to my application in internal
+    When I complete tracking for the application
+    And I publish the application on internal
+    When I click the Grant Application button
+    Then validation should be checked and the application should be granted if valid
+
+Scenario: Validation on Grant Application button for goods applications (advert required)
+    Given I have a "goods" "standard_national" application which is under consideration
+    And i create an admin and url search for my application
+    Then I pay the grant fee
+    When I navigate directly to my application in internal
+    When I add advert details for the application
+    When I navigate directly to my application in internal
+    When I complete tracking for the application
+    And I publish the application on internal
+    When I click the Grant Application button
+    Then the application status should be Awaiting Grant Fee

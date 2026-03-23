@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.openqa.selenium.WebElement;
 
 
+import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -49,7 +50,7 @@ public class GrantApplication extends BasePage {
             world.internalNavigation.logInAsAdmin();
             world.internalNavigation.getApplication(world.createApplication.getApplicationId());
             overrideOppositionAndDates();
-        }else{
+        } else {
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
             world.internalNavigation.loginIntoInternal("intSystemAdmin");
             world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Licence, licenceNumber[0].trim(), licenceNumber[0].trim());
@@ -65,10 +66,10 @@ public class GrantApplication extends BasePage {
         waitAndClickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
         selectValueFromDropDown("trafficArea", SelectorType.ID, "Wales");
-        if(getText("dataTrafficArea[enforcementArea]", SelectorType.ID).contains("Wales")) {
+        if (getText("dataTrafficArea[enforcementArea]", SelectorType.ID).contains("Wales")) {
             selectValueFromDropDown("dataTrafficArea[enforcementArea]", SelectorType.ID, "Wales");
-        }else{
-            selectValueFromDropDownByIndex("dataTrafficArea[enforcementArea]", SelectorType.ID,1);
+        } else {
+            selectValueFromDropDownByIndex("dataTrafficArea[enforcementArea]", SelectorType.ID, 1);
         }
         UniversalActions.clickSaveAndReturn();
         waitAndClickByLinkText("Review and declarations");
@@ -82,10 +83,50 @@ public class GrantApplication extends BasePage {
         waitAndClick("form-actions[grant]", SelectorType.ID);
     }
 
-    private void payGrantFees() {
+    @Then("I pay the grant fee")
+    public void iPayTheGrantFee() {
         waitAndClickByLinkText("Fees");
         waitAndClick("checkall", SelectorType.ID);
         waitAndClick("pay", SelectorType.ID);
-        world.feeAndPaymentJourney.payFee(null, "card");
+
+        List<WebElement> feeAmountElements = findElements("td[data-heading='Fee amount']", SelectorType.CSS);
+        double totalFeeAmount = 0.0;
+        
+        for (WebElement feeElement : feeAmountElements) {
+            String feeText = feeElement.getText().replace("£", "").trim();
+            totalFeeAmount += Double.parseDouble(feeText);
+        }
+        
+        // Convert back to string format for payment
+        String totalFeeAmountString = String.format("%.2f", totalFeeAmount);
+        world.feeAndPaymentJourney.payFee(totalFeeAmountString, "cash");
+    }
+
+    private void grantingTheApplication() {
+        waitAndClickByLinkText("Grant application");
+        waitForTextToBePresent("Grant application");
+        waitAndClick("//*[@value='grant_authority_tc']", SelectorType.XPATH);
+        waitAndClick("form-actions[continue-to-grant]", SelectorType.ID);
+        waitAndClick("//*[@value='N']", SelectorType.XPATH);
+        waitAndClick("form-actions[grant]", SelectorType.ID);
+    }
+
+    @When("I click the Grant Application button")
+    public void iClickTheGrantApplicationButton() {
+        grantingTheApplication();
+    }
+
+    @Then("validation should be checked and the application should be granted if valid")
+    public void validationShouldBeCheckedAndTheApplicationShouldBeGrantedIfValid() {
+        waitForTextToBePresent("Granted");
+        String licenceStatus = getText("//dt[text()='Licence status']/following-sibling::dd//strong", SelectorType.XPATH);
+        assertTrue(licenceStatus.contains("Valid"), "Expected licence status to be 'Valid' but was: " + licenceStatus);
+    }
+
+    @Then("the application status should be Awaiting Grant Fee")
+    public void theApplicationStatusShouldBeAwaitingGrantFee() {
+        waitForTextToBePresent("Awaiting grant fee");
+        String licenceStatus = getText("//dt[text()='Licence status']/following-sibling::dd//strong", SelectorType.XPATH);
+        assertTrue(licenceStatus.contains("Awaiting grant fee"), "Expected licence status to be 'Awaiting grant fee' but was: " + licenceStatus);
     }
 }
