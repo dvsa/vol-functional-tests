@@ -20,22 +20,30 @@ Feature: Grant under consideration application
 
 Scenario: Validation on Grant Application button for PSV (no advert required)
     Given I have a "public" "standard_national" application which is under consideration
-    And i create an admin and url search for my application
-    Then I pay the grant fee
+    And I create an admin and url search for my application
+    And I pay the grant fee
     When I navigate directly to my application in internal
-    When I complete tracking for the application
+    And I complete tracking for the application
     And I publish the application on internal
-    When I click the Grant Application button
+    And I click the Grant Application button
     Then validation should be checked and the application should be granted if valid
 
 Scenario: Validation on Grant Application button for goods applications (advert required)
     Given I have a "goods" "standard_national" application which is under consideration
-    And i create an admin and url search for my application
-    Then I pay the grant fee
+    And I create an admin and url search for my application
+    And I pay the grant fee
     When I navigate directly to my application in internal
-    When I add advert details for the application
-    When I navigate directly to my application in internal
-    When I complete tracking for the application
+    And I add advert details for the application
+    And I complete tracking for the application
     And I publish the application on internal
-    When I click the Grant Application button
+    And I click the Grant Application button
     Then the application status should be Awaiting Grant Fee
+
+Scenario: Validation on Grant Application button for upgrade applications (no advert required)
+    Given i have a valid "goods" "restricted" licence
+    When i upgrade my licence type to Standard National
+    And i complete the required five sections
+    And i create an admin and url search for my application
+    And I navigate directly to my application in internal
+    And I complete tracking for the application
+    Then validation should be checked and the application should be granted if valid

@@ -118,7 +118,7 @@ public class GrantApplication extends BasePage {
 
     @Then("validation should be checked and the application should be granted if valid")
     public void validationShouldBeCheckedAndTheApplicationShouldBeGrantedIfValid() {
-        waitForTextToBePresent("Granted");
+        waitForTextToBePresent("Valid");
         String licenceStatus = getText("//dt[text()='Licence status']/following-sibling::dd//strong", SelectorType.XPATH);
         assertTrue(licenceStatus.contains("Valid"), "Expected licence status to be 'Valid' but was: " + licenceStatus);
     }

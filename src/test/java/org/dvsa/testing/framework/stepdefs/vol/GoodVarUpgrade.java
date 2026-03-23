@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -75,5 +76,10 @@ public class GoodVarUpgrade extends BasePage {
         assertTrue(warningText.contains(upgradeInterimSubmittedText1));
         assertTrue(warningText.contains(upgradeInterimSubmittedText2));
         assertTrue(warningText.contains(upgradeInterimSubmittedText3));
+    }
+
+    @And("i submit my variation application")
+    public void iSubmitMyVariationApplication() throws HttpException, HttpException {
+        world.APIJourney.submitApplication();
     }
 }
