@@ -20,7 +20,7 @@ Feature: Grant under consideration application
 
 Scenario: Validation on Grant Application button for PSV (no advert required)
     Given I have a "public" "standard_national" application which is under consideration
-    And I create an admin and url search for my application
+    And i create an admin and url search for my application
     And I pay the grant fee
     When I navigate directly to my application in internal
     And I complete tracking for the application
@@ -30,7 +30,7 @@ Scenario: Validation on Grant Application button for PSV (no advert required)
 
 Scenario: Validation on Grant Application button for goods applications (advert required)
     Given I have a "goods" "standard_national" application which is under consideration
-    And I create an admin and url search for my application
+    And i create an admin and url search for my application
     And I pay the grant fee
     When I navigate directly to my application in internal
     And I add advert details for the application
