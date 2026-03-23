@@ -17,6 +17,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -359,8 +361,19 @@ public class InternalApplication extends BasePage {
         dateFields.put("year", String.valueOf(advertDate.getYear()));
         
         enterDateFieldsByPartialId("adPlacedDate", dateFields);
-        String filePath = System.getProperty("user.dir") + "/src/test/resources/newspaperAdvert.jpeg";
-        waitAndEnterText("//input[@type='file' and contains(@name, 'advert')]", SelectorType.XPATH, filePath);
+        
+        // Handle file upload for both local and remote environments
+        var workingDir = System.getProperty("user.dir");
+        var advertFile = "/src/test/resources/newspaperAdvert.jpeg";
+        
+        if (System.getProperty("platform") == null) {
+            waitAndEnterText("//input[@type='file' and contains(@name, 'advert')]", SelectorType.XPATH, workingDir.concat(advertFile));
+        } else {
+            WebElement fileInput = getDriver().findElement(By.xpath("//input[@type='file' and contains(@name, 'advert')]"));
+            ((RemoteWebElement) fileInput).setFileDetector(new LocalFileDetector());
+            fileInput.sendKeys(workingDir.concat(advertFile));
+        }
+        
         UniversalActions.clickSubmit();
     }
 }
