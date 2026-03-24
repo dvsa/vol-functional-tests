@@ -86,17 +86,17 @@ jobs:
       JOB_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure AWS with provided credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
           role-duration-seconds: 8400
 
       - name: Cache local Maven repository
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
@@ -207,10 +207,10 @@ jobs:
       FOLDER_NAME: ${{ needs.create-job-name.outputs.job_name }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Configure AWS with provided credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ env.ROLE_ARN }}
           aws-region: ${{ vars.DVSA_AWS_REGION }}
@@ -237,7 +237,7 @@ jobs:
         run: echo "timestamp=$(date +%Y%m%d%H%M%S%3N)" >> $GITHUB_ENV
 
       - name: Store Allure Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: e2e-${{ needs.create-job-name.outputs.job_name }}
           path: ./upload/${{ env.FOLDER_NAME }}/allure-results
@@ -252,10 +252,10 @@ jobs:
     environment: ${{ inputs.platform_env }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Download Allure Report
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: e2e-${{ needs.create-job-name.outputs.job_name }}
 
