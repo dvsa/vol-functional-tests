@@ -34,8 +34,8 @@ Scenario: Validation on Grant Application button for goods applications (advert 
     And I pay the grant fee
     When I navigate directly to my application in internal
     And I add advert details for the application
-    And I complete tracking for the application
     And I publish the application on internal
+   And I complete tracking for the application
     And I click the Grant Application button
     Then the application status should be Awaiting Grant Fee
 
