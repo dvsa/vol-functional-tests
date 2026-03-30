@@ -40,7 +40,7 @@
         <ion-java.version>1.11.11</ion-java.version>
 
         <!-- Network Dependencies -->
-        <netty.version>4.1.129.Final</netty.version>
+        <netty.version>4.1.132.Final</netty.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
