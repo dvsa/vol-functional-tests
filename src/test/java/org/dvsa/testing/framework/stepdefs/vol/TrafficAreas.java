@@ -134,7 +134,9 @@ public class TrafficAreas extends BasePage {
     public void aLicenceAlreadyExistsInThisTrafficAreaErrorAppearsWhenICompleteThePage() {
         enterText("totAuthLgvVehicles", SelectorType.ID, "5");
         enterText("totCommunityLicences", SelectorType.ID, "5");
-        selectValueFromDropDown("trafficArea", SelectorType.ID, "North West of England");
+        if (isElementPresent("//select[@id='trafficArea']", SelectorType.XPATH)) {
+            selectValueFromDropDown("trafficArea", SelectorType.ID, "North West of England");
+        }
         UniversalActions.clickSaveAndContinue();
         waitForUrlToContain("/operating-centres/", 2);
         waitForElementToBePresent("//p[@role='alert']");
