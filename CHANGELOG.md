@@ -1,6 +1,18 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.21.2](https://github.com/dvsa/vol-functional-tests/compare/v4.21.1...v4.21.2) (2026-04-01)
+
+
+### Bug Fixes
+
+* active support ([a81edc1](https://github.com/dvsa/vol-functional-tests/commit/a81edc1a97c7b76647228c9869e48b4f3c7f09b0))
+* co sign gov sign in ([83b988c](https://github.com/dvsa/vol-functional-tests/commit/83b988c47afec6431e04d77b394628f71049e809))
+* co sign manually ([020a47c](https://github.com/dvsa/vol-functional-tests/commit/020a47cbee05e3fea1e3218edba001742cbe9881))
+* goods si licence ([3701ea6](https://github.com/dvsa/vol-functional-tests/commit/3701ea6829727ed161c6ad04e6b056231a7ac7c9))
+* goods upgrade ([70b920f](https://github.com/dvsa/vol-functional-tests/commit/70b920f33286c8291acf2033b03650638c231f5e))
+* goods upgrade ([193c5b1](https://github.com/dvsa/vol-functional-tests/commit/193c5b146ab63e6757b6fc9ffb6f40d1faf6a30b))
+
 ## [4.21.1](https://github.com/dvsa/vol-functional-tests/compare/v4.21.0...v4.21.1) (2026-03-26)
 
 
