@@ -78,6 +78,7 @@ public class InternalApplication extends BasePage {
                 }
             }
         }
+        waitAndClick("details[overrideOppositionDate]", SelectorType.ID);
         UniversalActions.clickSave();
     }
 
