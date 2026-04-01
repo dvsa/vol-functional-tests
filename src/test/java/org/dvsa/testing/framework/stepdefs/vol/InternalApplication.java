@@ -17,6 +17,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +42,44 @@ public class InternalApplication extends BasePage {
 
     public InternalApplication(World world) {
         this.world = world;
+    }
+
+    @When("I navigate directly to my application in internal")
+    public void iNavigateDirectlyToMyApplicationInInternal() throws HttpException {
+        world.internalNavigation.getApplication();
+        waitAndClickByLinkText("Application");
+    }
+
+    @When("I complete tracking for the application")
+    public void iCompleteTrackingForTheApplication() {
+        List<WebElement> initialDropdowns = findElements("//select[contains(@name,'tracking') and contains(@name,'Status')]", SelectorType.XPATH);
+        int dropdownCount = initialDropdowns.size();
+        for (int i = 0; i < dropdownCount; i++) {
+            try {
+
+                List<WebElement> dropdowns = findElements("//select[contains(@name,'tracking') and contains(@name,'Status')]", SelectorType.XPATH);
+                if (i < dropdowns.size()) {
+                    WebElement dropdown = dropdowns.get(i);
+                    String name = dropdown.getAttribute("name");
+                    String xpath = String.format("//select[@name='%s']", name);
+                    selectValueFromDropDown(xpath, SelectorType.XPATH, "Accepted");
+                    waitForElementToBeClickable(xpath, SelectorType.XPATH);
+                }
+            } catch (Exception e) {
+                // If we get stale element or other issues, refresh page and retry
+                refreshPage();
+                waitForTextToBePresent("Tracking");
+                List<WebElement> dropdowns = findElements("//select[contains(@name,'tracking') and contains(@name,'Status')]", SelectorType.XPATH);
+                if (i < dropdowns.size()) {
+                    WebElement dropdown = dropdowns.get(i);
+                    String name = dropdown.getAttribute("name");
+                    String xpath = String.format("//select[@name='%s']", name);
+                    selectValueFromDropDown(xpath, SelectorType.XPATH, "Accepted");
+                }
+            }
+        }
+        waitAndClick("details[overrideOppositionDate]", SelectorType.ID);
+        UniversalActions.clickSave();
     }
 
     @When("the caseworker completes and submits the application")
@@ -297,5 +343,38 @@ public class InternalApplication extends BasePage {
     public void theApplicationFeeHasBeenPaid() {
         world.internalUIJourney.payFee();
         refreshPageWithJavascript();
+    }
+
+    @When("I add advert details for the application")
+    public void iAddAdvertDetailsForTheApplication() {
+        waitAndClickByLinkText("Operating centres and authorisation");
+        waitForTextToBePresent("Operating centres and authorisation");
+        waitAndClick("//button[contains(@name, 'table[action][edit]')]", SelectorType.XPATH);
+        waitForTextToBePresent("Operating centre");
+        waitAndClick("//input[@name='advertisements[radio]' and @value='adPlaced']", SelectorType.XPATH);
+        waitAndEnterText("advertisements[adPlacedContent][adPlacedIn]", SelectorType.NAME, "The Times");
+
+
+        LocalDate advertDate = LocalDate.now().minusDays(21);
+        HashMap<String, String> dateFields = new HashMap<>();
+        dateFields.put("day", String.valueOf(advertDate.getDayOfMonth()));
+        dateFields.put("month", String.valueOf(advertDate.getMonthValue()));
+        dateFields.put("year", String.valueOf(advertDate.getYear()));
+        
+        enterDateFieldsByPartialId("adPlacedDate", dateFields);
+        
+        // Handle file upload for both local and remote environments
+        var workingDir = System.getProperty("user.dir");
+        var advertFile = "/src/test/resources/newspaperAdvert.jpeg";
+        
+        if (System.getProperty("platform") == null) {
+            waitAndEnterText("//input[@type='file' and contains(@name, 'advert')]", SelectorType.XPATH, workingDir.concat(advertFile));
+        } else {
+            WebElement fileInput = getDriver().findElement(By.xpath("//input[@type='file' and contains(@name, 'advert')]"));
+            ((RemoteWebElement) fileInput).setFileDetector(new LocalFileDetector());
+            fileInput.sendKeys(workingDir.concat(advertFile));
+        }
+        
+        UniversalActions.clickSubmit();
     }
 }
