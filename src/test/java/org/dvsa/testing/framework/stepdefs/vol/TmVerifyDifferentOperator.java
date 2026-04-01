@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -42,6 +44,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     private String originalOperatorUserName;
     private String originalOperatorForeName;
     private String originalOperatorFamilyName;
+    private String originalOperatorEmail;
     // Store NEW operator (who becomes TM) credentials
     private String tmOperatorUserName;
     private String tmOperatorForeName; 
@@ -55,6 +58,7 @@ public class TmVerifyDifferentOperator extends BasePage {
         originalOperatorUserName = world.registerUser.getUserName();
         originalOperatorForeName = world.registerUser.getForeName();
         originalOperatorFamilyName = world.registerUser.getFamilyName();
+        originalOperatorEmail = world.registerUser.getEmailAddress();
         
         // SECOND: Generate a NEW operator user to become TM
         world.DataGenerator.generateAndAddOperatorUser();
@@ -106,7 +110,20 @@ public class TmVerifyDifferentOperator extends BasePage {
         world.selfServeNavigation.navigateToLoginPage();
         // Use ORIGINAL operator credentials (the one who owns the application) for countersigning
         world.globalMethods.signIn(originalOperatorUserName, SecretsManager.getSecretValue("adminPassword"));
-        Browser.navigate().get(world.genericUtils.getTransportManagerLink());
+        
+        // Get TM application link from original operator's email (not from current registerUser)
+        String tmAppLink = world.configuration.mailPit.retrieveTmAppLink(originalOperatorEmail);
+        String sanitizedHTML = tmAppLink.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
+        Matcher matcher = pattern.matcher(sanitizedHTML);
+        String tmLink;
+        if (matcher.find()) {
+            tmLink = matcher.group(1);
+        } else {
+            throw new RuntimeException("Review application link not found in email for original operator: " + originalOperatorEmail);
+        }
+        
+        Browser.navigate().get(tmLink);
         scrollToBottom();
         UniversalActions.clickSubmit();
         world.selfServeUIJourney.signDeclaration();
