@@ -289,7 +289,9 @@ public class InterimLicence extends BasePage {
         world.selfServeNavigation.navigateToPage(applicationType, SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("(//input[@name='declarationsAndUndertakings[declarationConfirmation]'])[2]", SelectorType.XPATH);
         click(interimRadioYes, SelectorType.XPATH);
-        clickByXPath(" //input[@type='radio' and @value='N' and contains(@name, 'noTmConfirmation')]");
+        if (isElementPresent("//input[@type='radio' and @value='N' and contains(@name, 'noTmConfirmation')]", SelectorType.XPATH)) {
+            clickByXPath("//input[@type='radio' and @value='N' and contains(@name, 'noTmConfirmation')]");
+        }
         waitAndEnterText("applicationInterimReason", SelectorType.ID, "I request an interim");
         waitAndClick("submit", SelectorType.ID);
     }
