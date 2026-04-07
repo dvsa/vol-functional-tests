@@ -15,7 +15,7 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.15.3</active-support.version>
+        <active-support.version>2.15.4</active-support.version>
         <api-calls.version>3.3.2</api-calls.version>
         <axe-scanner.version>2.11.4</axe-scanner.version>
 
