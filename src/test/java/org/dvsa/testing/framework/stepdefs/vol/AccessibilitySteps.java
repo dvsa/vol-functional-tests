@@ -55,7 +55,7 @@ public class AccessibilitySteps extends BasePage {
         String buttonColour = Color.fromString(
                 findElement(String.format("//*[contains(text(),'%s')]", buttonName), SelectorType.XPATH)
                         .getCssValue("background-color")).asHex();
-        assertEquals("#00703c", buttonColour);
+        assertEquals("#0f7a52", buttonColour);
     }
 
 
