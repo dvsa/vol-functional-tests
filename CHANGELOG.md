@@ -1,6 +1,20 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.22.0](https://github.com/dvsa/vol-functional-tests/compare/v4.21.2...v4.22.0) (2026-04-07)
+
+
+### Features
+
+* grant ui tests ([e5720dc](https://github.com/dvsa/vol-functional-tests/commit/e5720dcf94871d96b773e12247a640efdfae1dbc))
+
+
+### Bug Fixes
+
+* if visible ([e1c27a1](https://github.com/dvsa/vol-functional-tests/commit/e1c27a15a350217753bea6454f17b0b41e4aed0e))
+* if visible ([100a8b0](https://github.com/dvsa/vol-functional-tests/commit/100a8b0880c8ef616d137aa6195040e4bee06e70))
+* if visible ([9ac374d](https://github.com/dvsa/vol-functional-tests/commit/9ac374d48af6875dec0edda83796cc0ad6428f66))
+
 ## [4.21.2](https://github.com/dvsa/vol-functional-tests/compare/v4.21.1...v4.21.2) (2026-04-01)
 
 
