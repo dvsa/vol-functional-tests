@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
 import org.dvsa.testing.framework.Report.Config.Environments;
+import org.dvsa.testing.framework.axe.AXEScanner;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -57,4 +58,12 @@ public class TestRunConfiguration {
              Allure.addAttachment("Current URL", currentUrl);
         }
         }
+
+    @AfterAll
+    public static void generateAccessibilityReport() {
+        if (!AXEScanner.getAllViolations().isEmpty()) {
+            System.out.println("All scenarios complete. Generating AI-augmented accessibility report...");
+            AXEScanner.generateFinalReport();
+        }
+    }
     }

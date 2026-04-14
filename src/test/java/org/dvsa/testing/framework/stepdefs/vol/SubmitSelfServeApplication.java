@@ -6,7 +6,6 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 

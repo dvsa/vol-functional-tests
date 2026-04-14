@@ -7,10 +7,9 @@ import activesupport.string.Str;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
+import org.dvsa.testing.framework.axe.AXEScanner;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -86,8 +85,7 @@ public class DirectorJourney extends BasePage {
         if (isTitlePresent(convictionsAndPenaltiesTitle, 5)) {
             completeConvictionsAndPenalties("N");
         }
-            AXEScanner axeScanner = AccessibilitySteps.scanner;
-            axeScanner.scan(true);
+            AXEScanner.scan(activesupport.driver.Browser.navigate());
         }
 
 

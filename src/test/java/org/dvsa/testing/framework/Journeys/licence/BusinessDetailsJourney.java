@@ -6,8 +6,7 @@ import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
-import scanner.AXEScanner;
+import org.dvsa.testing.framework.axe.AXEScanner;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -36,8 +35,7 @@ public class BusinessDetailsJourney extends BasePage {
         UniversalActions.clickSaveAndContinue();
         enterCorrespondenceAddress();
         UniversalActions.clickSaveAndContinue();
-        AXEScanner axeScanner = AccessibilitySteps.scanner;
-        axeScanner.scan(true);
+        AXEScanner.scan(activesupport.driver.Browser.navigate());
     }
 
     public void enterCorrespondenceAddress() {

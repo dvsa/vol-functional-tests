@@ -17,7 +17,7 @@
         <!-- DVSA Internal Libraries -->
         <active-support.version>2.15.4</active-support.version>
         <api-calls.version>3.3.2</api-calls.version>
-        <axe-scanner.version>2.11.4</axe-scanner.version>
+        <accessibility-ai.version>2.0.0</accessibility-ai.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
@@ -145,9 +145,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.dvsa.testing.lib</groupId>
-            <artifactId>accessibility-library</artifactId>
-            <version>${axe-scanner.version}</version>
+            <groupId>org.dvsa.testing.framework</groupId>
+            <artifactId>accessibility-ai-core</artifactId>
+            <version>${accessibility-ai.version}</version>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.framework</groupId>
