@@ -268,7 +268,7 @@ jobs:
         run: |
           ACCESSIBILITY_URL="https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/reports/accessibility-report.html"
           echo "Accessibility report is available at ${ACCESSIBILITY_URL}"
-          echo "### :wheelchair: Accessibility Report" >> $GITHUB_STEP_SUMMARY
+          echo "### Accessibility Report" >> $GITHUB_STEP_SUMMARY
           echo "[View Accessibility Report](${ACCESSIBILITY_URL})" >> $GITHUB_STEP_SUMMARY
 
       - name: Get Summary
