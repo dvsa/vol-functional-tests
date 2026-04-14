@@ -17,7 +17,7 @@
         <!-- DVSA Internal Libraries -->
         <active-support.version>2.15.4</active-support.version>
         <api-calls.version>3.3.2</api-calls.version>
-        <accessibility-ai.version>2.0.0</accessibility-ai.version>
+        <accessibility-ai.version>2.0.1</accessibility-ai.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
