@@ -24,7 +24,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.time.Duration;

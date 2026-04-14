@@ -263,6 +263,14 @@ jobs:
         run: |
           echo "Allure report is available at s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
+      - name: Link Accessibility Report
+        if: contains(inputs.cucumber_tags, '@accessibility')
+        run: |
+          ACCESSIBILITY_URL="https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/reports/accessibility-report.html"
+          echo "Accessibility report is available at ${ACCESSIBILITY_URL}"
+          echo "### Accessibility Report" >> $GITHUB_STEP_SUMMARY
+          echo "[View Accessibility Report](${ACCESSIBILITY_URL})" >> $GITHUB_STEP_SUMMARY
+
       - name: Get Summary
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@v5.0.8

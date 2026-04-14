@@ -12,7 +12,6 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.time.Duration;

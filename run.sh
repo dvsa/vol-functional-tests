@@ -75,6 +75,15 @@ if [ $? -eq 0 ]; then
   zip -qr ./allure_attempt_${resultsBuildNumber}.zip target
   cd target
   aws s3 cp site s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/site/ --recursive
+  # Upload accessibility report and screenshots to S3 for CI linking
+  if [ -d "reports" ]; then
+    # Copy timestamped report to a fixed name for predictable CI linking
+    ACCESSIBILITY_REPORT=$(find reports -maxdepth 1 -name "*-accessibility.html" | head -1)
+    if [ -n "$ACCESSIBILITY_REPORT" ]; then
+      cp "$ACCESSIBILITY_REPORT" reports/accessibility-report.html
+    fi
+    aws s3 cp reports s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/reports/ --recursive
+  fi
   aws s3 cp ../allure_attempt_${resultsBuildNumber}.zip s3://${resultsTargetBucket}/${resultsTargetBucketPath}/${buildId}/
 else
   echo "Maven command failed!"
