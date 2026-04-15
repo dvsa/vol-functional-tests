@@ -1,11 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Allure;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.axe.AXEScanner;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -19,6 +23,23 @@ import static org.dvsa.testing.framework.pageObjects.BasePage.isLinkPresent;
 import static org.dvsa.testing.framework.pageObjects.BasePage.waitAndClick;
 
 public class TestRunConfiguration {
+
+    private static final Logger LOGGER = LogManager.getLogger(TestRunConfiguration.class);
+    private static final String BEDROCK_SECRET = "vol-functional-tests/bedrock";
+
+    @BeforeAll
+    public static void loadBedrockConfig() {
+        try {
+            String agentId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentId");
+            String aliasId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentAliasId");
+            if (agentId != null) System.setProperty("bedrock.agent.id", agentId);
+            if (aliasId != null) System.setProperty("bedrock.agent.alias.id", aliasId);
+            LOGGER.info("Loaded Bedrock config from Secrets Manager");
+        } catch (Exception e) {
+            LOGGER.warn("Could not load Bedrock config from Secrets Manager: {}", e.getMessage());
+        }
+    }
+
     @Before
     public void setUp(Scenario scenario) throws Exception {
         Environments environments = new Environments();
@@ -62,7 +83,7 @@ public class TestRunConfiguration {
     @AfterAll
     public static void generateAccessibilityReport() {
         if (!AXEScanner.getAllViolations().isEmpty()) {
-            System.out.println("All scenarios complete. Generating AI-augmented accessibility report...");
+            LOGGER.info("All scenarios complete. Generating AI-augmented accessibility report...");
             AXEScanner.generateFinalReport();
         }
     }
