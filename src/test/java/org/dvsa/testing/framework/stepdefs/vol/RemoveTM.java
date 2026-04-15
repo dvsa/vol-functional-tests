@@ -131,6 +131,6 @@ public class RemoveTM extends BasePage {
         sleep(20000);
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClickByLinkText("Docs & attachments");
-        assertTrue(isTextPresent("Last TM letter"));
+        assertTrue(isTextPresent("Last TM letter") || isTextPresent("1st letter"));
     }
 }

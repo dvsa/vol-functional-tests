@@ -43,6 +43,11 @@ public class BatchProcess extends BasePage {
         assertTrue(GenericUtils.jenkinsCLi(env, BatchCommands.DUPLICATE_VEHICLE_WARNING.toString(), SecretsManager.getSecretValue("jenkinsUser"), SecretsManager.getSecretValue("jenkinsAPIKey")));
     }
 
+    @And("the first TM letter job is run")
+    public void theFirstTMLetterJobIsRun() throws Exception {
+        assertTrue(awsBatch.triggerAwsBatchJob(JobDefinition.FIRST_TM_LETTER.name()));
+    }
+
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws Exception {
         assertTrue(awsBatch.triggerAwsBatchJob(JobDefinition.LAST_TM_LETTER.name()));
