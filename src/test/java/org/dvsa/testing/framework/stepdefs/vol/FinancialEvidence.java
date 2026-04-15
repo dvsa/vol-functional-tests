@@ -20,7 +20,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static apiCalls.enums.TrafficArea.trafficAreaList;
+import static apiCalls.enums.TrafficArea.values;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FinancialEvidence extends BasePage {
@@ -42,7 +42,7 @@ public class FinancialEvidence extends BasePage {
     public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String trafficArea) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
-        TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
+        TrafficArea ta = values()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
@@ -51,7 +51,7 @@ public class FinancialEvidence extends BasePage {
     public void iHaveALicenceWithAHgvAuthorisationOfLgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String lgvAuthority, String trafficArea) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvAuthority.replaceAll(" ", "")));
-        TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
+        TrafficArea ta = values()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, lgvAuthority, null, null});
     }
@@ -59,14 +59,14 @@ public class FinancialEvidence extends BasePage {
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} in the North West Of England")
     public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
-        TrafficArea ta = trafficAreaList()[1];
+        TrafficArea ta = values()[1];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
     @And("I have a valid {string} lgv only licence in traffic area {string}")
     public void iHaveAValidLgvOnlyLicenceFinancialEvidence(String NIFlag, String trafficArea) throws HttpException {
-        TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
+        TrafficArea ta = values()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLGVOnlyLicenceWithTrafficArea(NIFlag, ta);
         this.licences.put(world.createApplication.getLicenceId(), new String[] {"goods", "standard_international", "lgv" , null, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), null, null});
     }

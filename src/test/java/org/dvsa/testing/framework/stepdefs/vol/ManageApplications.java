@@ -26,7 +26,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 
-import static apiCalls.enums.TrafficArea.trafficAreaList;
+import static apiCalls.enums.TrafficArea.values;
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -104,7 +104,7 @@ public class ManageApplications extends BasePage {
         try {
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.createApplication.setNoOfAddedHgvVehicles(3);
-            for (TrafficArea ta : trafficAreaList()) {
+            for (TrafficArea ta : values()) {
                 world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
                 password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());
                 world.genericUtils.writeToFile(world.createApplication.getTransportManagerUserName(), password, fileName.concat("TM.csv"));
@@ -134,7 +134,7 @@ public class ManageApplications extends BasePage {
             }
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
-                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, trafficAreaList()[i]);
+                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, values()[i]);
             }
         } finally {
             writeLock.unlock();
@@ -147,7 +147,7 @@ public class ManageApplications extends BasePage {
         try {
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.createApplication.setNoOfAddedHgvVehicles(3);
-            for (TrafficArea ta : trafficAreaList()) {
+            for (TrafficArea ta : values()) {
                 world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
             }
         } finally {
@@ -223,7 +223,7 @@ public class ManageApplications extends BasePage {
             world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
             world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
             for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
-                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, trafficAreaList()[i]);
+                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, values()[i]);
             }
         } finally {
             writeLock.unlock();
@@ -272,7 +272,7 @@ public class ManageApplications extends BasePage {
         world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvs));
 
         for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
-            TrafficArea ta = trafficAreaList()[i];
+            TrafficArea ta = values()[i];
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
     }
@@ -463,7 +463,7 @@ public class ManageApplications extends BasePage {
             world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
             world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
             for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
-                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, trafficAreaList()[i]);
+                world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, values()[i]);
             }
         } finally {
             writeLock.unlock();
