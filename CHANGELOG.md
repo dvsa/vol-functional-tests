@@ -1,6 +1,30 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.23.0](https://github.com/dvsa/vol-functional-tests/compare/v4.22.0...v4.23.0) (2026-04-15)
+
+
+### Features
+
+* update last TM letter test to use new first-tm-letter batch job ([d8ddfe9](https://github.com/dvsa/vol-functional-tests/commit/d8ddfe9914a72ce8d54adeb9091de5940af4cd32))
+* update last TM letter test to use new first-tm-letter batch job ([3bebc13](https://github.com/dvsa/vol-functional-tests/commit/3bebc13ee3f2b120685648f0d9633cf5fbd3785c))
+
+
+### Bug Fixes
+
+* bump ([1ad2ff6](https://github.com/dvsa/vol-functional-tests/commit/1ad2ff634f7898d183ed932461f3477c88e59443))
+* green colour code -gds ([8993be8](https://github.com/dvsa/vol-functional-tests/commit/8993be8fd83f4ff9cc4aca3fe174c6effbca0754))
+* green colour code -gds ([a8fb84f](https://github.com/dvsa/vol-functional-tests/commit/a8fb84f62ab9185f4aa78dd073f6357afcff326a))
+* load Bedrock agent config from Secrets Manager ([8b357ad](https://github.com/dvsa/vol-functional-tests/commit/8b357adafbef8f3ffb4604c8bf5e99c8f69a70e3))
+* load Bedrock agent config from Secrets Manager ([6924990](https://github.com/dvsa/vol-functional-tests/commit/6924990ad815a106f0a194440a847e8c21c51456))
+* load Bedrock agent config from Secrets Manager ([f4d7323](https://github.com/dvsa/vol-functional-tests/commit/f4d7323a24308cb94de6550bf2160214b89ef979))
+* remove wheelchair icon from accessibility report summary ([f8163f7](https://github.com/dvsa/vol-functional-tests/commit/f8163f76cad590bff936a9edebf1524393b907e9))
+* replace deprecated trafficAreaList() with TrafficArea.values() ([7ea3d74](https://github.com/dvsa/vol-functional-tests/commit/7ea3d746ccbb7c14b4fdee1a185f0b0d5b9a7098))
+* replace deprecated trafficAreaList() with TrafficArea.values() ([da7b772](https://github.com/dvsa/vol-functional-tests/commit/da7b7726a5b40ca20f3c0076f92c9aa72d0b0211))
+* replace legacy accessibility-library with AI framework and add r… ([457757f](https://github.com/dvsa/vol-functional-tests/commit/457757ff5fdf1dec71ba813e1d09ed1af06e398d))
+* replace legacy accessibility-library with AI framework and add report linking ([2d8feb7](https://github.com/dvsa/vol-functional-tests/commit/2d8feb7864f488846095906c3ac25715b46bbbc6))
+* replace System.out with Logger.info ([90f86be](https://github.com/dvsa/vol-functional-tests/commit/90f86bee144d2b503e1e5cf78db3918f798df49b))
+
 ## [4.22.0](https://github.com/dvsa/vol-functional-tests/compare/v4.21.2...v4.22.0) (2026-04-07)
 
 
