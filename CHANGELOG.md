@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.23.1](https://github.com/dvsa/vol-functional-tests/compare/v4.23.0...v4.23.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* operator sign in ([471d572](https://github.com/dvsa/vol-functional-tests/commit/471d572570b9284ac387744af0776f678c47fa53))
+* operator sign in ([b69b693](https://github.com/dvsa/vol-functional-tests/commit/b69b69387a8ef61527660248146d894dc0eed84f))
+* print sign tests - go straight to gov sign in ([afc7879](https://github.com/dvsa/vol-functional-tests/commit/afc787999f81a8e6681adf019c241c2b06432456))
+* print sign tests - go straight to gov sign in ([0ec713e](https://github.com/dvsa/vol-functional-tests/commit/0ec713e41f2514a9e4231757e012f1eef4df366b))
+
 ## [4.23.0](https://github.com/dvsa/vol-functional-tests/compare/v4.22.0...v4.23.0) (2026-04-15)
 
 
