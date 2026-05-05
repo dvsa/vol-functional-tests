@@ -41,6 +41,10 @@ public class UniversalActions extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
+    public static void clickIAgreeSubmit(){
+        waitAndClick("form-actions[sign]", SelectorType.NAME);
+    }
+
     public static void clickSend() {
         waitAndClick("form-actions[send]", SelectorType.NAME);
     }
