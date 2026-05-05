@@ -29,13 +29,22 @@ public class CreateApplications extends BasePage {
         if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
             waitForTextToBePresent("Applications for a new licence");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            scrollAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         } else {
             refreshPageWithJavascript();
             waitForTitleToBePresent("Declaration");
-            scrollAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            scrollAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        }
+        // Print and sign is no longer available; go through GOV.UK One Login declaration signing
+        click("//label[@for='declarationsAndUndertakings[signatureVerifyMandate]']", SelectorType.XPATH);
+        waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+        world.govSignInJourney.navigateToGovUkSignIn();
+        world.govSignInJourney.signInGovAccount();
+        waitForTitleToBePresent("Review and declarations");
+        if (isElementPresent("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH)) {
+            waitAndClick("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH);
+        } else if (isElementPresent("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH)) {
+            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+        } else if (isElementPresent("//*[@name='form-actions[submit]']", SelectorType.XPATH)) {
+            waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
 

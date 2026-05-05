@@ -153,7 +153,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
-        if (isTitlePresent("You have already proved your identity", 2)) {
+        if (isTitlePresent("You have already proved your identity", 10)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
 
