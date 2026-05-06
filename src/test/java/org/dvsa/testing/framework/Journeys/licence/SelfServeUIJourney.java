@@ -140,9 +140,9 @@ public class SelfServeUIJourney extends BasePage {
     public void signDeclaration() {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTitlePresent("Review and declarations", 10)) {
-            UniversalActions.clickIAgreeSubmit();
+            UniversalActions.clickSubmit();
         } else if (isTitlePresent("Declaration", 10)) {
-            UniversalActions.clickIAgreeSubmit();
+            UniversalActions.clickSubmit();
         }
     }
 
