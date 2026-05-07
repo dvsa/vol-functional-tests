@@ -138,11 +138,13 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void signDeclaration() {
-        waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
+        waitForElementToBePresent("//*[contains(text(),'Sign your declaration online')]");
         if (isTitlePresent("Review and declarations", 10)) {
+            waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
             UniversalActions.clickIAgreeSubmit();
         } else if (isTitlePresent("Declaration", 10)) {
-            UniversalActions.clickIAgreeSubmit();
+            waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
+            UniversalActions.clickSubmit();
         }
     }
 
