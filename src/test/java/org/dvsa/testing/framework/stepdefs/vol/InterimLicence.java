@@ -134,8 +134,11 @@ public class InterimLicence extends BasePage {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("//*[@id='interim[goodsApplicationInterim]']", SelectorType.XPATH);
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");
-        click("//*[contains(text(),'Print, sign and return')]/../../input", SelectorType.XPATH);
-        click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+        click("//label[@for='declarationsAndUndertakings[signatureVerifyMandate]']", SelectorType.XPATH);
+        waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+        world.govSignInJourney.navigateToGovUkSignIn();
+        world.govSignInJourney.signInGovAccount();
+        waitAndClick("submitAndPay", SelectorType.ID);
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         if (isElementPresent("confirm", SelectorType.ID)) {
