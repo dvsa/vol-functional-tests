@@ -40,9 +40,7 @@ public class GrantApplication extends BasePage {
         if (world.licenceCreation.isGoodsLicence()) {
             apiResponse = world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
-        String body = apiResponse.extract().response().asString();
-        assertTrue(body.contains("documents\\/Licensing\\/Other_Documents"),
-                "Response: " + body.substring(0, Math.min(body.length(), 500)));
+        assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
     }
 
     @Then("the licence should be granted by a caseworker")
