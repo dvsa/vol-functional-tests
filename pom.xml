@@ -15,8 +15,8 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.18.2</active-support.version>
-        <api-calls.version>4.1.0</api-calls.version>
+        <active-support.version>2.18.4</active-support.version>
+        <api-calls.version>4.2.1</api-calls.version>
         <accessibility-ai.version>2.0.3</accessibility-ai.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
@@ -40,7 +40,8 @@
         <ion-java.version>1.11.11</ion-java.version>
 
         <!-- Network Dependencies -->
-        <netty.version>4.1.132.Final</netty.version>
+        <netty.version>4.1.133.Final</netty.version>
+        <jackson.version>2.21.2</jackson.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
@@ -75,6 +76,21 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-codec-http</artifactId>
                 <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -148,6 +164,16 @@
             <groupId>org.dvsa.testing.framework</groupId>
             <artifactId>accessibility-ai-core</artifactId>
             <version>${accessibility-ai.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.framework</groupId>
