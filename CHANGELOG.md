@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.23.4](https://github.com/dvsa/vol-functional-tests/compare/v4.23.3...v4.23.4) (2026-05-18)
+
+
+### Bug Fixes
+
+* resolve high severity Snyk vulnerabilities for netty and jackson ([41b7c9d](https://github.com/dvsa/vol-functional-tests/commit/41b7c9d6489d2c2cd156a3c4b353c5c6195e9a0a))
+* resolve Snyk vulnerabilities and update dependencies ([c1ffc6c](https://github.com/dvsa/vol-functional-tests/commit/c1ffc6c11294cd6854dfb499d8ec086f813d8483))
+
 ## [4.23.3](https://github.com/dvsa/vol-functional-tests/compare/v4.23.2...v4.23.3) (2026-05-07)
 
 
