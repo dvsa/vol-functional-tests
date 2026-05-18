@@ -33,9 +33,13 @@ public class CreateApplications extends BasePage {
             refreshPageWithJavascript();
             waitForTitleToBePresent("Declaration");
         }
-        // Print and sign is no longer available; go through GOV.UK One Login declaration signing
-        click("//label[@for='declarationsAndUndertakings[signatureVerifyMandate]']", SelectorType.XPATH);
-        waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+        // Sign declaration online via GOV.UK One Login
+        click("//label[@for='content[isDigitallySigned]']", SelectorType.XPATH);
+        if (isElementPresent("//*[@name='form-actions[sign]']", SelectorType.XPATH)) {
+            waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+        } else {
+            waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        }
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
         waitForTitleToBePresent("Review and declarations");
