@@ -85,6 +85,9 @@ public class APIJourney {
             world.createApplication.addTmResponsibilities();
             world.createApplication.submitTmResponsibilities();
             world.createApplication.addVehicleDetails();
+            if (world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString())) {
+                world.createApplication.submitVehicleSize();
+            }
             world.createApplication.addFinancialHistory();
             world.createApplication.addApplicationSafetyAndComplianceDetails();
             world.createApplication.addSafetyInspector();
