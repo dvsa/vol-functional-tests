@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.0](https://github.com/dvsa/vol-functional-tests/compare/v4.24.0...v4.25.0) (2026-05-19)
+
+
+### Features
+
+* add retry resilience to AWS Batch job submission and polling ([1fff670](https://github.com/dvsa/vol-functional-tests/commit/1fff6709a9ef08f15a38f7e67e3d8d1cb366c0b0))
+
 ## [4.24.0](https://github.com/dvsa/vol-functional-tests/compare/v4.23.4...v4.24.0) (2026-05-19)
 
 
