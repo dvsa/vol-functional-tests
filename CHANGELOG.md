@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.24.0](https://github.com/dvsa/vol-functional-tests/compare/v4.23.4...v4.24.0) (2026-05-19)
+
+
+### Features
+
+* call submitVehicleSize() for PSV applications before granting ([ae0237e](https://github.com/dvsa/vol-functional-tests/commit/ae0237eb8cf1edb8e86c2a7a376a193f24f1ada1))
+* call submitVehicleSize() for PSV applications before granting ([7dad100](https://github.com/dvsa/vol-functional-tests/commit/7dad1000aab7203a183022a5cd0f3838ebe61b04))
+
 ## [4.23.4](https://github.com/dvsa/vol-functional-tests/compare/v4.23.3...v4.23.4) (2026-05-18)
 
 
