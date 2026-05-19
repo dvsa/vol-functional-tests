@@ -15,9 +15,12 @@ import org.dvsa.testing.framework.enums.BatchCommands;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import software.amazon.awssdk.core.retry.RetryMode;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.batch.BatchClient;
 import software.amazon.awssdk.services.batch.model.*;
+
+import java.time.Duration;
 
 import java.io.IOException;
 import java.util.*;
@@ -185,31 +188,62 @@ public class BatchProcess extends BasePage {
         String envName = System.getProperty("env", "default").toLowerCase();
         String queueName = AwsBatch.JobQueue.DEFAULT.resolve(envName);
 
-        try (BatchClient batchClient = BatchClient.builder()
-                .region(Region.of("eu-west-1"))
-                .build()) {
+        int maxRetries = 3;
+        Exception lastException = null;
 
-            SubmitJobRequest request = SubmitJobRequest.builder()
-                    .jobQueue(queueName)
-                    .jobDefinition(jobDef.toString())
-                    .jobName(jobName)
-                    .parameters(parameters)
-                    .schedulingPriorityOverride(1)
-                    .shareIdentifier("default")
-                    .build();
+        for (int attempt = 1; attempt <= maxRetries; attempt++) {
+            try (BatchClient batchClient = BatchClient.builder()
+                    .region(Region.of("eu-west-1"))
+                    .overrideConfiguration(cfg -> cfg
+                            .apiCallTimeout(Duration.ofSeconds(30))
+                            .apiCallAttemptTimeout(Duration.ofSeconds(10))
+                            .retryStrategy(r -> r.maxAttempts(5)))
+                    .build()) {
 
-            SubmitJobResponse response = batchClient.submitJob(request);
-            return response.jobId();
+                SubmitJobRequest request = SubmitJobRequest.builder()
+                        .jobQueue(queueName)
+                        .jobDefinition(jobDef.toString())
+                        .jobName(jobName)
+                        .parameters(parameters)
+                        .schedulingPriorityOverride(1)
+                        .shareIdentifier("default")
+                        .build();
+
+                SubmitJobResponse response = batchClient.submitJob(request);
+                return response.jobId();
+            } catch (Exception e) {
+                lastException = e;
+                Output.printColoredLog("[WARN] Attempt " + attempt + "/" + maxRetries
+                        + " failed submitting " + jobName + ": " + e.getMessage());
+                if (attempt < maxRetries) {
+                    Thread.sleep(attempt * 5000L);
+                }
+            }
         }
+        throw lastException;
     }
 
     private JobResult pollJobUntilComplete(String jobName, String jobId, int timeoutMinutes) {
         long startTime = System.currentTimeMillis();
         long timeout = startTime + (timeoutMinutes * 60 * 1000L);
+        int consecutiveErrors = 0;
 
         try {
             while (System.currentTimeMillis() < timeout) {
-                JobStatus status = AwsBatch.getJobStatus(jobId);
+                JobStatus status;
+                try {
+                    status = AwsBatch.getJobStatus(jobId);
+                    consecutiveErrors = 0;
+                } catch (Exception e) {
+                    consecutiveErrors++;
+                    Output.printColoredLog("[WARN] Error polling " + jobName + " (attempt "
+                            + consecutiveErrors + "): " + e.getMessage());
+                    if (consecutiveErrors >= 5) {
+                        throw e;
+                    }
+                    Thread.sleep(consecutiveErrors * 5000L);
+                    continue;
+                }
 
                 if (status == JobStatus.SUCCEEDED) {
                     long elapsed = (System.currentTimeMillis() - startTime) / 1000;
