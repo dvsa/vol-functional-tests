@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.1](https://github.com/dvsa/vol-functional-tests/compare/v4.25.0...v4.25.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* change vrm ([6aefeec](https://github.com/dvsa/vol-functional-tests/commit/6aefeece8661330af7d80fb84e8c2451b01627cb))
+* change vrm ([875194a](https://github.com/dvsa/vol-functional-tests/commit/875194a0eb8c3e022e5ddcb1d04e4e49c63b30ae))
+
 ## [4.25.0](https://github.com/dvsa/vol-functional-tests/compare/v4.24.0...v4.25.0) (2026-05-19)
 
 
