@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.3](https://github.com/dvsa/vol-functional-tests/compare/v4.25.2...v4.25.3) (2026-05-21)
+
+
+### Bug Fixes
+
+* digial sign ([63fab2a](https://github.com/dvsa/vol-functional-tests/commit/63fab2a654e9565d1be893d3bbe66443eb8fb56f))
+* handle Confirm your details page in checkSignInConfirmation ([17dde16](https://github.com/dvsa/vol-functional-tests/commit/17dde16964e7bc737615eaa71b7b95ed17bca727))
+
 ## [4.25.2](https://github.com/dvsa/vol-functional-tests/compare/v4.25.1...v4.25.2) (2026-05-21)
 
 
