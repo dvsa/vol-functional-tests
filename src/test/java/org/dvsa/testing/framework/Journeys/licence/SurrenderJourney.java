@@ -158,6 +158,9 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void checkSignInConfirmation() {
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickByXPath("//button[contains(text(),'Confirm')]");
+        }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
