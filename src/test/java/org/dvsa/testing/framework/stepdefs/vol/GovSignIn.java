@@ -63,6 +63,9 @@ public class GovSignIn extends BasePage {
         if (isTitlePresent("You have already proved your identity", 2)) {
             clickById("submitButton");
         }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
         assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
