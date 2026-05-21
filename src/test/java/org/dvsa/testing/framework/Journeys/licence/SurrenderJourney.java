@@ -158,8 +158,11 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void checkSignInConfirmation() {
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
         if (isTitlePresent("Confirm your details", 2)) {
-            clickByXPath("//button[contains(text(),'Confirm')]");
+            clickById("submitButton");
         }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
