@@ -34,10 +34,12 @@ public class CreateApplications extends BasePage {
             waitForTitleToBePresent("Declaration");
         }
         // Sign declaration online via GOV.UK One Login
-        click("//label[@for='content[isDigitallySigned]']", SelectorType.XPATH);
+        if (isElementPresent("//label[@for='content[isDigitallySigned]']", SelectorType.XPATH)) {
+            click("//label[@for='content[isDigitallySigned]']", SelectorType.XPATH);
+        }
         if (isElementPresent("//*[@name='form-actions[sign]']", SelectorType.XPATH)) {
-            waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
-        } else {
+            clickById("declarationsAndUndertakings[signatureVerifyMandate]");
+        } else if (isElementPresent("//*[@name='form-actions[submit]']", SelectorType.XPATH)) {
             waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
         world.govSignInJourney.navigateToGovUkSignIn();
