@@ -1,6 +1,13 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.4](https://github.com/dvsa/vol-functional-tests/compare/v4.25.3...v4.25.4) (2026-05-22)
+
+
+### Bug Fixes
+
+* digial sign ([8b58d16](https://github.com/dvsa/vol-functional-tests/commit/8b58d1685f9a2dcf86852a6fb269a0e62aa74633))
+
 ## [4.25.3](https://github.com/dvsa/vol-functional-tests/compare/v4.25.2...v4.25.3) (2026-05-21)
 
 
