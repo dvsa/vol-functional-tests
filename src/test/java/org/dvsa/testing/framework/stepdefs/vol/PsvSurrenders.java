@@ -114,6 +114,9 @@ public class PsvSurrenders extends BasePage {
         if (isTitlePresent("Confirm your details", 2)) {
             clickById("submitButton");
         }
+        if (isTitlePresent("Declaration", 2)) {
+            clickById("sign");
+        }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
