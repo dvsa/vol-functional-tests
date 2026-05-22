@@ -9,8 +9,8 @@ Feature: Search and add a vehicle
     Then the "<VRM>" should be displayed on the page
     Examples:
       | user_type  | Operator | VRM     |
-      | admin      | goods    | X981FUJ |
-      | consultant | goods    | X981FUJ |
+      | admin      | goods    | M858PSS |
+      | consultant | goods    | M858PSS |
 
 
   Scenario Outline: Add a vehicle registration mark on a licence
