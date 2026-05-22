@@ -108,6 +108,12 @@ public class PsvSurrenders extends BasePage {
 
     @Then("the post gov sign in page is displayed")
     public void thePostGovSignInPageIsDisplayed() {
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
