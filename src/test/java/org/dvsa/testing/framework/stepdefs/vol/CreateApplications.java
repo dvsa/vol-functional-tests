@@ -44,7 +44,18 @@ public class CreateApplications extends BasePage {
         }
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
-        waitForTitleToBePresent("Review and declarations");
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
+        if (isTextPresent("What happens next?") || isTextPresent("Awaiting operator review")) {
+            return;
+        }
+        if (!isTitlePresent("Review and declarations", 5)) {
+            return;
+        }
         if (isElementPresent("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH)) {
             waitAndClick("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH);
         } else if (isElementPresent("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH)) {

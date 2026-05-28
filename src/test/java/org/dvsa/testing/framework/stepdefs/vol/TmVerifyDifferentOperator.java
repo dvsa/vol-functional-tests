@@ -171,8 +171,14 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @When("the operator rejects the transport managers details")
     public void theOperatorRejectsTheTransportManagersDetails() {
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
-          UniversalActions.clickHome();
+        UniversalActions.clickHome();
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         waitAndClickByLinkText("Sign out");
