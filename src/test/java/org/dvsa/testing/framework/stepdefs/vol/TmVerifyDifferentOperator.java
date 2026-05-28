@@ -102,6 +102,9 @@ public class TmVerifyDifferentOperator extends BasePage {
         if (isTitlePresent("You have already proved your identity", 4)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
@@ -147,6 +150,9 @@ public class TmVerifyDifferentOperator extends BasePage {
     public void theOperatorCountersignsByPrintAndSign() {
         if(isTitlePresent("You have already proved your identity",1)){
             waitAndClick("submitButton", SelectorType.ID);
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
         }
         waitForTextToBePresent("What happens next?");
         waitAndClickByLinkText("Sign out");

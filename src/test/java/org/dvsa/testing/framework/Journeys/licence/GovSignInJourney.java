@@ -210,6 +210,14 @@ public class GovSignInJourney extends BasePage {
                 isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+
+        if (isTitlePresent("Confirm your details", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
     }
 
     public void registerGovAccount() throws InterruptedException {
