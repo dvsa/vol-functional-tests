@@ -130,6 +130,12 @@ public class ContinuationJourney extends BasePage {
             waitAndClick("sign", SelectorType.ID);
             world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();
+            if (isTitlePresent("You have already proved your identity", 2)) {
+                clickById("submitButton");
+            }
+            if (isTitlePresent("Confirm your details", 2)) {
+                clickById("submitButton");
+            }
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
         }
