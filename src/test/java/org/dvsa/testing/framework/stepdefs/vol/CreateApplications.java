@@ -100,7 +100,6 @@ public class CreateApplications extends BasePage {
         if (isTitlePresent("Confirm your details", 2)) {
             clickById("submitButton");
         }
-
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
