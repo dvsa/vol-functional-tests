@@ -75,11 +75,6 @@ public class TmVerifyDifferentOperator extends BasePage {
         world.registerUser.setFamilyName(tmOperatorFamilyName);
     }
 
-    @And("i sign the declaration")
-    public void iSignTheDeclaration() {
-        world.selfServeUIJourney.signDeclaration();
-    }
-
     @When("i add an operator as a transport manager")
     public void iAddAnOperatorAsATransportManager() {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
