@@ -6,7 +6,7 @@ Feature: Self Serve Apply for licence
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |
-    And i choose to print and sign
+    And i sign the declaration
     When i pay for my application
     Then the application should be submitted
 
@@ -20,7 +20,7 @@ Feature: Self Serve Apply for licence
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
       | north_east |
-     And i choose to print and sign
+     And i sign the declaration
      When i pay for my application
      Then the application should be submitted
 
@@ -32,7 +32,7 @@ Feature: Self Serve Apply for licence
    Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |
-    And i choose to print and sign
+    And i sign the declaration
     When i pay for my application
     Then the application should be submitted
 

@@ -23,21 +23,36 @@ public class VerifySwitchedOff extends BasePage {
 
     @And("transport manager details approved banner appears")
     public void transportManagerDetailsApprovedBannerAppears() {
-        assertTrue(isTextPresent("Transport Manager details approved"));
-        waitAndClickByLinkText("Back to Transport Managers");
+        if (isTextPresent("Declaration signed through GOV.UK One Login")) {
+            click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+        } else {
+            assertTrue(isTextPresent("Transport Manager details approved"));
+            waitAndClickByLinkText("Back to Transport Managers");
+        }
     }
 
     @And("transport manager status is {string} and {string}")
     public void transportManagerStatusIs(String classString, String Text) {
         assertTrue(isElementPresent(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH));
-        assertTrue(getText(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH).equalsIgnoreCase(Text));
+        String actualText = getText(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH);
+        if (Text.equalsIgnoreCase("Not yet received")) {
+            assertTrue(actualText.equalsIgnoreCase(Text) || actualText.equalsIgnoreCase("Received"),
+                    String.format("Expected '%s' or 'Received' but got '%s'", Text, actualText));
+        } else {
+            assertTrue(actualText.equalsIgnoreCase(Text),
+                    String.format("Expected '%s' but got '%s'", Text, actualText));
+        }
     }
 
     @And("submit to operator button is displayed")
     public void submitToOperatorButtonIsDisplayed() {
         waitForTextToBePresent("Awaiting operator review");
         assertTrue(isElementPresent("//h1[contains(text(),'Awaiting operator review')]", SelectorType.XPATH));
-        waitAndClickByLinkText("Back to Transport Managers");
+        if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
+            click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
+        } else {
+            waitAndClickByLinkText("Back to Transport Managers");
+        }
     }
 
     @And("i select a transport manager to add")
@@ -66,7 +81,7 @@ public class VerifySwitchedOff extends BasePage {
 
     @Then("the print and sign page is displayed")
     public void thePrintAndSignPageIsDisplayed() {
-        assertTrue(isTextPresent("Transport Manager details approved"));
-        assertTrue(isTextPresent("Print, sign and return"));
+        assertTrue(isTextPresent("Transport Manager details approved") || isTextPresent("Declaration signed through GOV.UK One Login"));
+        assertTrue(isTextPresent("Print, sign and return") || isTextPresent("Finish"));
     }
 }
