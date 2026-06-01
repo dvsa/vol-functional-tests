@@ -157,6 +157,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
 
+        if (isTitlePresent("Confirm your details", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+
         if (isTextPresent("Are your details up to date?" )) {
             clickByXPath("//input[contains(@class, 'govuk-radios__input') and @id='up-to-date']");
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -166,6 +170,10 @@ public class GovSignInJourney extends BasePage {
                 isTextPresent("Choose a way to prove your identity")) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        }
+
+        if (isTitlePresent("Confirm your details", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
 
         if (isElementPresent("//button[@id='submitButton' and contains(text(),'Continue to the service')]", SelectorType.XPATH)) {
@@ -209,6 +217,14 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Returning you to Vehicle Operator Licence", 2) &&
                 isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+
+        if (isTitlePresent("Confirm your details", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
     }
 

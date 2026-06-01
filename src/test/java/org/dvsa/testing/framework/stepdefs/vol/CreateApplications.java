@@ -23,7 +23,7 @@ public class CreateApplications extends BasePage {
         this.world = world;
     }
 
-    @When("i choose to print and sign")
+    @When("i sign the declaration")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
         if (!getCurrentUrl().contains("tm-declaration") && (getCurrentUrl().contains("dashboard"))) {
@@ -44,7 +44,37 @@ public class CreateApplications extends BasePage {
         }
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
-        waitForTitleToBePresent("Review and declarations");
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
+        if (isTextPresent("What happens next?") || isTextPresent("Awaiting operator review")) {
+            return;
+        }
+        if (!isTitlePresent("Review and declarations", 5)) {
+            return;
+        }
+        if (isTextPresent("Declaration signed through GOV.UK One Login")) {
+            return;
+        }
+        // After GOV sign-in, the radio may need re-selecting to reveal hidden buttons
+        if (isElementPresent("declarationsAndUndertakings[signatureVerifyMandate]", SelectorType.ID)) {
+            clickById("declarationsAndUndertakings[signatureVerifyMandate]");
+        }
+        if (isElementPresent("//*[@name='form-actions[sign]']", SelectorType.XPATH)) {
+            waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+            world.govSignInJourney.navigateToGovUkSignIn();
+            world.govSignInJourney.signInGovAccount();
+            if (isTitlePresent("You have already proved your identity", 2)) {
+                clickById("submitButton");
+            }
+            if (isTitlePresent("Confirm your details", 2)) {
+                clickById("submitButton");
+            }
+        }
+        scrollToBottom();
         if (isElementPresent("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH)) {
             waitAndClick("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH);
         } else if (isElementPresent("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH)) {
@@ -67,6 +97,9 @@ public class CreateApplications extends BasePage {
 
     @When("i pay for my application")
     public void iPayForMyApplication() {
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }

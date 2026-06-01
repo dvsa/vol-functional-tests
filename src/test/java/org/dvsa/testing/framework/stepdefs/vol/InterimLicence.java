@@ -138,6 +138,12 @@ public class InterimLicence extends BasePage {
         waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitAndClick("submitAndPay", SelectorType.ID);
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();

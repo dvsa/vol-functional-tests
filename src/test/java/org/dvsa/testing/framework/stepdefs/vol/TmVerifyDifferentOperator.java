@@ -75,11 +75,6 @@ public class TmVerifyDifferentOperator extends BasePage {
         world.registerUser.setFamilyName(tmOperatorFamilyName);
     }
 
-    @And("i sign the declaration")
-    public void iSignTheDeclaration() {
-        world.selfServeUIJourney.signDeclaration();
-    }
-
     @When("i add an operator as a transport manager")
     public void iAddAnOperatorAsATransportManager() {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
@@ -101,6 +96,9 @@ public class TmVerifyDifferentOperator extends BasePage {
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
         if (isTitlePresent("You have already proved your identity", 4)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
         }
         waitForTextToBePresent("What happens next?");
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
@@ -148,6 +146,9 @@ public class TmVerifyDifferentOperator extends BasePage {
         if(isTitlePresent("You have already proved your identity",1)){
             waitAndClick("submitButton", SelectorType.ID);
         }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
         waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
@@ -171,8 +172,14 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @When("the operator rejects the transport managers details")
     public void theOperatorRejectsTheTransportManagersDetails() {
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            clickById("submitButton");
+        }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
-          UniversalActions.clickHome();
+        UniversalActions.clickHome();
         waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         waitAndClickByLinkText("Sign out");
