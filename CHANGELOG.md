@@ -1,6 +1,19 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.5](https://github.com/dvsa/vol-functional-tests/compare/v4.25.4...v4.25.5) (2026-06-01)
+
+
+### Bug Fixes
+
+* digial sign ([9f6dc33](https://github.com/dvsa/vol-functional-tests/commit/9f6dc332c4269fdd37814a6289812db15e1542d2))
+* handle 'Confirm your details' before early return in signInGovAccount ([f39ea43](https://github.com/dvsa/vol-functional-tests/commit/f39ea431767ae29733df5fde037e8656ad538449))
+* sign in ([2a7b046](https://github.com/dvsa/vol-functional-tests/commit/2a7b04686ecd078465d230b159cd534a163fd8a9))
+* sign in ([7ba0ed4](https://github.com/dvsa/vol-functional-tests/commit/7ba0ed49b9e9bfb6bd9487575439415e3e0032fd))
+* sign in ([170328d](https://github.com/dvsa/vol-functional-tests/commit/170328d74a3e1a27806f6bda9d0d54cdc906e2ba))
+* sign in ([e44cf44](https://github.com/dvsa/vol-functional-tests/commit/e44cf4486b09658804f2ddda247d76c122242bfa))
+* sign in ([87d5aae](https://github.com/dvsa/vol-functional-tests/commit/87d5aae386e5ece4c7b086a1f2288cbcd8b4c68d))
+
 ## [4.25.4](https://github.com/dvsa/vol-functional-tests/compare/v4.25.3...v4.25.4) (2026-05-22)
 
 
