@@ -102,6 +102,9 @@ public class TmVerifyDifferentOperator extends BasePage {
         if (isTitlePresent("You have already proved your identity", 4)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
+        if (isTitlePresent("Confirm your details", 2)) {
+            clickById("submitButton");
+        }
         waitForTextToBePresent("What happens next?");
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Finish')]", SelectorType.XPATH);

@@ -40,8 +40,8 @@ Feature: TM signs through gov-sign-in
     And i sign the declaration
     Then I can navigate to gov sign in
     When I sign in to gov sign in to complete the process
-    And the operator countersigns by print and sign
-    And the print and sign page is displayed
+    And the operator countersigns digitally
+    And the VOL 'Review and declarations' post signature page is displayed
 
   @tm-operator-rejects-details
   Scenario: Operator rejects TM details and TM details are marked incomplete
