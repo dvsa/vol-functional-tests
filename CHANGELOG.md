@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.6](https://github.com/dvsa/vol-functional-tests/compare/v4.25.5...v4.25.6) (2026-06-02)
+
+
+### Bug Fixes
+
+* swap out old step defs ([85b0984](https://github.com/dvsa/vol-functional-tests/commit/85b098479a33c99cea5c662001c491139daad3a6))
+* swap out old step defs ([7ecdec7](https://github.com/dvsa/vol-functional-tests/commit/7ecdec709ae4fa2b45f0a01351139e6cfb11a510))
+
 ## [4.25.5](https://github.com/dvsa/vol-functional-tests/compare/v4.25.4...v4.25.5) (2026-06-01)
 
 
