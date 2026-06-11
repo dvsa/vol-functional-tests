@@ -88,7 +88,7 @@ public class SubmitApplicationJourney extends BasePage {
         }
         UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
 
         //transport manager

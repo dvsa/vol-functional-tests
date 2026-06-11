@@ -168,7 +168,7 @@ public class InternalUIJourney extends BasePage {
 
     public void payForInterimApp() {
         waitAndClickByLinkText("Financial");
-        waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         UniversalActions.clickSaveAndReturn();
         waitAndClickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);

@@ -4,6 +4,9 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PSVJourney extends BasePage {
@@ -44,7 +47,18 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeDocumentaryEvidenceSmallVehiclesPage() {
-        findSelectAllRadioButtonsByValue("2");
+        String workingDir = System.getProperty("user.dir");
+        String evidenceFile = workingDir.concat("/src/test/resources/newspaperAdvert.jpeg");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        if (System.getProperty("platform") == null) {
+            waitAndEnterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, evidenceFile);
+        } else {
+            WebElement addFile = getDriver().findElement(org.openqa.selenium.By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(evidenceFile);
+        }
+        waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndContinue();
     }
 
@@ -58,9 +72,51 @@ public class PSVJourney extends BasePage {
         return sectionStatus.contains(status);
     }
 
+    public boolean vehicleSizeStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__vehicles_size']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean smallVehiclesConditionsStatus(String status) {
         String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_conditions']", SelectorType.XPATH);
         return sectionStatus.contains(status);
+    }
+
+    public boolean smallVehiclesConditionsStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_conditions']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean documentaryEvidenceSmallVehiclesStatus(String status) {
@@ -68,9 +124,51 @@ public class PSVJourney extends BasePage {
         return sectionStatus.contains(status);
     }
 
+    public boolean documentaryEvidenceSmallVehiclesStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_documentary_evidence_small']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean limousinesStatus(String status) {
         String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_novelty']", SelectorType.XPATH);
         return sectionStatus.contains(status);
+    }
+
+    public boolean limousinesStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_novelty']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public void completeVehiclesWith9SeatsOrMorePage() {
@@ -94,6 +192,27 @@ public class PSVJourney extends BasePage {
     public boolean vehicles9SeatsOrMoreStatus(String status) {
         String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
         return sectionStatus.contains(status);
+    }
+
+    public boolean vehicles9SeatsOrMoreStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_large']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public void selectVehicleSize(String vehicleSize) {
@@ -126,7 +245,18 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeDocumentaryEvidenceMainOccupationPage() {
-        findSelectAllRadioButtonsByValue("2");
+        String workingDir = System.getProperty("user.dir");
+        String evidenceFile = workingDir.concat("/src/test/resources/newspaperAdvert.jpeg");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        if (System.getProperty("platform") == null) {
+            waitAndEnterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, evidenceFile);
+        } else {
+            WebElement addFile = getDriver().findElement(org.openqa.selenium.By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(evidenceFile);
+        }
+        waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndContinue();
     }
 
@@ -141,9 +271,51 @@ public class PSVJourney extends BasePage {
         return sectionStatus.contains(status);
     }
 
+    public boolean smallVehiclesStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_operate_small']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean writtenExplanationSmallVehiclesStatus(String status) {
         String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_part_written']", SelectorType.XPATH);
         return sectionStatus.contains(status);
+    }
+
+    public boolean writtenExplanationSmallVehiclesStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_small_part_written']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean documentaryEvidenceMainOccupationStatus(String status) {
@@ -151,8 +323,50 @@ public class PSVJourney extends BasePage {
         return sectionStatus.contains(status);
     }
 
+    public boolean documentaryEvidenceMainOccupationStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_documentary_evidence_large']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean mainOccupationUndertakingsStatus(String status) {
         String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
         return sectionStatus.contains(status);
+    }
+
+    public boolean mainOccupationUndertakingsStatusWithRetry(String status) {
+        final int MAX_RETRIES = 3;
+        final long WAIT_MS = 2000;
+        
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            String sectionStatus = waitAndGetText("//*[@id='overview-item__psv_main_occupation_undertakings']", SelectorType.XPATH);
+            if (sectionStatus.contains(status)) {
+                return true;
+            }
+            if (attempt < MAX_RETRIES - 1) {
+                try {
+                    Thread.sleep(WAIT_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 }

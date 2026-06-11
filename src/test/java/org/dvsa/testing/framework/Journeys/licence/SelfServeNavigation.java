@@ -186,7 +186,9 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-        click("uploadNowRadio", SelectorType.ID);
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        waitAndClick("uploadNowRadio", SelectorType.ID);
 
         String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
