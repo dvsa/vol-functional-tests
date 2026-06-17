@@ -186,7 +186,7 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
+        click("uploadNowRadio", SelectorType.ID);
 
         String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
