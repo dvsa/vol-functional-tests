@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.7](https://github.com/dvsa/vol-functional-tests/compare/v4.25.6...v4.25.7) (2026-06-18)
+
+
+### Bug Fixes
+
+* psv ([be1d99d](https://github.com/dvsa/vol-functional-tests/commit/be1d99da47805a77968a13797f4f8c2bd7502b9f))
+* psv ([e7eaf19](https://github.com/dvsa/vol-functional-tests/commit/e7eaf194558e0254521afa548ac2e85c7e09ca0b))
+* remove retrys ([9697536](https://github.com/dvsa/vol-functional-tests/commit/969753661b71d3608e6fcd7c2bb9573d9ff27d59))
+* remove retrys ([bb2a90a](https://github.com/dvsa/vol-functional-tests/commit/bb2a90ae481335324e3629f5e25ac836445c335f))
+
 ## [4.25.6](https://github.com/dvsa/vol-functional-tests/compare/v4.25.5...v4.25.6) (2026-06-02)
 
 
