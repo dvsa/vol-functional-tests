@@ -138,15 +138,14 @@ public class SelfServeUIJourney extends BasePage {
         var workingDir = System.getProperty("user.dir");
         var financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        javaScriptExecutor("var r = document.getElementById('uploadNowRadio'); r.checked = true; r.dispatchEvent(new Event('change', {bubbles:true}));");
         javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
         javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
-        if (System.getProperty("platform") == null) {
-            waitAndEnterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
-        } else {
-            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+        WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+        if (System.getProperty("platform") != null) {
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
+        addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndReturn();
     }
