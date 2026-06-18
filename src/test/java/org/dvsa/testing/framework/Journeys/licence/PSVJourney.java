@@ -4,7 +4,9 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 public class PSVJourney extends BasePage {
 
@@ -44,7 +46,17 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeDocumentaryEvidenceSmallVehiclesPage() {
-        findSelectAllRadioButtonsByValue("2");
+        String workingDir = System.getProperty("user.dir");
+        String evidenceFile = workingDir.concat("/src/test/resources/newspaperAdvert.jpeg");
+        javaScriptExecutor("var r = document.getElementById('uploadNowRadio'); r.checked = true; r.dispatchEvent(new Event('change', {bubbles:true}));");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        WebElement addFile = getDriver().findElement(org.openqa.selenium.By.xpath("//*[@id='evidence[files][file]']"));
+        if (System.getProperty("platform") != null) {
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        }
+        addFile.sendKeys(evidenceFile);
+        waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndContinue();
     }
 
@@ -126,7 +138,17 @@ public class PSVJourney extends BasePage {
     }
 
     public void completeDocumentaryEvidenceMainOccupationPage() {
-        findSelectAllRadioButtonsByValue("2");
+        String workingDir = System.getProperty("user.dir");
+        String evidenceFile = workingDir.concat("/src/test/resources/newspaperAdvert.jpeg");
+        javaScriptExecutor("var r = document.getElementById('uploadNowRadio'); r.checked = true; r.dispatchEvent(new Event('change', {bubbles:true}));");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        WebElement addFile = getDriver().findElement(org.openqa.selenium.By.xpath("//*[@id='evidence[files][file]']"));
+        if (System.getProperty("platform") != null) {
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        }
+        addFile.sendKeys(evidenceFile);
+        waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndContinue();
     }
 
