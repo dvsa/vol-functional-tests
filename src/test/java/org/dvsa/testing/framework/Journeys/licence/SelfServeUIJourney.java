@@ -12,6 +12,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.SelfServeNavigation;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -132,8 +135,19 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
+        var workingDir = System.getProperty("user.dir");
+        var financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
-        clickByXPath("//*[@id='uploadLaterRadio']");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        if (System.getProperty("platform") == null) {
+            waitAndEnterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
+        } else {
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
+        }
+        waitForTextToBePresent("File name");
         UniversalActions.clickSaveAndReturn();
     }
 
@@ -150,10 +164,14 @@ public class SelfServeUIJourney extends BasePage {
 
     public void signDeclarationForVariation() {
         if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
-            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
-        } else {
-            waitAndClickByLinkText("Review and declarations");
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
         }
+        if (isElementPresent("//*[@id='overview-item__financial_evidence']//strong[contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH)) {
+            completeFinancialEvidencePage();
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+        }
+        waitAndClickByLinkText("Review and declarations");
+        waitForTitleToBePresent("Review and declarations");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
