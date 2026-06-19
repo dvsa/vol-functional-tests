@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.8](https://github.com/dvsa/vol-functional-tests/compare/v4.25.7...v4.25.8) (2026-06-19)
+
+
+### Bug Fixes
+
+* lgv ([1576af5](https://github.com/dvsa/vol-functional-tests/commit/1576af5ea284b165cf5108f7a87338a8c3ba105f))
+* lgv file upload ([a6e8392](https://github.com/dvsa/vol-functional-tests/commit/a6e83926c3fd45614c4f72adfbdd478c08a7280b))
+
 ## [4.25.7](https://github.com/dvsa/vol-functional-tests/compare/v4.25.6...v4.25.7) (2026-06-18)
 
 
