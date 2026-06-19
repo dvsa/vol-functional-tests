@@ -12,9 +12,14 @@ import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -31,7 +36,7 @@ public class FinancialEvidence extends BasePage {
     List<FinancialStandingRate> validRates = new LinkedList<>(); // operatorType, licenceType, vehicleType
 
     int expectedFinancialEvidenceValue;
-    String financialEvidenceValueOnPage = "//h2[@style='margin-top: 0;']";
+    String financialEvidenceValueOnPage = "//div[contains(@class,'info-box')]//h2";
 
 
     public FinancialEvidence(World world) {
@@ -73,6 +78,8 @@ public class FinancialEvidence extends BasePage {
 
     @Then("the financial evidence value should be as expected for {string} hgvs and {string} lgvs")
     public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) throws HttpException {
+        var workingDir = System.getProperty("user.dir");
+        var financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         if (this.licences.get(world.createApplication.getLicenceId()) != null) {
             this.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
             if (world.licenceCreation.isAGoodsInternationalLicence()) {
@@ -86,6 +93,16 @@ public class FinancialEvidence extends BasePage {
         LOGGER.info("Expected Financial Evidence Value £".concat(String.valueOf(expectedFinancialEvidenceValue)));
         LOGGER.info("Actual Financial Evidence Value £".concat(String.valueOf(actualFinancialEvidenceValue)));
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
+        javaScriptExecutor("var r = document.getElementById('uploadNowRadio'); r.checked = true; r.dispatchEvent(new Event('change', {bubbles:true}));");
+        javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
+        javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");
+        WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+        if (System.getProperty("platform") != null) {
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+        }
+        addFile.sendKeys(workingDir.concat(financialEvidenceFile));
+        waitForTextToBePresent("File name");
+        UniversalActions.clickSaveAndReturn();
     }
 
     @And("the same financial evidence value is displayed on internal")
