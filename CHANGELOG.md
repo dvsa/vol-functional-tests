@@ -1,6 +1,19 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.25.9](https://github.com/dvsa/vol-functional-tests/compare/v4.25.8...v4.25.9) (2026-07-06)
+
+
+### Bug Fixes
+
+* bump active-support to 2.18.7 and api-calls to 4.3.3 ([e10d5f0](https://github.com/dvsa/vol-functional-tests/commit/e10d5f01f4a46feebe8578a81491bdb3151477ec))
+* pin httpclient5 to 5.6.2 in dependencyManagement to address CVE ([84f6ae6](https://github.com/dvsa/vol-functional-tests/commit/84f6ae6d00524404061e48045a9d3ce3a9a84c59))
+* pin tools.jackson.core:jackson-databind to 3.1.4 to address CVE ([57fd1c7](https://github.com/dvsa/vol-functional-tests/commit/57fd1c7d894d77e4251290834cf14b99e5a9a166))
+* remove rbac tag ([b0d5cd9](https://github.com/dvsa/vol-functional-tests/commit/b0d5cd9d01e451f2040296fd3fcc4f78b5317365))
+* remove rbac tag ([329c9f8](https://github.com/dvsa/vol-functional-tests/commit/329c9f8f987cf2cdcf2ac936467e0354dcd4dbb6))
+* surrender sign in ([3270997](https://github.com/dvsa/vol-functional-tests/commit/32709979f496472e3ab853084aac88a477dc5d63))
+* surrender sign in ([869d029](https://github.com/dvsa/vol-functional-tests/commit/869d0291620993cf7d2c9846a7a7614461f5f4a8))
+
 ## [4.25.8](https://github.com/dvsa/vol-functional-tests/compare/v4.25.7...v4.25.8) (2026-06-19)
 
 
