@@ -43,6 +43,7 @@
         <!-- Network Dependencies -->
         <netty.version>4.1.135.Final</netty.version>
         <jackson.version>2.22.0</jackson.version>
+        <jackson3.version>3.1.4</jackson3.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
@@ -97,6 +98,11 @@
                 <groupId>org.apache.httpcomponents.client5</groupId>
                 <artifactId>httpclient5</artifactId>
                 <version>${httpclient5.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
