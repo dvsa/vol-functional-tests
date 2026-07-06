@@ -15,8 +15,8 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.18.5</active-support.version>
-        <api-calls.version>4.3.0</api-calls.version>
+        <active-support.version>2.18.7</active-support.version>
+        <api-calls.version>4.3.3</api-calls.version>
         <accessibility-ai.version>2.0.3</accessibility-ai.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
@@ -35,6 +35,7 @@
         <zt-zip.version>1.15</zt-zip.version>
         <lorem.version>2.1</lorem.version>
         <httpclient.version>4.5.14</httpclient.version>
+        <httpclient5.version>5.6.2</httpclient5.version>
         <snakeyaml.version>2.2</snakeyaml.version>
         <dom4j.version>2.1.4</dom4j.version>
         <ion-java.version>1.11.11</ion-java.version>
@@ -42,6 +43,7 @@
         <!-- Network Dependencies -->
         <netty.version>4.1.135.Final</netty.version>
         <jackson.version>2.22.0</jackson.version>
+        <jackson3.version>3.1.4</jackson3.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
@@ -91,6 +93,16 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
+                <version>${httpclient5.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
