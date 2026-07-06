@@ -15,8 +15,8 @@
         <jvmMemory>4000</jvmMemory>
 
         <!-- DVSA Internal Libraries -->
-        <active-support.version>2.18.5</active-support.version>
-        <api-calls.version>4.3.0</api-calls.version>
+        <active-support.version>2.18.7</active-support.version>
+        <api-calls.version>4.3.3</api-calls.version>
         <accessibility-ai.version>2.0.3</accessibility-ai.version>
 
         <!-- Testing Framework - Cucumber & JUnit -->
