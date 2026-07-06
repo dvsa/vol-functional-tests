@@ -1,4 +1,4 @@
-@int_regression
+#@int_regression
 @readOnly
 @FullRegression
 Feature: Users should have functionality based on their system role
