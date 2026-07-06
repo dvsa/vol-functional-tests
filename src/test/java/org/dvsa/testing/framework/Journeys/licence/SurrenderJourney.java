@@ -164,6 +164,10 @@ public class SurrenderJourney extends BasePage {
         if (isTitlePresent("Confirm your details", 2)) {
             clickById("submitButton");
         }
+        if (isTextPresent("We need to check your details") ||
+                isTextPresent("Continue to the service you want to use")) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
