@@ -272,6 +272,12 @@ public class SelfServeUIJourney extends BasePage {
         }
     }
 
+    public void viewVehicleOnLicence()
+    {
+        clickByXPath("//*[@id=\"view-vehicles\"]");
+        waitAndClick("next", SelectorType.ID);
+    }
+
     public void addAVehicleToAnApplication(String vrm, String weight){
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");

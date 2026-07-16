@@ -1,17 +1,28 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.apache.hc.core5.http.HttpException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpException;
+import org.awaitility.Awaitility;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -355,5 +366,39 @@ public class ManageVehicle extends BasePage {
         }
         waitAndEnterText("vehicleSearch[search-value]", SelectorType.NAME, vehicleRegistrationMark);
         click("vehicleSearch[submit]", SelectorType.NAME);
+    }
+
+    @And("I view the vehicles on my licence")
+    public void iViewTheVehiclesOnMyLicence() {
+        world.selfServeUIJourney.viewVehicleOnLicence();
+    }
+
+
+    @Then("I click the Export list link that responds")
+    public void iClickTheExportListLinkThatResponds() throws Exception {
+        Path dir = Files.createTempDirectory("csv-downloads");
+
+        ChromeDriver chrome = (ChromeDriver) getDriver();
+        Map<String, Object> params = new HashMap<>();
+        params.put("behavior", "allow");
+        params.put("downloadPath", dir.toAbsolutePath().toString());
+        chrome.executeCdpCommand("Page.setDownloadBehavior", params);
+
+        waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
+
+        Path csv = Awaitility.await()
+                .atMost(30, TimeUnit.SECONDS)
+                .pollInterval(500, TimeUnit.MILLISECONDS)
+                .until(() -> {
+                    try (Stream<Path> files = Files.list(dir)) {
+                        return files
+                                .filter(p -> p.toString().endsWith(".csv"))
+                                .filter(p -> !p.toString().endsWith(".crdownload"))
+                                .findFirst()
+                                .orElse(null);
+                    }
+                }, Objects::nonNull);
+
+        assertTrue(Files.size(csv) > 0, "CSV was empty");
     }
 }
