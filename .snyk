@@ -30,4 +30,14 @@ ignore:
         reason: Vulnerability in transitive dependency, acceptable for current usage
         expires: 2026-12-31T00:00:00.000Z
         created: 2026-01-05T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-17972608:
+    - '*':
+        reason: Transitive jackson-databind 2.x via active-support; fixed upstream and pinned in active-support pom.xml, awaiting release consumption
+        expires: 2027-07-17T00:00:00.000Z
+        created: 2026-07-17T00:00:00.000Z
+  SNYK-JAVA-TOOLSJACKSONCORE-17972609:
+    - '*':
+        reason: Transitive tools.jackson.core:jackson-databind via active-support; fixed upstream (3.2.1) and pinned in active-support pom.xml, awaiting release consumption
+        expires: 2027-07-17T00:00:00.000Z
+        created: 2026-07-17T00:00:00.000Z
 patch: {}
