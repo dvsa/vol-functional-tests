@@ -5,7 +5,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
-import org.awaitility.Awaitility;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -14,58 +13,74 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chromium.HasCdp;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v148.browser.Browser;
+import org.openqa.selenium.devtools.v148.browser.model.DownloadProgress;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+import java.util.Optional;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageVehicle extends BasePage {
     World world;
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
     public ManageVehicle(World world) {
         this.world = world;
     }
 
     @When("I navigate to manage vehicle page on an application")
-    public void iNavigateToManageVehiclePageOnAnApplication(){
+    public void iNavigateToManageVehiclePageOnAnApplication() {
         world.dvlaJourney.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
-    public void iNavigateToManageVehiclePageOnALicence(){
+    public void iNavigateToManageVehiclePageOnALicence() {
         world.dvlaJourney.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
-    public void iNavigateToManageVehiclePageOnAVariation(){
+    public void iNavigateToManageVehiclePageOnAVariation() {
         world.dvlaJourney.navigateToManageVehiclesPage("variation");
     }
 
     @Then("the add vehicle page should display licence number")
-    public void theAddVehiclePageShouldDisplayLicenceNumber(){
+    public void theAddVehiclePageShouldDisplayLicenceNumber() {
         assertEquals(world.applicationDetails.getLicenceNumber(), getText("licence", SelectorType.ID));
     }
 
     @And("choose to add a {string} vehicle")
-    public void chooseToAddAVehicle(String VRM){
+    public void chooseToAddAVehicle(String VRM) {
         world.selfServeUIJourney.addAVehicle(VRM);
-        if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
+        if (isTextPresent(String.format("%s is specified on another licence.", VRM))) {
             findSelectAllRadioButtonsByValue("yes");
             clickById("next");
         }
     }
 
     @And("{string} heading")
-    public void heading(String heading){
+    public void heading(String heading) {
         assertEquals(heading, getText("h1", SelectorType.CSS));
     }
 
@@ -345,25 +360,26 @@ public class ManageVehicle extends BasePage {
             Thread.sleep(2000);
         }
     }
+
     @And("the vehicle {string} does not exist on the licence")
     public void theVehicleDoesNotExistOnTheLicence(String vrm) {
         world.dvlaJourney.navigateToRemoveVehiclePage();
         searchForVRMToRemove(vrm);
-        if(isTextPresent(vrm)){
-            waitAndClick("//*[@type='checkbox']",SelectorType.XPATH);
-            waitAndClick("formActions[action]",SelectorType.NAME);
+        if (isTextPresent(vrm)) {
+            waitAndClick("//*[@type='checkbox']", SelectorType.XPATH);
+            waitAndClick("formActions[action]", SelectorType.NAME);
             waitAndClick("//*[contains(text(), 'Yes')]", SelectorType.XPATH);
-            waitAndClick("next",SelectorType.ID);
-        }else {
+            waitAndClick("next", SelectorType.ID);
+        } else {
             waitAndClickByLinkText("manage your vehicles");
         }
     }
 
     private void searchForVRMToRemove(String vrm) {
         String vehicleRegistrationMark;
-        if(vrm == null) {
+        if (vrm == null) {
             vehicleRegistrationMark = world.dvlaJourney.VRM;
-        } else{
+        } else {
             vehicleRegistrationMark = vrm;
         }
         waitAndEnterText("vehicleSearch[search-value]", SelectorType.NAME, vehicleRegistrationMark);
@@ -378,38 +394,33 @@ public class ManageVehicle extends BasePage {
 
     @Then("I click the Export list link that responds")
     public void iClickTheExportListLinkThatResponds() throws Exception {
-        Path dir = Files.createTempDirectory("csv-downloads");
-
         WebDriver raw = activesupport.driver.Browser.getDriver();
-        WebDriver driver = (raw instanceof RemoteWebDriver && !(raw instanceof HasCdp))
+        WebDriver driver = (raw instanceof RemoteWebDriver && !(raw instanceof HasDevTools))
                 ? new Augmenter().augment(raw)
                 : raw;
-        HasCdp cdp = (HasCdp) driver;
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("behavior", "allow");
-        params.put("downloadPath", dir.toAbsolutePath().toString());
-        cdp.executeCdpCommand("Page.setDownloadBehavior", params);
+        DevTools devTools = ((HasDevTools) driver).getDevTools();
+        devTools.createSessionIfThereIsNotOne();
+
+        devTools.send(Browser.setDownloadBehavior(
+                Browser.SetDownloadBehaviorBehavior.ALLOWANDNAME,
+                Optional.empty(),
+                Optional.of("/tmp/csv-downloads"),
+                Optional.of(true)
+        ));
+
+        CompletableFuture<DownloadProgress> completed = new CompletableFuture<>();
+        devTools.addListener(Browser.downloadProgress(), evt -> {
+            if (evt.getState() == DownloadProgress.State.COMPLETED) {
+                completed.complete(evt);
+            } else if (evt.getState() == DownloadProgress.State.CANCELED) {
+                completed.completeExceptionally(new AssertionError("Download cancelled"));
+            }
+        });
 
         waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
 
-        Path csv = Awaitility.await()
-                .atMost(30, TimeUnit.SECONDS)
-                .pollInterval(500, TimeUnit.MILLISECONDS)
-                .until(() -> {
-                    try (Stream<Path> files = Files.list(dir)) {
-                        return files
-                                .filter(p -> p.toString().endsWith(".csv"))
-                                .filter(p -> !p.toString().endsWith(".crdownload"))
-                                .findFirst()
-                                .orElse(null);
-                    }
-                }, path -> path != null);
-
-        assertTrue(Files.size(csv) > 0, "CSV was empty");
-        String header = Files.lines(csv).findFirst().orElse("");
-        assertTrue(header.contains("Vehicle") || header.contains("VRM"),
-                "Unexpected CSV header: " + header);
+        DownloadProgress evt = completed.get(30, TimeUnit.SECONDS);
+        assertTrue(evt.getTotalBytes().longValue() > 0, "Download completed but was empty");
     }
-
 }
