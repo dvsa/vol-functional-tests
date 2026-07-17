@@ -12,15 +12,17 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chromium.HasCdp;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -378,11 +380,16 @@ public class ManageVehicle extends BasePage {
     public void iClickTheExportListLinkThatResponds() throws Exception {
         Path dir = Files.createTempDirectory("csv-downloads");
 
-        ChromeDriver chrome = (ChromeDriver) getDriver();
+        WebDriver raw = activesupport.driver.Browser.getDriver();
+        WebDriver driver = (raw instanceof RemoteWebDriver && !(raw instanceof HasCdp))
+                ? new Augmenter().augment(raw)
+                : raw;
+        HasCdp cdp = (HasCdp) driver;
+
         Map<String, Object> params = new HashMap<>();
         params.put("behavior", "allow");
         params.put("downloadPath", dir.toAbsolutePath().toString());
-        chrome.executeCdpCommand("Page.setDownloadBehavior", params);
+        cdp.executeCdpCommand("Page.setDownloadBehavior", params);
 
         waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
 
@@ -397,8 +404,12 @@ public class ManageVehicle extends BasePage {
                                 .findFirst()
                                 .orElse(null);
                     }
-                }, Objects::nonNull);
+                }, path -> path != null);
 
         assertTrue(Files.size(csv) > 0, "CSV was empty");
+        String header = Files.lines(csv).findFirst().orElse("");
+        assertTrue(header.contains("Vehicle") || header.contains("VRM"),
+                "Unexpected CSV header: " + header);
     }
+
 }
