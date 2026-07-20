@@ -15,17 +15,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.HasDevTools;
-
+import org.awaitility.Awaitility;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.HasDevTools;
-import org.openqa.selenium.devtools.v148.browser.Browser;
-import org.openqa.selenium.devtools.v148.browser.model.DownloadProgress;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
+
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
@@ -395,32 +394,27 @@ public class ManageVehicle extends BasePage {
     @Then("I click the Export list link that responds")
     public void iClickTheExportListLinkThatResponds() throws Exception {
         WebDriver raw = activesupport.driver.Browser.getDriver();
-        WebDriver driver = (raw instanceof RemoteWebDriver && !(raw instanceof HasDevTools))
-                ? new Augmenter().augment(raw)
-                : raw;
-
-        DevTools devTools = ((HasDevTools) driver).getDevTools();
-        devTools.createSessionIfThereIsNotOne();
-
-        devTools.send(Browser.setDownloadBehavior(
-                Browser.SetDownloadBehaviorBehavior.ALLOWANDNAME,
-                Optional.empty(),
-                Optional.of("/tmp/csv-downloads"),
-                Optional.of(true)
-        ));
-
-        CompletableFuture<DownloadProgress> completed = new CompletableFuture<>();
-        devTools.addListener(Browser.downloadProgress(), evt -> {
-            if (evt.getState() == DownloadProgress.State.COMPLETED) {
-                completed.complete(evt);
-            } else if (evt.getState() == DownloadProgress.State.CANCELED) {
-                completed.completeExceptionally(new AssertionError("Download cancelled"));
-            }
-        });
+        RemoteWebDriver remote = (RemoteWebDriver) ((raw instanceof RemoteWebDriver) ? raw : new Augmenter().augment(raw));
 
         waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
 
-        DownloadProgress evt = completed.get(30, TimeUnit.SECONDS);
-        assertTrue(evt.getTotalBytes().longValue() > 0, "Download completed but was empty");
+
+        String csvName = Awaitility.await()
+                .atMost(30, TimeUnit.SECONDS)
+                .pollInterval(1, TimeUnit.SECONDS)
+                .until(() -> remote.getDownloadableFiles().stream()
+                                .filter(n -> n.toLowerCase().endsWith(".csv"))
+                                .findFirst()
+                                .orElse(null),
+                        name -> name != null);
+
+        Path target = Files.createTempDirectory("csv-downloads");
+        remote.downloadFile(csvName, target);
+
+        Path csv = target.resolve(csvName);
+        assertTrue(Files.size(csv) > 0, "CSV was empty");
+        String header = Files.lines(csv).findFirst().orElse("");
+        assertTrue(header.contains("Vehicle") || header.contains("VRM"),
+                "Unexpected CSV header: " + header);
     }
 }
