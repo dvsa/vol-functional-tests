@@ -1,6 +1,16 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.26.2](https://github.com/dvsa/vol-functional-tests/compare/v4.26.1...v4.26.2) (2026-07-22)
+
+
+### Bug Fixes
+
+* use remote driver ([421b9ca](https://github.com/dvsa/vol-functional-tests/commit/421b9cadb9ef93a6c4f717505d9ab93befb40864))
+* use remote driver ([ee73811](https://github.com/dvsa/vol-functional-tests/commit/ee73811283f6e5b17692c5e79d48beb91bc2d2e2))
+* use remote driver ([81c6be8](https://github.com/dvsa/vol-functional-tests/commit/81c6be81c9e33933043abcfd34677ca54b3fe1c3))
+* use remote driver ([a580055](https://github.com/dvsa/vol-functional-tests/commit/a58005538e81e0df987e8ca8d72889a19ba1d1a8))
+
 ## [4.26.1](https://github.com/dvsa/vol-functional-tests/compare/v4.26.0...v4.26.1) (2026-07-17)
 
 
