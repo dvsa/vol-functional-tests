@@ -1,6 +1,6 @@
 Feature: Export CSV file
 
-  @smoke
+  @smoke @CSV
   Scenario: Export CSV File on Manage Vehicle Page
     Given I have a "goods" "standard_national" licence
     When I navigate to manage vehicle page on a licence
