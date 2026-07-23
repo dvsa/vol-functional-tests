@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.27.0](https://github.com/dvsa/vol-functional-tests/compare/v4.26.2...v4.27.0) (2026-07-23)
+
+
+### Features
+
+* consolidate ([116adf3](https://github.com/dvsa/vol-functional-tests/commit/116adf39c0007a9c1f513cda5c24d42b00366a59))
+* int axe ([cd1e05d](https://github.com/dvsa/vol-functional-tests/commit/cd1e05d7548583943e834919dbc8dc79f05569f1))
+* int axe ([eef86e4](https://github.com/dvsa/vol-functional-tests/commit/eef86e40965b947a87dfab90bed5d772daf141c0))
+
 ## [4.26.2](https://github.com/dvsa/vol-functional-tests/compare/v4.26.1...v4.26.2) (2026-07-22)
 
 
