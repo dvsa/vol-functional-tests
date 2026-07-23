@@ -43,7 +43,7 @@
         <!-- Network Dependencies -->
         <netty.version>4.1.135.Final</netty.version>
         <jackson.version>2.22.1</jackson.version>
-        <jackson3.version>3.1.4</jackson3.version>
+        <jackson3.version>3.1.5</jackson3.version>
 
         <!-- Maven Plugins -->
         <maven.compiler.version>3.13.0</maven.compiler.version>
