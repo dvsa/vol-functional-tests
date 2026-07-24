@@ -9,6 +9,9 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
@@ -142,6 +145,19 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
+    public void getHearingAppeal() {
+        get(this.url.concat(String.format("case/%s/hearing-appeal/", world.updateLicence.getCaseId())));
+    }
+
+    public void getPublicInquiry() {
+        get(this.url.concat(String.format("case/%s/pi/", world.updateLicence.getCaseId())));
+    }
+
+    public void getNonPublicInquiry() {
+        get(this.url.concat(String.format("case/%s/non-pi/details/", world.updateLicence.getCaseId())));
+    }
+
+
     public void getAdminEditFee(String feeNumber) {
         get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
@@ -200,5 +216,133 @@ public class InternalNavigation extends BasePage {
     public void navigateToLoginPage() {
         var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
+    }
+
+    public String appealNumber;
+    public String appealDate;
+    public String appealDeadline;
+    public String appealReason;
+    public String appealOutlineGround;
+
+    public void addAppeal() {
+        appealNumber = String.format("APP-%d", System.currentTimeMillis() % 100000);
+        LocalDate today = LocalDate.now();
+        LocalDate deadline = today.plusDays(14);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        appealDate = today.format(fmt);
+        appealDeadline = deadline.format(fmt);
+        appealReason = "Application";
+        appealOutlineGround = "Automated test appeal outline ground - " + appealNumber;
+
+        waitAndClickByLinkText("Add appeal");
+        waitForElementToBePresent("//form[@id='appeal']");
+
+        enterDateParts("appealDate", today);
+        enterDateParts("deadlineDate", deadline);
+
+        waitAndEnterText("//input[@id='fields[appealNo]']", SelectorType.XPATH, appealNumber);
+        waitAndSelectValueFromDropDown("//select[@id='fields[reason]']", SelectorType.XPATH, appealReason);
+        waitAndEnterText("//textarea[@id='fields[outlineGround]']", SelectorType.XPATH, appealOutlineGround);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public String piAgreedDate;
+    public String piAgreedByRole;
+    public String piType;
+    public String piLegislation;
+    public String piComment;
+
+    public void addPublicInquiry() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        piAgreedDate = today.format(fmt);
+        piAgreedByRole = "Traffic Commissioner";
+        piComment = "Automated test PI comment - " + System.currentTimeMillis();
+
+        waitAndClickByLinkText("Add Public Inquiry");
+        waitForElementToBePresent("//form[@id='traffic-commissioner-agreement-legislation']");
+
+        enterDateParts("agreedDate", today);
+
+        selectFirstNonEmptyValue("//select[@id='fields[agreedByTc]']");
+        waitAndSelectValueFromDropDown("//select[@id='fields[agreedByTcRole]']", SelectorType.XPATH, piAgreedByRole);
+        selectFirstNonEmptyValue("//select[@id='assignedCaseworker']");
+
+        piType = selectFirstOptionOnChosen("fields_piTypes__chosen", "//select[@id='fields[piTypes]']");
+        piLegislation = selectFirstOptionOnChosen("fields_reasons__chosen", "//select[@id='fields[reasons]']");
+
+        waitAndEnterText("//textarea[@id='fields[comment]']", SelectorType.XPATH, piComment);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    private void selectFirstNonEmptyValue(String selectXpath) {
+        var select = new org.openqa.selenium.support.ui.Select(findElement(selectXpath, SelectorType.XPATH));
+        for (var opt : select.getOptions()) {
+            String v = opt.getAttribute("value");
+            if (v != null && !v.isEmpty()) {
+                select.selectByValue(v);
+                return;
+            }
+        }
+        throw new IllegalStateException("No selectable option found for " + selectXpath);
+    }
+
+    private String selectFirstOptionOnChosen(String chosenContainerId, String underlyingSelectXpath) {
+        waitAndClick(String.format("//div[@id='%s']//ul[@class='chosen-choices']", chosenContainerId), SelectorType.XPATH);
+        String firstOptionXpath = String.format("//div[@id='%s']//ul[@class='chosen-results']/li[contains(concat(' ',normalize-space(@class),' '),' active-result ')][1]", chosenContainerId);
+        waitForElementToBePresent(firstOptionXpath);
+        String chosenText = findElement(firstOptionXpath, SelectorType.XPATH).getText();
+        waitAndClick(firstOptionXpath, SelectorType.XPATH);
+        return chosenText;
+    }
+
+    private void enterDateParts(String fieldName, LocalDate date) {
+        waitAndEnterText(String.format("//input[@id='fields[%s]_day' or @id='%s_day']", fieldName, fieldName), SelectorType.XPATH,
+                String.format("%02d", date.getDayOfMonth()));
+        waitAndEnterText(String.format("//input[@id='fields[%s]_month' or @id='%s_month']", fieldName, fieldName), SelectorType.XPATH,
+                String.format("%02d", date.getMonthValue()));
+        waitAndEnterText(String.format("//input[@id='fields[%s]_year' or @id='%s_year']", fieldName, fieldName), SelectorType.XPATH,
+                String.valueOf(date.getYear()));
+    }
+
+    public String nonPiAgreedByTcDate;
+    public String nonPiHearingType;
+    public String nonPiHearingDate;
+    public String nonPiVenue;
+    public String nonPiWitnessCount;
+    public String nonPiPresidingStaff;
+    public String nonPiOutcome;
+
+    public void addNonPublicInquiry() {
+        LocalDate today = LocalDate.now();
+        LocalDate hearing = today.plusDays(7);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        nonPiAgreedByTcDate = today.format(fmt);
+        nonPiHearingDate = hearing.format(fmt);
+        nonPiHearingType = "Preliminary hearing";
+        nonPiVenue = "Quarry House (Leeds)";
+        nonPiWitnessCount = "2";
+        nonPiPresidingStaff = "Automated test presiding staff - " + System.currentTimeMillis();
+        nonPiOutcome = "Warning letter";
+
+        waitAndClickByLinkText("Add Non-Public Inquiry");
+        waitForElementToBePresent("//form[@id='Non-Public Inquiry']");
+
+        enterDateParts("agreedByTcDate", today);
+
+        waitAndSelectValueFromDropDown("//select[@id='hearingType']", SelectorType.XPATH, nonPiHearingType);
+
+        enterDateParts("hearingDate", hearing);
+        waitAndSelectValueFromDropDown("//select[@id='hearingDate_hour']", SelectorType.XPATH, "10");
+        waitAndSelectValueFromDropDown("//select[@id='hearingDate_minute']", SelectorType.XPATH, "30");
+
+        waitAndSelectValueFromDropDown("//select[@id='venue']", SelectorType.XPATH, nonPiVenue);
+        waitAndEnterText("//input[@id='fields[witnessCount]']", SelectorType.XPATH, nonPiWitnessCount);
+        waitAndEnterText("//textarea[@id='fields[presidingStaffName]']", SelectorType.XPATH, nonPiPresidingStaff);
+        waitAndSelectValueFromDropDown("//select[@id='outcome']", SelectorType.XPATH, nonPiOutcome);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 }
