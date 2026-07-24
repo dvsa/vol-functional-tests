@@ -149,6 +149,10 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("case/%s/hearing-appeal/", world.updateLicence.getCaseId())));
     }
 
+    public void getPublicInquiry() {
+        get(this.url.concat(String.format("case/%s/pi/", world.updateLicence.getCaseId())));
+    }
+
 
     public void getAdminEditFee(String feeNumber) {
         get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
@@ -237,6 +241,57 @@ public class InternalNavigation extends BasePage {
         waitAndEnterText("//textarea[@id='fields[outlineGround]']", SelectorType.XPATH, appealOutlineGround);
 
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public String piAgreedDate;
+    public String piAgreedByRole;
+    public String piType;
+    public String piLegislation;
+    public String piComment;
+
+    public void addPublicInquiry() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        piAgreedDate = today.format(fmt);
+        piAgreedByRole = "Traffic Commissioner";
+        piComment = "Automated test PI comment - " + System.currentTimeMillis();
+
+        waitAndClickByLinkText("Add Public Inquiry");
+        waitForElementToBePresent("//form[@id='traffic-commissioner-agreement-legislation']");
+
+        enterDateParts("agreedDate", today);
+
+        selectFirstNonEmptyValue("//select[@id='fields[agreedByTc]']");
+        waitAndSelectValueFromDropDown("//select[@id='fields[agreedByTcRole]']", SelectorType.XPATH, piAgreedByRole);
+        selectFirstNonEmptyValue("//select[@id='assignedCaseworker']");
+
+        piType = selectFirstOptionOnChosen("fields_piTypes__chosen", "//select[@id='fields[piTypes]']");
+        piLegislation = selectFirstOptionOnChosen("fields_reasons__chosen", "//select[@id='fields[reasons]']");
+
+        waitAndEnterText("//textarea[@id='fields[comment]']", SelectorType.XPATH, piComment);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    private void selectFirstNonEmptyValue(String selectXpath) {
+        var select = new org.openqa.selenium.support.ui.Select(findElement(selectXpath, SelectorType.XPATH));
+        for (var opt : select.getOptions()) {
+            String v = opt.getAttribute("value");
+            if (v != null && !v.isEmpty()) {
+                select.selectByValue(v);
+                return;
+            }
+        }
+        throw new IllegalStateException("No selectable option found for " + selectXpath);
+    }
+
+    private String selectFirstOptionOnChosen(String chosenContainerId, String underlyingSelectXpath) {
+        waitAndClick(String.format("//div[@id='%s']//ul[@class='chosen-choices']", chosenContainerId), SelectorType.XPATH);
+        String firstOptionXpath = String.format("//div[@id='%s']//ul[@class='chosen-results']/li[contains(concat(' ',normalize-space(@class),' '),' active-result ')][1]", chosenContainerId);
+        waitForElementToBePresent(firstOptionXpath);
+        String chosenText = findElement(firstOptionXpath, SelectorType.XPATH).getText();
+        waitAndClick(firstOptionXpath, SelectorType.XPATH);
+        return chosenText;
     }
 
     private void enterDateParts(String fieldName, LocalDate date) {

@@ -227,4 +227,33 @@ public class CreateCase extends BasePage {
         assertTrue(isTextPresent("Appeal in progress"),
                 "'Appeal in progress' warning should be displayed in the sidebar");
     }
+
+    @When("I navigate to Public Inquiry")
+    public void iNavigateToPublicInquiry() {
+        world.internalNavigation.getPublicInquiry();
+    }
+
+    @Then("I add a public inquiry to the case")
+    public void iAddAPublicInquiryToTheCase() {
+        world.internalNavigation.addPublicInquiry();
+    }
+
+    @Then("the public inquiry should be created")
+    public void thePublicInquiryShouldBeCreated() {
+        waitForElementToBePresent("//h3[contains(@class,'read-only__title') and normalize-space()='TC/DTC/HTRU/DHTRU agreement and legislation']");
+        assertTrue(isElementPresent("//a[normalize-space()='Edit' and contains(@href,'/pi/agreed/edit/')]", SelectorType.XPATH),
+                "Edit link for PI agreement should be visible");
+        assertTrue(isTextPresent(world.internalNavigation.piAgreedDate),
+                "Agreed date should be displayed: " + world.internalNavigation.piAgreedDate);
+        assertTrue(isTextPresent(world.internalNavigation.piAgreedByRole),
+                "Agreed by role should be displayed: " + world.internalNavigation.piAgreedByRole);
+        assertTrue(isTextPresent(world.internalNavigation.piType),
+                "Type of Public Inquiry should be displayed: " + world.internalNavigation.piType);
+        assertTrue(isTextPresent(world.internalNavigation.piLegislation),
+                "Legislation should be displayed: " + world.internalNavigation.piLegislation);
+        assertTrue(isTextPresent(world.internalNavigation.piComment),
+                "Comment should be displayed");
+        assertTrue(isElementPresent("//a[normalize-space()='Add hearing']", SelectorType.XPATH),
+                "'Add hearing' link should be present under the Hearing section");
+    }
 }
