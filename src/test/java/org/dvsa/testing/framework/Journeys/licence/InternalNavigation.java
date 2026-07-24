@@ -9,6 +9,9 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import org.dvsa.testing.lib.url.webapp.webAppURL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
@@ -142,6 +145,11 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
+    public void getHearingAppeal() {
+        get(this.url.concat(String.format("case/%s/hearing-appeal/", world.updateLicence.getCaseId())));
+    }
+
+
     public void getAdminEditFee(String feeNumber) {
         get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
@@ -200,5 +208,43 @@ public class InternalNavigation extends BasePage {
     public void navigateToLoginPage() {
         var myURL = webAppURL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login/").toString();
         navigate().get(myURL);
+    }
+
+    public String appealNumber;
+    public String appealDate;
+    public String appealDeadline;
+    public String appealReason;
+    public String appealOutlineGround;
+
+    public void addAppeal() {
+        appealNumber = String.format("APP-%d", System.currentTimeMillis() % 100000);
+        LocalDate today = LocalDate.now();
+        LocalDate deadline = today.plusDays(14);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        appealDate = today.format(fmt);
+        appealDeadline = deadline.format(fmt);
+        appealReason = "Application";
+        appealOutlineGround = "Automated test appeal outline ground - " + appealNumber;
+
+        waitAndClickByLinkText("Add appeal");
+        waitForElementToBePresent("//form[@id='appeal']");
+
+        enterDateParts("appealDate", today);
+        enterDateParts("deadlineDate", deadline);
+
+        waitAndEnterText("//input[@id='fields[appealNo]']", SelectorType.XPATH, appealNumber);
+        waitAndSelectValueFromDropDown("//select[@id='fields[reason]']", SelectorType.XPATH, appealReason);
+        waitAndEnterText("//textarea[@id='fields[outlineGround]']", SelectorType.XPATH, appealOutlineGround);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    private void enterDateParts(String fieldName, LocalDate date) {
+        waitAndEnterText(String.format("//input[@id='fields[%s]_day']", fieldName), SelectorType.XPATH,
+                String.format("%02d", date.getDayOfMonth()));
+        waitAndEnterText(String.format("//input[@id='fields[%s]_month']", fieldName), SelectorType.XPATH,
+                String.format("%02d", date.getMonthValue()));
+        waitAndEnterText(String.format("//input[@id='fields[%s]_year']", fieldName), SelectorType.XPATH,
+                String.valueOf(date.getYear()));
     }
 }

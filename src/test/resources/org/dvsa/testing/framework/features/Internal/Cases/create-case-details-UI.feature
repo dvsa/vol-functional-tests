@@ -60,3 +60,14 @@ Feature: Public enquiry added and published and deletion of case notes
     And I add conviction to the case
     Then the conviction should be created
 
+    @Add_appeal_to_case
+    Scenario: UI - Add a appeal to a case
+      When I navigate to Hearings & appeals
+      Then I add an appeal to the case
+      Then the appeal should be created
+
+
+
+
+
+

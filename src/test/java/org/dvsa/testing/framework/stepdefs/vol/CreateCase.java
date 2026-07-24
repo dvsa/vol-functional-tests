@@ -198,4 +198,33 @@ public class CreateCase extends BasePage {
     public void iAddANote() {
         world.convictionsAndPenaltiesJourney.addANote();
     }
+
+    @When("I navigate to Hearings & appeals")
+    public void iNavigateToHearingsAppeals() {
+        world.internalNavigation.getHearingAppeal();
+    }
+
+    @Then("I add an appeal to the case")
+    public void iAddAnAppealToTheCase() {
+        world.internalNavigation.addAppeal();
+    }
+
+    @Then("the appeal should be created")
+    public void theAppealShouldBeCreated() {
+        waitForElementToBePresent("//h3[contains(@class,'read-only__title') and normalize-space()='Appeal and stays']");
+        assertTrue(isElementPresent("//a[normalize-space()='Edit appeal']", SelectorType.XPATH),
+                "Edit appeal link should be visible on the appeal details page");
+        assertTrue(isTextPresent(world.internalNavigation.appealNumber),
+                "Appeal number should be displayed: " + world.internalNavigation.appealNumber);
+        assertTrue(isTextPresent(world.internalNavigation.appealDeadline),
+                "Appeals deadline should be displayed: " + world.internalNavigation.appealDeadline);
+        assertTrue(isTextPresent(world.internalNavigation.appealDate),
+                "Date of appeal should be displayed: " + world.internalNavigation.appealDate);
+        assertTrue(isTextPresent(world.internalNavigation.appealReason),
+                "Reason should be displayed: " + world.internalNavigation.appealReason);
+        assertTrue(isTextPresent(world.internalNavigation.appealOutlineGround),
+                "Outline ground should be displayed");
+        assertTrue(isTextPresent("Appeal in progress"),
+                "'Appeal in progress' warning should be displayed in the sidebar");
+    }
 }
