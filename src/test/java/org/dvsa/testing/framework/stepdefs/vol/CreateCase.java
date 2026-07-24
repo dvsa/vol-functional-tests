@@ -238,6 +238,39 @@ public class CreateCase extends BasePage {
         world.internalNavigation.addPublicInquiry();
     }
 
+    @When("I navigate to Non-Public Inquiry")
+    public void iNavigateToNonPublicInquiry() {
+        world.internalNavigation.getNonPublicInquiry();
+    }
+
+    @Then("I add a non-public inquiry to the case")
+    public void iAddANonPublicInquiryToTheCase() {
+        world.internalNavigation.addNonPublicInquiry();
+    }
+
+    @Then("the non-public inquiry should be created")
+    public void theNonPublicInquiryShouldBeCreated() {
+        waitForElementToBePresent("//h3[contains(@class,'read-only__title') and normalize-space()='Non-Public Inquiry']");
+        assertTrue(isElementPresent("//a[normalize-space()='Edit' and contains(@href,'/non-pi/edit/')]", SelectorType.XPATH),
+                "Edit link for non-public inquiry should be visible");
+        assertTrue(isElementPresent("//a[normalize-space()='Generate letter']", SelectorType.XPATH),
+                "'Generate letter' link should be visible");
+        assertTrue(isTextPresent(world.internalNavigation.nonPiHearingType),
+                "Type should be displayed: " + world.internalNavigation.nonPiHearingType);
+        assertTrue(isTextPresent(world.internalNavigation.nonPiHearingDate + " 10:30"),
+                "Meeting date & time should be displayed: " + world.internalNavigation.nonPiHearingDate + " 10:30");
+        assertTrue(isTextPresent(world.internalNavigation.nonPiPresidingStaff),
+                "Presiding staff member should be displayed");
+        assertTrue(isTextPresent(world.internalNavigation.nonPiAgreedByTcDate),
+                "TC/DTC/TR/DTR agreed date should be displayed: " + world.internalNavigation.nonPiAgreedByTcDate);
+        assertTrue(isTextPresent(world.internalNavigation.nonPiVenue),
+                "Meeting venue should be displayed: " + world.internalNavigation.nonPiVenue);
+        assertTrue(isTextPresent(world.internalNavigation.nonPiWitnessCount),
+                "Number of witnesses should be displayed: " + world.internalNavigation.nonPiWitnessCount);
+        assertTrue(isTextPresent(world.internalNavigation.nonPiOutcome),
+                "Outcome should be displayed: " + world.internalNavigation.nonPiOutcome);
+    }
+
     @Then("the public inquiry should be created")
     public void thePublicInquiryShouldBeCreated() {
         waitForElementToBePresent("//h3[contains(@class,'read-only__title') and normalize-space()='TC/DTC/HTRU/DHTRU agreement and legislation']");

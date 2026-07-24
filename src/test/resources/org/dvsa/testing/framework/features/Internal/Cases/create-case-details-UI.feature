@@ -72,6 +72,14 @@ Feature: Public enquiry added and published and deletion of case notes
       Then I add a public inquiry to the case
       Then the public inquiry should be created
 
+    @Add_non_public_inquiry_to_case
+    Scenario: UI - Add a non-public inquiry to a case
+      When I navigate to Non-Public Inquiry
+      Then I add a non-public inquiry to the case
+      Then the non-public inquiry should be created
+
+
+
 
 
 

@@ -153,6 +153,10 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("case/%s/pi/", world.updateLicence.getCaseId())));
     }
 
+    public void getNonPublicInquiry() {
+        get(this.url.concat(String.format("case/%s/non-pi/details/", world.updateLicence.getCaseId())));
+    }
+
 
     public void getAdminEditFee(String feeNumber) {
         get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
@@ -295,11 +299,50 @@ public class InternalNavigation extends BasePage {
     }
 
     private void enterDateParts(String fieldName, LocalDate date) {
-        waitAndEnterText(String.format("//input[@id='fields[%s]_day']", fieldName), SelectorType.XPATH,
+        waitAndEnterText(String.format("//input[@id='fields[%s]_day' or @id='%s_day']", fieldName, fieldName), SelectorType.XPATH,
                 String.format("%02d", date.getDayOfMonth()));
-        waitAndEnterText(String.format("//input[@id='fields[%s]_month']", fieldName), SelectorType.XPATH,
+        waitAndEnterText(String.format("//input[@id='fields[%s]_month' or @id='%s_month']", fieldName, fieldName), SelectorType.XPATH,
                 String.format("%02d", date.getMonthValue()));
-        waitAndEnterText(String.format("//input[@id='fields[%s]_year']", fieldName), SelectorType.XPATH,
+        waitAndEnterText(String.format("//input[@id='fields[%s]_year' or @id='%s_year']", fieldName, fieldName), SelectorType.XPATH,
                 String.valueOf(date.getYear()));
+    }
+
+    public String nonPiAgreedByTcDate;
+    public String nonPiHearingType;
+    public String nonPiHearingDate;
+    public String nonPiVenue;
+    public String nonPiWitnessCount;
+    public String nonPiPresidingStaff;
+    public String nonPiOutcome;
+
+    public void addNonPublicInquiry() {
+        LocalDate today = LocalDate.now();
+        LocalDate hearing = today.plusDays(7);
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        nonPiAgreedByTcDate = today.format(fmt);
+        nonPiHearingDate = hearing.format(fmt);
+        nonPiHearingType = "Preliminary hearing";
+        nonPiVenue = "Quarry House (Leeds)";
+        nonPiWitnessCount = "2";
+        nonPiPresidingStaff = "Automated test presiding staff - " + System.currentTimeMillis();
+        nonPiOutcome = "Warning letter";
+
+        waitAndClickByLinkText("Add Non-Public Inquiry");
+        waitForElementToBePresent("//form[@id='Non-Public Inquiry']");
+
+        enterDateParts("agreedByTcDate", today);
+
+        waitAndSelectValueFromDropDown("//select[@id='hearingType']", SelectorType.XPATH, nonPiHearingType);
+
+        enterDateParts("hearingDate", hearing);
+        waitAndSelectValueFromDropDown("//select[@id='hearingDate_hour']", SelectorType.XPATH, "10");
+        waitAndSelectValueFromDropDown("//select[@id='hearingDate_minute']", SelectorType.XPATH, "30");
+
+        waitAndSelectValueFromDropDown("//select[@id='venue']", SelectorType.XPATH, nonPiVenue);
+        waitAndEnterText("//input[@id='fields[witnessCount]']", SelectorType.XPATH, nonPiWitnessCount);
+        waitAndEnterText("//textarea[@id='fields[presidingStaffName]']", SelectorType.XPATH, nonPiPresidingStaff);
+        waitAndSelectValueFromDropDown("//select[@id='outcome']", SelectorType.XPATH, nonPiOutcome);
+
+        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 }
