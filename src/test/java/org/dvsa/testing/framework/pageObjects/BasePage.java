@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.pageObjects;
 
 import activesupport.driver.Browser;
+import activesupport.driver.NetworkDiagnostics;
 import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -628,6 +629,8 @@ public abstract class BasePage extends DriverUtils {
                 LOGGER.warn("WebDriverException encountered. Attempting retry " + (attempt + 1));
             }
         }
+        NetworkDiagnostics.reportAll(getDriver(),
+                "waitForElementToBePresent failed: " + selector);
         throw new RuntimeException("Failed to wait for element to be present after " + maxRetries + " attempts.");
     }
 

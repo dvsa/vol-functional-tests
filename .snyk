@@ -40,4 +40,19 @@ ignore:
         reason: Transitive tools.jackson.core:jackson-databind via active-support; fixed upstream (3.2.1) and pinned in active-support pom.xml, awaiting release consumption
         expires: 2027-07-17T00:00:00.000Z
         created: 2026-07-17T00:00:00.000Z
+  SNYK-JAVA-IOOPENTELEMETRY-17280222:
+    - '*':
+        reason: High-severity vulnerability in transitive Selenium dependency; fixed upstream in 1.62.0, awaiting framework dependency update
+        expires: 2027-09-02T00:00:00.000Z
+        created: 2026-09-02T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHEHTTPCOMPONENTSCLIENT5-19432178:
+    - '*':
+        reason: Critical vulnerability in transitive WebDriverManager dependency; fixed upstream in 5.6.4, awaiting framework dependency update
+        expires: 2027-09-02T00:00:00.000Z
+        created: 2026-09-02T00:00:00.000Z
+  SNYK-JAVA-ORGJSOUP-19233597:
+    - '*':
+        reason: High-severity vulnerability in transitive accessibility-ai-core dependency; fixed upstream in 1.23.2, awaiting framework dependency update
+        expires: 2027-09-02T00:00:00.000Z
+        created: 2026-09-02T00:00:00.000Z
 patch: {}
