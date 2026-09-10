@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.PrintOutputS3;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -20,6 +21,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ManageVehicle extends BasePage {
     World world;
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+    private PrintOutputS3.PrintOutputFile printOutputFile;
+    private Set<String> printOutputKeysBeforeReprint;
 
     public ManageVehicle(World world) {
         this.world = world;
@@ -172,6 +176,7 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
         world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "Y", "N");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
+        printOutputKeysBeforeReprint = PrintOutputS3.currentPdfKeys();
         world.updateLicence.printLicenceDiscs();
     }
 
@@ -189,6 +194,17 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.completeDVLAPageAndStoreAllValues("Y", "Y");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to reprint discs for these vehicles");
         world.updateLicence.printLicenceDiscs();
+    }
+
+    @Then("the licence disc print output PDF should be created in S3")
+    public void theLicenceDiscPrintOutputPDFShouldBeCreatedInS3() {
+        assertNotNull(printOutputKeysBeforeReprint, "Print output S3 keys should have been captured before reprinting");
+        printOutputFile = PrintOutputS3.waitForNewNonEmptyPdf(printOutputKeysBeforeReprint, world.updateLicence.getQueueId());
+        assertNotNull(printOutputFile, "Print output PDF should have been captured from S3");
+        assertTrue(printOutputFile.name().matches("\\d{8}-\\d{6}_job\\d+\\.pdf"),
+                "Unexpected print output PDF name: " + printOutputFile.name());
+        assertTrue(printOutputFile.size() > 0,
+                "Print output PDF should not be empty: " + printOutputFile.key());
     }
 
     @Then("the {string} confirmation banner should appear")

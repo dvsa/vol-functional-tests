@@ -62,6 +62,7 @@ Feature: Search and add a vehicle
     When I reprint a vehicle disc
     Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
     And the licence discs number should be updated
+    And the licence disc print output PDF should be created in S3
 
     Examples:
       | user_type  |
