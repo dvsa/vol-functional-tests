@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.s3.PrintOutputS3;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -7,7 +8,6 @@ import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
 import org.awaitility.Awaitility;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.PrintOutputS3;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
