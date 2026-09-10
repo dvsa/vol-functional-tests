@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.34.1](https://github.com/dvsa/vol-functional-tests/compare/v4.34.0...v4.34.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* check s3 for disc file name ([67f266f](https://github.com/dvsa/vol-functional-tests/commit/67f266f52b565278cf4c1be4d0112734536ee7c5))
+* check s3 for disc file name ([fac5d6d](https://github.com/dvsa/vol-functional-tests/commit/fac5d6d5989d97065f9e69bf504e76d4b50ddf83))
+
 ## [4.34.0](https://github.com/dvsa/vol-functional-tests/compare/v4.33.0...v4.34.0) (2026-09-01)
 
 
