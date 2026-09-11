@@ -200,7 +200,7 @@ public class ManageVehicle extends BasePage {
         assertTrue(printOutputFile.name().matches("\\d{8}-\\d{6}_job\\d+\\.pdf"),
                 "Unexpected print output PDF name: " + printOutputFile.name());
         assertTrue(printOutputFile.size() > 0,
-                "Print output PDF should not be empty: " + printOutputFile.key());
+                "Print output PDF should not be empty: " + printOutputFile.name());
     }
 
     @Then("the {string} confirmation banner should appear")
