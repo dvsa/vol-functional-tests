@@ -1,6 +1,22 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.34.2](https://github.com/dvsa/vol-functional-tests/compare/v4.34.1...v4.34.2) (2026-09-11)
+
+
+### Bug Fixes
+
+* manage vehicle ([ce521cb](https://github.com/dvsa/vol-functional-tests/commit/ce521cbdcb1b88d5243be7582dedff6bbc76fc33))
+* manage vehicle ([1e6ef3b](https://github.com/dvsa/vol-functional-tests/commit/1e6ef3b7d6df01af4312a7f37fa632b98ed0a119))
+
+## [4.34.1](https://github.com/dvsa/vol-functional-tests/compare/v4.34.0...v4.34.1) (2026-09-10)
+
+
+### Bug Fixes
+
+* check s3 for disc file name ([67f266f](https://github.com/dvsa/vol-functional-tests/commit/67f266f52b565278cf4c1be4d0112734536ee7c5))
+* check s3 for disc file name ([fac5d6d](https://github.com/dvsa/vol-functional-tests/commit/fac5d6d5989d97065f9e69bf504e76d4b50ddf83))
+
 ## [4.34.0](https://github.com/dvsa/vol-functional-tests/compare/v4.33.0...v4.34.0) (2026-09-01)
 
 
