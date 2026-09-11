@@ -1,5 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.aws.batch.AwsBatch;
+import activesupport.aws.batch.JobDefinition;
 import activesupport.aws.s3.PrintOutputS3;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
@@ -198,8 +200,10 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("the licence disc print output PDF should be created in S3")
-    public void theLicenceDiscPrintOutputPDFShouldBeCreatedInS3() {
+    public void theLicenceDiscPrintOutputPDFShouldBeCreatedInS3() throws Exception {
         assertNotNull(printRequestedAt, "Print request time should have been captured before checking S3");
+        assertTrue(new AwsBatch().triggerAwsBatchJob(JobDefinition.PROCESS_QUEUE.name()),
+                "Process queue batch job should have completed successfully");
         printOutputFile = PrintOutputS3.waitForNonEmptyPdfCreatedAfter(printRequestedAt);
         assertNotNull(printOutputFile, "Print output PDF should have been captured from S3");
         assertTrue(printOutputFile.name().matches("\\d{8}-\\d{6}_job\\d+\\.pdf"),
