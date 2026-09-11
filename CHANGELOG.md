@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.38.0](https://github.com/dvsa/vol-functional-tests/compare/v4.37.0...v4.38.0) (2026-09-11)
+
+
+### Features
+
+* process queue ([4581a9e](https://github.com/dvsa/vol-functional-tests/commit/4581a9e0c05a03c014859d04765c3e306f5f73d2))
+* process queue ([22edd44](https://github.com/dvsa/vol-functional-tests/commit/22edd449cbef998ce3863816c84fb20be57de347))
+
 ## [4.37.0](https://github.com/dvsa/vol-functional-tests/compare/v4.36.0...v4.37.0) (2026-09-11)
 
 
