@@ -132,19 +132,28 @@ public class FirstAndFinalLetterGeneration extends BasePage {
 
     @And("i select the {string} appendix")
     public void iSelectTheAppendix(String appendix) {
-        click(String.format(APPENDIX_CHECKBOX, appendix), SelectorType.XPATH);
+        String appendixSelector = String.format(APPENDIX_CHECKBOX, appendix);
+        waitForElementToBeClickable(appendixSelector, SelectorType.XPATH);
+        waitAndClick(appendixSelector, SelectorType.XPATH);
     }
 
     @And("i select the {string} option")
     public void iSelectTheOption(String choice) {
-        click(String.format(CHOICE_RADIO, choice), SelectorType.XPATH);
+        String choiceSelector = String.format(CHOICE_RADIO, choice);
+        waitForElementToBeClickable(choiceSelector, SelectorType.XPATH);
+        waitAndClick(choiceSelector, SelectorType.XPATH);
+        // Verify the radio button is actually selected by checking for the checked attribute on the input
+        String checkedInputSelector = String.format("//div[contains(@class,'letter-choices')]//label[normalize-space()='%s']//input[@checked]", choice);
+        untilElementIsPresent(checkedInputSelector, SelectorType.XPATH, 5, TimeUnit.SECONDS);
+        assertTrue(isElementPresent(checkedInputSelector, SelectorType.XPATH),
+                String.format("The '%s' radio button option should be selected", choice));
     }
 
     @And("i create the letter")
     public void iCreateTheLetter() {
         assertTrue(isElementEnabled(CREATE_LETTER_BUTTON, SelectorType.XPATH),
                 "'Create letter' should be enabled once the letter is valid");
-        click(CREATE_LETTER_BUTTON, SelectorType.XPATH);
+        waitAndClick(CREATE_LETTER_BUTTON, SelectorType.XPATH);
         untilElementIsPresent(PREVIEW_LINK, SelectorType.XPATH, 30, TimeUnit.SECONDS);
         assertTrue(isElementPresent(PREVIEW_MODAL, SelectorType.XPATH), "The letter preview should be displayed");
         letterContent = readLetterContent();
