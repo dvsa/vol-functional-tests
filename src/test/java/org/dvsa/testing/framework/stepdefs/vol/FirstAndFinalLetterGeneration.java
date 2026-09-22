@@ -68,6 +68,8 @@ public class FirstAndFinalLetterGeneration extends BasePage {
     private static final String LETTER_SUBCATEGORY = "Application Letters";
     private static final String FIRST_AND_FINAL_TEMPLATE = "[New] First and Finals GB";
 
+    private static final String FINAL_ATTEMPT_TEXT = "This letter is intended as a final attempt to resolve these issues";
+
     // Wording captured per choice ("First request" / "Final request") so the two can be compared.
     private final Map<String, String> capturedWording = new HashMap<>();
     private String letterContent;
@@ -208,6 +210,10 @@ public class FirstAndFinalLetterGeneration extends BasePage {
         assertNotNull(finalRequestWording, "Final request wording was not captured");
         assertNotEquals(firstRequestWording, finalRequestWording,
                 "First and final request letters should not share the same wording");
+        assertTrue(finalRequestWording.contains(FINAL_ATTEMPT_TEXT),
+                String.format("Final request letter should contain '%s'", FINAL_ATTEMPT_TEXT));
+        assertFalse(firstRequestWording.contains(FINAL_ATTEMPT_TEXT),
+                String.format("First request letter should not contain '%s'", FINAL_ATTEMPT_TEXT));
     }
 
     @Then("the letter should contain the {string} issue wording")
