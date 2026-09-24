@@ -1,6 +1,19 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.39.0](https://github.com/dvsa/vol-functional-tests/compare/v4.38.3...v4.39.0) (2026-09-24)
+
+
+### Features
+
+* as ([6795832](https://github.com/dvsa/vol-functional-tests/commit/6795832b7ca1c3e790e70bb4ce0aab296c579af1))
+* jackson ([527f1f7](https://github.com/dvsa/vol-functional-tests/commit/527f1f78077f50f856ead57a1a61319b35252a77))
+* jackson ([bf3c19d](https://github.com/dvsa/vol-functional-tests/commit/bf3c19db555db0eb70d77271a341dd7414bc8909))
+* jackson ([109f150](https://github.com/dvsa/vol-functional-tests/commit/109f1504033a610264292fc8d79c22777c7cef68))
+* mock Sign - secrets ([218f313](https://github.com/dvsa/vol-functional-tests/commit/218f3139331de8f8c5c8a1f17dc58cce6676cf8a))
+* mock Sign In ([21e4481](https://github.com/dvsa/vol-functional-tests/commit/21e44814b6302878991ff0601967daf9565c3e23))
+* remove refresh ([3dadd8e](https://github.com/dvsa/vol-functional-tests/commit/3dadd8ebbc3fdd8ead00b51c187f2f5e545a174c))
+
 ## [4.38.3](https://github.com/dvsa/vol-functional-tests/compare/v4.38.2...v4.38.3) (2026-09-16)
 
 
