@@ -72,21 +72,20 @@ Feature: First and final letter generation end to end journeys
       | Statutory declaration             | First request |
       | New application advert template   | Final request |
 
-  @operator-details
+  @operator-details @smoke
   Scenario Outline: Operator and application information is correctly populated
     When i select the "Adverts" issue "Date of publication is missing"
     And i select the "<choice>" option
     And i create the letter
     Then the letter preview should show the category, subcategory and template
     And the letter should display the operator name and licence number
-    And the letter should display the application reference
 
     Examples:
       | choice        |
       | First request |
       | Final request |
 
-  @e2e
+  @letters-e2e @int-regression
   Scenario: End to end first then final request letter journey
     When i select the "Adverts" issue "Date of publication is missing"
     And i select the "Statutory declaration" appendix

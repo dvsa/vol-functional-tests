@@ -101,5 +101,6 @@ public class World {
     public MessagingSelfServe messagingSelfServe;
 
     public DocumentsJourney documentsJourney;
+    public LetterGenerationJourney letterGenerationJourney;
     public RegisterConsultantAndOperator registerConsultantAndOperator;
 }

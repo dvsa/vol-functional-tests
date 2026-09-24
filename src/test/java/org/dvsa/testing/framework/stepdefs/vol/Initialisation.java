@@ -92,6 +92,7 @@ public class Initialisation {
         world.messagingInternal = new MessagingInternal(world);
         world.messagingSelfServe = new MessagingSelfServe(world);
         world.documentsJourney = new DocumentsJourney(world);
+        world.letterGenerationJourney = new LetterGenerationJourney(world);
         world.submitApplicationJourney = new SubmitApplicationJourney(world);
     }
 }
