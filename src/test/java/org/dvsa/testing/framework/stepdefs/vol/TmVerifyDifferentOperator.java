@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.codec.DecoderException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Journeys.licence.GovSignInJourney;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -85,21 +86,11 @@ public class TmVerifyDifferentOperator extends BasePage {
     public void thePostSignaturePageIsDisplayed(String text) {
         waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
         assertTrue(isTextPresent(text));
-        if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) < 10) {
-            assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
-        } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) >= 10) {
-            assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
-        }
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
     }
 
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
-        if (isTitlePresent("You have already proved your identity", 4)) {
-            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         waitForTextToBePresent("What happens next?");
         if (isElementPresent("//*[contains(text(),'Finish')]", SelectorType.XPATH)) {
             click("//*[contains(text(),'Finish')]", SelectorType.XPATH);
@@ -134,8 +125,7 @@ public class TmVerifyDifferentOperator extends BasePage {
             }
         } else if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            world.govSignInJourney.signInGovAccount();
         } else {
             world.govSignInJourney.signInGovAccount();
         }
@@ -143,12 +133,6 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
-        if(isTitlePresent("You have already proved your identity",1)){
-            waitAndClick("submitButton", SelectorType.ID);
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         waitForTextToBePresent("What happens next?");
         waitAndClickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLoginPage();
@@ -172,12 +156,6 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @When("the operator rejects the transport managers details")
     public void theOperatorRejectsTheTransportManagersDetails() {
-        if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         waitForTextToBePresent("What happens next?");
         UniversalActions.clickHome();
         waitForTextToBePresent("Home");

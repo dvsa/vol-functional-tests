@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Journeys.licence.GovSignInJourney;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
@@ -30,7 +31,7 @@ public class PsvSurrenders extends BasePage {
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
@@ -108,19 +109,13 @@ public class PsvSurrenders extends BasePage {
 
     @Then("the post gov sign in page is displayed")
     public void thePostGovSignInPageIsDisplayed() {
-        if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         if (isTitlePresent("Declaration", 2)) {
             clickById("sign");
         }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        assertTrue(isTextPresent(String.format("Signed by KENNETH DECERQUEIRA on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }

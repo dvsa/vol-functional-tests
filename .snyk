@@ -40,4 +40,14 @@ ignore:
         reason: Transitive tools.jackson.core:jackson-databind via active-support; fixed upstream (3.2.1) and pinned in active-support pom.xml, awaiting release consumption
         expires: 2027-07-17T00:00:00.000Z
         created: 2026-07-17T00:00:00.000Z
+  SNYK-JAVA-IOOPENTELEMETRY-17280222:
+    - '*':
+        reason: Transitive Selenium dependency via accessibility-ai-core; temporarily ignored pending an accessibility-ai-core upgrade
+        expires: 2026-10-23T00:00:00.000Z
+        created: 2026-09-23T00:00:00.000Z
+  SNYK-JAVA-ORGJSOUP-19233597:
+    - '*':
+        reason: Transitive jsoup dependency via accessibility-ai-core; temporarily ignored pending an accessibility-ai-core upgrade
+        expires: 2026-10-23T00:00:00.000Z
+        created: 2026-09-23T00:00:00.000Z
 patch: {}

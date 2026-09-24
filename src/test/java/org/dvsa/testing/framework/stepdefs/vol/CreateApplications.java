@@ -44,12 +44,6 @@ public class CreateApplications extends BasePage {
         }
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
-        if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         if (isTextPresent("What happens next?") || isTextPresent("Awaiting operator review")) {
             return;
         }
@@ -67,12 +61,6 @@ public class CreateApplications extends BasePage {
             waitAndClick("//*[@name='form-actions[sign]']", SelectorType.XPATH);
             world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();
-            if (isTitlePresent("You have already proved your identity", 2)) {
-                clickById("submitButton");
-            }
-            if (isTitlePresent("Confirm your details", 2)) {
-                clickById("submitButton");
-            }
         }
         scrollToBottom();
         if (isElementPresent("//*[@name='signatureDetails[submitAndPay]']", SelectorType.XPATH)) {
@@ -97,9 +85,6 @@ public class CreateApplications extends BasePage {
 
     @When("i pay for my application")
     public void iPayForMyApplication() {
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         UniversalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }

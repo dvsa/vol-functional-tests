@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Journeys.licence.GovSignInJourney;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -41,7 +42,7 @@ public class GovSignIn extends BasePage {
         world.govSignInJourney.registerGovAccount();
         waitForElementNotToBePresent("//*[@class='govuk-body text-centre']");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
-        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
     }
 
     @And("I am taken back to VOL Review and Declarations page")
@@ -60,14 +61,8 @@ public class GovSignIn extends BasePage {
     @Then("the application should be digitally signed")
     public void theApplicationShouldBeDigitallySigned() throws MalformedURLException, InterruptedException {
         world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
-        if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
-        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
     }
 }

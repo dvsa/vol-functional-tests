@@ -149,7 +149,7 @@ public class SurrenderJourney extends BasePage {
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
         waitForTextToBePresent("Application to surrender licence");
@@ -158,20 +158,10 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void checkSignInConfirmation() {
-        if (isTitlePresent("You have already proved your identity", 2)) {
-            clickById("submitButton");
-        }
-        if (isTitlePresent("Confirm your details", 2)) {
-            clickById("submitButton");
-        }
-        if (isTextPresent("We need to check your details") ||
-                isTextPresent("Continue to the service you want to use")) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        }
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        assertTrue(isTextPresent(String.format("Signed by KENNETH DECERQUEIRA on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(GovSignInJourney.isDigitallySignedToday());
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }

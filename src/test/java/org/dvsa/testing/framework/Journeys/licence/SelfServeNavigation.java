@@ -82,7 +82,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        refreshPage();
+        waitForTitleToBePresent("Licences");
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
