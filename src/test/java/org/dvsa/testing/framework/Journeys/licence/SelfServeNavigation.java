@@ -233,7 +233,15 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
         waitAndContinuePage("Licence history");
+        completeKnowledgeAndExperiencePage();
         waitAndContinuePage("Convictions and Penalties");
+    }
+
+    private void completeKnowledgeAndExperiencePage() {
+        waitForTitleToBePresent("Documentary evidence of knowledge/experience for holding an operator licence");
+        waitAndClick("uploadLaterRadio", SelectorType.ID);
+        waitAndClick("knowledgeExperienceOlat", SelectorType.ID);
+        UniversalActions.clickSaveAndContinue();
     }
 
     private void waitAndContinuePage(String pageTitle) {
