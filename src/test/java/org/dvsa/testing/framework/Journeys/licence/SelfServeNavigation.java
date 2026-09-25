@@ -95,8 +95,10 @@ public class SelfServeNavigation extends BasePage {
             }
             case "application" -> {
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
-                applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                waitAndClickByLinkText(world.createApplication.getApplicationId());
+                applicationStatus = openDashboardItemWhenAvailable(
+                        world.createApplication.getApplicationId(),
+                        overviewStatus
+                );
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply for a new licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
@@ -104,8 +106,10 @@ public class SelfServeNavigation extends BasePage {
             }
             case "variation" -> {
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
-                applicationStatus = waitAndGetText(overviewStatus, SelectorType.XPATH);
-                waitAndClickByLinkText(world.updateLicence.getVariationApplicationId());
+                applicationStatus = openDashboardItemWhenAvailable(
+                        world.updateLicence.getVariationApplicationId(),
+                        overviewStatus
+                );
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply to change a licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
@@ -123,6 +127,16 @@ public class SelfServeNavigation extends BasePage {
                 waitForTitleToBePresent("Convictions and Penalties");
             }
             default -> {
+                String disabledSection = String.format(
+                        "//li[contains(@class,'disabled')][.//*[normalize-space()='%s']]",
+                        page
+                );
+                if (isElementPresent(disabledSection, SelectorType.XPATH)) {
+                    throw new IllegalStateException(String.format(
+                            "Cannot navigate to '%s' because the section is disabled on the application overview",
+                            page
+                    ));
+                }
                 waitAndClickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
             }
@@ -152,6 +166,27 @@ public class SelfServeNavigation extends BasePage {
         throw new TimeoutException(String.format(
                 "Licence %s was not shown after %d dashboard loads",
                 licenceNumber,
+                MAX_DASHBOARD_LOADS
+        ));
+    }
+
+    private String openDashboardItemWhenAvailable(String reference, String statusSelector) {
+        for (int dashboardLoad = 1; dashboardLoad <= MAX_DASHBOARD_LOADS; dashboardLoad++) {
+            if (isLinkPresent(reference, 3)) {
+                String status = waitAndGetText(statusSelector, SelectorType.XPATH);
+                waitAndClickByLinkText(reference);
+                return status;
+            }
+
+            if (dashboardLoad < MAX_DASHBOARD_LOADS) {
+                get(url.concat("dashboard/"));
+                navigateToDashboard();
+            }
+        }
+
+        throw new TimeoutException(String.format(
+                "Application %s was not shown after %d dashboard loads",
+                reference,
                 MAX_DASHBOARD_LOADS
         ));
     }
@@ -239,8 +274,8 @@ public class SelfServeNavigation extends BasePage {
 
     private void completeKnowledgeAndExperiencePage() {
         waitForTitleToBePresent("Documentary evidence of knowledge/experience for holding an operator licence");
-        waitAndClick("uploadLaterRadio", SelectorType.ID);
-        waitAndClick("knowledgeExperienceOlat", SelectorType.ID);
+        waitAndClick("//label[@for='uploadLaterRadio']", SelectorType.XPATH);
+        waitAndClick("//label[.//input[@id='knowledgeExperienceOlat']]", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
     }
 
