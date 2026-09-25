@@ -412,6 +412,7 @@ public class ManageApplications extends BasePage {
     public void iHaveAnExistingLicence(String licenceNumber) {
         world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
         existingLicenceNumber = licenceNumber;
+        world.existingLicenceNumber = licenceNumber;
         waitAndClickByLinkText(existingLicenceNumber);
     }
 

@@ -17,6 +17,7 @@ import org.dvsa.testing.framework.stepdefs.vol.*;
 
 
 public class World {
+    public String existingLicenceNumber;
     public GetApplicationDetails applicationDetails;
     public RegisterUser registerUser;
     public UserDetails userDetails;
