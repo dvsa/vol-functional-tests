@@ -82,7 +82,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        waitForTitleToBePresent("Licences");
+        navigateToDashboard();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
@@ -103,7 +103,6 @@ public class SelfServeNavigation extends BasePage {
                 }
             }
             case "variation" -> {
-                UniversalActions.clickHome();
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = waitAndGetText(overviewStatus, SelectorType.XPATH);
                 waitAndClickByLinkText(world.updateLicence.getVariationApplicationId());
@@ -130,6 +129,13 @@ public class SelfServeNavigation extends BasePage {
         }
     }
 
+    private void navigateToDashboard() {
+        if (!isPath("^/dashboard/?$")) {
+            get(url.concat("dashboard/"));
+        }
+        waitForTitleToBePresent("Licences");
+    }
+
     private void clickLicenceWhenAvailable(String licenceNumber) {
         for (int dashboardLoad = 1; dashboardLoad <= MAX_DASHBOARD_LOADS; dashboardLoad++) {
             if (isLinkPresent(licenceNumber, 3)) {
@@ -139,7 +145,7 @@ public class SelfServeNavigation extends BasePage {
 
             if (dashboardLoad < MAX_DASHBOARD_LOADS) {
                 get(url.concat("dashboard/"));
-                waitForTitleToBePresent("Licences");
+                navigateToDashboard();
             }
         }
 
