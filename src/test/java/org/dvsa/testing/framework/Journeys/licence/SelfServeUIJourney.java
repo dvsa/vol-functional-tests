@@ -137,7 +137,12 @@ public class SelfServeUIJourney extends BasePage {
     public void completeFinancialEvidencePage() {
         var workingDir = System.getProperty("user.dir");
         var financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        if (isTitlePresent("Apply to change a licence", 15)) {
+            waitAndClick("overview-item__financial_evidence", SelectorType.ID);
+        } else {
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        }
+        waitForTitleToBePresent("Financial evidence");
         javaScriptExecutor("var r = document.getElementById('uploadNowRadio'); r.checked = true; r.dispatchEvent(new Event('change', {bubbles:true}));");
         javaScriptExecutor("document.getElementById('files').style.display = 'block'; document.getElementById('files').removeAttribute('aria-hidden');");
         javaScriptExecutor("var f = document.getElementById('evidence[files][file]'); f.style.left='0'; f.style.position='relative'; f.classList.remove('js-visually-hidden');");

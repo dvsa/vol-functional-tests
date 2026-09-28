@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.xpath;
 
@@ -31,7 +32,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelfServeNavigation extends BasePage {
 
-    private static final int MAX_DASHBOARD_LOADS = 4;
     private final World world;
     private final String url = webAppURL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
@@ -82,15 +82,16 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        waitForTitleToBePresent("Licences");
+        refreshPage();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence" -> {
-                String licenceNumber = world.existingLicenceNumber != null
-                        ? world.existingLicenceNumber
-                        : world.applicationDetails.getLicenceNumber();
-                clickLicenceWhenAvailable(licenceNumber);
+                if (world.configuration.env.toString().equals("int")) {
+                    waitAndClickByLinkText(existingLicenceNumber);
+                } else {
+                    waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
+                }
                 waitForTitleToBePresent("View and amend your licence");
             }
             case "application" -> {
@@ -128,26 +129,6 @@ public class SelfServeNavigation extends BasePage {
                 waitForTitleToBePresent(page.toString());
             }
         }
-    }
-
-    private void clickLicenceWhenAvailable(String licenceNumber) {
-        for (int dashboardLoad = 1; dashboardLoad <= MAX_DASHBOARD_LOADS; dashboardLoad++) {
-            if (isLinkPresent(licenceNumber, 3)) {
-                waitAndClickByLinkText(licenceNumber);
-                return;
-            }
-
-            if (dashboardLoad < MAX_DASHBOARD_LOADS) {
-                get(url.concat("dashboard/"));
-                waitForTitleToBePresent("Licences");
-            }
-        }
-
-        throw new TimeoutException(String.format(
-                "Licence %s was not shown after %d dashboard loads",
-                licenceNumber,
-                MAX_DASHBOARD_LOADS
-        ));
     }
 
     public void navigateToNavBarPage(SelfServeNavBar page) {
@@ -227,7 +208,15 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
         waitAndContinuePage("Licence history");
+        completeKnowledgeAndExperiencePage();
         waitAndContinuePage("Convictions and Penalties");
+    }
+
+    private void completeKnowledgeAndExperiencePage() {
+        waitForTitleToBePresent("Documentary evidence of knowledge/experience for holding an operator licence");
+        waitAndClick("//label[@for='uploadLaterRadio']", SelectorType.XPATH);
+        waitAndClick("//label[.//input[@id='knowledgeExperienceOlat']]", SelectorType.XPATH);
+        UniversalActions.clickSaveAndContinue();
     }
 
     private void waitAndContinuePage(String pageTitle) {
