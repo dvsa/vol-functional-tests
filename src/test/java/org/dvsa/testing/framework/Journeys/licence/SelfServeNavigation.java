@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.util.Set;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 import static org.openqa.selenium.By.linkText;
 import static org.openqa.selenium.By.xpath;
 
@@ -31,7 +32,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelfServeNavigation extends BasePage {
 
-    private static final int MAX_DASHBOARD_LOADS = 4;
     private final World world;
     private final String url = webAppURL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
@@ -82,34 +82,32 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        navigateToDashboard();
+        refreshPage();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence" -> {
-                String licenceNumber = world.existingLicenceNumber != null
-                        ? world.existingLicenceNumber
-                        : world.applicationDetails.getLicenceNumber();
-                clickLicenceWhenAvailable(licenceNumber);
+                if (world.configuration.env.toString().equals("int")) {
+                    waitAndClickByLinkText(existingLicenceNumber);
+                } else {
+                    waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
+                }
                 waitForTitleToBePresent("View and amend your licence");
             }
             case "application" -> {
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
-                applicationStatus = openDashboardItemWhenAvailable(
-                        world.createApplication.getApplicationId(),
-                        overviewStatus
-                );
+                applicationStatus = getText(overviewStatus, SelectorType.XPATH);
+                waitAndClickByLinkText(world.createApplication.getApplicationId());
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply for a new licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
                 }
             }
             case "variation" -> {
+                UniversalActions.clickHome();
                 overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
-                applicationStatus = openDashboardItemWhenAvailable(
-                        world.updateLicence.getVariationApplicationId(),
-                        overviewStatus
-                );
+                applicationStatus = waitAndGetText(overviewStatus, SelectorType.XPATH);
+                waitAndClickByLinkText(world.updateLicence.getVariationApplicationId());
                 switch (applicationStatus) {
                     case "NOT YET SUBMITTED" -> waitForTitleToBePresent("Apply to change a licence");
                     case "UNDER CONSIDERATION" -> waitForTitleToBePresent("Application overview");
@@ -127,68 +125,10 @@ public class SelfServeNavigation extends BasePage {
                 waitForTitleToBePresent("Convictions and Penalties");
             }
             default -> {
-                String disabledSection = String.format(
-                        "//li[contains(@class,'disabled')][.//*[normalize-space()='%s']]",
-                        page
-                );
-                if (isElementPresent(disabledSection, SelectorType.XPATH)) {
-                    throw new IllegalStateException(String.format(
-                            "Cannot navigate to '%s' because the section is disabled on the application overview",
-                            page
-                    ));
-                }
                 waitAndClickByLinkText(page.toString());
                 waitForTitleToBePresent(page.toString());
             }
         }
-    }
-
-    private void navigateToDashboard() {
-        if (!isPath("^/dashboard/?$")) {
-            get(url.concat("dashboard/"));
-        }
-        waitForTitleToBePresent("Licences");
-    }
-
-    private void clickLicenceWhenAvailable(String licenceNumber) {
-        for (int dashboardLoad = 1; dashboardLoad <= MAX_DASHBOARD_LOADS; dashboardLoad++) {
-            if (isLinkPresent(licenceNumber, 3)) {
-                waitAndClickByLinkText(licenceNumber);
-                return;
-            }
-
-            if (dashboardLoad < MAX_DASHBOARD_LOADS) {
-                get(url.concat("dashboard/"));
-                navigateToDashboard();
-            }
-        }
-
-        throw new TimeoutException(String.format(
-                "Licence %s was not shown after %d dashboard loads",
-                licenceNumber,
-                MAX_DASHBOARD_LOADS
-        ));
-    }
-
-    private String openDashboardItemWhenAvailable(String reference, String statusSelector) {
-        for (int dashboardLoad = 1; dashboardLoad <= MAX_DASHBOARD_LOADS; dashboardLoad++) {
-            if (isLinkPresent(reference, 3)) {
-                String status = waitAndGetText(statusSelector, SelectorType.XPATH);
-                waitAndClickByLinkText(reference);
-                return status;
-            }
-
-            if (dashboardLoad < MAX_DASHBOARD_LOADS) {
-                get(url.concat("dashboard/"));
-                navigateToDashboard();
-            }
-        }
-
-        throw new TimeoutException(String.format(
-                "Application %s was not shown after %d dashboard loads",
-                reference,
-                MAX_DASHBOARD_LOADS
-        ));
     }
 
     public void navigateToNavBarPage(SelfServeNavBar page) {
