@@ -72,7 +72,7 @@ Feature: First and final letter generation end to end journeys
       | Statutory declaration             | First request |
       | New application advert template   | Final request |
 
-  @operator-details @smoke
+  @operator-details @smoke @letters-e2e
   Scenario Outline: Operator and application information is correctly populated
     When i select the "Adverts" issue "Date of publication is missing"
     And i select the "<choice>" option
