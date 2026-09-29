@@ -101,3 +101,13 @@ Feature: Transport Manager - internal detail and processing tabs
     When I create a second application and capture the second transport manager
     And I merge the first transport manager into the second
     Then the winning transport manager should be linked to both licences
+
+  @Tm_licence_search_combined_filters
+  Scenario: Transport manager licence search honours the licence and transport manager filters together
+    Given I capture the first transport manager as the merge source
+    When I create a second application and capture the second transport manager
+    And I merge the first transport manager into the second
+    And I identify the transport manager that holds both licences
+    Then searching transport manager licences by that transport manager alone should return both licences
+    And searching transport manager licences by the first licence alone should return only that licence
+    And searching transport manager licences by both the first licence and that transport manager should return only the matching record

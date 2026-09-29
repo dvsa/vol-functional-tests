@@ -43,6 +43,7 @@ public class Initialisation {
         world.internalSearchJourney = new InternalSearchJourney(world);
         world.feeAndPaymentJourney = new FeeAndPaymentJourney(world);
         world.internalNavigation = new InternalNavigation(world);
+        world.transportManagerLicenceApiJourney = new TransportManagerLicenceApiJourney(world);
         world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.selfServeNavigation = new SelfServeNavigation(world);
         world.surrenderJourney = new SurrenderJourney(world);

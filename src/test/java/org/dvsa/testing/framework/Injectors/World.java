@@ -45,6 +45,7 @@ public class World {
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
     public InternalNavigation internalNavigation;
+    public TransportManagerLicenceApiJourney transportManagerLicenceApiJourney;
     public OperatingCentreJourney operatingCentreJourney;
     public SelfServeNavigation selfServeNavigation;
     public SurrenderJourney surrenderJourney;

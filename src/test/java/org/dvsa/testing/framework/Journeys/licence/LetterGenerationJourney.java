@@ -41,7 +41,10 @@ public class LetterGenerationJourney extends BasePage {
     private static final String MODAL_CATEGORY = "details[category]";
     private static final String MODAL_SUBCATEGORY = "details[documentSubCategory]";
     private static final String MODAL_TEMPLATE = "details[documentTemplate]";
-    private static final String MODAL_GENERATE_BUTTON = "form-actions[submit]";
+    // Selecting a "new letter flow" template (e.g. First and Finals) automatically swaps the modal
+    // content to the Create Letter form via ajax (see generate-document.js redirectToNewLetterFlow),
+    // so there is no generate button to press.
+    private static final String CREATE_LETTER_MODAL_TITLE = "//h2[@id='modal-title'][normalize-space()='Create Letter']";
 
     // Create Letter modal. Section selectors are anchored on the section heading because the section
     // div gains a "letter-section--expanded" modifier class once it has been opened.
@@ -94,7 +97,7 @@ public class LetterGenerationJourney extends BasePage {
 
     public void closeModalIfOpen() {
         if (isElementPresent(MODAL_CLOSE, SelectorType.XPATH)) {
-            click(MODAL_CLOSE, SelectorType.XPATH);
+            waitAndClick(MODAL_CLOSE, SelectorType.XPATH);
             waitForPageLoad();
         }
     }
@@ -107,7 +110,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void openGenerateLetterModal() {
-        clickById(NEW_LETTER_BUTTON);
+        waitAndClick(NEW_LETTER_BUTTON, SelectorType.ID);
         waitForTextToBePresent("Generate letter");
         assertEquals("Generate letter", getText(MODAL_TITLE, SelectorType.XPATH),
                 "The Generate letter modal should be displayed");
@@ -137,7 +140,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void openCreateLetterModal() {
-        clickById(MODAL_GENERATE_BUTTON);
+        untilElementIsPresent(CREATE_LETTER_MODAL_TITLE, SelectorType.XPATH, 30, TimeUnit.SECONDS);
         waitForTextToBePresent("Select content options");
         assertEquals("Create Letter", getText(MODAL_TITLE, SelectorType.XPATH),
                 "The Create Letter modal should be displayed");
@@ -148,7 +151,7 @@ public class LetterGenerationJourney extends BasePage {
         assertTrue(isElementPresent(toggle, SelectorType.XPATH),
                 String.format("Letter section '%s' should be present on the Create Letter modal", section));
         if (isElementNotPresent(String.format(SECTION_EXPANDED, section), SelectorType.XPATH)) {
-            click(toggle, SelectorType.XPATH);
+            waitAndClick(toggle, SelectorType.XPATH);
         }
         waitForElementToBeClickable(String.format(SECTION_ISSUE_LABELS, section), SelectorType.XPATH);
     }
@@ -159,11 +162,11 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void selectAppendix(String appendix) {
-        click(String.format(APPENDIX_CHECKBOX, appendix), SelectorType.XPATH);
+        waitAndClick(String.format(APPENDIX_CHECKBOX, appendix), SelectorType.XPATH);
     }
 
     public void selectChoice(String choice) {
-        click(String.format(CHOICE_RADIO, choice), SelectorType.XPATH);
+        waitAndClick(String.format(CHOICE_RADIO, choice), SelectorType.XPATH);
     }
 
     public boolean createLetterButtonIsEnabled() {
@@ -171,7 +174,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void clickCreateLetter() {
-        click(CREATE_LETTER_BUTTON, SelectorType.XPATH);
+        waitAndClick(CREATE_LETTER_BUTTON, SelectorType.XPATH);
     }
 
     public void createLetter() {
@@ -214,7 +217,7 @@ public class LetterGenerationJourney extends BasePage {
         switchToWindow(windows.get(windows.size() - 1));
         waitForPageLoad();
 
-        click(String.format(EDIT_INSTANCE_SECTION_CHECKBOX, instanceSection), SelectorType.XPATH);
+        waitAndClick(String.format(EDIT_INSTANCE_SECTION_CHECKBOX, instanceSection), SelectorType.XPATH);
 
         switchToIframe(LETTER_PREVIEW_FRAME);
         String content = getText("//body", SelectorType.XPATH);
@@ -226,7 +229,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void prepareToSend() {
-        click(PREPARE_TO_SEND_BUTTON, SelectorType.XPATH);
+        waitAndClick(PREPARE_TO_SEND_BUTTON, SelectorType.XPATH);
     }
 
     public void captureWording(String choice, String wording) {
