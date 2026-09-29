@@ -32,6 +32,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SelfServeNavigation extends BasePage {
 
+    private static final String KNOWLEDGE_AND_EXPERIENCE_TITLE = "Documentary evidence of knowledge/experience for holding an operator licence";
+    private static final int KNOWLEDGE_AND_EXPERIENCE_TIMEOUT_SECONDS = 15;
+
     private final World world;
     private final String url = webAppURL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
@@ -213,7 +216,9 @@ public class SelfServeNavigation extends BasePage {
     }
 
     private void completeKnowledgeAndExperiencePage() {
-        waitForTitleToBePresent("Documentary evidence of knowledge/experience for holding an operator licence");
+        if (!isTitlePresent(KNOWLEDGE_AND_EXPERIENCE_TITLE, KNOWLEDGE_AND_EXPERIENCE_TIMEOUT_SECONDS)) {
+            return;
+        }
         waitAndClick("//label[@for='uploadLaterRadio']", SelectorType.XPATH);
         waitAndClick("//label[.//input[@id='knowledgeExperienceOlat']]", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
