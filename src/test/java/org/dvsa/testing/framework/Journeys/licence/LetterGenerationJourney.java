@@ -70,7 +70,7 @@ public class LetterGenerationJourney extends BasePage {
 
     // /letter/preview page - the rendered letter itself sits inside an iframe, and "Continue to
     // editor" stays disabled until at least one section/appendix/todo checkbox is selected.
-    private static final String EDIT_INSTANCE_SECTION_CHECKBOX = "//label[normalize-space()='%s']/preceding-sibling::input[@name='letterSections[]']";
+    private static final String EDIT_INSTANCE_SECTION_CHECKBOX = "//label[starts-with(@for,'letter-section-') and normalize-space()='%s']";
     private static final String LETTER_PREVIEW_FRAME = "letter-preview-frame";
     private static final String SAVE_LETTER_AND_EXIT_BUTTON = "//button[@id='save-letter-exit']";
 
