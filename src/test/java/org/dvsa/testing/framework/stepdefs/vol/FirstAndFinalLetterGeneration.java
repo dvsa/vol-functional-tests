@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -135,8 +134,6 @@ public class FirstAndFinalLetterGeneration extends BasePage {
     @When("i prepare the letter to be sent")
     public void iPrepareTheLetterToBeSent() {
         world.letterGenerationJourney.prepareToSend();
-        // TODO: complete the send journey once the "Prepare to send" screen markup is available.
-        throw new PendingException();
     }
 
     @Then("the letter should be listed in Docs & attachments")
