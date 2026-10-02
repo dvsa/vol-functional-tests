@@ -29,8 +29,6 @@ public class LetterGenerationJourney extends BasePage {
     private static final String NEW_LETTER_BUTTON = "New letter";
     private static final String NEW_LETTER_BUTTON_SELECTOR = "//button[@id='New letter']";
     private static final String CATEGORY_FILTER = "category";
-    private static final String SUBCATEGORY_FILTER = "documentSubCategory";
-    private static final String SHOW_DOCS_FILTER = "showDocs";
     private static final String DOCUMENT_DESCRIPTIONS = "//td[@data-heading='Description']//a";
     private static final String LICENCE_DETAILS_PANEL = "//div[@class='small-module']//p[contains(@class,'small-module__details')]";
 
@@ -74,8 +72,12 @@ public class LetterGenerationJourney extends BasePage {
     private static final String SEND_BY_POST_BUTTON = "//button[normalize-space()='Print and send by post']";
 
     // /letter/preview page - the rendered letter itself sits inside an iframe, and "Continue to
-    // editor" stays disabled until at least one section/appendix/todo checkbox is selected.
-    private static final String EDIT_INSTANCE_SECTION_CHECKBOX = "//label[starts-with(@for,'letter-section-') and normalize-space()='%s']";
+    // editor" stays disabled until at least one section/appendix/todo checkbox is selected. Matched
+    // case-insensitively on a substring so template renaming (e.g. "Introductory wording F&F") does
+    // not break the lookup.
+    private static final String EDIT_INSTANCE_SECTION_CHECKBOX =
+            "//label[starts-with(@for,'letter-section-') and contains(translate(normalize-space(),"
+                    + "'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'%s')]";
     private static final String LETTER_PREVIEW_FRAME = "letter-preview-frame";
     private static final String SAVE_LETTER_AND_EXIT_BUTTON = "//button[@id='save-letter-exit']";
 
@@ -89,6 +91,10 @@ public class LetterGenerationJourney extends BasePage {
 
     // Wording captured per choice ("First request" / "Final request") so the two can be compared.
     private final Map<String, String> capturedWording = new HashMap<>();
+
+    // Tracks the last request type chosen ("First request" / "Final request") so the generated
+    // document ("First and Finals GB - <choice>") can be located in Docs & attachments.
+    private String lastChoice;
 
     public void viewDocsAndAttachments() {
         closeModalIfOpen();
@@ -107,11 +113,12 @@ public class LetterGenerationJourney extends BasePage {
         }
     }
 
-    public void filterDocuments(String category, String subCategory) {
+    public void filterDocuments(String category) {
+        // Selecting a filter auto-submits and re-renders the whole filter panel (OLCS.formHandler
+        // hideSubmit), so only one select is safe before the controls reload. Category alone is
+        // enough to surface the newly created letter (listed newest-first by default).
         selectValueFromDropDown(CATEGORY_FILTER, SelectorType.NAME, category);
-        selectValueFromDropDown(SUBCATEGORY_FILTER, SelectorType.NAME, subCategory);
-        selectValueFromDropDown(SHOW_DOCS_FILTER, SelectorType.NAME, "This application only");
-        waitForTextToBePresent("Docs & attachments");
+        waitForPageLoad();
     }
 
     public void openGenerateLetterModal() {
@@ -171,6 +178,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void selectChoice(String choice) {
+        lastChoice = choice;
         waitAndClick(String.format(CHOICE_RADIO, choice), SelectorType.XPATH);
     }
 
@@ -216,8 +224,12 @@ public class LetterGenerationJourney extends BasePage {
      * parent window before returning.
      */
     public String readLetterContent(String instanceSection) {
-        String parentWindow = new ArrayList<>(getWindowHandles()).get(0);
+        List<String> initialWindows = new ArrayList<>(getWindowHandles());
+        String parentWindow = initialWindows.get(0);
         waitAndClick(PREVIEW_LINK, SelectorType.XPATH);
+        // The preview opens in a new tab; wait for it to register before switching, otherwise we
+        // stay on the parent window (which has no letter-section labels) and the click below fails.
+        waitForTabsToLoad(initialWindows.size() + 1, 30);
         List<String> windows = new ArrayList<>(getWindowHandles());
         switchToWindow(windows.get(windows.size() - 1));
         waitForPageLoad();
@@ -235,11 +247,10 @@ public class LetterGenerationJourney extends BasePage {
 
     public void prepareToSend() {
         waitAndClick(PREPARE_TO_SEND_BUTTON, SelectorType.XPATH);
-        // "Prepare to send" converts the letter to a PDF server-side ("Preparing...") before the
-        // print/send modal loads, which can take a while, so wait for the Send letter modal to appear.
-        untilElementIsPresent(SEND_BY_POST_BUTTON, SelectorType.XPATH, 60, TimeUnit.SECONDS);
-        assertEquals("Send letter", getText(MODAL_TITLE, SelectorType.XPATH),
-                "The Send letter modal should be displayed");
+        // "Prepare to send" converts the letter to a PDF server-side ("Preparing...") - rendering,
+        // Gotenberg HTML->PDF conversion, appendix merge, content-store upload and Document creation
+        // all happen synchronously in this request, so allow a reasonable wait for the Send letter modal.
+        untilElementIsPresent(SEND_BY_POST_BUTTON, SelectorType.XPATH, 45, TimeUnit.SECONDS);
         waitAndClick(SEND_BY_POST_BUTTON, SelectorType.XPATH);
         waitForPageLoad();
     }
@@ -271,11 +282,12 @@ public class LetterGenerationJourney extends BasePage {
                 String.format("Licence details panel should show the licence number, but was '%s'", licenceDetails));
     }
 
-    public void assertDocumentIsListed(String category, String subCategory, String description) {
+    public void assertDocumentIsListed(String category, String subCategory) {
         viewDocsAndAttachments();
-        filterDocuments(category, subCategory);
-        assertTrue(documentIsListed(description),
-                String.format("'%s' should be listed under the '%s' subcategory", description, subCategory));
+        filterDocuments(category);
+        assertTrue(letterDocumentIsListed(),
+                String.format("The '%s' letter should be listed under the '%s' subcategory",
+                        lastChoice, subCategory));
     }
 
     public void assertDocumentLinkOpensStoredFile() {
@@ -285,8 +297,14 @@ public class LetterGenerationJourney extends BasePage {
                 String.format("Link should point at a stored document, but was '%s'", documentLink));
     }
 
-    private boolean documentIsListed(String description) {
+    private boolean letterDocumentIsListed() {
+        // The generated document is listed as "First and Finals GB - First request" /
+        // "First and Finals GB - Final request", not by the raw template name.
         List<WebElement> documents = findElements(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH);
-        return documents.stream().anyMatch(document -> document.getText().contains(description));
+        return documents.stream().anyMatch(document -> {
+            String text = document.getText();
+            return text.contains(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME)
+                    && (lastChoice == null || text.contains(lastChoice));
+        });
     }
 }

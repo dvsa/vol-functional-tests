@@ -6,7 +6,6 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.dvsa.testing.framework.Journeys.licence.LetterGenerationJourney.FIRST_AND_FINAL_TEMPLATE;
 import static org.dvsa.testing.framework.Journeys.licence.LetterGenerationJourney.LETTER_CATEGORY;
 import static org.dvsa.testing.framework.Journeys.licence.LetterGenerationJourney.LETTER_SUBCATEGORY;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FirstAndFinalLetterGeneration extends BasePage {
     private final World world;
 
-    // The name of the "Edit Instance Section" that must be ticked on the /letter/preview page before
-    // "Continue to editor" is enabled, and whose iframe content is read back to assert wording.
-    private static final String INTRODUCTORY_WORDING_SECTION = "First and Finals GB - introductory wording";
+    // A substring (matched case-insensitively) of the "Edit Instance Section" that is ticked on the
+    // /letter/preview page to enable "Continue to editor"; its iframe content is read back to assert
+    // wording. Kept as a substring so it matches regardless of the template's full section label
+    // (e.g. "Introductory wording F&F").
+    private static final String INTRODUCTORY_WORDING_SECTION = "introductory wording";
 
     private String letterContent;
 
@@ -138,6 +139,6 @@ public class FirstAndFinalLetterGeneration extends BasePage {
 
     @Then("the letter should be listed in Docs & attachments")
     public void theLetterShouldBeListedInDocsAndAttachments() {
-        world.letterGenerationJourney.assertDocumentIsListed(LETTER_CATEGORY, LETTER_SUBCATEGORY, FIRST_AND_FINAL_TEMPLATE);
+        world.letterGenerationJourney.assertDocumentIsListed(LETTER_CATEGORY, LETTER_SUBCATEGORY);
     }
 }
