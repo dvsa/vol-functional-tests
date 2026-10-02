@@ -85,7 +85,7 @@ Feature: First and final letter generation end to end journeys
       | First request |
       | Final request |
 
-  @letters-e2e @int-regression
+  @letters-e2e @int_regression
   Scenario: End to end first then final request letter journey
     When i select the "Adverts" issue "Date of publication is missing"
     And i select the "Statutory declaration" appendix
