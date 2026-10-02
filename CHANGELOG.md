@@ -1,6 +1,32 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.40.0](https://github.com/dvsa/vol-functional-tests/compare/v4.39.1...v4.40.0) (2026-10-02)
+
+
+### Features
+
+* inital ([cf1bf39](https://github.com/dvsa/vol-functional-tests/commit/cf1bf396e5876a965cd5442ab028b30921081c8e))
+
+
+### Bug Fixes
+
+* dashboard ([3af4562](https://github.com/dvsa/vol-functional-tests/commit/3af4562ce77c3b7df9745c318abc1cd6e684bc1d))
+* knowledge page ([9af1518](https://github.com/dvsa/vol-functional-tests/commit/9af15180c07ec861ec3d017e574ac08b8d096965))
+* knowledge page ([2094ec8](https://github.com/dvsa/vol-functional-tests/commit/2094ec8827f81ff385a75ed06e90ff2cb223f0ce))
+* knowledge page ([77b9c52](https://github.com/dvsa/vol-functional-tests/commit/77b9c52fe3785dbc4b070feaf8411114c7b22293))
+* knowledge page ([c1c7389](https://github.com/dvsa/vol-functional-tests/commit/c1c7389a693a96fa15a903ddb847242c245d5201))
+* knowledge page ([e1e96c2](https://github.com/dvsa/vol-functional-tests/commit/e1e96c2599201cff8ec257b1b9afa5f9a23918f7))
+* knowledge page ([fefe5b5](https://github.com/dvsa/vol-functional-tests/commit/fefe5b53328e65e403ebea408595be181c22af5c))
+* knowledge page ([e078b9a](https://github.com/dvsa/vol-functional-tests/commit/e078b9a1d41baab99cef5b6baec34a1c70c1f61b))
+* knowledge page ([5f7b4ae](https://github.com/dvsa/vol-functional-tests/commit/5f7b4aebf24ed488e656587f9713c6c9458ac584))
+* knowledge page ([b97f88e](https://github.com/dvsa/vol-functional-tests/commit/b97f88ea743e5d2a4c22f30f4e09f4fb4b916dde))
+* knowledge page ([d5709b3](https://github.com/dvsa/vol-functional-tests/commit/d5709b3c219516f581cf0039bb62b7fbe0f31964))
+* knowledge page ([d2c9979](https://github.com/dvsa/vol-functional-tests/commit/d2c997935917abeb8c63cad14fcaf73be91cc3e7))
+* knowledge page ([28e3ef9](https://github.com/dvsa/vol-functional-tests/commit/28e3ef9f5167e827e486f6ee5640626538303f30))
+* knowledge page ([af887f1](https://github.com/dvsa/vol-functional-tests/commit/af887f11b52b6e077e169299dda245c875d1427e))
+* tm licence search combined filter test ([e52621b](https://github.com/dvsa/vol-functional-tests/commit/e52621b9d21b024a66559cd3a63c25e7497db791))
+
 ## [4.39.1](https://github.com/dvsa/vol-functional-tests/compare/v4.39.0...v4.39.1) (2026-09-25)
 
 
