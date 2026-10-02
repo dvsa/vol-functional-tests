@@ -71,7 +71,6 @@ public class LetterGenerationJourney extends BasePage {
     // Send letter modal - "Prepare to send" loads the existing document print action (DocumentSend
     // form) into the same modal and retitles it "Send letter". The action buttons keep their form
     // labels: "Send by email", "Print and send by post" and "Cancel".
-    private static final String SEND_LETTER_TITLE = "//h2[@id='modal-title'][normalize-space()='Send letter']";
     private static final String SEND_BY_POST_BUTTON = "//button[normalize-space()='Print and send by post']";
 
     // /letter/preview page - the rendered letter itself sits inside an iframe, and "Continue to
@@ -236,7 +235,9 @@ public class LetterGenerationJourney extends BasePage {
 
     public void prepareToSend() {
         waitAndClick(PREPARE_TO_SEND_BUTTON, SelectorType.XPATH);
-        untilElementIsPresent(SEND_LETTER_TITLE, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+        // "Prepare to send" converts the letter to a PDF server-side ("Preparing...") before the
+        // print/send modal loads, which can take a while, so wait for the Send letter modal to appear.
+        untilElementIsPresent(SEND_BY_POST_BUTTON, SelectorType.XPATH, 60, TimeUnit.SECONDS);
         assertEquals("Send letter", getText(MODAL_TITLE, SelectorType.XPATH),
                 "The Send letter modal should be displayed");
         waitAndClick(SEND_BY_POST_BUTTON, SelectorType.XPATH);
