@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -96,18 +98,69 @@ public class LetterGenerationJourney extends BasePage {
     // document ("First and Finals GB - <choice>") can be located in Docs & attachments.
     private String lastChoice;
 
+    // Nearly every panel on this journey is re-rendered by ajax (the documents filter auto-submits,
+    // the modal swaps its own body, the letter sections expand in place), so an element located a
+    // moment ago can be detached before it is read. BasePage recovers from staleness by refreshing
+    // the page, which would discard the open modal, so these helpers simply re-locate and retry.
+    private static final int STALE_RETRY_ATTEMPTS = 3;
+    private static final long STALE_RETRY_PAUSE_MILLIS = 500;
+
+    private static <T> T retryOnStale(Supplier<T> action) {
+        StaleElementReferenceException lastStale = null;
+        for (int attempt = 0; attempt < STALE_RETRY_ATTEMPTS; attempt++) {
+            try {
+                return action.get();
+            } catch (StaleElementReferenceException stale) {
+                lastStale = stale;
+                pauseBeforeStaleRetry();
+            }
+        }
+        throw lastStale;
+    }
+
+    private static void retryOnStale(Runnable action) {
+        retryOnStale(() -> {
+            action.run();
+            return null;
+        });
+    }
+
+    private static void pauseBeforeStaleRetry() {
+        try {
+            Thread.sleep(STALE_RETRY_PAUSE_MILLIS);
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private static String getTextWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> getText(selector, selectorType));
+    }
+
+    private static boolean isElementPresentWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> isElementPresent(selector, selectorType));
+    }
+
+    private static boolean isElementNotPresentWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> isElementNotPresent(selector, selectorType));
+    }
+
+    private static void selectWhenStable(String selectName, String option) {
+        retryOnStale(() -> selectValueFromDropDown(selectName, SelectorType.NAME, option));
+    }
+
     public void viewDocsAndAttachments() {
         closeModalIfOpen();
-        if (isElementNotPresent(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH)) {
+        if (isElementNotPresentWhenStable(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH)) {
             waitAndClickByLinkText("Docs & attachments");
             waitForTextToBePresent("New Letter");
         }
-        assertTrue(isElementPresent(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH),
+        assertTrue(isElementPresentWhenStable(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH),
                 "'New Letter' button should be available on the Docs & attachments page");
     }
 
     public void closeModalIfOpen() {
-        if (isElementPresent(MODAL_CLOSE, SelectorType.XPATH)) {
+        if (isElementPresentWhenStable(MODAL_CLOSE, SelectorType.XPATH)) {
             waitAndClick(MODAL_CLOSE, SelectorType.XPATH);
             waitForPageLoad();
         }
@@ -116,15 +169,16 @@ public class LetterGenerationJourney extends BasePage {
     public void filterDocuments(String category) {
         // Selecting a filter auto-submits and re-renders the whole filter panel (OLCS.formHandler
         // hideSubmit), so only one select is safe before the controls reload. Category alone is
-        // enough to surface the newly created letter (listed newest-first by default).
-        selectValueFromDropDown(CATEGORY_FILTER, SelectorType.NAME, category);
+        // enough to surface the newly created letter (listed newest-first by default). The select
+        // itself is replaced by that reload, so re-locate it if it goes stale mid-selection.
+        selectWhenStable(CATEGORY_FILTER, category);
         waitForPageLoad();
     }
 
     public void openGenerateLetterModal() {
         waitAndClick(NEW_LETTER_BUTTON, SelectorType.ID);
         waitForTextToBePresent("Generate letter");
-        assertEquals("Generate letter", getText(MODAL_TITLE, SelectorType.XPATH),
+        assertEquals("Generate letter", getTextWhenStable(MODAL_TITLE, SelectorType.XPATH),
                 "The Generate letter modal should be displayed");
     }
 
@@ -146,23 +200,23 @@ public class LetterGenerationJourney extends BasePage {
         String enabledOption = String.format("//select[@name='%s' and not(@disabled)]/option[normalize-space()=\"%s\"]",
                 selectName, option);
         untilElementIsPresent(enabledOption, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        assertTrue(isElementPresent(enabledOption, SelectorType.XPATH),
+        assertTrue(isElementPresentWhenStable(enabledOption, SelectorType.XPATH),
                 String.format("Option '%s' should be selectable in the '%s' dropdown", option, selectName));
-        selectValueFromDropDown(selectName, SelectorType.NAME, option);
+        selectWhenStable(selectName, option);
     }
 
     public void openCreateLetterModal() {
         untilElementIsPresent(CREATE_LETTER_MODAL_TITLE, SelectorType.XPATH, 30, TimeUnit.SECONDS);
         waitForTextToBePresent("Select content options");
-        assertEquals("Create Letter", getText(MODAL_TITLE, SelectorType.XPATH),
+        assertEquals("Create Letter", getTextWhenStable(MODAL_TITLE, SelectorType.XPATH),
                 "The Create Letter modal should be displayed");
     }
 
     public void expandSection(String section) {
         String toggle = String.format(SECTION_TOGGLE, section);
-        assertTrue(isElementPresent(toggle, SelectorType.XPATH),
+        assertTrue(isElementPresentWhenStable(toggle, SelectorType.XPATH),
                 String.format("Letter section '%s' should be present on the Create Letter modal", section));
-        if (isElementNotPresent(String.format(SECTION_EXPANDED, section), SelectorType.XPATH)) {
+        if (isElementNotPresentWhenStable(String.format(SECTION_EXPANDED, section), SelectorType.XPATH)) {
             waitAndClick(toggle, SelectorType.XPATH);
         }
         waitForElementToBeClickable(String.format(SECTION_ISSUE_LABELS, section), SelectorType.XPATH);
@@ -183,7 +237,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public boolean createLetterButtonIsEnabled() {
-        return isElementEnabled(CREATE_LETTER_BUTTON, SelectorType.XPATH);
+        return retryOnStale(() -> isElementEnabled(CREATE_LETTER_BUTTON, SelectorType.XPATH));
     }
 
     public void clickCreateLetter() {
@@ -194,27 +248,28 @@ public class LetterGenerationJourney extends BasePage {
         assertTrue(createLetterButtonIsEnabled(), "'Create letter' should be enabled once the letter is valid");
         clickCreateLetter();
         untilElementIsPresent(PREVIEW_LINK, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        assertTrue(isElementPresent(PREVIEW_MODAL, SelectorType.XPATH), "The letter preview should be displayed");
+        assertTrue(isElementPresentWhenStable(PREVIEW_MODAL, SelectorType.XPATH),
+                "The letter preview should be displayed");
     }
 
     public void assertChoiceGroupWarningIsDisplayed() {
-        assertTrue(isElementPresent(CHOICE_GROUP_ERROR, SelectorType.XPATH),
+        assertTrue(isElementPresentWhenStable(CHOICE_GROUP_ERROR, SelectorType.XPATH),
                 "The 'First or final request' warning should be displayed");
-        assertTrue(getText(CHOICE_GROUP_ERROR, SelectorType.XPATH).contains("Select First or final request"),
+        assertTrue(getTextWhenStable(CHOICE_GROUP_ERROR, SelectorType.XPATH).contains("Select First or final request"),
                 "The 'First or final request' warning text should be displayed");
     }
 
     public void assertContentOptionsWarningIsDisplayed() {
-        assertTrue(isElementPresent(VALIDATION_ERROR, SelectorType.XPATH),
+        assertTrue(isElementPresentWhenStable(VALIDATION_ERROR, SelectorType.XPATH),
                 "The content options warning should be displayed");
-        assertTrue(getText(VALIDATION_ERROR, SelectorType.XPATH).contains("Please choose at least one issue or appendix"),
+        assertTrue(getTextWhenStable(VALIDATION_ERROR, SelectorType.XPATH).contains("Please choose at least one issue or appendix"),
                 "The content options warning text should be displayed");
     }
 
     public void assertPreviewDetails() {
-        assertEquals(LETTER_CATEGORY, getText(PREVIEW_CATEGORY, SelectorType.XPATH));
-        assertEquals(LETTER_SUBCATEGORY, getText(PREVIEW_SUBCATEGORY, SelectorType.XPATH));
-        assertEquals(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME, getText(PREVIEW_TEMPLATE, SelectorType.XPATH));
+        assertEquals(LETTER_CATEGORY, getTextWhenStable(PREVIEW_CATEGORY, SelectorType.XPATH));
+        assertEquals(LETTER_SUBCATEGORY, getTextWhenStable(PREVIEW_SUBCATEGORY, SelectorType.XPATH));
+        assertEquals(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME, getTextWhenStable(PREVIEW_TEMPLATE, SelectorType.XPATH));
     }
 
     /**
@@ -237,7 +292,7 @@ public class LetterGenerationJourney extends BasePage {
         waitAndClick(String.format(EDIT_INSTANCE_SECTION_CHECKBOX, instanceSection), SelectorType.XPATH);
 
         switchToIframe(LETTER_PREVIEW_FRAME);
-        String content = getText("//body", SelectorType.XPATH);
+        String content = getTextWhenStable("//body", SelectorType.XPATH);
         switchToDefaultContent();
 
         closeTab();
@@ -275,7 +330,7 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void assertLicenceDetailsPanel() {
-        String licenceDetails = getText(LICENCE_DETAILS_PANEL, SelectorType.XPATH);
+        String licenceDetails = getTextWhenStable(LICENCE_DETAILS_PANEL, SelectorType.XPATH);
         assertTrue(licenceDetails.contains(world.createApplication.getOrganisationName()),
                 String.format("Licence details panel should show the operator name, but was '%s'", licenceDetails));
         assertTrue(licenceDetails.contains(world.applicationDetails.getLicenceNumber()),
@@ -291,20 +346,32 @@ public class LetterGenerationJourney extends BasePage {
     }
 
     public void assertDocumentLinkOpensStoredFile() {
-        String documentLink = getLink(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH);
+        String documentLink = retryOnStale(() -> getLink(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH));
         assertNotNull(documentLink, "Document link should be present");
         assertTrue(documentLink.contains("/file/"),
                 String.format("Link should point at a stored document, but was '%s'", documentLink));
     }
 
     private boolean letterDocumentIsListed() {
-        // The generated document is listed as "First and Finals GB - First request" /
-        // "First and Finals GB - Final request", not by the raw template name.
-        List<WebElement> documents = findElements(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH);
-        return documents.stream().anyMatch(document -> {
-            String text = document.getText();
-            return text.contains(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME)
-                    && (lastChoice == null || text.contains(lastChoice));
-        });
+        // The document is listed as "First and Finals GB - First request" / "...- Final request",
+        // not by the raw template name. The filter auto-submits and re-renders the table via AJAX,
+        // so poll and tolerate StaleElementReferenceException while that reload settles.
+        long deadline = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(15);
+        do {
+            try {
+                List<WebElement> documents = findElements(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH);
+                for (WebElement document : documents) {
+                    String text = document.getText();
+                    if (text.contains(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME)
+                            && (lastChoice == null || text.contains(lastChoice))) {
+                        return true;
+                    }
+                }
+            } catch (StaleElementReferenceException staleDuringReload) {
+                // Table was replaced mid-read by the filter's AJAX reload; re-query on the next pass.
+            }
+            pauseBeforeStaleRetry();
+        } while (System.currentTimeMillis() < deadline);
+        return false;
     }
 }
