@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.40.1](https://github.com/dvsa/vol-functional-tests/compare/v4.40.0...v4.40.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* tag ([21361a6](https://github.com/dvsa/vol-functional-tests/commit/21361a6e395561892518d4152bf7355fecf4d1e5))
+* tag ([a5720ac](https://github.com/dvsa/vol-functional-tests/commit/a5720ac73a4049d16d82e3e837f41845c81150b5))
+
 ## [4.40.0](https://github.com/dvsa/vol-functional-tests/compare/v4.39.1...v4.40.0) (2026-10-02)
 
 
