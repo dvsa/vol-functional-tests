@@ -1,0 +1,377 @@
+package org.dvsa.testing.framework.Journeys.licence;
+
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class LetterGenerationJourney extends BasePage {
+
+    World world;
+
+    public LetterGenerationJourney(World world) {
+        this.world = world;
+    }
+
+    // Docs & attachments page
+    private static final String NEW_LETTER_BUTTON = "New letter";
+    private static final String NEW_LETTER_BUTTON_SELECTOR = "//button[@id='New letter']";
+    private static final String CATEGORY_FILTER = "category";
+    private static final String DOCUMENT_DESCRIPTIONS = "//td[@data-heading='Description']//a";
+    private static final String LICENCE_DETAILS_PANEL = "//div[@class='small-module']//p[contains(@class,'small-module__details')]";
+
+    // Generate letter modal. It reuses the ids of the left hand filter form, so the modal fields are
+    // always addressed by their form element names.
+    private static final String MODAL_TITLE = "//h2[@id='modal-title']";
+    private static final String MODAL_CLOSE = "//a[contains(@class,'modal__close')]";
+    private static final String MODAL_CATEGORY = "details[category]";
+    private static final String MODAL_SUBCATEGORY = "details[documentSubCategory]";
+    private static final String MODAL_TEMPLATE = "details[documentTemplate]";
+    // Selecting a "new letter flow" template (e.g. First and Finals) automatically swaps the modal
+    // content to the Create Letter form via ajax (see generate-document.js redirectToNewLetterFlow),
+    // so there is no generate button to press.
+    private static final String CREATE_LETTER_MODAL_TITLE = "//h2[@id='modal-title'][normalize-space()='Create Letter']";
+
+    // Create Letter modal. Section selectors are anchored on the section heading because the section
+    // div gains a "letter-section--expanded" modifier class once it has been opened.
+    private static final String SECTION_TITLE = "//h3[contains(@class,'letter-section__title')][normalize-space()='%s']";
+    private static final String SECTION_TOGGLE = SECTION_TITLE + "/following-sibling::span[contains(@class,'letter-section__toggle')]";
+    private static final String SECTION_CONTENT = SECTION_TITLE + "/parent::div/following-sibling::div[contains(@class,'letter-section__content')]";
+    private static final String SECTION_ISSUE = SECTION_CONTENT + "//label[normalize-space()='%s']";
+    private static final String SECTION_ISSUE_LABELS = SECTION_CONTENT + "//label[contains(@class,'govuk-checkboxes__label')]";
+    private static final String SECTION_EXPANDED = SECTION_TITLE + "/ancestor::div[contains(@class,'letter-section--expanded')]";
+    private static final String APPENDIX_CHECKBOX = "//div[contains(@class,'letter-appendices')]//label[contains(normalize-space(),'%s')]";
+    private static final String CHOICE_RADIO = "//div[contains(@class,'letter-choices')]//label[normalize-space()='%s']";
+    private static final String CHOICE_GROUP_ERROR = "//p[contains(@class,'letter-choice-group-error')]";
+    private static final String VALIDATION_ERROR = "//div[@id='validation-error']";
+    private static final String CREATE_LETTER_BUTTON = "//button[@id='create-letter-btn']";
+
+    // Preview / prepare to send modal (opens the /letter/preview page in a new tab)
+    private static final String PREVIEW_MODAL = "//div[@id='letter-preview-modal']";
+    private static final String PREVIEW_CATEGORY = "//span[@id='preview-category']";
+    private static final String PREVIEW_SUBCATEGORY = "//span[@id='preview-subcategory']";
+    private static final String PREVIEW_TEMPLATE = "//span[@id='preview-template']";
+    private static final String PREVIEW_LINK = "//a[@id='preview-link']";
+    private static final String PREPARE_TO_SEND_BUTTON = "//button[@id='prepare-to-send-btn']";
+
+    // Send letter modal - "Prepare to send" loads the existing document print action (DocumentSend
+    // form) into the same modal and retitles it "Send letter". The action buttons keep their form
+    // labels: "Send by email", "Print and send by post" and "Cancel".
+    private static final String SEND_BY_POST_BUTTON = "//button[normalize-space()='Print and send by post']";
+
+    // /letter/preview page - the rendered letter itself sits inside an iframe, and "Continue to
+    // editor" stays disabled until at least one section/appendix/todo checkbox is selected. Matched
+    // case-insensitively on a substring so template renaming (e.g. "Introductory wording F&F") does
+    // not break the lookup.
+    private static final String EDIT_INSTANCE_SECTION_CHECKBOX =
+            "//label[starts-with(@for,'letter-section-') and contains(translate(normalize-space(),"
+                    + "'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'%s')]";
+    private static final String LETTER_PREVIEW_FRAME = "letter-preview-frame";
+    private static final String SAVE_LETTER_AND_EXIT_BUTTON = "//button[@id='save-letter-exit']";
+
+    public static final String LETTER_CATEGORY = "Application";
+    public static final String LETTER_SUBCATEGORY = "Application Letters";
+    public static final String APPENDIX_SUBCATEGORY = "Letter appendix";
+    public static final String FIRST_AND_FINAL_TEMPLATE = "[New] First and Finals GB";
+    // The Generate letter modal lists the template with its "[New]" prefix, but the Create Letter
+    // preview panel displays it without that prefix.
+    private static final String FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME = "First and Finals GB";
+
+    // Wording captured per choice ("First request" / "Final request") so the two can be compared.
+    private final Map<String, String> capturedWording = new HashMap<>();
+
+    // Tracks the last request type chosen ("First request" / "Final request") so the generated
+    // document ("First and Finals GB - <choice>") can be located in Docs & attachments.
+    private String lastChoice;
+
+    // Nearly every panel on this journey is re-rendered by ajax (the documents filter auto-submits,
+    // the modal swaps its own body, the letter sections expand in place), so an element located a
+    // moment ago can be detached before it is read. BasePage recovers from staleness by refreshing
+    // the page, which would discard the open modal, so these helpers simply re-locate and retry.
+    private static final int STALE_RETRY_ATTEMPTS = 3;
+    private static final long STALE_RETRY_PAUSE_MILLIS = 500;
+
+    private static <T> T retryOnStale(Supplier<T> action) {
+        StaleElementReferenceException lastStale = null;
+        for (int attempt = 0; attempt < STALE_RETRY_ATTEMPTS; attempt++) {
+            try {
+                return action.get();
+            } catch (StaleElementReferenceException stale) {
+                lastStale = stale;
+                pauseBeforeStaleRetry();
+            }
+        }
+        throw lastStale;
+    }
+
+    private static void retryOnStale(Runnable action) {
+        retryOnStale(() -> {
+            action.run();
+            return null;
+        });
+    }
+
+    private static void pauseBeforeStaleRetry() {
+        try {
+            Thread.sleep(STALE_RETRY_PAUSE_MILLIS);
+        } catch (InterruptedException interrupted) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private static String getTextWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> getText(selector, selectorType));
+    }
+
+    private static boolean isElementPresentWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> isElementPresent(selector, selectorType));
+    }
+
+    private static boolean isElementNotPresentWhenStable(String selector, SelectorType selectorType) {
+        return retryOnStale(() -> isElementNotPresent(selector, selectorType));
+    }
+
+    private static void selectWhenStable(String selectName, String option) {
+        retryOnStale(() -> selectValueFromDropDown(selectName, SelectorType.NAME, option));
+    }
+
+    public void viewDocsAndAttachments() {
+        closeModalIfOpen();
+        if (isElementNotPresentWhenStable(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH)) {
+            waitAndClickByLinkText("Docs & attachments");
+            waitForTextToBePresent("New Letter");
+        }
+        assertTrue(isElementPresentWhenStable(NEW_LETTER_BUTTON_SELECTOR, SelectorType.XPATH),
+                "'New Letter' button should be available on the Docs & attachments page");
+    }
+
+    public void closeModalIfOpen() {
+        if (isElementPresentWhenStable(MODAL_CLOSE, SelectorType.XPATH)) {
+            waitAndClick(MODAL_CLOSE, SelectorType.XPATH);
+            waitForPageLoad();
+        }
+    }
+
+    public void filterDocuments(String category) {
+        // Selecting a filter auto-submits and re-renders the whole filter panel (OLCS.formHandler
+        // hideSubmit), so only one select is safe before the controls reload. Category alone is
+        // enough to surface the newly created letter (listed newest-first by default). The select
+        // itself is replaced by that reload, so re-locate it if it goes stale mid-selection.
+        selectWhenStable(CATEGORY_FILTER, category);
+        waitForPageLoad();
+    }
+
+    public void openGenerateLetterModal() {
+        waitAndClick(NEW_LETTER_BUTTON, SelectorType.ID);
+        waitForTextToBePresent("Generate letter");
+        assertEquals("Generate letter", getTextWhenStable(MODAL_TITLE, SelectorType.XPATH),
+                "The Generate letter modal should be displayed");
+    }
+
+    public void selectFirstAndFinalRequestTemplate() {
+        selectLetterTemplate(LETTER_CATEGORY, LETTER_SUBCATEGORY, FIRST_AND_FINAL_TEMPLATE);
+    }
+
+    public void selectLetterTemplate(String category, String subCategory, String template) {
+        selectWhenEnabled(MODAL_CATEGORY, category);
+        selectWhenEnabled(MODAL_SUBCATEGORY, subCategory);
+        selectWhenEnabled(MODAL_TEMPLATE, template);
+    }
+
+    /**
+     * The subcategory and template dropdowns are disabled while they are repopulated by ajax, so wait
+     * for the select to be enabled and for the wanted option to have been loaded before selecting it.
+     */
+    private void selectWhenEnabled(String selectName, String option) {
+        String enabledOption = String.format("//select[@name='%s' and not(@disabled)]/option[normalize-space()=\"%s\"]",
+                selectName, option);
+        untilElementIsPresent(enabledOption, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+        assertTrue(isElementPresentWhenStable(enabledOption, SelectorType.XPATH),
+                String.format("Option '%s' should be selectable in the '%s' dropdown", option, selectName));
+        selectWhenStable(selectName, option);
+    }
+
+    public void openCreateLetterModal() {
+        untilElementIsPresent(CREATE_LETTER_MODAL_TITLE, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+        waitForTextToBePresent("Select content options");
+        assertEquals("Create Letter", getTextWhenStable(MODAL_TITLE, SelectorType.XPATH),
+                "The Create Letter modal should be displayed");
+    }
+
+    public void expandSection(String section) {
+        String toggle = String.format(SECTION_TOGGLE, section);
+        assertTrue(isElementPresentWhenStable(toggle, SelectorType.XPATH),
+                String.format("Letter section '%s' should be present on the Create Letter modal", section));
+        if (isElementNotPresentWhenStable(String.format(SECTION_EXPANDED, section), SelectorType.XPATH)) {
+            waitAndClick(toggle, SelectorType.XPATH);
+        }
+        waitForElementToBeClickable(String.format(SECTION_ISSUE_LABELS, section), SelectorType.XPATH);
+    }
+
+    public void selectIssue(String section, String issue) {
+        expandSection(section);
+        waitAndClick(String.format(SECTION_ISSUE, section, issue), SelectorType.XPATH);
+    }
+
+    public void selectAppendix(String appendix) {
+        waitAndClick(String.format(APPENDIX_CHECKBOX, appendix), SelectorType.XPATH);
+    }
+
+    public void selectChoice(String choice) {
+        lastChoice = choice;
+        waitAndClick(String.format(CHOICE_RADIO, choice), SelectorType.XPATH);
+    }
+
+    public boolean createLetterButtonIsEnabled() {
+        return retryOnStale(() -> isElementEnabled(CREATE_LETTER_BUTTON, SelectorType.XPATH));
+    }
+
+    public void clickCreateLetter() {
+        waitAndClick(CREATE_LETTER_BUTTON, SelectorType.XPATH);
+    }
+
+    public void createLetter() {
+        assertTrue(createLetterButtonIsEnabled(), "'Create letter' should be enabled once the letter is valid");
+        clickCreateLetter();
+        untilElementIsPresent(PREVIEW_LINK, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+        assertTrue(isElementPresentWhenStable(PREVIEW_MODAL, SelectorType.XPATH),
+                "The letter preview should be displayed");
+    }
+
+    public void assertChoiceGroupWarningIsDisplayed() {
+        assertTrue(isElementPresentWhenStable(CHOICE_GROUP_ERROR, SelectorType.XPATH),
+                "The 'First or final request' warning should be displayed");
+        assertTrue(getTextWhenStable(CHOICE_GROUP_ERROR, SelectorType.XPATH).contains("Select First or final request"),
+                "The 'First or final request' warning text should be displayed");
+    }
+
+    public void assertContentOptionsWarningIsDisplayed() {
+        assertTrue(isElementPresentWhenStable(VALIDATION_ERROR, SelectorType.XPATH),
+                "The content options warning should be displayed");
+        assertTrue(getTextWhenStable(VALIDATION_ERROR, SelectorType.XPATH).contains("Please choose at least one issue or appendix"),
+                "The content options warning text should be displayed");
+    }
+
+    public void assertPreviewDetails() {
+        assertEquals(LETTER_CATEGORY, getTextWhenStable(PREVIEW_CATEGORY, SelectorType.XPATH));
+        assertEquals(LETTER_SUBCATEGORY, getTextWhenStable(PREVIEW_SUBCATEGORY, SelectorType.XPATH));
+        assertEquals(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME, getTextWhenStable(PREVIEW_TEMPLATE, SelectorType.XPATH));
+    }
+
+    /**
+     * Opens the /letter/preview page (in its own tab), selects the named "Edit Instance Section" so
+     * that "Continue to editor" is enabled, then reads the rendered letter text out of the
+     * letter-preview-frame iframe embedded on that page. The tab is closed and focus returned to the
+     * parent window before returning.
+     */
+    public String readLetterContent(String instanceSection) {
+        List<String> initialWindows = new ArrayList<>(getWindowHandles());
+        String parentWindow = initialWindows.get(0);
+        waitAndClick(PREVIEW_LINK, SelectorType.XPATH);
+        // The preview opens in a new tab; wait for it to register before switching, otherwise we
+        // stay on the parent window (which has no letter-section labels) and the click below fails.
+        waitForTabsToLoad(initialWindows.size() + 1, 30);
+        List<String> windows = new ArrayList<>(getWindowHandles());
+        switchToWindow(windows.get(windows.size() - 1));
+        waitForPageLoad();
+
+        waitAndClick(String.format(EDIT_INSTANCE_SECTION_CHECKBOX, instanceSection), SelectorType.XPATH);
+
+        switchToIframe(LETTER_PREVIEW_FRAME);
+        String content = getTextWhenStable("//body", SelectorType.XPATH);
+        switchToDefaultContent();
+
+        closeTab();
+        switchToWindow(parentWindow);
+        return content;
+    }
+
+    public void prepareToSend() {
+        waitAndClick(PREPARE_TO_SEND_BUTTON, SelectorType.XPATH);
+        // "Prepare to send" converts the letter to a PDF server-side ("Preparing...") - rendering,
+        // Gotenberg HTML->PDF conversion, appendix merge, content-store upload and Document creation
+        // all happen synchronously in this request, so allow a reasonable wait for the Send letter modal.
+        untilElementIsPresent(SEND_BY_POST_BUTTON, SelectorType.XPATH, 45, TimeUnit.SECONDS);
+        waitAndClick(SEND_BY_POST_BUTTON, SelectorType.XPATH);
+        waitForPageLoad();
+    }
+
+    public void captureWording(String choice, String wording) {
+        assertFalse(wording == null || wording.isBlank(),
+                String.format("No wording was captured for the '%s' letter", choice));
+        capturedWording.put(choice, wording);
+    }
+
+    public String capturedWordingFor(String choice) {
+        return capturedWording.get(choice);
+    }
+
+    public void assertFirstAndFinalWordingDiffer() {
+        String firstRequestWording = capturedWording.get("First request");
+        String finalRequestWording = capturedWording.get("Final request");
+        assertNotNull(firstRequestWording, "First request wording was not captured");
+        assertNotNull(finalRequestWording, "Final request wording was not captured");
+        assertNotEquals(firstRequestWording, finalRequestWording,
+                "First and final request letters should not share the same wording");
+    }
+
+    public void assertLicenceDetailsPanel() {
+        String licenceDetails = getTextWhenStable(LICENCE_DETAILS_PANEL, SelectorType.XPATH);
+        assertTrue(licenceDetails.contains(world.createApplication.getOrganisationName()),
+                String.format("Licence details panel should show the operator name, but was '%s'", licenceDetails));
+        assertTrue(licenceDetails.contains(world.applicationDetails.getLicenceNumber()),
+                String.format("Licence details panel should show the licence number, but was '%s'", licenceDetails));
+    }
+
+    public void assertDocumentIsListed(String category, String subCategory) {
+        viewDocsAndAttachments();
+        filterDocuments(category);
+        assertTrue(letterDocumentIsListed(),
+                String.format("The '%s' letter should be listed under the '%s' subcategory",
+                        lastChoice, subCategory));
+    }
+
+    public void assertDocumentLinkOpensStoredFile() {
+        String documentLink = retryOnStale(() -> getLink(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH));
+        assertNotNull(documentLink, "Document link should be present");
+        assertTrue(documentLink.contains("/file/"),
+                String.format("Link should point at a stored document, but was '%s'", documentLink));
+    }
+
+    private boolean letterDocumentIsListed() {
+        // The document is listed as "First and Finals GB - First request" / "...- Final request",
+        // not by the raw template name. The filter auto-submits and re-renders the table via AJAX,
+        // so poll and tolerate StaleElementReferenceException while that reload settles.
+        long deadline = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(15);
+        do {
+            try {
+                List<WebElement> documents = findElements(DOCUMENT_DESCRIPTIONS, SelectorType.XPATH);
+                for (WebElement document : documents) {
+                    String text = document.getText();
+                    if (text.contains(FIRST_AND_FINAL_TEMPLATE_PREVIEW_NAME)
+                            && (lastChoice == null || text.contains(lastChoice))) {
+                        return true;
+                    }
+                }
+            } catch (StaleElementReferenceException staleDuringReload) {
+                // Table was replaced mid-read by the filter's AJAX reload; re-query on the next pass.
+            }
+            pauseBeforeStaleRetry();
+        } while (System.currentTimeMillis() < deadline);
+        return false;
+    }
+}

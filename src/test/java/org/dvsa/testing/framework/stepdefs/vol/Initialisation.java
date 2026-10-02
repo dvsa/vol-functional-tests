@@ -43,6 +43,7 @@ public class Initialisation {
         world.internalSearchJourney = new InternalSearchJourney(world);
         world.feeAndPaymentJourney = new FeeAndPaymentJourney(world);
         world.internalNavigation = new InternalNavigation(world);
+        world.transportManagerLicenceApiJourney = new TransportManagerLicenceApiJourney(world);
         world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.selfServeNavigation = new SelfServeNavigation(world);
         world.surrenderJourney = new SurrenderJourney(world);
@@ -92,6 +93,7 @@ public class Initialisation {
         world.messagingInternal = new MessagingInternal(world);
         world.messagingSelfServe = new MessagingSelfServe(world);
         world.documentsJourney = new DocumentsJourney(world);
+        world.letterGenerationJourney = new LetterGenerationJourney(world);
         world.submitApplicationJourney = new SubmitApplicationJourney(world);
     }
 }
