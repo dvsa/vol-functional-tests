@@ -793,15 +793,15 @@ public class InternalNavigation extends BasePage {
         piDecisionPresidingTc = selectRandomOption("//select[@id='fields[decidedByTc]']");
         piDecisionPresidingTcRole = selectRandomOption("//select[@id='fields[decidedByTcRole]']");
 
-        piDecisionDecision = selectRandomOptionOnChosen("decisions_chosen");
+        piDecisionDecision = selectRandomOptionOnChosen("fields_decisions__chosen");
 
         waitAndEnterText("//input[@id='fields[witnesses]']", SelectorType.XPATH, piDecisionWitnesses);
 
         enterDateParts("decisionDate", today);
         enterDateParts("notificationDate", notification);
 
-        piDecisionDefinition = selectRandomOptionOnUnderlyingSelect("//select[@id='definition']");
-        waitAndEnterText("//textarea[@id='decisionNotes']", SelectorType.XPATH, piDecisionNotes);
+        piDecisionDefinition = selectRandomOptionOnUnderlyingSelect("//select[@id='fields[definition]']");
+        waitAndEnterText("//textarea[@id='fields[decisionNotes]']", SelectorType.XPATH, piDecisionNotes);
 
         waitAndClick("//button[@id='form-actions[publish]']", SelectorType.XPATH);
     }
