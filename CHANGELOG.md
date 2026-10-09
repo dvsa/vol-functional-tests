@@ -1,6 +1,14 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.40.2](https://github.com/dvsa/vol-functional-tests/compare/v4.40.1...v4.40.2) (2026-10-09)
+
+
+### Bug Fixes
+
+* locator ([7b5ef4b](https://github.com/dvsa/vol-functional-tests/commit/7b5ef4b30c618d8aad65bb06ed5e7b385fab9d30))
+* locator ([8e36224](https://github.com/dvsa/vol-functional-tests/commit/8e36224295e32d668f0e3529b37f1349b9664336))
+
 ## [4.40.1](https://github.com/dvsa/vol-functional-tests/compare/v4.40.0...v4.40.1) (2026-10-02)
 
 
