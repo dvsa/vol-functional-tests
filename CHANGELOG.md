@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.40.3](https://github.com/dvsa/vol-functional-tests/compare/v4.40.2...v4.40.3) (2026-10-15)
+
+
+### Bug Fixes
+
+* address change ([14e8275](https://github.com/dvsa/vol-functional-tests/commit/14e8275080986705ae736ea72c2c6dea1c6193d7))
+* address change ([d0ee598](https://github.com/dvsa/vol-functional-tests/commit/d0ee598b6e5508473320a043a5c098d3a85106bb))
+* address change ([d95575c](https://github.com/dvsa/vol-functional-tests/commit/d95575c3569f51c9ffd14a26fe940dedc28cb4d8))
+
 ## [4.40.2](https://github.com/dvsa/vol-functional-tests/compare/v4.40.1...v4.40.2) (2026-10-09)
 
 
