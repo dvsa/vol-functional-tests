@@ -53,6 +53,7 @@ public class World {
     public TransportManagerJourney TMJourney;
     public BusinessDetailsJourney businessDetailsJourney;
     public AddressesJourney addressesJourney;
+    public PeopleJourney peopleJourney;
     public SafetyComplianceJourney safetyComplianceJourney;
     public SafetyInspectorJourney safetyInspectorJourney;
     public TransportManagerJourney transportManagerJourney;

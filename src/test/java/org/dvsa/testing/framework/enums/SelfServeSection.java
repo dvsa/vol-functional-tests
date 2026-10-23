@@ -14,6 +14,7 @@ public enum SelfServeSection {
     LICENCE_DISCS("Licence discs"),
     LICENCE_HISTORY("Licence history"),
     OPERATING_CENTERS_AND_AUTHORISATION("Operating centres and authorisation"),
+    PEOPLE("Partners or members"),
     REVIEW_AND_DECLARATIONS("Review and declarations"),
     SAFETY_AND_COMPLIANCE("Safety and compliance"),
     TAXI_AND_PHV("Taxi and PHV"),

@@ -1,4 +1,4 @@
-@people-changes
+@people-changes @ss_regression
 Feature: People changes (partners, LLP members)
 
   Background:
