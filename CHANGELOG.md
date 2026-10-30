@@ -1,6 +1,22 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.42.0](https://github.com/dvsa/vol-functional-tests/compare/v4.41.0...v4.42.0) (2026-10-30)
+
+
+### Features
+
+* active support/reduce forks ([e1b6d16](https://github.com/dvsa/vol-functional-tests/commit/e1b6d1608813133e2b74e47f4192156e4c934dd3))
+* active support/reduce threads ([9dac228](https://github.com/dvsa/vol-functional-tests/commit/9dac2282b8169c75685e1b9740078f1651103e3a))
+* disc ([781142f](https://github.com/dvsa/vol-functional-tests/commit/781142fd557e7c6453adcd3074fdb642f0ff39d1))
+* disc ([63fe609](https://github.com/dvsa/vol-functional-tests/commit/63fe6092f733a25209b7aeca922212f0eaeb9f3a))
+* LLP Test ([aea7e9f](https://github.com/dvsa/vol-functional-tests/commit/aea7e9f06978affce761234db5606255a0e55e15))
+* LLP Test ([97a9b03](https://github.com/dvsa/vol-functional-tests/commit/97a9b03d2e913bd12d629a5de6bf492caf2114e3))
+* LLP Test ([7cdd3e8](https://github.com/dvsa/vol-functional-tests/commit/7cdd3e89e01232384a785e448e76a7b4cc102e43))
+* LLP Test ([dba8e13](https://github.com/dvsa/vol-functional-tests/commit/dba8e13e8f775d1c34c3131b6da24603f9c63173))
+* undertakings ([c61f314](https://github.com/dvsa/vol-functional-tests/commit/c61f3147bdb23a93d0f267621964ac0cd581a7b9))
+* undertakings ([602e5a5](https://github.com/dvsa/vol-functional-tests/commit/602e5a5a0ab4351724a6f4120d9a31d5809844a1))
+
 ## [4.41.0](https://github.com/dvsa/vol-functional-tests/compare/v4.40.2...v4.41.0) (2026-10-23)
 
 
