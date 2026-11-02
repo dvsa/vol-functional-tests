@@ -36,7 +36,7 @@ public class FinancialEvidence extends BasePage {
     List<FinancialStandingRate> validRates = new LinkedList<>(); // operatorType, licenceType, vehicleType
 
     int expectedFinancialEvidenceValue;
-    String financialEvidenceValueOnPage = "//div[contains(@class,'info-box')]//h2";
+    String financialEvidenceValueOnPage = "//div[contains(@class,'info-box')]//h2[contains(.,'£')]";
 
 
     public FinancialEvidence(World world) {

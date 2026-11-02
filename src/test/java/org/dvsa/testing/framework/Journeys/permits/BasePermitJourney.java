@@ -71,7 +71,7 @@ public class BasePermitJourney extends BasePermitPage {
         // Note not ready for MLH but not needed.
         SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
         SelectALicencePage.saveAndContinue();
-        if (!isElementPresent("//span[@class='govuk-warning-text__assistive']", SelectorType.XPATH)) {
+        if (!isElementPresent("//*[contains(@class,'govuk-warning-text__text')]", SelectorType.XPATH)) {
             setFullReferenceNumber(OverviewPage.getReferenceFromPage());
         }
     }

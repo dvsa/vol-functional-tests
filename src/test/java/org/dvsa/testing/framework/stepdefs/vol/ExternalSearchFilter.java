@@ -73,7 +73,7 @@ public class ExternalSearchFilter extends BasePage {
             List<Map<String, Object>> licenceResults = VolDatabaseUtils.getLicenceDetails(env);
             String expectedLicType = licenceResults.get(0).get("Licence type").toString();
             
-            String licType = getText("/html/body/div[3]/main/div[2]/div[1]/form/fieldset[2]/div[2]/select/option[2]", SelectorType.XPATH);
+            String licType = getText("//*[@id='filter[licTypeDesc]']/option[2]", SelectorType.XPATH);
             assertEquals(expectedLicType.toUpperCase(), licType.toUpperCase());
         } catch (SQLException e) {
             throw new RuntimeException("Failed to retrieve licence details: " + e.getMessage(), e);

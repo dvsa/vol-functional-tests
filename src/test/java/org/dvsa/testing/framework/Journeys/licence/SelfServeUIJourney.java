@@ -303,6 +303,6 @@ public class SelfServeUIJourney extends BasePage {
     }
 
     public void noteOperatorNameOnDashboardPage() {
-        volOperatorName = getText("/html/body/div[3]/ul/li/b", SelectorType.XPATH);
+        volOperatorName = getText("//li[contains(@class,'user-menu__item')]/b", SelectorType.XPATH);
     }
 }
