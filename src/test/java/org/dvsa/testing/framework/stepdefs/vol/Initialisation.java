@@ -61,6 +61,7 @@ public class Initialisation {
         world.transportManagerJourney = new TransportManagerJourney(world);
         world.vehicleDetailsJourney = new VehicleDetailsJourney(world);
         world.financialHistoryJourney = new FinancialHistoryJourney(world);
+        world.financialEvidenceJourney = new FinancialEvidenceJourney(world);
         world.licenceDetailsJourney = new LicenceDetailsJourney(world);
         world.convictionsAndPenaltiesJourney = new ConvictionsAndPenaltiesJourney(world);
         world.generalVariationJourney = new GeneralVariationJourney(world);
