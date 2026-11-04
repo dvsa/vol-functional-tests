@@ -27,6 +27,7 @@ public class TestRunConfiguration {
 
     private static final Logger LOGGER = LogManager.getLogger(TestRunConfiguration.class);
     private static final String BEDROCK_SECRET = "vol-functional-tests/bedrock";
+    private static final String BEDROCK_SECRET_FALLBACK = "OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-MAIN-APPLICATION";
 
     @BeforeAll(order = Integer.MIN_VALUE)
     public static void initialiseJumpboxProxy() {
@@ -36,13 +37,27 @@ public class TestRunConfiguration {
     @BeforeAll
     public static void loadBedrockConfig() {
         try {
-            String agentId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentId");
-            String aliasId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentAliasId");
+            String agentId = null;
+            String aliasId = null;
+            try {
+                agentId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentId");
+                aliasId = SecretsManager.getSecretValue(BEDROCK_SECRET, "axe_agentAliasId");
+                LOGGER.info("Loaded Bedrock config from primary secret: {}", BEDROCK_SECRET);
+            } catch (Exception primaryException) {
+                LOGGER.debug("Could not load from primary secret {}, trying fallback", BEDROCK_SECRET);
+                try {
+                    agentId = SecretsManager.getSecretValue(BEDROCK_SECRET_FALLBACK, "axe_agentId");
+                    aliasId = SecretsManager.getSecretValue(BEDROCK_SECRET_FALLBACK, "axe_agentAliasId");
+                    LOGGER.info("Loaded Bedrock config from fallback secret: {}", BEDROCK_SECRET_FALLBACK);
+                } catch (Exception fallbackException) {
+                    LOGGER.warn("Could not load Bedrock config from either secret. Primary: {}, Fallback: {}", 
+                            primaryException.getMessage(), fallbackException.getMessage());
+                }
+            }
             if (agentId != null) System.setProperty("bedrock.agent.id", agentId);
             if (aliasId != null) System.setProperty("bedrock.agent.alias.id", aliasId);
-            LOGGER.info("Loaded Bedrock config from Secrets Manager");
         } catch (Exception e) {
-            LOGGER.warn("Could not load Bedrock config from Secrets Manager: {}", e.getMessage());
+            LOGGER.warn("Error loading Bedrock config: {}", e.getMessage());
         }
     }
 
