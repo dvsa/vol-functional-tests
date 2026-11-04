@@ -127,7 +127,7 @@ public class PSVJourney extends BasePage {
     }
 
     public boolean areSmallVehicleConditionsPresent() {
-        return isElementPresent("//*[@id='lva-vehicles-declarations-small-conditions']/div[3]/h4[1]", SelectorType.XPATH);
+        return isElementPresent("//*[@id='lva-vehicles-declarations-small-conditions']//*[self::h2 or self::h4][contains(@class,'govuk-heading-s') or contains(@class,'h4')]", SelectorType.XPATH);
     }
 
     public void completeWrittenExplanationSmallVehiclesPage() {

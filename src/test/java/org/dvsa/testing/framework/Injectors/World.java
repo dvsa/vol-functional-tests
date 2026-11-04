@@ -60,6 +60,7 @@ public class World {
     public TransportManagerJourney transportManagerJourney;
     public VehicleDetailsJourney vehicleDetailsJourney;
     public FinancialHistoryJourney financialHistoryJourney;
+    public FinancialEvidenceJourney financialEvidenceJourney;
     public LicenceDetailsJourney licenceDetailsJourney;
     public ConvictionsAndPenaltiesJourney convictionsAndPenaltiesJourney;
     public UserRegistrationJourney userRegistrationJourney;

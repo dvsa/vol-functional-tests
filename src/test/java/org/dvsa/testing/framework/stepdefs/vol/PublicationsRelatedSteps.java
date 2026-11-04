@@ -197,7 +197,7 @@ public class PublicationsRelatedSteps extends BasePage {
         if (!isElementPresent(licenceNumber, SelectorType.XPATH))
             waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
 
-        WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", licenceNumber, publicationType), SelectorType.XPATH);
+        WebElement publicationResult = findElement(String.format("//li[div/*[self::h2 or self::h4]/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", licenceNumber, publicationType), SelectorType.XPATH);
         String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy goods vehicle" : "vehicle";
         String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
@@ -327,10 +327,10 @@ public class PublicationsRelatedSteps extends BasePage {
     public void theLicenceViewOfThePublicationForLGVOnlyIsCorrectOnSelfServe() {
         waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
-        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        String operatingCentreSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains("The table is empty"));
 
-        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        String authorisationSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
         assertTrue(authorisationSection.contains("Total Number of Light Goods Vehicles"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority())));
         assertFalse(authorisationSection.contains("vehicles"));
@@ -342,11 +342,11 @@ public class PublicationsRelatedSteps extends BasePage {
     public void theLicenceViewOfThePublicationForPSVSIIsCorrectOnSelfServe() {
         waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
-        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        String operatingCentreSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
         assertTrue(operatingCentreSection.contains("Vehicles"));
 
-        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        String authorisationSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
         assertTrue(authorisationSection.contains("Total Number of vehicles"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
         assertFalse(authorisationSection.contains("trailers"));
@@ -356,12 +356,12 @@ public class PublicationsRelatedSteps extends BasePage {
     public void theLicenceViewOfThePublicationForGoodsSNIsCorrectOnSelfServe() {
         waitAndClickByLinkText(world.applicationDetails.getLicenceNumber());
 
-        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        String operatingCentreSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
         assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
         assertTrue(operatingCentreSection.contains("Vehicles"));
         assertTrue(operatingCentreSection.contains("Trailers"));
 
-        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        String authorisationSection = getText("//*[self::h2 or self::h4][contains(@class,'read-only__title')][contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
         assertTrue(authorisationSection.contains("Total Number of vehicles"));
         assertTrue(authorisationSection.contains("Total Number of trailers"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
@@ -452,7 +452,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
     @And("the variation publication for LGV Only should be correct on self serve with {int} more lgvs")
     public void theVariationPublicationForLGVOnlyShouldBeCorrectOnSelfServeWithMoreLgvs(int additionalAuthority) {
-        String publicationResult = getText(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]", world.applicationDetails.getLicenceNumber(), "New Variation"), SelectorType.XPATH);
+        String publicationResult = getText(String.format("//li[div/*[self::h2 or self::h4]/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]", world.applicationDetails.getLicenceNumber(), "New Variation"), SelectorType.XPATH);
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
         assertExpectedLGVVariationText(publicationResult, newAuthority);
     }

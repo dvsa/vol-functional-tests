@@ -100,7 +100,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTextPresent(String locator) {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(1))
-                    .until(driver -> visibilityOf(findElement(String.format("//*[contains(text(),'%s')]", locator), SelectorType.XPATH)));
+                    .until(driver -> visibilityOf(findElement(String.format("//*[text()[contains(.,'%s')]]", locator), SelectorType.XPATH)));
             return true;
         } catch (Exception e) {
             return false;
@@ -336,7 +336,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTitlePresent(String locator, int duration) {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
-                    .until(driver -> visibilityOf(findElement(String.format("//h1[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
+                    .until(driver -> visibilityOf(findElement(String.format("//h1[text()[contains(.,\"%s\")]]", locator), SelectorType.XPATH)));
             return true;
         } catch (Exception e) {
             return false;
@@ -595,15 +595,15 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
-        waitForElementToBePresent(String.format("//*[contains(text(),'%s')]", selector));
+        waitForElementToBePresent(String.format("//*[text()[contains(.,'%s')]]", selector));
     }
 
     public static void waitForTitleToBePresent(@NotNull String selector) {
-        waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
+        waitForElementToBePresent(String.format("//h1[text()[contains(.,'%s')]]", selector));
     }
 
     public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
-        waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
+        waitForElementToBePresent(String.format("//%s[text()[contains(.,'%s')]]", htmlTag, selector));
     }
 
     public static void waitForElementToBePresent(@NotNull String selector) {

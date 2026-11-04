@@ -21,7 +21,7 @@ public class OperatingCentreJourney extends BasePage {
     String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
     String operatingCentreTrailerField = "//*[@id='noOfTrailersRequired']";
     String confirmOffStreetParkingCheckbox = "permission";
-    String advertTitle = "//h3[text()='Newspaper advert']";
+    String advertTitle = "//*[self::h2 or self::h3][normalize-space()='Newspaper advert']";
     String uploadAdvertLater = "//*[contains(text(),'Upload documents later')]";
 
     public String addOperatingCentre = "//*[@id='add']";

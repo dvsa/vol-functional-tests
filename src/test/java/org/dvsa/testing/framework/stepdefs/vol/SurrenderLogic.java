@@ -58,7 +58,7 @@ public class SurrenderLogic extends BasePage {
         waitAndClickByLinkText("Continue with");
         assertTrue(Browser.navigate().getCurrentUrl().contains("information-changed"));
         String expectedChangedText = "Warning Since starting your application to surrender your licence, you have made changes to your licence information.";
-        String actualChangeText = getText("//*[@class='govuk-warning-text__text']", SelectorType.XPATH);
+        String actualChangeText = getText("//*[@class='govuk-warning-text__text']", SelectorType.XPATH).replaceAll("\\s+", " ").trim();
         assertEquals(expectedChangedText, actualChangeText);
     }
 
