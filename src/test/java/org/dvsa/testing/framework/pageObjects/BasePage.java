@@ -55,7 +55,13 @@ public abstract class BasePage extends DriverUtils {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                WebElement element = waitForVisibleElement(selector, selectorType, TIME_OUT_SECONDS);
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class);
+
+                WebElement element = wait.until(ExpectedConditions.visibilityOf(findElement(selector, selectorType)));
                 return element.getText();
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
@@ -94,7 +100,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTextPresent(String locator) {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(1))
-                    .until(driver -> visibilityOf(driver.findElement(By.xpath(String.format("//*[text()[contains(.,'%s')]]", locator)))));
+                    .until(driver -> visibilityOf(findElement(String.format("//*[text()[contains(.,'%s')]]", locator), SelectorType.XPATH)));
             return true;
         } catch (Exception e) {
             return false;
@@ -141,7 +147,16 @@ public abstract class BasePage extends DriverUtils {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                WebElement element = waitForClickableElement(selector, SelectorType.PARTIALLINKTEXT, TIME_OUT_SECONDS);
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class);
+
+                WebElement element = wait.until(ExpectedConditions.elementToBeClickable(
+                        by(selector, SelectorType.PARTIALLINKTEXT)
+                ));
                 element.click();
                 return;
             } catch (StaleElementReferenceException e) {
@@ -282,7 +297,7 @@ public abstract class BasePage extends DriverUtils {
 
         try {
             wait.until(driver -> wait.until(ExpectedConditions.visibilityOf(
-                    driver.findElement(by(locator, SelectorType.PARTIALLINKTEXT)))));
+                    findElement(locator, SelectorType.PARTIALLINKTEXT))));
             return true;
         } catch (Exception e) {
             return false;
@@ -321,7 +336,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTitlePresent(String locator, int duration) {
         try {
             new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
-                    .until(driver -> visibilityOf(driver.findElement(By.xpath(String.format("//h1[text()[contains(.,\"%s\")]]", locator)))));
+                    .until(driver -> visibilityOf(findElement(String.format("//h1[text()[contains(.,\"%s\")]]", locator), SelectorType.XPATH)));
             return true;
         } catch (Exception e) {
             return false;
@@ -372,7 +387,7 @@ public abstract class BasePage extends DriverUtils {
 
     protected static boolean isElementPresent(@NotNull String selector, SelectorType selectorType) {
         try {
-            getDriver().findElement(by(selector, selectorType));
+            findElement(selector, selectorType);
             return true;
         } catch (NoSuchElementException e) {
             return false;
@@ -451,7 +466,13 @@ public abstract class BasePage extends DriverUtils {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                WebElement element = waitForVisibleElement(selector, selectorType, TIME_OUT_SECONDS);
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class);
+
+                WebElement element = wait.until(ExpectedConditions.visibilityOf(findElement(selector, selectorType)));
                 return element.getText();
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
@@ -548,7 +569,15 @@ public abstract class BasePage extends DriverUtils {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                waitForClickableElement(selector, selectorType, TIME_OUT_SECONDS).click();
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
+
+                wait.until(driver -> wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)))).click();
                 return;
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));
@@ -581,7 +610,16 @@ public abstract class BasePage extends DriverUtils {
         int maxRetries = 3;
         for (int attempt = 0; attempt < maxRetries; attempt++) {
             try {
-                waitForVisibleElement(selector, SelectorType.XPATH, TIME_OUT_SECONDS);
+                var wait = new FluentWait<>(getDriver())
+                        .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                        .pollingEvery(ofSeconds(POLLING_SECONDS))
+                        .ignoring(NoSuchElementException.class)
+                        .ignoring(StaleElementReferenceException.class)
+                        .ignoring(ElementClickInterceptedException.class)
+                        .ignoring(TimeoutException.class)
+                        .ignoring(ElementNotInteractableException.class);
+
+                wait.until(driver -> visibilityOf(getDriver().findElement(By.xpath(selector))));
                 return;
             } catch (StaleElementReferenceException e) {
                 LOGGER.warn("StaleElementReferenceException encountered. Attempting retry " + (attempt + 1));

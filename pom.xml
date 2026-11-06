@@ -19,15 +19,6 @@
         <api-calls.version>4.4.1</api-calls.version>
         <accessibility-ai.version>2.0.4</accessibility-ai.version>
 
-        <!-- Self-healing remains opt-in, including automatic retries. -->
-        <selfHealing.enabled>false</selfHealing.enabled>
-        <selfHealing.region>eu-west-1</selfHealing.region>
-        <selfHealing.secretName>OLCS-DEVAPPCI-DEVCI-BATCHTESTRUNNER-MAIN-APPLICATION</selfHealing.secretName>
-        <selfHealing.selfHeal_agentId/>
-        <selfHealing.selfHealth_agentAliasId/>
-        <selfHealing.minConfidence>0.5</selfHealing.minConfidence>
-        <selfHealing.maxDomLength>50000</selfHealing.maxDomLength>
-
         <!-- Testing Framework - Cucumber & JUnit -->
         <cucumber.version>7.20.1</cucumber.version>
         <junit.version>5.11.4</junit.version>
@@ -50,8 +41,7 @@
         <ion-java.version>1.11.11</ion-java.version>
 
         <!-- Network Dependencies -->
-        <aws-sdk.version>2.44.7</aws-sdk.version>
-        <netty.version>4.1.138.Final</netty.version>
+        <netty.version>4.1.136.Final</netty.version>
         <jackson2.version>2.22.4</jackson2.version>
         <jackson3.version>3.2.4</jackson3.version>
 
@@ -81,10 +71,18 @@
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
-                <artifactId>netty-bom</artifactId>
+                <artifactId>netty-codec-http2</artifactId>
                 <version>${netty.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec</artifactId>
+                <version>${netty.version}</version>
             </dependency>
             <dependency>
                 <groupId>tools.jackson.core</groupId>
@@ -197,21 +195,7 @@
             <version>${api-calls.version}</version>
         </dependency>
 
-        <!-- active-support excludes Netty transitively; Bedrock's async client needs its full transport. -->
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>netty-nio-client</artifactId>
-            <version>${aws-sdk.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!-- Assertions -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>5.8.0</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -289,15 +273,6 @@
                 </executions>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <systemPropertyVariables>
-                        <selfHealing.enabled>${selfHealing.enabled}</selfHealing.enabled>
-                        <selfHealing.region>${selfHealing.region}</selfHealing.region>
-                        <selfHealing.secretName>${selfHealing.secretName}</selfHealing.secretName>
-                        <selfHealing.selfHeal_agentId>${selfHealing.selfHeal_agentId}</selfHealing.selfHeal_agentId>
-                        <selfHealing.selfHealth_agentAliasId>${selfHealing.selfHealth_agentAliasId}</selfHealing.selfHealth_agentAliasId>
-                        <selfHealing.minConfidence>${selfHealing.minConfidence}</selfHealing.minConfidence>
-                        <selfHealing.maxDomLength>${selfHealing.maxDomLength}</selfHealing.maxDomLength>
-                    </systemPropertyVariables>
                     <includes>
                         <include>**/RunCucumberTests.java</include>
                     </includes>
@@ -345,7 +320,7 @@
                             <target>
                                 <exec executable="/bin/bash" failonerror="false">
                                     <arg value="-c"/>
-                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2&gt;/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -roh 'file://[^)]*\.feature:[0-9]*' ${project.build.directory}/surefire-reports/*.xml | sed 's|file://||' | sed 's|^/app/||' | sort -u &gt; ${project.build.directory}/rerun_raw.txt; if [ -s ${project.build.directory}/rerun_raw.txt ]; then echo 'Found failed scenario references:'; cat ${project.build.directory}/rerun_raw.txt; java -cp ${project.build.testOutputDirectory} org.dvsa.testing.framework.parallel.RerunScenarioLineMapper ${project.build.directory}/rerun_raw.txt ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed scenarios (scenario start lines):'; cat ${project.build.directory}/rerun.txt; echo ''; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true -DselfHealing.enabled='${selfHealing.enabled}' -DselfHealing.region='${selfHealing.region}' -DselfHealing.secretName='${selfHealing.secretName}' -DselfHealing.selfHeal_agentId='${selfHealing.selfHeal_agentId}' -DselfHealing.selfHealth_agentAliasId='${selfHealing.selfHealth_agentAliasId}' -DselfHealing.minConfidence='${selfHealing.minConfidence}' -DselfHealing.maxDomLength='${selfHealing.maxDomLength}'; else echo 'No failed scenarios mapped'; fi; else echo 'No failed scenario references found in XML'; fi; rm -f ${project.build.directory}/rerun.txt ${project.build.directory}/rerun_raw.txt; else echo 'No test failures detected'; fi"/>
+                                    <arg value="echo 'Checking for test failures...'; if grep -r '&lt;failure\|&lt;error' ${project.build.directory}/surefire-reports/ 2&gt;/dev/null; then echo 'Found test failures, extracting specific failed scenarios...'; grep -roh 'file://[^)]*\.feature:[0-9]*' ${project.build.directory}/surefire-reports/*.xml | sed 's|file://||' | sed 's|^/app/||' | sort -u &gt; ${project.build.directory}/rerun_raw.txt; if [ -s ${project.build.directory}/rerun_raw.txt ]; then echo 'Found failed scenario references:'; cat ${project.build.directory}/rerun_raw.txt; java -cp ${project.build.testOutputDirectory} org.dvsa.testing.framework.parallel.RerunScenarioLineMapper ${project.build.directory}/rerun_raw.txt ${project.build.directory}/rerun.txt; if [ -s ${project.build.directory}/rerun.txt ]; then echo 'Created rerun.txt with failed scenarios (scenario start lines):'; cat ${project.build.directory}/rerun.txt; echo ''; mvn integration-test -Pretry-failed -DgridURL='${gridURL}' -Denv='${env}' -Dbrowser='${browser}' -Dplatform=LINUX -DbrowserVersion=latest -Dmaven.test.failure.ignore=true; else echo 'No failed scenarios mapped'; fi; else echo 'No failed scenario references found in XML'; fi; rm -f ${project.build.directory}/rerun.txt ${project.build.directory}/rerun_raw.txt; else echo 'No test failures detected'; fi"/>
                                 </exec>
                                 <mkdir dir="${project.build.directory}/results-summary"/>
                                 <java classname="org.dvsa.testing.framework.parallel.SurefireDeduplicator" fork="true" classpath="${project.build.testOutputDirectory}">
