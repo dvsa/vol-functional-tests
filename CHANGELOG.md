@@ -1,6 +1,15 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.42.1](https://github.com/dvsa/vol-functional-tests/compare/v4.42.0...v4.42.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* axe workflow changes ([2890e15](https://github.com/dvsa/vol-functional-tests/commit/2890e15548c2a5e5e9d39098f960be396e2d3358))
+* axe workflow changes ([416dc16](https://github.com/dvsa/vol-functional-tests/commit/416dc165e16983a48f546cfb3d426cc0d85c3102))
+* axe workflow changes ([ac3973b](https://github.com/dvsa/vol-functional-tests/commit/ac3973bc75dcf01677284097ce1a12f449469844))
+
 ## [4.42.0](https://github.com/dvsa/vol-functional-tests/compare/v4.41.0...v4.42.0) (2026-11-04)
 
 
