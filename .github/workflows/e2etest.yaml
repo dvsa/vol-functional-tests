@@ -53,6 +53,7 @@ permissions:
   checks: write
 
 env:
+  ACCESSIBILITY_RUN: ${{ contains(inputs.cucumber_tags, '@accessibility') || contains(inputs.cucumber_tags, '@ss_accessibility') || contains(inputs.cucumber_tags, '@int_accessibility') }}
   REPORT_NAME: "allure_attempt_${{ github.run_number }}.zip"
   ROLE_ARN: ${{ inputs.aws_role }}
   BUCKET_NAME: ${{ inputs.bucket_name }}
@@ -260,11 +261,12 @@ jobs:
           name: e2e-${{ needs.create-job-name.outputs.job_name }}
 
       - name: Console Output Report
+        if: env.ACCESSIBILITY_RUN != 'true'
         run: |
           echo "Allure report is available at s3://${{ env.BUCKET_NAME }}/${{ env.BUCKET_KEY }}/${{env.REPORT_KEY}}/site/allure-maven-plugin/index.html"
 
       - name: Link Accessibility Report
-        if: contains(inputs.cucumber_tags, '@accessibility')
+        if: env.ACCESSIBILITY_RUN == 'true'
         run: |
           ACCESSIBILITY_URL="https://${{ env.BUCKET_NAME }}.s3.amazonaws.com/${{ env.BUCKET_KEY }}/${{ env.REPORT_KEY }}/reports/accessibility-report.html"
           echo "Accessibility report is available at ${ACCESSIBILITY_URL}"
@@ -272,6 +274,7 @@ jobs:
           echo "[View Accessibility Report](${ACCESSIBILITY_URL})" >> $GITHUB_STEP_SUMMARY
 
       - name: Get Summary
+        if: env.ACCESSIBILITY_RUN != 'true'
         id: get-summary
         uses: dvsa/.github/.github/actions/surefire-report-summary@main
         with:
