@@ -1,17 +1,22 @@
 package org.dvsa.testing.framework.pageObjects.Driver;
 
 import activesupport.driver.Browser;
+import activesupport.selfhealing.SelfHealingElementLocator;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 
 public class DriverUtils {
 
@@ -56,14 +61,46 @@ public class DriverUtils {
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType) {
-        return getDriver().findElement(by(selector, selectorType));
+        try {
+            return getDriver().findElement(by(selector, selectorType));
+        } catch (NoSuchElementException failure) {
+            return SelfHealingElementLocator.heal(getDriver(), selector, selectorType.name())
+                    .orElseThrow(() -> failure);
+        }
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType, long timeOutInSeconds) {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
-                webDriver ->
-                        ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
-        return findElement(selector, selectorType);
+        return waitForElement(selector, selectorType, timeOutInSeconds,
+                ExpectedConditions::presenceOfElementLocated, element -> driver -> element);
+    }
+
+    public static WebElement waitForVisibleElement(String selector, SelectorType selectorType, long timeoutInSeconds) {
+        return waitForElement(selector, selectorType, timeoutInSeconds,
+                ExpectedConditions::visibilityOfElementLocated, ExpectedConditions::visibilityOf);
+    }
+
+    public static WebElement waitForClickableElement(String selector, SelectorType selectorType, long timeoutInSeconds) {
+        return waitForElement(selector, selectorType, timeoutInSeconds,
+                ExpectedConditions::elementToBeClickable, ExpectedConditions::elementToBeClickable);
+    }
+
+    private static WebElement waitForElement(String selector, SelectorType selectorType, long timeoutInSeconds,
+                                            Function<By, ExpectedCondition<WebElement>> condition,
+                                            Function<WebElement, ExpectedCondition<WebElement>> healedCondition) {
+        WebDriver driver = getDriver();
+        By locator = by(selector, selectorType);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        try {
+            return wait.until(condition.apply(locator));
+        } catch (TimeoutException failure) {
+            // Hidden or disabled elements are not broken selectors.
+            if (!driver.findElements(locator).isEmpty()) {
+                throw failure;
+            }
+            WebElement healed = SelfHealingElementLocator.heal(driver, selector, selectorType.name())
+                    .orElseThrow(() -> failure);
+            return wait.until(healedCondition.apply(healed));
+        }
     }
 
     public static List<WebElement> findElements(@NotNull String selector, @NotNull SelectorType selectorType) {
