@@ -50,6 +50,7 @@
         <ion-java.version>1.11.11</ion-java.version>
 
         <!-- Network Dependencies -->
+        <aws-sdk.version>2.44.7</aws-sdk.version>
         <netty.version>4.1.136.Final</netty.version>
         <jackson2.version>2.22.4</jackson2.version>
         <jackson3.version>3.2.4</jackson3.version>
@@ -80,18 +81,10 @@
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
-                <artifactId>netty-codec-http2</artifactId>
+                <artifactId>netty-bom</artifactId>
                 <version>${netty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-codec-http</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-codec</artifactId>
-                <version>${netty.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>tools.jackson.core</groupId>
@@ -202,6 +195,14 @@
             <groupId>org.dvsa.testing.framework</groupId>
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
+        </dependency>
+
+        <!-- active-support excludes Netty transitively; Bedrock's async client needs its full transport. -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>netty-nio-client</artifactId>
+            <version>${aws-sdk.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Assertions -->
