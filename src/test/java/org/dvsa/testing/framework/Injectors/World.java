@@ -55,6 +55,7 @@ public class World {
     public AddressesJourney addressesJourney;
     public PeopleJourney peopleJourney;
     public DiscsJourney discsJourney;
+    public InternalInterimJourney internalInterimJourney;
     public SafetyComplianceJourney safetyComplianceJourney;
     public SafetyInspectorJourney safetyInspectorJourney;
     public TransportManagerJourney transportManagerJourney;
