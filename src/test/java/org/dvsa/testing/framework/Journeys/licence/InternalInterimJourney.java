@@ -1,8 +1,11 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,7 +16,7 @@ public class InternalInterimJourney extends BasePage {
         this.world = world;
     }
 
-    public void verifyInterimFee(String expectedDescription, String expectedAmount, String expectedStatus) {
+    public void verifyInterimFee(String expectedDescription, String expectedStatus) throws HttpException {
         waitAndClickByLinkText("Fees");
         waitForElementToBePresent("//*[@id='status']");
         selectValueFromDropDown("status", SelectorType.ID, "All");
@@ -21,8 +24,14 @@ public class InternalInterimJourney extends BasePage {
                 + expectedDescription + " " + world.createApplication.getApplicationId() + "']]";
         waitForElementToBePresent(feeRow
                 + "/td[@data-heading='Fee No.']/strong[normalize-space()='" + expectedStatus + "']");
-        assertEquals(expectedAmount,
-                getText(feeRow + "/td[@data-heading='Fee amount']", SelectorType.XPATH).trim(),
+        String feeLink = findElement(feeRow + "/td[@data-heading='Description']/a", SelectorType.XPATH)
+                .getAttribute("href");
+        int feeId = Integer.parseInt(feeLink.split("/edit-fee/")[1].split("/")[0]);
+        BigDecimal expectedAmount = new ApplicationFeeApiJourney(world).grossAmount(feeId);
+        BigDecimal displayedAmount = new BigDecimal(
+                getText(feeRow + "/td[@data-heading='Fee amount']", SelectorType.XPATH)
+                        .replace("\u00a3", "").replace(",", "").trim());
+        assertEquals(expectedAmount.stripTrailingZeros(), displayedAmount.stripTrailingZeros(),
                 "The interim fee should show the expected amount for this application");
         assertEquals(expectedStatus,
                 getText(feeRow + "/td[@data-heading='Fee No.']/strong", SelectorType.XPATH).trim(),

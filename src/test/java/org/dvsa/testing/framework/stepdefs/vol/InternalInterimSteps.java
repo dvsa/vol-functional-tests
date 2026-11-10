@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 
 public class InternalInterimSteps {
@@ -16,9 +17,9 @@ public class InternalInterimSteps {
         world.internalInterimJourney.removeInterimRequest();
     }
 
-    @Then("the Internal fees page should show {string} of {string} with status {string}")
-    public void theInternalFeesPageShouldShowFee(String description, String amount, String status) {
-        world.internalInterimJourney.verifyInterimFee(description, amount, status);
+    @Then("the Internal fees page should show {string} with its recorded amount and status {string}")
+    public void theInternalFeesPageShouldShowFee(String description, String status) throws HttpException {
+        world.internalInterimJourney.verifyInterimFee(description, status);
     }
 
     @Then("the application overview should show interim status {string}")
