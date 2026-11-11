@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -16,6 +17,71 @@ public class SafetyAndCompliance extends BasePage {
 
     public SafetyAndCompliance (World world) {
         this.world = world;
+    }
+
+    @When("I add an internal safety inspector")
+    public void iAddAnInternalSafetyInspector() {
+        world.safetyComplianceJourney.addSafetyInspector(false);
+    }
+
+    @When("I add an external safety inspection provider")
+    public void iAddAnExternalSafetyInspectionProvider() {
+        world.safetyComplianceJourney.addSafetyInspector(true);
+    }
+
+    @Then("the safety inspector is listed with external status {string}")
+    public void theSafetyInspectorIsListedWithExternalStatus(String externalStatus) {
+        world.safetyComplianceJourney.verifySafetyInspectorIsListed(externalStatus.equals("Yes"));
+    }
+
+    @When("I edit the safety inspector")
+    public void iEditTheSafetyInspector() {
+        world.safetyComplianceJourney.editSafetyInspector();
+    }
+
+    @Then("the edited safety inspector is listed")
+    public void theEditedSafetyInspectorIsListed() {
+        world.safetyComplianceJourney.verifySafetyInspectorWasEdited();
+    }
+
+    @When("I remove the safety inspector")
+    public void iRemoveTheSafetyInspector() {
+        world.safetyComplianceJourney.removeSafetyInspector();
+    }
+
+    @Then("the safety inspector is no longer listed")
+    public void theSafetyInspectorIsNoLongerListed() {
+        world.safetyComplianceJourney.verifySafetyInspectorWasRemoved();
+    }
+
+    @When("I submit invalid safety inspection settings")
+    public void iSubmitInvalidSafetyInspectionSettings() {
+        world.safetyComplianceJourney.submitInvalidSafetySettings();
+    }
+
+    @Then("the invalid safety inspection settings are rejected")
+    public void theInvalidSafetyInspectionSettingsAreRejected() {
+        world.safetyComplianceJourney.verifyInvalidSafetySettingsAreRejected();
+    }
+
+    @When("I correct and save the safety inspection settings")
+    public void iCorrectAndSaveTheSafetyInspectionSettings() {
+        world.safetyComplianceJourney.saveValidSafetySettings();
+    }
+
+    @Then("the valid safety inspection settings are saved")
+    public void theValidSafetyInspectionSettingsAreSaved() {
+        world.safetyComplianceJourney.verifyValidSafetySettingsWereSaved();
+    }
+
+    @When("I view the safety and compliance section")
+    public void iViewTheSafetyAndComplianceSection() {
+        world.safetyComplianceJourney.navigateToSafetyCompliancePage();
+    }
+
+    @Then("the PSV safety section does not include trailer inspection fields")
+    public void thePsvSafetySectionDoesNotIncludeTrailerInspectionFields() {
+        world.safetyComplianceJourney.verifyPsvSafetySection();
     }
 
     @Then("there is no reference of trailers on the safety and compliance page")
