@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import apiCalls.Utils.volBuilders.VehiclesBuilder;
-import activesupport.driver.Browser;
-import org.awaitility.Awaitility;
+import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -20,9 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -93,32 +88,19 @@ public class PSVVehicleManagementJourney extends BasePage {
     public void exportVehicleList() throws Exception {
         assertFalse(addedVehicles.isEmpty(), "A scenario-created PSV vehicle is required before exporting the list");
         openVehicleList();
-        RemoteWebDriver remoteDriver = remoteDriver();
         waitAndClick("more-actions__button__container", SelectorType.ID);
         waitAndClick("export", SelectorType.ID);
-
-        String csvName = Awaitility.await()
-                .atMost(30, TimeUnit.SECONDS)
-                .pollInterval(1, TimeUnit.SECONDS)
-                .until(() -> remoteDriver.getDownloadableFiles().stream()
-                                .filter(name -> name.toLowerCase(Locale.ROOT).endsWith(".csv"))
-                                .findFirst()
-                                .orElse(null),
-                        Objects::nonNull);
 
         Path downloadDirectory = Path.of(
                 System.getProperty("user.dir"),
                 "target",
                 "psv-vehicle-downloads",
                 addedVehicles.get(addedVehicles.size() - 1).registrationMark());
-        Path csv = downloadDirectory.resolve(csvName);
         try {
-            Files.createDirectories(downloadDirectory);
-            remoteDriver.downloadFile(csvName, downloadDirectory);
+            Path csv = UniversalActions.downloadCsv(downloadDirectory);
             exportedVehicles = readExportedVehicles(csv);
         } finally {
-            Files.deleteIfExists(csv);
-            Files.deleteIfExists(downloadDirectory);
+            FileUtils.deleteDirectory(downloadDirectory.toFile());
         }
     }
 
@@ -189,11 +171,6 @@ public class PSVVehicleManagementJourney extends BasePage {
             }
         }
         return vehicles;
-    }
-
-    private RemoteWebDriver remoteDriver() {
-        var driver = Browser.getDriver();
-        return (RemoteWebDriver) (driver instanceof RemoteWebDriver ? driver : new Augmenter().augment(driver));
     }
 
     private record AddedVehicle(String registrationMark, String makeModel) {

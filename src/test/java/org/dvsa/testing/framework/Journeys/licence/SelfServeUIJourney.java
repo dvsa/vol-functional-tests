@@ -5,6 +5,7 @@ import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
+import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -18,6 +19,9 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Set;
@@ -281,6 +285,22 @@ public class SelfServeUIJourney extends BasePage {
     {
         clickByXPath("//*[@id=\"view-vehicles\"]");
         waitAndClick("next", SelectorType.ID);
+    }
+
+    public void verifyVehicleListExport() throws IOException {
+        waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
+        Path downloadDirectory = Files.createTempDirectory("csv-downloads");
+        try {
+            Path csv = UniversalActions.downloadCsv(downloadDirectory);
+            assertTrue(Files.size(csv) > 0, "CSV was empty");
+            try (var lines = Files.lines(csv)) {
+                String header = lines.findFirst().orElse("");
+                assertTrue(header.contains("Vehicle") || header.contains("VRM"),
+                        "Unexpected CSV header: " + header);
+            }
+        } finally {
+            FileUtils.deleteDirectory(downloadDirectory.toFile());
+        }
     }
 
     public void addAVehicleToAnApplication(String vrm, String weight){

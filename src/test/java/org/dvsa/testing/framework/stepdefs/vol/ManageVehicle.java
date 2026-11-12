@@ -8,24 +8,17 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.hc.core5.http.HttpException;
-import org.awaitility.Awaitility;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -397,28 +390,6 @@ public class ManageVehicle extends BasePage {
 
     @Then("I click the Export list link that responds")
     public void iClickTheExportListLinkThatResponds() throws Exception {
-        WebDriver raw = activesupport.driver.Browser.getDriver();
-        RemoteWebDriver remote = (RemoteWebDriver) ((raw instanceof RemoteWebDriver) ? raw : new Augmenter().augment(raw));
-
-        waitAndClick("action--export-current-and-removed-csv", SelectorType.ID);
-
-
-        String csvName = Awaitility.await()
-                .atMost(30, TimeUnit.SECONDS)
-                .pollInterval(1, TimeUnit.SECONDS)
-                .until(() -> remote.getDownloadableFiles().stream()
-                                .filter(n -> n.toLowerCase().endsWith(".csv"))
-                                .findFirst()
-                                .orElse(null),
-                        name -> name != null);
-
-        Path target = Files.createTempDirectory("csv-downloads");
-        remote.downloadFile(csvName, target);
-
-        Path csv = target.resolve(csvName);
-        assertTrue(Files.size(csv) > 0, "CSV was empty");
-        String header = Files.lines(csv).findFirst().orElse("");
-        assertTrue(header.contains("Vehicle") || header.contains("VRM"),
-                "Unexpected CSV header: " + header);
+        world.selfServeUIJourney.verifyVehicleListExport();
     }
 }
