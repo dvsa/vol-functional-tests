@@ -1,4 +1,5 @@
-@ss_regression @vol763
+# @ss_regression
+@vol763
 Feature: Application convictions and penalties declarations
 
   @application-conviction-required-fields

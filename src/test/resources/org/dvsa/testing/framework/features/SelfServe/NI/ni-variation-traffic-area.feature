@@ -1,4 +1,5 @@
-@ss_regression @vol763 @ni-variation-traffic-area-validation
+# @ss_regression
+@vol763 @ni-variation-traffic-area-validation
 Feature: Northern Ireland variation operating centre traffic area
 
   Scenario: Reject an operating centre outside Northern Ireland

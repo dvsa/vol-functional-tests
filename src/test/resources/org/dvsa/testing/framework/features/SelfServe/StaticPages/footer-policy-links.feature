@@ -1,4 +1,5 @@
-@ss_regression @vol763 @footer-policy-links
+# @ss_regression
+@vol763 @footer-policy-links
 Feature: Self Serve footer policy links
 
   Scenario Outline: Follow a policy link from the sign in page

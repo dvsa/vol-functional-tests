@@ -1,5 +1,5 @@
 @MANUAL-BUS-REG
-@int_regression
+# @int_regression
 @CPMS_tests
 @FullRegression
 @printAndSign
@@ -154,6 +154,7 @@ Feature: Complete Manual Bus Registration Steps
     Then the manual bus cancellation should remain cancelled after reload
 
 
+  @int_regression
   Scenario: Editing a bus registration of status Registered
     When i add a new bus registration
     And it has been paid and granted

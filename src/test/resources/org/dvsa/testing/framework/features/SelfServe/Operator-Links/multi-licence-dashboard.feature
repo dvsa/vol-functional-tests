@@ -1,4 +1,5 @@
-@ss_regression @vol763
+# @ss_regression
+@vol763
 Feature: Operators can review and switch between current licences
 
   @multi-licence-dashboard

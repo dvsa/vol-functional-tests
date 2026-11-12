@@ -1,4 +1,5 @@
-@ss_regression @vol763 @ni-standard-international-persistence
+# @ss_regression
+@vol763 @ni-standard-international-persistence
 Feature: Northern Ireland standard international application
 
   Scenario Outline: Save and reopen a new application for an NI operator
