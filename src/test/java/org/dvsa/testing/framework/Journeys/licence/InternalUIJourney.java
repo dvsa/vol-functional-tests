@@ -21,6 +21,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
@@ -270,12 +271,44 @@ public class InternalUIJourney extends BasePage {
     public void manualBusRegistration(Integer plusOrMinusDay, Integer plusOrMinusMonth, Integer plusOrMinusYear) {
         world.internalNavigation.getLicence();
         world.busRegistrationJourney.internalSiteAddBusNewReg(plusOrMinusDay,plusOrMinusMonth,plusOrMinusYear);
+        completeManualBusRegistration(null);
+    }
+
+    public void manualBusRegistration(Map<String, String> serviceDetails) {
+        world.internalNavigation.getLicence();
+        world.busRegistrationJourney.internalSiteAddBusNewReg(serviceDetails, 0, 5, 0);
+        completeManualBusRegistration(serviceDetails);
+    }
+
+    private void completeManualBusRegistration(Map<String, String> serviceDetails) {
         refreshPage();
         waitAndClickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
         UniversalActions.clickSubmit();
         refreshPage();
         waitAndClickByLinkText("Service details");
+        if (serviceDetails != null) {
+            assertEquals(
+                    serviceDetails.get("serviceNo"),
+                    getValue("serviceNo", SelectorType.ID),
+                    "The saved service number should match the manual registration details."
+            );
+            assertEquals(
+                    serviceDetails.get("startPoint"),
+                    getValue("startPoint", SelectorType.ID),
+                    "The saved starting point should match the manual registration details."
+            );
+            assertEquals(
+                    serviceDetails.get("finishPoint"),
+                    getValue("finishPoint", SelectorType.ID),
+                    "The saved finishing point should match the manual registration details."
+            );
+            assertEquals(
+                    serviceDetails.get("via"),
+                    getValue("via", SelectorType.ID),
+                    "The saved via point should match the manual registration details."
+            );
+        }
         UniversalActions.clickSubmit();
         refreshPage();
         waitAndClickByLinkText("TA's");

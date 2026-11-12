@@ -49,6 +49,8 @@ public class World {
     public TransportManagerLicenceApiJourney transportManagerLicenceApiJourney;
     public OperatingCentreJourney operatingCentreJourney;
     public SelfServeNavigation selfServeNavigation;
+    public LicenceDashboardJourney licenceDashboardJourney;
+    public StaticPagesJourney staticPagesJourney;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
     public BusinessDetailsJourney businessDetailsJourney;
@@ -72,9 +74,11 @@ public class World {
     public TaskAllocation taskAllocation;
     public PrintingAndScanningJourney printingAndScanningJourney;
     public PSVJourney psvJourney;
+    public PSVVehicleManagementJourney psvVehicleManagementJourney;
     public GovSignInJourney govSignInJourney;
 
     public TypeOfLicenceJourney typeOfLicenceJourney;
+    public NiApplicationJourney niApplicationJourney;
     public GeneralVariationJourney generalVariationJourney;
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;

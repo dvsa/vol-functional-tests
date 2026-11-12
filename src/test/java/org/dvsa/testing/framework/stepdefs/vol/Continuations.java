@@ -43,6 +43,33 @@ public class Continuations extends BasePage {
         world.continuationJourney.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
     }
 
+    @Then("the current licences dashboard should show my licence as {string}, type {string}, and area {string}")
+    public void theCurrentLicencesDashboardShouldShowMyLicenceAsTypeAndArea(
+            String status,
+            String licenceType,
+            String area
+    ) {
+        world.continuationJourney.verifyExpiringLicenceOnDashboard(
+                world.applicationDetails.getLicenceNumber(),
+                status,
+                licenceType,
+                area
+        );
+    }
+
+    @And("the licence overview should show expiry warning {string}, supporting text {string}, and action {string}")
+    public void theLicenceOverviewShouldShowExpiryWarningSupportingTextAndAction(
+            String warning,
+            String supportingText,
+            String continuationAction
+    ) {
+        world.continuationJourney.verifyExpiryWarningAndContinuationAction(
+                warning,
+                supportingText,
+                continuationAction
+        );
+    }
+
     @And("fill in my continuation details on self serve as {string}")
     public void fillInMyContinuationDetailsOnSelfServeAsUserType(String userType) {
         world.continuationJourney.continueLicenceWithVerifyAndPay(userType);

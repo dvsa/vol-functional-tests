@@ -94,6 +94,35 @@ public class DirectorJourney extends BasePage {
         UniversalActions.clickSaveAndContinue();
     }
 
+    public void beginDirectorConvictionDeclaration() {
+        waitAndClick("//button[@name='table[action]']", SelectorType.XPATH);
+        addDirectorDetails();
+        answerFinancialHistory("No");
+        UniversalActions.clickSaveAndContinue();
+        completeLicenceHistory("N");
+        waitForTitleToBePresent("Convictions and Penalties");
+    }
+
+    public void submitEmptyDirectorConvictionDeclaration() {
+        UniversalActions.clickSaveAndContinue();
+        waitForElementToBePresent("//*[@id='validationSummary']");
+    }
+
+    public void verifyDirectorConvictionDeclarationRequired(String expectedError) {
+        assertTrue(getCurrentUrl().contains("/director-change/") && getCurrentUrl().contains("/convictions-penalties/"),
+                "Validation should remain on the director conviction declaration");
+        assertFalse(findElement("//input[@name='data[question]' and @value='Y']", SelectorType.XPATH).isSelected(),
+                "Yes should remain unselected");
+        assertFalse(findElement("//input[@name='data[question]' and @value='N']", SelectorType.XPATH).isSelected(),
+                "No should remain unselected");
+        assertEquals(expectedError, getText("//*[@id='validationSummary']//a[@href='#data[question]']", SelectorType.XPATH),
+                "The validation summary should identify the conviction declaration");
+        assertEquals(expectedError, getText("//div[contains(@class,'validation-wrapper')]"
+                        + "[.//input[@name='data[question]']]//p[contains(@class,'govuk-error-message')]",
+                SelectorType.XPATH).replace("Error:", "").trim(),
+                "The conviction declaration should show its inline error");
+    }
+
     public void addPersonDetails() {
         personDetails();
         UniversalActions.clickSubmit();

@@ -70,10 +70,22 @@ Feature: Add a director variation
     When I submit the empty page
     Then the director financial history page empty field validation should appear
 
-  @directors-validations
-  Scenario: Director convictions and penalties page validation
-    When I begin adding a new director and their details
-    And i enter "No" to financial details question
-    And i enter "N" to licence history question
-    When I submit the empty page
-    Then the director convictions and penalties page empty field validation should appear
+  @directors-validations @director-conviction-declaration-required @vol763
+  Scenario: A director conviction declaration requires an answer
+    When I reach the new director conviction declaration
+    And I submit the director conviction declaration without an answer
+    Then the director conviction declaration shows "Value is required" in the summary and inline
+
+  @director-conviction-required-fields @vol763
+  Scenario: A previous conviction requires its details
+    When I reach the new director conviction declaration
+    And I submit an empty previous conviction for the director
+    Then the director conviction required fields show errors in the summary and inline
+      | data[title]        | Choose title                              |
+      | data[forename]     | Enter first name                          |
+      | data[familyName]   | Enter last name                           |
+      | dob_day            | Enter date of conviction                  |
+      | data[categoryText] | Enter a value for the field: "Offence"    |
+      | data[notes]        | Please give details about the offence     |
+      | data[courtFpn]     | Provide the name of the court you attended |
+      | data[penalty]      | Tell us what penalty you received         |
