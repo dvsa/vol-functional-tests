@@ -1,6 +1,23 @@
 # Revision History for the VOL Functional Tests
 
 
+## [4.43.0](https://github.com/dvsa/vol-functional-tests/compare/v4.42.1...v4.43.0) (2026-11-13)
+
+
+### Features
+
+* interim tests ([fa9e548](https://github.com/dvsa/vol-functional-tests/commit/fa9e548ff1720f5f8283dd8a6ab1f8f79a7d3e83))
+* interim tests ([0a9c715](https://github.com/dvsa/vol-functional-tests/commit/0a9c715fbaa6d0d927a7d74a4c98e490c80e7461))
+* tags ([42917f6](https://github.com/dvsa/vol-functional-tests/commit/42917f6a4c3d8cf80c5f26de8d653082971cd810))
+* vol 7653 ([d2ad324](https://github.com/dvsa/vol-functional-tests/commit/d2ad324a9ba54a66066941cda271fe99574b4ff8))
+
+
+### Bug Fixes
+
+* dynamic assertion ([6db0738](https://github.com/dvsa/vol-functional-tests/commit/6db07380d1aa26e77a8ffae9be7849d18b58b161))
+* safety and compliance ([c5e635e](https://github.com/dvsa/vol-functional-tests/commit/c5e635ebd30c8a4a572cd9b8f7b27b2ca0688550))
+* safety and compliance ([5fcdecb](https://github.com/dvsa/vol-functional-tests/commit/5fcdecb9a3b6b8040c0b60c351e55d3b9954cb54))
+
 ## [4.42.1](https://github.com/dvsa/vol-functional-tests/compare/v4.42.0...v4.42.1) (2026-11-06)
 
 
