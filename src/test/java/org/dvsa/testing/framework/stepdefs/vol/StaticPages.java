@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
@@ -10,11 +9,6 @@ public class StaticPages {
 
     public StaticPages(World world) {
         this.world = world;
-    }
-
-    @Given("I open the Self Serve sign in page")
-    public void openSelfServeSignIn() {
-        world.staticPagesJourney.openSelfServeSignIn();
     }
 
     @When("I follow the footer link to {string}")

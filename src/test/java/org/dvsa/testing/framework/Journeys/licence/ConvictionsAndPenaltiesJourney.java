@@ -142,7 +142,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
 
     public void saveDeclarations() {
         if (!findElement("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID).isSelected()) {
-            waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
+            waitAndClick("//label[input[@id='convictionsConfirmation[convictionsConfirmation]']]", SelectorType.XPATH);
         }
         UniversalActions.clickSaveAndReturn();
     }
@@ -150,7 +150,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     public void verifySavedConviction(String type, Map<String, String> details) {
         UniversalActions.clickHome();
         navigateToDeclarations(type);
-        String row = "//tbody//tr[.//button[contains(@name,'table[action][edit]')"
+        String row = "//tbody//tr[.//button[contains(@name,'data[table][action][edit]')"
                 + " and contains(normalize-space(),'" + details.get("forename") + " " + details.get("familyName") + "')]]";
         String rowText = waitAndGetText(row, SelectorType.XPATH);
         assertEquals(1, findElements(row, SelectorType.XPATH).size(), "Exactly one matching conviction should be listed");
@@ -163,7 +163,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void editApplicationConviction(String name, String offence) {
-        waitAndClick("//tbody//button[contains(@name,'table[action][edit]') and contains(normalize-space(),'"
+        waitAndClick("//tbody//button[contains(@name,'data[table][action][edit]') and contains(normalize-space(),'"
                 + name + "')]", SelectorType.XPATH);
         replaceText("data[categoryText]", SelectorType.ID, offence);
         UniversalActions.clickSubmit();
@@ -171,9 +171,9 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void removeApplicationConviction(String name) {
-        String row = "//tbody//tr[.//button[contains(@name,'table[action][edit]') and contains(normalize-space(),'"
+        String row = "//tbody//tr[.//button[contains(@name,'data[table][action][edit]') and contains(normalize-space(),'"
                 + name + "')]]";
-        waitAndClick(row + "//button[contains(@name,'table[action][delete]')]", SelectorType.XPATH);
+        waitAndClick(row + "//button[contains(@name,'data[table][action][delete]')]", SelectorType.XPATH);
         waitAndClick("//form[@id='generic-delete-confirmation']//button[@name='form-actions[submit]']", SelectorType.XPATH);
         waitForElementNotToBePresent("//form[@id='generic-delete-confirmation']");
         waitForElementNotToBePresent(row);
@@ -181,7 +181,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
 
     public void verifyApplicationConvictionRemoved(String name) {
         refreshPage();
-        assertFalse(isElementPresent("//tbody//button[contains(@name,'table[action][edit]') and contains(normalize-space(),'"
+        assertFalse(isElementPresent("//tbody//button[contains(@name,'data[table][action][edit]') and contains(normalize-space(),'"
                 + name + "')]", SelectorType.XPATH), "Deleted conviction should not be listed after reload");
     }
 

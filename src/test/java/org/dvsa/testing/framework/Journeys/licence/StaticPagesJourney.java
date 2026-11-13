@@ -7,14 +7,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StaticPagesJourney extends BasePage {
-    private final World world;
-
     public StaticPagesJourney(World world) {
-        this.world = world;
-    }
-
-    public void openSelfServeSignIn() {
-        world.selfServeNavigation.navigateToLoginPage();
     }
 
     public void followFooterLink(String path) {

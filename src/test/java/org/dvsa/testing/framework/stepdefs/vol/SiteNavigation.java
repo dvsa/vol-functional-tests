@@ -19,8 +19,7 @@ public class SiteNavigation extends BasePage {
 
     @Given("I am on Selfserve homepage")
     public void iAmOnSelfServeHomepage() {
-        String externalLoginURL = webAppURL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-        Browser.navigate().get(externalLoginURL);
+        world.selfServeNavigation.navigateToLoginPage();
     }
 
     @Given("i am on the internal admin login page")

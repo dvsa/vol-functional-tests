@@ -68,7 +68,7 @@ public class PSVVehicleManagementJourney extends BasePage {
 
         WebElement row = findVehicleRow(removedVehicle.registrationMark());
         assertNotNull(row, "The scenario-created PSV vehicle should be available for removal");
-        row.findElement(By.xpath("./td[@data-heading='Remove']//button")).click();
+        row.findElement(By.xpath("./td[normalize-space(@data-heading)='Remove']//button")).click();
         waitForElementToBePresent("//form[@id='generic-delete-confirmation']");
         waitAndClick("//form[@id='generic-delete-confirmation']//button[@name='form-actions[submit]']", SelectorType.XPATH);
         waitForTitleToBePresent("Vehicle details");

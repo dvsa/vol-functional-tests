@@ -3,7 +3,7 @@
 Feature: Self Serve footer policy links
 
   Scenario Outline: Follow a policy link from the sign in page
-    Given I open the Self Serve sign in page
+    Given I am on Selfserve homepage
     When I follow the footer link to "<path>"
     Then the destination page contains "<content>"
 

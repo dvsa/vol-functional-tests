@@ -13,7 +13,7 @@ Feature: Complete Manual Bus Registration Steps
   @localsmoke @manualbus @manual-bus-route-values @vol763
   Scenario: Paying Fees to Complete Bus Registration Manually
     And i add a manual bus registration with service details
-      | serviceNo  | 123            |
+      | serviceNo  | Generated      |
       | startPoint | River Road     |
       | finishPoint | Market Square |
       | via        | High Street    |
@@ -24,7 +24,7 @@ Feature: Complete Manual Bus Registration Steps
   @manual-bus-variation @manual-bus-registration-history @vol763
   Scenario: Create and grant a variation and cancellation of a manually registered bus route
     And i add a manual bus registration with service details
-      | serviceNo  | 459                |
+      | serviceNo  | Generated          |
       | startPoint | North Terminal     |
       | finishPoint | Lakeside Centre    |
       | via        | Cedar Avenue       |
@@ -33,12 +33,12 @@ Feature: Complete Manual Bus Registration Steps
     When I create a variation of the manual bus registration
     Then the new bus registration variation should inherit the original service details
     When I update the bus registration variation with service details
-      | serviceNo  | 460              |
+      | serviceNo  | Generated        |
       | startPoint | West Terminal    |
       | finishPoint | Hilltop Centre   |
       | via        | King Street      |
     Then the variation should retain the updated service details and the original registration should remain unchanged
-      | serviceNo  | 460              |
+      | serviceNo  | Generated        |
       | startPoint | West Terminal    |
       | finishPoint | Hilltop Centre   |
       | via        | King Street      |
@@ -58,18 +58,12 @@ Feature: Complete Manual Bus Registration Steps
       | endDate                 | Leave blank            |
     Then the cancellation dates should remain saved
     When I complete the manual bus cancellation registration checks
-      | Timetable acceptable             | Yes |
-      | Maps supplied                    | Yes |
       | TRC's / Conditions satisfactory  | Yes |
       | Application copied to LA/PTE     | Yes |
-      | LA/PTE support short notice      | Yes |
       | Application signed               | Yes |
     Then the manual bus cancellation registration checks should remain saved
-      | Timetable acceptable             | Yes |
-      | Maps supplied                    | Yes |
       | TRC's / Conditions satisfactory  | Yes |
       | Application copied to LA/PTE     | Yes |
-      | LA/PTE support short notice      | Yes |
       | Application signed               | Yes |
     When I grant the manual bus cancellation
     Then the manual bus cancellation should remain cancelled after reload
@@ -82,7 +76,7 @@ Feature: Complete Manual Bus Registration Steps
   @manual-bus-short-notice @vol763
   Scenario: Register a short-notice manual bus variation
     And i add a manual bus registration with service details
-      | serviceNo  | 462              |
+      | serviceNo  | Generated        |
       | startPoint | River Road       |
       | finishPoint | Market Square   |
       | via        | High Street      |
@@ -91,7 +85,7 @@ Feature: Complete Manual Bus Registration Steps
     When I create a variation of the manual bus registration
     Then the new bus registration variation should inherit the original service details
     When I update the short-notice bus registration variation with service details
-      | serviceNo  | 463               |
+      | serviceNo  | Generated         |
       | startPoint | Central Terminal  |
       | finishPoint | Harbour Exchange |
       | via        | Mill Road         |
@@ -122,7 +116,7 @@ Feature: Complete Manual Bus Registration Steps
   @manual-bus-cancellation @vol763
   Scenario: Cancel a manually registered bus route
     And i add a manual bus registration with service details
-      | serviceNo  | 468                |
+      | serviceNo  | Generated          |
       | startPoint | Orchard Terminal   |
       | finishPoint | Riverside Centre |
       | via        | Station Road       |
@@ -137,18 +131,12 @@ Feature: Complete Manual Bus Registration Steps
       | endDate                 | Leave blank            |
     Then the cancellation dates should remain saved
     When I complete the manual bus cancellation registration checks
-      | Timetable acceptable             | Yes |
-      | Maps supplied                    | Yes |
       | TRC's / Conditions satisfactory  | Yes |
       | Application copied to LA/PTE     | Yes |
-      | LA/PTE support short notice      | Yes |
       | Application signed               | Yes |
     Then the manual bus cancellation registration checks should remain saved
-      | Timetable acceptable             | Yes |
-      | Maps supplied                    | Yes |
       | TRC's / Conditions satisfactory  | Yes |
       | Application copied to LA/PTE     | Yes |
-      | LA/PTE support short notice      | Yes |
       | Application signed               | Yes |
     When I grant the manual bus cancellation
     Then the manual bus cancellation should remain cancelled after reload

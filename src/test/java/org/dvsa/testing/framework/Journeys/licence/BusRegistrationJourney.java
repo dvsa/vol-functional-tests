@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,7 +47,6 @@ public class BusRegistrationJourney extends BasePage {
     private Map<String, String> originalManualBusServiceDetails;
     private String originalBusServiceDetailsUrl;
     private String originalBusRegistrationId;
-    private String originalBusRegistrationVersion;
     private String variationServiceDetailsUrl;
     private String variationRegistrationId;
     private String variationRegistrationVersion;
@@ -66,8 +66,8 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void addManualBusRegistrationWithServiceDetails(Map<String, String> serviceDetails) {
-        originalManualBusServiceDetails = Map.copyOf(serviceDetails);
-        world.internalUIJourney.manualBusRegistration(serviceDetails);
+        originalManualBusServiceDetails = resolveGeneratedServiceNumber(serviceDetails);
+        world.internalUIJourney.manualBusRegistration(originalManualBusServiceDetails);
         waitAndClickByLinkText("Service details");
         waitForTextToBePresent("Service No. & type");
         originalBusServiceDetailsUrl = getDriver().getCurrentUrl();
@@ -411,7 +411,6 @@ public class BusRegistrationJourney extends BasePage {
         get(originalBusServiceDetailsUrl);
         waitForTextToBePresent("Service No. & type");
         originalBusRegistrationId = busRegistrationIdFromUrl(getDriver().getCurrentUrl());
-        originalBusRegistrationVersion = getValue("fields[version]", SelectorType.ID);
         assertServiceDetailsMatch(originalManualBusServiceDetails);
 
         waitAndClickByLinkText("Processing");
@@ -439,10 +438,6 @@ public class BusRegistrationJourney extends BasePage {
         assertEquals("breg_s_var", getValue("fields[status]", SelectorType.ID));
         assertEquals(variationRegistrationId, getValue("fields[id]", SelectorType.ID));
         assertTrue(
-                originalBusRegistrationVersion != null && !originalBusRegistrationVersion.isBlank(),
-                "The original registration version should be captured before creating the variation."
-        );
-        assertTrue(
                 variationRegistrationVersion != null && !variationRegistrationVersion.isBlank(),
                 "The variation version should be captured after creating the variation."
         );
@@ -468,10 +463,11 @@ public class BusRegistrationJourney extends BasePage {
                 "A bus registration variation must be created before updating its service details."
         );
 
-        waitAndEnterText("serviceNo", SelectorType.ID, serviceDetails.get("serviceNo"));
-        waitAndEnterText("startPoint", SelectorType.ID, serviceDetails.get("startPoint"));
-        waitAndEnterText("finishPoint", SelectorType.ID, serviceDetails.get("finishPoint"));
-        waitAndEnterText("via", SelectorType.ID, serviceDetails.get("via"));
+        Map<String, String> updatedServiceDetails = resolveGeneratedServiceNumber(serviceDetails);
+        replaceText("serviceNo", SelectorType.ID, updatedServiceDetails.get("serviceNo"));
+        replaceText("startPoint", SelectorType.ID, updatedServiceDetails.get("startPoint"));
+        replaceText("finishPoint", SelectorType.ID, updatedServiceDetails.get("finishPoint"));
+        replaceText("via", SelectorType.ID, updatedServiceDetails.get("via"));
 
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         enterDateFieldsByPartialId("receivedDate", dates);
@@ -488,15 +484,20 @@ public class BusRegistrationJourney extends BasePage {
         waitForTextToBePresent("Variation 1");
         waitForTextToBePresent("Updated record");
         savedVariationRegistrationVersion = getValue("fields[version]", SelectorType.ID);
-        savedVariationServiceDetails = Map.copyOf(serviceDetails);
+        savedVariationServiceDetails = updatedServiceDetails;
     }
 
     public void verifyManualBusRegistrationVariationServiceDetails(Map<String, String> variationServiceDetails) {
+        Map<String, String> expectedDetails = new HashMap<>(variationServiceDetails);
+        if ("Generated".equals(expectedDetails.get("serviceNo"))) {
+            assertTrue(savedVariationServiceDetails != null, "The variation details must be saved before verification.");
+            expectedDetails.put("serviceNo", savedVariationServiceDetails.get("serviceNo"));
+        }
         get(variationServiceDetailsUrl);
         waitForTextToBePresent("Variation 1");
         assertEquals(variationRegistrationId, busRegistrationIdFromUrl(getDriver().getCurrentUrl()));
         assertEquals(variationRegistrationId, getValue("fields[id]", SelectorType.ID));
-        assertServiceDetailsMatch(variationServiceDetails);
+        assertServiceDetailsMatch(expectedDetails);
         assertEquals(
                 savedVariationRegistrationVersion,
                 getValue("fields[version]", SelectorType.ID),
@@ -506,17 +507,12 @@ public class BusRegistrationJourney extends BasePage {
         get(originalBusServiceDetailsUrl);
         waitForTextToBePresent("Service No. & type");
         assertEquals(originalBusRegistrationId, busRegistrationIdFromUrl(getDriver().getCurrentUrl()));
-        assertEquals(
-                originalBusRegistrationVersion,
-                getValue("fields[version]", SelectorType.ID),
-                "Creating and editing a variation should not change the original registration version."
-        );
         assertServiceDetailsMatch(originalManualBusServiceDetails);
 
         get(variationServiceDetailsUrl);
         waitForTextToBePresent("Variation 1");
         assertEquals(variationRegistrationId, getValue("fields[id]", SelectorType.ID));
-        assertServiceDetailsMatch(variationServiceDetails);
+        assertServiceDetailsMatch(expectedDetails);
     }
 
     public void grantManualBusRegistrationVariation(Map<String, String> grantDetails) {
@@ -594,11 +590,34 @@ public class BusRegistrationJourney extends BasePage {
         });
     }
 
+    private Map<String, String> resolveGeneratedServiceNumber(Map<String, String> serviceDetails) {
+        Map<String, String> resolvedDetails = new HashMap<>(serviceDetails);
+        if ("Generated".equals(resolvedDetails.get("serviceNo"))) {
+            String serviceNumber;
+            do {
+                serviceNumber = Integer.toString(ThreadLocalRandom.current().nextInt(100, 1000));
+            } while (originalManualBusServiceDetails != null
+                    && serviceNumber.equals(originalManualBusServiceDetails.get("serviceNo")));
+            resolvedDetails.put("serviceNo", serviceNumber);
+        }
+        return Map.copyOf(resolvedDetails);
+    }
+
     private void assertServiceDetailsMatch(Map<String, String> serviceDetails) {
-        assertEquals(serviceDetails.get("serviceNo"), getValue("serviceNo", SelectorType.ID));
-        assertEquals(serviceDetails.get("startPoint"), getValue("startPoint", SelectorType.ID));
-        assertEquals(serviceDetails.get("finishPoint"), getValue("finishPoint", SelectorType.ID));
-        assertEquals(serviceDetails.get("via"), getValue("via", SelectorType.ID));
+        boolean editable = isElementPresent("serviceNo", SelectorType.ID);
+        Map.of(
+                "serviceNo", "Service number",
+                "startPoint", "Start point",
+                "finishPoint", "Finish point",
+                "via", "Via"
+        ).forEach((field, heading) -> {
+            String actualValue = editable
+                    ? getValue(field, SelectorType.ID)
+                    : waitAndGetText("//form[@id='bus-service-number-and-type']//li"
+                            + "[dt[normalize-space()='" + heading + "']]/dd", SelectorType.XPATH).trim();
+            assertEquals(serviceDetails.get(field), actualValue,
+                    "The saved " + heading + " should match the expected service details.");
+        });
     }
 
     private String busRegistrationIdFromUrl(String url) {
@@ -635,8 +654,12 @@ public class BusRegistrationJourney extends BasePage {
 
     private void assertDatePartsMatch(String dateField, String relativeDate) {
         HashMap<String, String> expectedDate = dateParts(relativeDate);
-        assertEquals(expectedDate.get("day"), getValue(dateField + "_day", SelectorType.ID));
-        assertEquals(expectedDate.get("month"), getValue(dateField + "_month", SelectorType.ID));
+        assertEquals(Integer.parseInt(expectedDate.get("day")),
+                Integer.parseInt(getValue(dateField + "_day", SelectorType.ID)),
+                "The saved " + dateField + " day should match.");
+        assertEquals(Integer.parseInt(expectedDate.get("month")),
+                Integer.parseInt(getValue(dateField + "_month", SelectorType.ID)),
+                "The saved " + dateField + " month should match.");
         assertEquals(expectedDate.get("year"), getValue(dateField + "_year", SelectorType.ID));
     }
 

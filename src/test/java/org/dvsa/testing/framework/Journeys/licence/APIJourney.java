@@ -11,6 +11,7 @@ import org.joda.time.LocalDate;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.apache.commons.codec.DecoderException;
 
+import java.util.UUID;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -32,6 +33,10 @@ public class APIJourney {
     public void createAdminUser() throws MissingRequiredArgument, HttpException {
         writeLock.lock();
         try {
+            String login = "admin" + UUID.randomUUID().toString().replace("-", "");
+            String email = world.updateLicence.getInternalUserEmailAddress();
+            world.updateLicence.setInternalUserLogin(login);
+            world.updateLicence.setInternalUserEmailAddress(login + email.substring(email.indexOf('@')));
             world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
         } finally {
             writeLock.unlock();
