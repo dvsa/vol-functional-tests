@@ -46,6 +46,8 @@ public class Initialisation {
         world.transportManagerLicenceApiJourney = new TransportManagerLicenceApiJourney(world);
         world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.selfServeNavigation = new SelfServeNavigation(world);
+        world.licenceDashboardJourney = new LicenceDashboardJourney(world);
+        world.staticPagesJourney = new StaticPagesJourney(world);
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);
         world.universalActions = new UniversalActions(world);
@@ -73,7 +75,9 @@ public class Initialisation {
         world.taskAllocation = new TaskAllocation(world);
         world.printingAndScanningJourney = new PrintingAndScanningJourney(world);
         world.typeOfLicenceJourney = new TypeOfLicenceJourney(world);
+        world.niApplicationJourney = new NiApplicationJourney(world);
         world.psvJourney = new PSVJourney(world);
+        world.psvVehicleManagementJourney = new PSVVehicleManagementJourney(world);
         world.trailersJourney = new TrailersJourney(world);
         world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);

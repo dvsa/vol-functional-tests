@@ -76,10 +76,10 @@ public class SelfServeNavigation extends BasePage {
 
     public void navigateToCreateAnAccount() {
         if (isLinkPresent("Sign out", 3)) {
-            waitAndClickByLinkText("Sign out");
+            navigateToNavBarPage(SelfServeNavBar.SIGN_OUT);
         }
         getDriver().manage().deleteAllCookies();
-        refreshPage();
+        navigateToLoginPage();
         waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
         waitAndClickByLinkText("create an account");
     }
@@ -142,7 +142,7 @@ public class SelfServeNavigation extends BasePage {
             }
             case "Sign out" -> {
                 waitAndClickByLinkText("Sign out");
-                waitForTextToBePresent("Thank you");
+                get(url);
             }
             default -> {
                 waitAndClickByLinkText(page.toString());

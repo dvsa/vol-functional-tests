@@ -17,6 +17,15 @@ Feature: Continuations journey through internal and self serve
       | admin      | public       | standard_national      |
 #      | admin      | public       | special_restricted     |
 
+  @int_regression
+  @continuation-due-dashboard @vol763
+  Scenario: The dashboard and licence overview identify a due continuation
+    Given as a "admin" I have a valid "goods" "standard_national" licence
+    When i change my continuation and review date on Internal
+    And i generate a continuation
+    Then the current licences dashboard should show my licence as "Expiring" and type "Standard National"
+    And the licence overview should show expiry warning "This licence is due to expire on", supporting text "The licence will automatically end after the expiry date.", and action "Continue licence"
+
   @int_regression @FullRegression @continuations_internal @continuations_smoke
   Scenario: Caseworker continues a licence that has expired
     Given as a "admin" I have a valid "goods" "standard_international" licence

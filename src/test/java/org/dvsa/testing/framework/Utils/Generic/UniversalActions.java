@@ -1,13 +1,23 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.driver.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.awaitility.Awaitility;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -104,5 +114,23 @@ public class UniversalActions extends BasePage {
     public static void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
         waitAndClick("//*[contains(text(),'Close')]", SelectorType.XPATH);
+    }
+
+    public static Path downloadCsv(Path targetDirectory) throws IOException {
+        var driver = Browser.getDriver();
+        RemoteWebDriver remoteDriver = (RemoteWebDriver)
+                (driver instanceof RemoteWebDriver ? driver : new Augmenter().augment(driver));
+        String csvName = Awaitility.await()
+                .atMost(30, TimeUnit.SECONDS)
+                .pollInterval(1, TimeUnit.SECONDS)
+                .until(() -> remoteDriver.getDownloadableFiles().stream()
+                                .filter(name -> name.toLowerCase(Locale.ROOT).endsWith(".csv"))
+                                .findFirst()
+                                .orElse(null),
+                        Objects::nonNull);
+
+        Files.createDirectories(targetDirectory);
+        remoteDriver.downloadFile(csvName, targetDirectory);
+        return targetDirectory.resolve(csvName);
     }
 }

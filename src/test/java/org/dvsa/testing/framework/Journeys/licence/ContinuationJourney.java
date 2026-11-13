@@ -16,17 +16,22 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Objects;
 
 import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContinuationJourney extends BasePage {
 
     private World world;
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+    private String expectedContinuationExpiryDate;
 
     public ContinuationJourney(World world) {
         this.world = world;
@@ -99,6 +104,11 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates) {
+        expectedContinuationExpiryDate = LocalDate.of(
+                Integer.parseInt(continuationDates.get("year")),
+                Integer.parseInt(continuationDates.get("month")),
+                Integer.parseInt(continuationDates.get("day"))
+        ).format(DateTimeFormatter.ofPattern("d MMM yyyy", Locale.UK));
         waitForTextToBePresent("Continuation date");
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
@@ -106,11 +116,65 @@ public class ContinuationJourney extends BasePage {
         UniversalActions.clickSubmit();
     }
 
+    public void verifyExpiringLicenceOnDashboard(
+            String licenceNumber,
+            String expectedStatus,
+            String expectedLicenceType
+    ) {
+        world.selfServeNavigation.navigateToLoginPage();
+        if (!isTextPresent("Current licences")) {
+            world.globalMethods.signIn(
+                    world.registerUser.getUserName(),
+                    SecretsManager.getSecretValue("internalNewPassword")
+            );
+        }
+        waitForTextToBePresent("Current licences");
+
+        String licenceRow = String.format(
+                "//table[.//caption[normalize-space()='Current licences']]//tbody/tr[td[@data-heading='Licence number']//a[normalize-space()='%s']]",
+                licenceNumber
+        );
+        String statusCell = licenceRow + "/td[@data-heading='Status']";
+        refreshPageUntilElementAppears(
+                statusCell + "//*[normalize-space()='" + expectedStatus + "']",
+                SelectorType.XPATH
+        );
+
+        assertEquals(expectedStatus, getText(statusCell, SelectorType.XPATH));
+        assertEquals(expectedLicenceType, getText(licenceRow + "/td[@data-heading='Licence type']", SelectorType.XPATH));
+
+        waitAndClick(licenceRow + "/td[@data-heading='Licence number']/a", SelectorType.XPATH);
+        waitForTitleToBePresent("View and amend your licence");
+    }
+
+    public void verifyExpiryWarningAndContinuationAction(
+            String warningText,
+            String supportingText,
+            String continuationAction
+    ) {
+        assertTrue(
+                isTextPresent(warningText + " " + expectedContinuationExpiryDate),
+                "The licence overview should show the expected expiry date."
+        );
+        assertTrue(isTextPresent(supportingText), "The licence expiry warning should explain the expiry consequence.");
+
+        String continuationLink = String.format(
+                "//div[contains(@class, 'info-box--pink')]//a[normalize-space()='%s']",
+                continuationAction
+        );
+        waitForElementToBeClickable(continuationLink, SelectorType.XPATH);
+        assertTrue(
+                findElement(continuationLink, SelectorType.XPATH).getAttribute("href").contains("/continuation/"),
+                "The expiry warning should link to the continuation flow."
+        );
+    }
+
     public void completeContinuationPayOrSubmit() {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             waitAndClick("submitAndPay", SelectorType.ID);
             UniversalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
+            waitForUrlToContain("fees/receipt", 30);
         } else {
             waitForTextToBePresent("Declaration");
             waitAndClick("submit", SelectorType.ID);

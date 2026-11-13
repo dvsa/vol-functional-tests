@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -53,15 +54,134 @@ public class EBSRUpload extends BasePage {
         world.internalUIJourney.manualBusRegistration(0, 5, 0);
     }
 
+    @And("i add a manual bus registration with service details")
+    public void iAddAManualBusRegistrationWithServiceDetails(DataTable serviceDetails) {
+        world.busRegistrationJourney.addManualBusRegistrationWithServiceDetails(serviceDetails.asMap(String.class, String.class));
+    }
+
+    @When("I save the short notice reason and comment")
+    public void iSaveTheShortNoticeReasonAndComment(DataTable reasonDetails) {
+        world.busRegistrationJourney.saveManualShortNoticeReason(reasonDetails.asMap(String.class, String.class));
+    }
+
+    @Then("the short notice reason and comment should remain saved")
+    public void theShortNoticeReasonAndCommentShouldRemainSaved(DataTable expectedReasonDetails) {
+        world.busRegistrationJourney.verifyManualShortNoticeReasonIsSaved(
+                expectedReasonDetails.asMap(String.class, String.class)
+        );
+    }
+
+    @When("I complete the short notice registration checks")
+    public void iCompleteTheShortNoticeRegistrationChecks(DataTable expectedChecks) {
+        world.busRegistrationJourney.completeManualShortNoticeRegistrationChecks(
+                expectedChecks.asMap(String.class, String.class)
+        );
+    }
+
+    @Then("the short notice registration checks should remain saved")
+    public void theShortNoticeRegistrationChecksShouldRemainSaved(DataTable expectedChecks) {
+        world.busRegistrationJourney.verifyManualShortNoticeRegistrationChecksAreSaved(
+                expectedChecks.asMap(String.class, String.class)
+        );
+    }
+
+    @When("I create a variation of the manual bus registration")
+    public void iCreateAVariationOfTheManualBusRegistration() {
+        world.busRegistrationJourney.createManualBusRegistrationVariation();
+    }
+
+    @Then("the new bus registration variation should inherit the original service details")
+    public void theNewBusRegistrationVariationShouldInheritTheOriginalServiceDetails() {
+        world.busRegistrationJourney.verifyManualBusRegistrationVariationInheritedServiceDetails();
+    }
+
+    @When("I update the bus registration variation with service details")
+    public void iUpdateTheBusRegistrationVariationWithServiceDetails(DataTable serviceDetails) {
+        world.busRegistrationJourney.updateManualBusRegistrationVariation(serviceDetails.asMap(String.class, String.class));
+    }
+
+    @When("I update the short-notice bus registration variation with service details")
+    public void iUpdateTheShortNoticeBusRegistrationVariationWithServiceDetails(DataTable serviceDetails) {
+        world.busRegistrationJourney.updateManualShortNoticeBusRegistrationVariation(
+                serviceDetails.asMap(String.class, String.class)
+        );
+    }
+
+    @Then("the variation should retain the updated service details and the original registration should remain unchanged")
+    public void theVariationShouldRetainTheUpdatedServiceDetailsAndTheOriginalRegistrationShouldRemainUnchanged(
+            DataTable serviceDetails
+    ) {
+        world.busRegistrationJourney.verifyManualBusRegistrationVariationServiceDetails(
+                serviceDetails.asMap(String.class, String.class)
+        );
+    }
+
+    @When("I grant the manual bus registration variation")
+    public void iGrantTheManualBusRegistrationVariation(DataTable grantDetails) {
+        world.busRegistrationJourney.grantManualBusRegistrationVariation(
+                grantDetails.asMap(String.class, String.class)
+        );
+    }
+
+    @Then("the manual registration history should show")
+    public void theManualRegistrationHistoryShouldShow(DataTable expectedRows) {
+        world.busRegistrationJourney.verifyManualBusRegistrationHistory(expectedRows.asMaps(String.class, String.class));
+    }
+
+    @When("I create a cancellation for the manual bus registration")
+    public void iCreateACancellationForTheManualBusRegistration() {
+        world.busRegistrationJourney.createManualBusCancellation();
+    }
+
+    @Then("the cancellation should inherit the saved service details")
+    public void theCancellationShouldInheritTheSavedServiceDetails() {
+        world.busRegistrationJourney.verifyManualBusCancellationInheritedServiceDetails();
+    }
+
+    @When("I save the cancellation dates")
+    public void iSaveTheCancellationDates(DataTable expectedDates) {
+        world.busRegistrationJourney.saveManualBusCancellationDates(
+                expectedDates.asMap(String.class, String.class)
+        );
+    }
+
+    @Then("the cancellation dates should remain saved")
+    public void theCancellationDatesShouldRemainSaved() {
+        world.busRegistrationJourney.verifyManualBusCancellationDatesAreSaved();
+    }
+
+    @When("I complete the manual bus cancellation registration checks")
+    public void iCompleteTheManualBusCancellationRegistrationChecks(DataTable expectedChecks) {
+        world.busRegistrationJourney.completeManualBusCancellationRegistrationChecks(
+                expectedChecks.asMap(String.class, String.class)
+        );
+    }
+
+    @Then("the manual bus cancellation registration checks should remain saved")
+    public void theManualBusCancellationRegistrationChecksShouldRemainSaved(DataTable expectedChecks) {
+        world.busRegistrationJourney.verifyManualBusCancellationRegistrationChecksAreSaved(
+                expectedChecks.asMap(String.class, String.class)
+        );
+    }
+
+    @When("I grant the manual bus cancellation")
+    public void iGrantTheManualBusCancellation() {
+        world.busRegistrationJourney.grantManualBusCancellation();
+    }
+
+    @Then("the manual bus cancellation should remain cancelled after reload")
+    public void theManualBusCancellationShouldRemainCancelledAfterReload() {
+        world.busRegistrationJourney.verifyManualBusCancellationRemainsCancelled();
+    }
+
     @When("it has been paid and granted")
     public void itHasBeenPaidAndGranted() {
-        world.internalUIJourney.payFee();
-        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
+        world.busRegistrationJourney.payFeeAndGrantManualBusRegistration();
     }
 
     @Then("the bus registration should be granted")
     public void theBusRegistrationShouldBeGranted() {
-        assertTrue(isTextPresent("Registered"));
+        world.busRegistrationJourney.verifyManualBusRegistrationIsGranted();
     }
 
     @And("the traffic areas should be displayed on the service details page")
