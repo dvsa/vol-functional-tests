@@ -1,4 +1,4 @@
-# @ss_regression
+@ss_regression
 @vol763 @ni-standard-international-persistence
 Feature: Northern Ireland standard international application
 

@@ -1,4 +1,4 @@
-# @ss_regression
+@ss_regression
 @vol763
 Feature: Operators can review and switch between current licences
 

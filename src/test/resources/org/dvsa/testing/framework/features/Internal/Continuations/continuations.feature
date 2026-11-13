@@ -17,7 +17,7 @@ Feature: Continuations journey through internal and self serve
       | admin      | public       | standard_national      |
 #      | admin      | public       | special_restricted     |
 
-  # @int_regression
+  @int_regression
   @continuation-due-dashboard @vol763
   Scenario: The dashboard and licence overview identify a due continuation
     Given as a "admin" I have a valid "goods" "standard_national" licence

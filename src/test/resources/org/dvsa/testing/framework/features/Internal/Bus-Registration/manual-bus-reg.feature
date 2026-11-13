@@ -1,5 +1,5 @@
 @MANUAL-BUS-REG
-# @int_regression
+@int_regression
 @CPMS_tests
 @FullRegression
 @printAndSign

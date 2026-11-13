@@ -1,4 +1,4 @@
-# @ss_regression
+@ss_regression
 @vol763
 Feature: PSV vehicle management
 

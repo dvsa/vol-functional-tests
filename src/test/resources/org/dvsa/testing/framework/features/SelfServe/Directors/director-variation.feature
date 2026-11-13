@@ -70,14 +70,14 @@ Feature: Add a director variation
     When I submit the empty page
     Then the director financial history page empty field validation should appear
 
-  # @ss_regression
+  @ss_regression
   @directors-validations @director-conviction-declaration-required @vol763
   Scenario: A director conviction declaration requires an answer
     When I reach the new director conviction declaration
     And I submit the director conviction declaration without an answer
     Then the director conviction declaration shows "Value is required" in the summary and inline
 
-  # @ss_regression
+  @ss_regression
   @director-conviction-required-fields @vol763
   Scenario: A previous conviction requires its details
     When I reach the new director conviction declaration

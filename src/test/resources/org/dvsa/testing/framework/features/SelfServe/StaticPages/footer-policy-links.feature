@@ -1,4 +1,4 @@
-# @ss_regression
+@ss_regression
 @vol763 @footer-policy-links
 Feature: Self Serve footer policy links
 

@@ -1,4 +1,4 @@
-# @ss_regression
+@ss_regression
 @vol763
 Feature: Application convictions and penalties declarations
 
