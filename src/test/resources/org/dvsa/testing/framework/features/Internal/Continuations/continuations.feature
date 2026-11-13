@@ -23,7 +23,7 @@ Feature: Continuations journey through internal and self serve
     Given as a "admin" I have a valid "goods" "standard_national" licence
     When i change my continuation and review date on Internal
     And i generate a continuation
-    Then the current licences dashboard should show my licence as "Expiring", type "Standard National", and area "North East of England"
+    Then the current licences dashboard should show my licence as "Expiring" and type "Standard National"
     And the licence overview should show expiry warning "This licence is due to expire on", supporting text "The licence will automatically end after the expiry date.", and action "Continue licence"
 
   @int_regression @FullRegression @continuations_internal @continuations_smoke

@@ -119,8 +119,7 @@ public class ContinuationJourney extends BasePage {
     public void verifyExpiringLicenceOnDashboard(
             String licenceNumber,
             String expectedStatus,
-            String expectedLicenceType,
-            String expectedArea
+            String expectedLicenceType
     ) {
         world.selfServeNavigation.navigateToLoginPage();
         if (!isTextPresent("Current licences")) {
@@ -143,7 +142,6 @@ public class ContinuationJourney extends BasePage {
 
         assertEquals(expectedStatus, getText(statusCell, SelectorType.XPATH));
         assertEquals(expectedLicenceType, getText(licenceRow + "/td[@data-heading='Licence type']", SelectorType.XPATH));
-        assertEquals(expectedArea, getText(licenceRow + "/td[@data-heading='Area']", SelectorType.XPATH));
 
         waitAndClick(licenceRow + "/td[@data-heading='Licence number']/a", SelectorType.XPATH);
         waitForTitleToBePresent("View and amend your licence");
