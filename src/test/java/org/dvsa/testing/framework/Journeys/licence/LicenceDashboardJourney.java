@@ -22,6 +22,7 @@ public class LicenceDashboardJourney extends BasePage {
     public void verifyLicenceDashboardSummariesAndSwitchBetween(List<Map<String, String>> expectedSummaries) {
         assertEquals(2, expectedSummaries.size(), "The scenario must provide exactly two expected licence summaries");
 
+        refreshPage();
         List<WebElement> dashboardRows = currentLicenceRows();
         assertEquals(expectedSummaries.size(), dashboardRows.size(), "The dashboard should show the expected number of current licences");
         for (Map<String, String> expectedSummary : expectedSummaries) {
