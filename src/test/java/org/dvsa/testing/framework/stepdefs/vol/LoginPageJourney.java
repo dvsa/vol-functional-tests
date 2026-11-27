@@ -19,9 +19,6 @@ public class LoginPageJourney extends BasePage {
 
     @When("I attempt to login with a username {string} with special characters")
     public void iAttemptToLoginWithAUsernameWithSpecialCharacters(String username) {
-        if (isElementPresent("declarationRead", SelectorType.ID)) {
-            waitAndClick("declarationRead", SelectorType.ID);
-        }
         world.globalMethods.signIn(username, SecretsManager.getSecretValue("adminPassword"));
         this.userId = username;
     }

@@ -6,8 +6,10 @@ import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,6 +29,19 @@ public class FeeAndPaymentJourney extends BasePage {
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
         waitAndEnterText("amount", SelectorType.ID, amount);
         UniversalActions.clickSubmit();
+    }
+
+    public void payGrantFees() {
+        waitAndClickByLinkText("Fees");
+        waitAndClick("//label[@for=//input[@type='checkbox' and @name='checkall']/@id]", SelectorType.XPATH);
+        waitAndClick("pay", SelectorType.ID);
+
+        List<WebElement> feeAmountElements = findElements("td[data-heading='Fee amount']", SelectorType.CSS);
+        double totalFeeAmount = 0.0;
+        for (WebElement feeElement : feeAmountElements) {
+            totalFeeAmount += Double.parseDouble(feeElement.getText().replace("£", "").trim());
+        }
+        payFee(String.format("%.2f", totalFeeAmount), "cash");
     }
 
     public void payFee(String amount, @NotNull String paymentMethod) {

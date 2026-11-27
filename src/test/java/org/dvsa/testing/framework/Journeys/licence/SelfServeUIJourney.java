@@ -55,7 +55,7 @@ public class SelfServeUIJourney extends BasePage {
             findSelectAllRadioButtonsByValue("N");
             waitAndEnterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
-            click("termsAgreed", SelectorType.ID);
+            waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
             UniversalActions.clickSubmit();
         } else {
             operatorCreatesAccount();
@@ -93,7 +93,7 @@ public class SelfServeUIJourney extends BasePage {
         waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getConsultantFamilyName());
         waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
         waitAndEnterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getConsultantUserEmail());
-        click("termsAgreed", SelectorType.ID);
+        waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
         UniversalActions.clickSubmit();
     }
 
@@ -106,7 +106,7 @@ public class SelfServeUIJourney extends BasePage {
         waitAndEnterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
         waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         if (isElementPresent("termsAgreed", SelectorType.ID)){
-            click("termsAgreed", SelectorType.ID);
+            waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
         }
         UniversalActions.clickSubmit();
     }
@@ -247,7 +247,7 @@ public class SelfServeUIJourney extends BasePage {
         else
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         UniversalActions.clickSaveAndReturn();
-        if (!getCurrentUrl().contains("#validationSummary"))
+        if (!isElementPresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]", SelectorType.XPATH))
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
 

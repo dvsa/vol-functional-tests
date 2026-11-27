@@ -61,7 +61,7 @@ public class GlobalMethods extends BasePage {
         }
 
         if (isTextPresent("Welcome to your account")) {
-            click("termsAgreed", SelectorType.ID);
+            waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
             waitAndClick("submit", SelectorType.ID);
         }
     }
@@ -93,14 +93,14 @@ public class GlobalMethods extends BasePage {
     public void signIn(String userName, String password) {
         if (isElementPresent("declarationRead", SelectorType.ID)
                 && (!isElementSelected("declarationRead", SelectorType.ID))) {
-            waitAndClick("declarationRead", SelectorType.ID);
+            waitAndClick("//label[@for='declarationRead']", SelectorType.XPATH);
         }
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
         if (isTextPresent("Welcome to your account")) {
-            waitAndClick("termsAgreed", SelectorType.ID);
+            waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
             waitAndClick("submit", SelectorType.ID);
         }
     }

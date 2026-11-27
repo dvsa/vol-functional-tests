@@ -120,7 +120,7 @@ public class FinancialStandingRates extends BasePage {
     public void iDeleteAFinancialStandingRate() {
         String mostRecentRow = String.format("//button[@name='action[edit][%s]']/ancestor::tr", getMostRecentRowId());
         setRowBeforeChange(new FinancialStandingRate(mostRecentRow));
-        click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
+        waitAndClick(mostRecentRow.concat("//label[@for=../input[@type='checkbox']/@id]"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
         UniversalActions.clickConfirm();
@@ -157,7 +157,7 @@ public class FinancialStandingRates extends BasePage {
 
     @Then("i should receive the correct financial standing modal errors")
     public void iShouldReceiveTheCorrectFinancialStandingErrors() {
-        List<WebElement> summaryErrors = findElements("//li[@class='validation-summary__item']/a", SelectorType.XPATH);
+        List<WebElement> summaryErrors = findElements("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//li/a", SelectorType.XPATH);
         String[] inputTypes = {"Operator type", "Licence type", "First vehicle", "Additional vehicle", "Effective date"};
         for (int i = 0; i < inputTypes.length; i++) {
             String errorMessage = String.format("%s: value is required", inputTypes[i]);

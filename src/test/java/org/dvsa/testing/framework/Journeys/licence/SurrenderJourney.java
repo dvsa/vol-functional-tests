@@ -139,7 +139,7 @@ public class SurrenderJourney extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
-        waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
+        waitAndClick("//label[@for=//input[@type='checkbox' and @name='checks[ecms]']/@id]", SelectorType.XPATH);
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -175,9 +175,9 @@ public class SurrenderJourney extends BasePage {
 
     public void addDiscInformation() throws IllegalBrowserException, IOException {
         waitForPageLoad();
-        tickCheckbox("//input[@type='checkbox' and @name='stolenSection[stolen]' and @id='stolenSection[stolen]']");
-        waitAndClick("//*[contains(text(),'Lost')]", SelectorType.XPATH);
-       waitAndClick("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
+        waitAndClick("//label[@for=//input[@type='checkbox' and @name='stolenSection[stolen]']/@id]", SelectorType.XPATH);
+        waitAndClick("//label[@for=//input[@type='checkbox' and @name='lostSection[lost]']/@id]", SelectorType.XPATH);
+        waitAndClick("//label[@for=//input[@type='checkbox' and @name='possessionSection[inPossession]']/@id]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs stolen");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());

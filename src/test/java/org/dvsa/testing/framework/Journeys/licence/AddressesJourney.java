@@ -38,8 +38,8 @@ public class AddressesJourney extends BasePage {
     }
 
     public void verifyValidationErrorsAreDisplayed(Map<String, String> expectedErrorsByFieldName) {
-        waitForElementToBePresent("//*[@id='validationSummary']");
-        List<String> summary = findElements("//*[@id='validationSummary']//li[@class='validation-summary__item']/a", SelectorType.XPATH)
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]");
+        List<String> summary = findElements("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//li/a", SelectorType.XPATH)
                 .stream()
                 .map(WebElement::getText)
                 .map(String::trim)

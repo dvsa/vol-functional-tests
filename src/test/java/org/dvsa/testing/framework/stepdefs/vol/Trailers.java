@@ -90,14 +90,14 @@ public class Trailers extends BasePage {
 
     @Then("the trailer number mandatory error message appears")
     public void trailerNumberMandatoryErrorAppears() {
-        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isElementPresent("//div[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
         assertTrue(isElementPresent("//a[contains(text(),'Enter a value for the field: \"Trailer number\"')]", SelectorType.XPATH));
     }
 
     @Then("the is longer semi trailer mandatory error message appears")
     public void longerSemiTrailerMandatoryErrorAppears() {
-        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isElementPresent("//div[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
         assertTrue(isElementPresent("//a[contains(text(),'Select yes if this trailer is a longer semi-trailer')]", SelectorType.XPATH));
     }

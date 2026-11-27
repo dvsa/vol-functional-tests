@@ -53,14 +53,14 @@ public class TypeOfLicence extends BasePage {
 
     @Then("A LGV only error message should be displayed")
     public void lgvOnlyErrorMessage() {
-        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isElementPresent("//div[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
         assertTrue(isElementPresent("//a[contains(text(),'Will you only be operating Light goods vehicles on this licence?')]", SelectorType.XPATH));
     }
 
     @Then("A LGV undertakings error message should be displayed")
     public void lgvUndertakingsErrorMessage() {
-        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isElementPresent("//div[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
         assertTrue(isTextPresent("You must confirm you have read and agree to the undertaking to apply for this licence type."));
     }

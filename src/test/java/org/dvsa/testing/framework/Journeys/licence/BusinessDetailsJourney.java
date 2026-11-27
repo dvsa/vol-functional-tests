@@ -42,7 +42,7 @@ public class BusinessDetailsJourney extends BasePage {
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
         clickByName("correspondence_address[searchPostcode][search]");
-        if (isElementPresent("//*[@class='validation-summary__list']", SelectorType.XPATH)) {
+        if (isElementPresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary__list ')]", SelectorType.XPATH)) {
             waitAndClick("Enter the address yourself", SelectorType.LINKTEXT);
             enterCorrespondenceAddressManually();
         }else {
