@@ -12,7 +12,6 @@ import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.openqa.selenium.WebElement;
 
 
-import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -85,21 +84,7 @@ public class GrantApplication extends BasePage {
 
     @Then("I pay the grant fee")
     public void iPayTheGrantFee() {
-        waitAndClickByLinkText("Fees");
-        waitAndClick("checkall", SelectorType.ID);
-        waitAndClick("pay", SelectorType.ID);
-
-        List<WebElement> feeAmountElements = findElements("td[data-heading='Fee amount']", SelectorType.CSS);
-        double totalFeeAmount = 0.0;
-        
-        for (WebElement feeElement : feeAmountElements) {
-            String feeText = feeElement.getText().replace("£", "").trim();
-            totalFeeAmount += Double.parseDouble(feeText);
-        }
-        
-        // Convert back to string format for payment
-        String totalFeeAmountString = String.format("%.2f", totalFeeAmount);
-        world.feeAndPaymentJourney.payFee(totalFeeAmountString, "cash");
+        world.feeAndPaymentJourney.payGrantFees();
     }
 
     private void grantingTheApplication() {

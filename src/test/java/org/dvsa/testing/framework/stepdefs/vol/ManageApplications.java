@@ -517,7 +517,7 @@ public class ManageApplications extends BasePage {
 
         world.globalMethods.signIn(user, password);
         if (isTextPresent("Welcome to your account")) {
-            click("termsAgreed", SelectorType.ID);
+            waitAndClick("//label[@for='termsAgreed']", SelectorType.XPATH);
             waitAndClick("submit", SelectorType.ID);
         }
         waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);

@@ -7,7 +7,9 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -206,9 +208,15 @@ public class LetterGenerationJourney extends BasePage {
     private void selectWhenEnabled(String selectName, String option) {
         String enabledOption = String.format("//select[@name='%s' and not(@disabled)]/option[normalize-space()=\"%s\"]",
                 selectName, option);
-        untilElementIsPresent(enabledOption, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        assertTrue(isElementPresentWhenStable(enabledOption, SelectorType.XPATH),
-                String.format("Option '%s' should be selectable in the '%s' dropdown", option, selectName));
+        try {
+            new WebDriverWait(getDriver(), Duration.ofSeconds(30))
+                    .ignoring(StaleElementReferenceException.class)
+                    .until(driver -> isElementPresent(enabledOption, SelectorType.XPATH));
+        } catch (TimeoutException timeout) {
+            throw new AssertionError(
+                    String.format("Option '%s' should be selectable in the '%s' dropdown", option, selectName),
+                    timeout);
+        }
         selectWhenStable(selectName, option);
     }
 

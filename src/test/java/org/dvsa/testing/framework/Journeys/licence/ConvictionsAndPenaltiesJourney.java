@@ -86,7 +86,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitForTitleToBePresent("Add previous conviction");
         UniversalActions.clickSubmit();
-        waitForElementToBePresent("//*[@id='validationSummary']");
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]");
     }
 
     public void verifyConvictionRequiredFields(String context, Map<String, String> expectedErrors) {
@@ -96,10 +96,10 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         assertTrue(isElementPresent("lva-previous-conviction", SelectorType.ID),
                 "The conviction entry form should remain open");
         assertEquals(expectedErrors.size(),
-                findElements("//*[@id='validationSummary']//li/a", SelectorType.XPATH).size(),
+                findElements("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//li/a", SelectorType.XPATH).size(),
                 "The summary should contain each required-field error");
         expectedErrors.forEach((field, expectedError) -> {
-            assertEquals(expectedError, getText("//*[@id='validationSummary']//a[@href='#" + field + "']",
+            assertEquals(expectedError, getText("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[@href='#" + field + "']",
                     SelectorType.XPATH), "Summary error for " + field);
             String inlineError = field.equals("dob_day")
                     ? "//*[@id='dob_day']/ancestor::fieldset[contains(concat(' ',normalize-space(@class),' '),' date ')]"
@@ -141,8 +141,8 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void saveDeclarations() {
-        if (!findElement("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID).isSelected()) {
-            waitAndClick("//label[input[@id='convictionsConfirmation[convictionsConfirmation]']]", SelectorType.XPATH);
+        if (!isElementSelected("//input[@type='checkbox' and @name='convictionsConfirmation[convictionsConfirmation]']", SelectorType.XPATH)) {
+            waitAndClick("//label[@for=//input[@type='checkbox' and @name='convictionsConfirmation[convictionsConfirmation]']/@id]", SelectorType.XPATH);
         }
         UniversalActions.clickSaveAndReturn();
     }

@@ -8,9 +8,12 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -89,7 +92,10 @@ public class GovSignInJourney extends BasePage {
         }
         LOGGER.info("Completing mock GOV.UK Sign In with the email from secret key " + MOCK_EMAIL_SECRET_KEY);
         waitAndEnterText(EMAIL_FIELD_ID, SelectorType.ID, email);
+        String mockSignInUrl = Browser.getDriver().getCurrentUrl();
         waitAndClick(CONTINUE_BUTTON_ID, SelectorType.ID);
+        new WebDriverWait(Browser.getDriver(), Duration.ofSeconds(MOCK_PAGE_TIMEOUT_SECONDS))
+                .until(ExpectedConditions.not(ExpectedConditions.urlToBe(mockSignInUrl)));
     }
 
     /**

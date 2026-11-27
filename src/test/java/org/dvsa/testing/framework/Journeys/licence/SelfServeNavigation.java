@@ -220,7 +220,7 @@ public class SelfServeNavigation extends BasePage {
             return;
         }
         waitAndClick("//label[@for='uploadLaterRadio']", SelectorType.XPATH);
-        waitAndClick("//label[.//input[@id='knowledgeExperienceOlat']]", SelectorType.XPATH);
+        waitAndClick("//label[@for='knowledgeExperienceOlat']", SelectorType.XPATH);
         UniversalActions.clickSaveAndContinue();
     }
 

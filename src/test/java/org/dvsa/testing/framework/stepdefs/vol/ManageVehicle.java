@@ -286,7 +286,7 @@ public class ManageVehicle extends BasePage {
     @Then("the standard {string} errors appear")
     public void theVehicleDiscErrorsAppear(String error) {
         waitForTextToBePresent(error);
-        assertTrue(isElementPresent(String.format("//div[@class='validation-summary']//a[contains(text(),'%s')]", error), SelectorType.XPATH));
+        assertTrue(isElementPresent(String.format("//div[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[contains(text(),'%s')]", error), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-wrapper']//p[contains(text(),'%s')]", error), SelectorType.XPATH));
     }
 

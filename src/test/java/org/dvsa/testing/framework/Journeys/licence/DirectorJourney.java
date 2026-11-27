@@ -105,7 +105,7 @@ public class DirectorJourney extends BasePage {
 
     public void submitEmptyDirectorConvictionDeclaration() {
         UniversalActions.clickSaveAndContinue();
-        waitForElementToBePresent("//*[@id='validationSummary']");
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]");
     }
 
     public void verifyDirectorConvictionDeclarationRequired(String expectedError) {
@@ -115,7 +115,7 @@ public class DirectorJourney extends BasePage {
                 "Yes should remain unselected");
         assertFalse(findElement("//input[@name='data[question]' and @value='N']", SelectorType.XPATH).isSelected(),
                 "No should remain unselected");
-        assertEquals(expectedError, getText("//*[@id='validationSummary']//a[@href='#data[question]']", SelectorType.XPATH),
+        assertEquals(expectedError, getText("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[@href='#data[question]']", SelectorType.XPATH),
                 "The validation summary should identify the conviction declaration");
         assertEquals(expectedError, getText("//div[contains(@class,'validation-wrapper')]"
                         + "[.//input[@name='data[question]']]//p[contains(@class,'govuk-error-message')]",

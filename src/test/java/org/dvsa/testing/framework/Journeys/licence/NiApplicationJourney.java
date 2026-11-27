@@ -43,7 +43,7 @@ public class NiApplicationJourney extends BasePage {
         clickRadioLabel("//input[@name='type-of-licence[licence-type][licence-type]'][following-sibling::label[normalize-space(.)='" + licenceType + "']]");
         clickRadioLabel("//input[@name='type-of-licence[licence-type][ltyp_siContent][vehicle-type]'][following-sibling::label[normalize-space(.)='" + vehicleChoice + "']]");
         if (confirmUndertaking) {
-            waitAndClick("//label[input[@id='lgv-declaration-confirmation']]", SelectorType.XPATH);
+            waitAndClick("//label[@for='lgv-declaration-confirmation']", SelectorType.XPATH);
         }
         UniversalActions.clickSaveAndContinue();
     }
@@ -93,7 +93,7 @@ public class NiApplicationJourney extends BasePage {
         replaceText("noOfVehiclesRequired", SelectorType.ID, details.get("vehicles"));
         replaceText("noOfTrailersRequired", SelectorType.ID, details.get("trailers"));
         if (!isElementSelected("permission", SelectorType.ID)) {
-            waitAndClick("//label[input[@id='permission']]", SelectorType.XPATH);
+            waitAndClick("//label[@for='permission']", SelectorType.XPATH);
         }
         if (!isElementSelected("//input[@name='advertisements[radio]' and @value='adPlacedLater']", SelectorType.XPATH)) {
             clickRadioLabel("//input[@name='advertisements[radio]' and @value='adPlacedLater']");
@@ -102,10 +102,10 @@ public class NiApplicationJourney extends BasePage {
     }
 
     public void verifyRejectedOperatingCentre(String postcode, String expectedError) {
-        waitForElementToBePresent("//*[@id='validationSummary']//a[@href='#postcode']");
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[@href='#postcode']");
         assertTrue(navigate().getCurrentUrl().contains("/operating-centres/add/"),
                 "The user should remain on the operating centre correction form");
-        assertEquals(expectedError, getText("//*[@id='validationSummary']//a[@href='#postcode']", SelectorType.XPATH));
+        assertEquals(expectedError, getText("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[@href='#postcode']", SelectorType.XPATH));
         assertTrue(getText("//input[@id='postcode']/preceding-sibling::p[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-message ')]", SelectorType.XPATH)
                         .endsWith(expectedError),
                 "The postcode field should display the validation error");

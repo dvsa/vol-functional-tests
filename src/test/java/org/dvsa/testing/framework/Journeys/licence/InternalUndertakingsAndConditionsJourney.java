@@ -20,23 +20,21 @@ public class InternalUndertakingsAndConditionsJourney extends BasePage {
 
     public void verifyUndertakingsTableExists() {
         waitForElementToBePresent("//form[@id='lva-conditions-undertakings']");
-        // Check for fieldset containing conditions/undertakings data
-        String fieldsetXpath = "//fieldset[@name='table']";
+        String fieldsetXpath = "//form[@id='lva-conditions-undertakings']//*[@data-group='table']";
         assertTrue(findElements(fieldsetXpath, SelectorType.XPATH).size() > 0,
                 "Conditions and undertakings form should be present");
     }
 
     public void verifyConditionsTableExists() {
         waitForElementToBePresent("//form[@id='lva-conditions-undertakings']");
-        // Verify the conditions/undertakings fieldset exists
-        String fieldsetXpath = "//fieldset[@name='table']";
+        String fieldsetXpath = "//form[@id='lva-conditions-undertakings']//*[@data-group='table']";
         assertTrue(findElements(fieldsetXpath, SelectorType.XPATH).size() > 0,
                 "Conditions and undertakings section should contain content");
     }
 
     public void verifyUndertakingTextIsPresent(String undertakingText) {
         waitForElementToBePresent("//form[@id='lva-conditions-undertakings']");
-        String undertakingXpath = "//fieldset[@name='table']//tr[contains(., '" + undertakingText + "')]";
+        String undertakingXpath = "//form[@id='lva-conditions-undertakings']//*[@data-group='table']//tr[contains(., '" + undertakingText + "')]";
         assertTrue(findElements(undertakingXpath, SelectorType.XPATH).size() > 0,
                 "Undertaking text '" + undertakingText + "' should be present in form");
     }

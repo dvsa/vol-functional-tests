@@ -194,8 +194,8 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @Then("two TM DOB errors should display")
     public void twoTMDOBErrorsShouldDisplay() {
-        waitForElementToBePresent("//*[@class='validation-summary']");
-        assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]");
+        assertTrue(isElementPresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
     }
 
@@ -216,8 +216,8 @@ public class TmVerifyDifferentOperator extends BasePage {
 
     @Then("two worked hours errors should display")
     public void twoWorkedHoursErrorsShouldDisplay() {
-        waitForElementToBePresent("//*[@class='validation-summary']");
-        assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
+        waitForElementToBePresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]");
+        assertTrue(isElementPresent("//*[contains(concat(' ', normalize-space(@class), ' '), ' govuk-error-summary ')]//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
     }
 
